@@ -1,6 +1,17 @@
-import Image from 'next/image'
+'use client'
+
+import { useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { toolBarState } from '../providers';
 
 export default function Governance() {
+  const setToolBarState = useSetRecoilState(toolBarState);
+  
+  useEffect(() => setToolBarState({
+    title: 'Governance',
+    show_back_nav: true
+  }), [])
+
   return (
     <div className="h-full w-full">
 

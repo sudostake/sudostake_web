@@ -5,9 +5,22 @@ import {
     atom,
 } from 'recoil';
 
-export const sideBarToggleState = atom({
-    key: 'sideBarToggleState', // unique ID (with respect to other atoms/selectors)
-    default: false, // default value (aka initial value)
+type ToolBarInfo = {
+    title: string,
+    show_back_nav: boolean,
+};
+
+export const sideBarToggleState = atom<boolean>({
+    key: 'sideBarToggleState',
+    default: false,
+});
+
+export const toolBarState = atom<ToolBarInfo>({
+    key: 'toolBarState',
+    default: {
+        title: '',
+        show_back_nav: false,
+    },
 });
 
 export function Providers({ children }: {

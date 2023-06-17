@@ -6,18 +6,16 @@ import Link from "next/link";
 import { usePathname } from 'next/navigation'
 import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
 import { sideBarToggleState } from '../providers';
 
-// Define the NavItem type
 type NavItem = {
     label: string;
     href: string;
     icon: React.ReactNode;
 };
 
-// Define NavLinks
 const navLinks: NavItem[] = [
     {
         label: "Home",
@@ -31,7 +29,7 @@ const navLinks: NavItem[] = [
     },
     {
         label: "Liquidity Requests",
-        href: "/open_liquidity_requests",
+        href: "/liquidity_requests",
         icon: <FaExchangeAlt className="w-6 h-6 mr-3" />,
     },
     {
@@ -47,13 +45,9 @@ const navLinks: NavItem[] = [
 ];
 
 export default function SideBar() {
-    // Get pathname
     const pathname = usePathname();
-
-    // Get the recoil state for the sidebar toggle
     const [isOpen, setSideBarState] = useRecoilState(sideBarToggleState);
 
-    // Update the state after initial render
     useEffect(() => setSideBarState(!isMobile), [])
 
     return (
@@ -61,30 +55,31 @@ export default function SideBar() {
             classNames({
                 "fixed w-full h-full lg:w-80": true,
                 "md:translate-x-0": true,
+                "bg-inherit":true,
                 "-translate-x-full": !isOpen
             })
         }>
-            <div className="flex flex-col w-full h-full overflow-hidden text-gray-300 bg-gray-900 z-10">
-                <span className="flex items-center w-full py-8 px-2">
+            <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
+                <span className="flex items-center h-20 lg:h-24 py-4 px-4 w-full border-b border-current">
                     <Image
                         src="/l1.png"
                         alt="sudostake Logo"
-                        // className="dark:invert"
-                        width={60}
-                        height={60}
+                        className="invert"
+                        width={40}
+                        height={40}
                         priority
                     />
-                    <span className="ml-2 text-sm lg:text-lg font-bold">SudoStake</span>
-                    <button onClick={() => setSideBarState(!isOpen)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-6 h-6" /></button>
+                    <span className="ml-2 text-lg lg:text-2xl font-bold">SudoStake</span>
+                    <button onClick={() => setSideBarState(!isOpen)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
                 </span>
 
-                <ul className="w-full flex flex-col mt-3 px-2 border-t border-gray-700">
+                <ul className="w-full flex flex-col mt-4 px-2">
                     {navLinks.map((item, index) => {
                         return (
-                            <Link key={index} href={item.href}>
+                            <Link key={index} href={item.href} onClick={() => setSideBarState(!isOpen)}>
                                 <li className={classNames({
-                                    "flex items-center w-full h-16 px-3 mt-2 rounded hover:bg-gray-500 hover:text-gray-300": true,
-                                    "bg-gray-700 text-gray-300": pathname === item.href
+                                    "flex items-center w-full h-16 px-3 mt-2": true,
+                                    "rounded hover:border-2 hover:border-current": true
                                 })}>
                                     {item.icon}
                                     <span className="ml-2 text-sm lg:text-lg font-medium">{item.label}</span>
@@ -94,12 +89,11 @@ export default function SideBar() {
                     })}
                 </ul>
 
-                <a className="flex items-center px-3 w-full h-16 mt-auto bg-gray-800 hover:bg-gray-500 hover:text-gray-300" href="#">
+                <a className="flex items-center px-3 w-full h-16 mt-auto hover:border-t-2 hover:border-current" href="#">
                     <FaPlug className="w-6 h-6 mr-3" />
                     <span className="ml-2 text-sm lg:text-lg font-medium">Connect Wallet</span>
                 </a>
             </div>
         </div>
-
     )
 }

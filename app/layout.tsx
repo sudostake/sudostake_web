@@ -2,6 +2,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import SideBar from './components/sidebar'
 import { Providers } from './providers';
+import ToolBar from './components/toolbar';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -18,11 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`flex flex-row w-screen h-screen ${inter.className}`} suppressHydrationWarning={true} >
         <Providers>
-          {/* Import SideBar component here */}
+          <ToolBar />
           <SideBar />
 
-          {/* Import child components here */}
-          <div className="flex-1 lg:pl-80">
+          {/* main content is displayed in this section */}
+          <div className="flex-1 lg:ml-80">
             {children}
           </div>
         </Providers>
