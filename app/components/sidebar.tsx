@@ -1,6 +1,6 @@
 'use client'
 
-import { FaExchangeAlt, FaGlobe, FaDatabase, FaHome, FaPlug, FaBook, FaTimes } from 'react-icons/fa';
+import { FaExchangeAlt, FaGlobe, FaDatabase, FaHome, FaBook, FaTimes, FaLink } from 'react-icons/fa';
 import Image from 'next/image'
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
@@ -9,37 +9,44 @@ import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
 import { sideBarToggleState } from '../providers';
+import ConnectWalletButton from './connect_wallet_button';
 
-type NavItem = {
+type nav_itemItem = {
     label: string;
     href: string;
+    target: string;
     icon: React.ReactNode;
 };
 
-const navLinks: NavItem[] = [
+const nav_itemLinks: nav_itemItem[] = [
     {
         label: "Home",
         href: "/",
+        target: "",
         icon: <FaHome className="w-6 h-6 mr-3" />,
     },
     {
         label: "Manage Vaults",
         href: "/manage_vaults",
+        target: "",
         icon: <FaDatabase className="w-6 h-6 mr-3" />,
     },
     {
         label: "Liquidity Requests",
         href: "/liquidity_requests",
+        target: "",
         icon: <FaExchangeAlt className="w-6 h-6 mr-3" />,
     },
     {
         label: "Governance",
         href: "/governance",
+        target: "",
         icon: <FaGlobe className="w-6 h-6 mr-3" />,
     },
     {
         label: "Docs",
-        href: "/docs",
+        href: "https://github.com/sudostake",
+        target: "_blank",
         icon: <FaBook className="w-6 h-6 mr-3" />,
     },
 ];
@@ -55,7 +62,7 @@ export default function SideBar() {
             classNames({
                 "fixed w-full h-full lg:w-80": true,
                 "md:translate-x-0": true,
-                "bg-inherit":true,
+                "bg-inherit": true,
                 "-translate-x-full": !isOpen
             })
         }>
@@ -64,7 +71,7 @@ export default function SideBar() {
                     <Image
                         src="/l1.png"
                         alt="sudostake Logo"
-                        className="invert"
+                        className="invert dark:invert-0"
                         width={40}
                         height={40}
                         priority
@@ -74,25 +81,27 @@ export default function SideBar() {
                 </span>
 
                 <ul className="w-full flex flex-col mt-4 px-2">
-                    {navLinks.map((item, index) => {
+                    {nav_itemLinks.map((nav_item, index) => {
                         return (
-                            <Link key={index} href={item.href} onClick={() => setSideBarState(!isOpen)}>
+                            <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)}>
                                 <li className={classNames({
-                                    "flex items-center w-full h-16 px-3 mt-2": true,
-                                    "rounded hover:border-2 hover:border-current": true
+                                    "flex items-center w-full h-16 px-3 mt-2 rounded": true,
+                                    "hover:border-2 hover:border-current": true,
+                                    "border-2 border-current": nav_item.href === pathname,
+                                    "border-2 border-transparent": nav_item.href !== pathname
                                 })}>
-                                    {item.icon}
-                                    <span className="ml-2 text-sm lg:text-lg font-medium">{item.label}</span>
+                                    {nav_item.icon}
+                                    <span className="ml-2 text-sm lg:text-lg font-medium">{nav_item.label}</span>
+                                    {nav_item.target && <span className="ml-auto"><FaLink className="w-4 h-4 mr-3" /></span>}
                                 </li>
                             </Link>
                         );
                     })}
                 </ul>
 
-                <a className="flex items-center px-3 w-full h-16 mt-auto hover:border-t-2 hover:border-current" href="#">
-                    <FaPlug className="w-6 h-6 mr-3" />
-                    <span className="ml-2 text-sm lg:text-lg font-medium">Connect Wallet</span>
-                </a>
+                <div className="flex items-center w-full mt-auto">
+                    <ConnectWalletButton />
+                </div>
             </div>
         </div>
     )
