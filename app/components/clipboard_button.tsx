@@ -30,7 +30,7 @@ export default function ClipBoardButton() {
     }
 
     return (
-        <button onClick={() => handleCopyClick()} className="rounded-full">
+        <button onClick={() => handleCopyClick()}>
             {!isCopied && <FaClipboard className="w-5 h-5" />}
             {isCopied && <FaClipboardCheck className="w-5 h-5" />}
         </button>

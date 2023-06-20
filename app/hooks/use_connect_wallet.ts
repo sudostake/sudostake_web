@@ -3,7 +3,6 @@ import {
     useMutation,
 } from '@tanstack/react-query'
 import { useRecoilState } from 'recoil'
-import { useChainInfo } from './useChainInfo'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
 import { GAS_PRICE } from '../utils/constants'
@@ -11,7 +10,6 @@ import { useEffect } from 'react'
 
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
-    const [chainInfo] = useChainInfo()
 
     const useKeplr = async () => {
         if (window && !window?.keplr) {
@@ -20,14 +18,9 @@ export const useConnectWallet = () => {
         }
 
         try {
-            await window.keplr.experimentalSuggestChain(chainInfo)
-            await window.keplr.enable(chainInfo.chainId)
-
-            const offlineSigner = await window.getOfflineSignerAuto(
-                chainInfo.chainId
-            )
+            const offlineSigner = window.keplr.getOfflineSigner("constantine-3");
             const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                chainInfo.rpc,
+                'https://rpc.constantine.archway.tech:443',
                 offlineSigner,
                 {
                     gasPrice: GasPrice.fromString(GAS_PRICE),
@@ -35,7 +28,7 @@ export const useConnectWallet = () => {
             )
 
             const [{ address }] = await offlineSigner.getAccounts()
-            const key = await window.keplr.getKey(chainInfo.chainId)
+            const key = await window.keplr.getKey('constantine-3')
 
             /* successfully update the wallet state */
             setWalletState({
@@ -67,9 +60,7 @@ export const useConnectWallet = () => {
         }))
 
         // Try to connect wallet
-        if (chainInfo) {
-            await useKeplr()
-        }
+        await useKeplr();
     }, {});
 
     // Listen to wallet address change in keplr

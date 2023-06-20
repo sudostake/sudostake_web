@@ -72,8 +72,8 @@ export default function SideBar() {
                         src="/l1.png"
                         alt="sudostake Logo"
                         className="invert dark:invert-0"
-                        width={40}
-                        height={40}
+                        width={50}
+                        height={50}
                         priority
                     />
                     <span className="ml-2 text-lg lg:text-2xl font-bold">SudoStake</span>

@@ -11,15 +11,6 @@ import {
 } from '@tanstack/react-query'
 import { DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME } from './utils/constants';
 
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: true,
-            staleTime: DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME,
-        },
-    },
-})
-
 type ToolBarInfo = {
     title: string,
     show_back_nav: boolean,
@@ -71,7 +62,7 @@ export function Providers({ children }: {
 }) {
     return (
         <RecoilRoot>
-            <QueryClientProvider client={queryClient}>
+            <QueryClientProvider client={new QueryClient({})}>
                 {children}
             </QueryClientProvider>
         </RecoilRoot>
