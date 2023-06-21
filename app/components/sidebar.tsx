@@ -1,6 +1,6 @@
 'use client'
 
-import { FaExchangeAlt, FaGlobe, FaDatabase, FaHome, FaBook, FaTimes, FaLink } from 'react-icons/fa';
+import { FaExchangeAlt, FaGlobe, FaDatabase, FaBook, FaTimes, FaLink } from 'react-icons/fa';
 import Image from 'next/image'
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
@@ -20,14 +20,8 @@ type nav_itemItem = {
 
 const nav_itemLinks: nav_itemItem[] = [
     {
-        label: "Home",
-        href: "/",
-        target: "",
-        icon: <FaHome className="w-6 h-6 mr-3" />,
-    },
-    {
         label: "Manage Vaults",
-        href: "/manage_vaults",
+        href: "/",
         target: "",
         icon: <FaDatabase className="w-6 h-6 mr-3" />,
     },
@@ -55,7 +49,7 @@ export default function SideBar() {
     const pathname = usePathname();
     const [isOpen, setSideBarState] = useRecoilState(sideBarToggleState);
 
-    useEffect(() => setSideBarState(!isMobile), [])
+    useEffect(() => setSideBarState(!isMobile), [setSideBarState])
 
     return (
         <div className={
@@ -85,10 +79,10 @@ export default function SideBar() {
                         return (
                             <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)}>
                                 <li className={classNames({
-                                    "flex items-center w-full h-16 px-3 mt-2 rounded": true,
-                                    "hover:border-2 hover:border-current": true,
-                                    "border-2 border-current": nav_item.href === pathname,
-                                    "border-2 border-transparent": nav_item.href !== pathname
+                                    "flex items-center w-full h-16 px-3 mb-2 rounded": true,
+                                    "hover:border hover:border-current": true,
+                                    "border border-current": nav_item.href === pathname,
+                                    "border border-transparent": nav_item.href !== pathname
                                 })}>
                                     {nav_item.icon}
                                     <span className="ml-2 text-sm lg:text-lg font-medium">{nav_item.label}</span>

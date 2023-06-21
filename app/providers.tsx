@@ -10,6 +10,7 @@ import {
     QueryClientProvider,
 } from '@tanstack/react-query'
 import { DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME } from './utils/constants';
+import { ChainInfo, supportedChains } from './utils/supported_chains';
 
 type ToolBarInfo = {
     title: string,
@@ -20,7 +21,7 @@ type WalletState = {
     client: SigningCosmWasmClient | null,
     status: WalletStatusType,
     name: string,
-    address: String,
+    address: string,
 };
 
 export enum WalletStatusType {
@@ -55,6 +56,11 @@ export const walletState = atom<WalletState>({
         name: '',
         address: '',
     },
+});
+
+export const selectedChainState = atom<ChainInfo>({
+    key: 'selectedChainState',
+    default: supportedChains[0],
 });
 
 export function Providers({ children }: {

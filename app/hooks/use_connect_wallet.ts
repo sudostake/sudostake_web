@@ -1,8 +1,8 @@
-import { WalletStatusType, walletState } from '@/app/providers'
+import { WalletStatusType, selectedChainState, walletState } from '@/app/providers'
 import {
     useMutation,
 } from '@tanstack/react-query'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
 import { GAS_PRICE } from '../utils/constants'
@@ -10,47 +10,7 @@ import { useEffect } from 'react'
 
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
-
-    const useKeplr = async () => {
-        if (window && !window?.keplr) {
-            alert('Please install Keplr extension and refresh the page.')
-            return
-        }
-
-        try {
-            const offlineSigner = window.keplr.getOfflineSigner("constantine-3");
-            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                'https://rpc.constantine.archway.tech:443',
-                offlineSigner,
-                {
-                    gasPrice: GasPrice.fromString(GAS_PRICE),
-                }
-            )
-
-            const [{ address }] = await offlineSigner.getAccounts()
-            const key = await window.keplr.getKey('constantine-3')
-
-            /* successfully update the wallet state */
-            setWalletState({
-                name: key.name,
-                address,
-                client: wasmChainClient,
-                status: WalletStatusType.connected,
-            })
-        } catch (e) {
-            /* set the error state */
-            setWalletState({
-                name: '',
-                address: '',
-                client: null,
-                status: WalletStatusType.error,
-            })
-
-            /* throw the error for the UI */
-            throw e
-        }
-    }
-
+    const chainInfo = useRecoilValue(selectedChainState)
     const mutation = useMutation(async () => {
         /* set the fetching state */
         setWalletState((value) => ({
@@ -60,8 +20,43 @@ export const useConnectWallet = () => {
         }))
 
         // Try to connect wallet
-        await useKeplr();
-    }, {});
+        if (window && !window?.keplr) {
+            alert('Please install Keplr extension and refresh the page.')
+            return
+        }
+
+        // Connec wallet
+        const offlineSigner = window.keplr.getOfflineSigner(chainInfo.chain_id);
+        const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+            chainInfo.rpc_endpoint,
+            offlineSigner,
+            {
+                gasPrice: GasPrice.fromString(GAS_PRICE),
+            }
+        )
+        const [{ address }] = await offlineSigner.getAccounts();
+        const key = await window.keplr.getKey(chainInfo.chain_id);
+
+        // Return success response
+        return {
+            name: key.name,
+            address,
+            client: wasmChainClient,
+            status: WalletStatusType.connected,
+        };
+    }, {
+        onSuccess(res) {
+            setWalletState(res);
+        },
+        onError(e) {
+            setWalletState({
+                name: '',
+                address: '',
+                client: null,
+                status: WalletStatusType.error,
+            })
+        }
+    });
 
     // Listen to wallet address change in keplr
     useEffect(

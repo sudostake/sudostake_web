@@ -16,8 +16,9 @@ export default function ToolBar() {
             classNames({
                 "fixed flex items-center": true,
                 "w-full h-20 lg:h-24": true,
-                "py-4 px-4 lg:ml-80": true,
+                "py-4 px-8 lg:ml-80": true,
                 "border-b border-current": true,
+                "bg-inherit": true,
             })
         }>
             <button

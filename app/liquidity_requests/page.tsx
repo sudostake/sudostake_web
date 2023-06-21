@@ -9,8 +9,8 @@ export default function LiquidityRequests() {
 
   useEffect(() => setToolBarState({
     title: 'Liquidity Requests',
-    show_back_nav: true
-  }), [])
+    show_back_nav: false
+  }), [setToolBarState])
 
   return (
     <div className="h-full w-full">
