@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
-import { WalletStatusType, walletState } from "../providers";
+import { WalletStatusType, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom } from "../utils/conversion";
+import BigNumber from "bignumber.js";
 
 async function fetchTokenBalance({
     client,
@@ -22,20 +23,36 @@ async function fetchTokenBalance({
 }
 
 async function fetchUnbondingInfo({
-    vault_address
-}: { vault_address: string }) {
+    vault_address,
+    token: { decimals }
+}: {
+    vault_address: string, token: {
+        decimals: number
+    }
+}) {
     const api = [
         'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
         vault_address,
         '/unbonding_delegations'
     ].join('');
-
     const response = await fetch(api, {
         method: "GET",
     });
     const data = await response.json();
 
-    return 0;
+    // Calculate total unbonding amount
+    // Note! this API may change as it is controlled by a third party
+    let total = new BigNumber(0);
+    let unbonding_responses: any[] = data['unbonding_responses'];
+    unbonding_responses.forEach((res) => {
+        let entries: any[] = res['entries'];
+        entries.forEach((entry) => {
+            let amount = new BigNumber(entry['balance'])
+            total = total.plus(amount);
+        })
+    });
+
+    return convertMicroDenomToDenom(total.toString(), decimals)
 }
 
 export const useQueryVaultInfo = (vault_address: string) => {
@@ -44,7 +61,7 @@ export const useQueryVaultInfo = (vault_address: string) => {
     const { data: info, isLoading } = useQuery(
         ['vault_info', vault_address],
         async () => {
-            const [native_balance, usdc_balance, unbonding_amount] = await Promise.all([
+            const [native_balance, usdc_balance, unbonding_amount, staking_info] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
                     client,
@@ -66,21 +83,23 @@ export const useQueryVaultInfo = (vault_address: string) => {
                 }),
 
                 // Fetch unbonding amount
-                fetchUnbondingInfo({ vault_address })
+                fetchUnbondingInfo({
+                    vault_address, token: {
+                        decimals: 18,
 
-                // TODO Fetch total delegated amount
-                // Add this to the vault API
+                    },
+                }),
 
-                // TODO Fetch accumulated staking rewards
-                // Add this to the vault API
+                // Fetch staking info
+                client.queryContractSmart(vault_address, { staking_info: {} })
             ]);
 
             return {
                 native_balance,
                 usdc_balance: usdc_balance,
+                total_staked: convertMicroDenomToDenom(staking_info['total_staked'], 18),
+                acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], 18),
                 unbonding: unbonding_amount,
-                delegated: '0.000000',
-                acc_rewards: '0.000000',
             };
         },
         { enabled: status === WalletStatusType.connected, }

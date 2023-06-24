@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
-import { sideBarToggleState } from '../providers';
+import { sideBarToggleState } from '../state';
 import ConnectWalletButton from './connect_wallet_button';
 
 type nav_itemItem = {
@@ -61,7 +61,7 @@ export default function SideBar() {
             })
         }>
             <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
-                <span className="flex items-center h-20 lg:h-24 py-4 px-4 w-full border-b border-current">
+                <span className="flex items-center h-20 lg:h-24 py-4 px-2 lg:px-4 w-full border-b border-current">
                     <Image
                         src="/l1.png"
                         alt="sudostake Logo"

@@ -3,7 +3,7 @@
 import { FaClipboard, FaClipboardCheck } from "react-icons/fa"
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { walletState } from "../providers";
+import { walletState } from "../state";
 
 export default function ClipBoardButton() {
     const { address } = useRecoilValue(walletState)

@@ -2,7 +2,7 @@
 
 import { FaSignInAlt, FaSignOutAlt, FaSpinner } from "react-icons/fa"
 import { useRecoilState, useRecoilValue } from "recoil";
-import { WalletStatusType, selectedChainState, walletState } from "../providers";
+import { WalletStatusType, selectedChainState, walletState } from "../state";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import ClipBoardButton from "./clipboard_button";
 import Image from 'next/image'

@@ -1,4 +1,4 @@
-import { WalletStatusType, selectedChainState, walletState } from '@/app/providers'
+import { WalletStatusType, selectedChainState, walletState } from '../state'
 import {
     useMutation,
 } from '@tanstack/react-query'
@@ -26,6 +26,9 @@ export const useConnectWallet = () => {
         }
 
         // Connec wallet
+        await window.keplr.experimentalSuggestChain(chainInfo.full_chain_info);
+        await window.keplr.enable(chainInfo.chain_id);
+
         const offlineSigner = window.keplr.getOfflineSigner(chainInfo.chain_id);
         const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
             chainInfo.rpc_endpoint,

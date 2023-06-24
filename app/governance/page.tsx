@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { toolBarState } from '../providers';
+import { toolBarState } from '../state';
 
 export default function Governance() {
   const setToolBarState = useSetRecoilState(toolBarState);

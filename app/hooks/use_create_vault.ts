@@ -1,9 +1,9 @@
 import { JsonObject, SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { coin } from "@cosmjs/stargate";
 import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
-import { selectedChainState, walletState } from "../providers";
 import { ChainInfo } from "../utils/supported_chains";
+import { selectedChainState, walletState } from "../state";
+import { toast } from "react-toastify";
 
 const createVault = async ({
     msg,
@@ -16,24 +16,23 @@ const createVault = async ({
     client: SigningCosmWasmClient,
     chainInfo: ChainInfo
 }) => {
-    const funds = [
-        chainInfo.vault_creation_fee,
-    ]
-
     return await client.execute(
         senderAddress,
         chainInfo.sudomod_address,
         msg,
         'auto',
-        undefined,
-        funds
+        '',
+        [
+            chainInfo.vault_creation_fee,
+        ]
     )
 }
 
-export const indexVault = async (vault_address: string, rpcEndpoint: string) => {
+export const indexVault = async (client: SigningCosmWasmClient, vault_address: string) => {
+    const vault_info = await client.queryContractSmart(vault_address, { info: {} });
     const response = await fetch("/api", {
         method: "POST",
-        body: JSON.stringify({ vault_address, rpcEndpoint }),
+        body: JSON.stringify({ vault_info, vault_address }),
     });
 
     return await response.json();
@@ -50,15 +49,15 @@ export const useCreateVault = () => {
             client,
             chainInfo,
         });
-        console.log(exec_res);
-        // return await indexVault()
-        // await new Promise(resolve => setTimeout(resolve, 3000));
+        const vault_address = exec_res.events[18].attributes[0].value;
+        return await indexVault(client, vault_address);
+
     }, {
         onSuccess(res) {
-            // TODO
+            toast("New vault created!", { type: 'success' })
         },
         onError(e) {
-            console.log(e);
+            toast("Error creating vault", { type: 'error' })
         }
     });
 }
