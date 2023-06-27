@@ -36,7 +36,6 @@ export default function Home() {
 
   return (
     <div className="h-full w-full overflow-y-scroll text-sm lg:text-lg py-4 px-4 lg:px-8">
-      <h2 className="mb-4 font-bold ">My Vaults</h2>
       <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded p-2">
         {
           isLoading && <>

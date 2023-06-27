@@ -54,7 +54,7 @@ export default function SideBar() {
     return (
         <div className={
             classNames({
-                "fixed w-full h-full lg:w-80": true,
+                "fixed w-full h-full lg:w-80 z-20 lg:z-0": true,
                 "md:translate-x-0": true,
                 "bg-inherit": true,
                 "-translate-x-full": !isOpen

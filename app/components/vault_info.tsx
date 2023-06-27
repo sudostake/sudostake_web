@@ -1,8 +1,11 @@
 import { FaSpinner } from "react-icons/fa";
 import { useQueryVaultInfo } from "../hooks/use_query_vault_info";
+import { useRouter } from 'next/navigation';
+import TransferVaultDialog from "./transfer_vault_dialog";
 
 export default function VaultInfo(props: any) {
     const { info } = useQueryVaultInfo(props.vault.id);
+    const router = useRouter();
 
     return (
         <div className="w-full p-4 border border-current rounded grid grid-cols-1 gap-2">
@@ -48,9 +51,12 @@ export default function VaultInfo(props: any) {
                 </span>
             </span>
 
-            <a className="mt-4 rounded border border-current p-2" target="_blank" href={`https://testnet.mintscan.io/archway-testnet/account/${props.vault['id']}`}>
-                view details
-            </a>
+            <span className="grid gap-4 grid-cols-2">
+                <button onClick={() => { router.push(`/vaults/${props.vault['id']}`) }} className="flex items-center justify-center mt-4 border border-current rounded p-2">
+                    view
+                </button>
+                <TransferVaultDialog key={props.vault.id} />
+            </span>
         </div>
     );
 }

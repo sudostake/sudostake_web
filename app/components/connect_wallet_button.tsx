@@ -6,13 +6,17 @@ import { WalletStatusType, selectedChainState, walletState } from "../state";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import ClipBoardButton from "./clipboard_button";
 import Image from 'next/image'
+import { useRouter } from "next/navigation";
 
 export default function ConnectWalletButton() {
     const { mutate: connectWallet } = useConnectWallet()
     const [{ name, status }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
+    const router = useRouter();
 
     const resetWalletConnection = () => {
+        router.replace('/');
+
         setWalletState({
             status: WalletStatusType.idle,
             address: '',
