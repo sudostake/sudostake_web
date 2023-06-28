@@ -77,7 +77,7 @@ export default function SideBar() {
                 <ul className="w-full flex flex-col mt-4 px-2">
                     {nav_itemLinks.map((nav_item, index) => {
                         return (
-                            <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)}>
+                            <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)} passHref>
                                 <li className={classNames({
                                     "flex items-center w-full h-16 px-3 mb-2 rounded": true,
                                     "hover:border hover:border-current": true,

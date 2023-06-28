@@ -7,14 +7,14 @@ import { collection, onSnapshot, where, query, orderBy } from "firebase/firestor
 import { db } from "./services/firebase_client";
 import { FaPlus, FaSpinner } from "react-icons/fa";
 import VaultInfo from "./components/vault_info";
-import { useCreateVault } from "./hooks/use_create_vault";
+import { useCreateVault } from "./hooks/use_exec_vault";
 import { toolBarState } from "./state";
 
 export default function Home() {
   const [vaults, setVaults] = useState<any[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
-  const { mutate: createVault, isLoading } = useCreateVault()
+  const { mutate: createVault, isLoading } = useCreateVault();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
@@ -40,7 +40,7 @@ export default function Home() {
         {
           isLoading && <>
             <FaSpinner className="w-6 h-6 mr-3 spinner" />
-            <span>Creating Vault ...</span>
+            <span>Creating ...</span>
           </>
         }
 

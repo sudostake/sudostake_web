@@ -1,17 +1,23 @@
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { Coin, coin } from "@cosmjs/stargate";
 
-export type ChainInfo = {
-    chain_id: string,
-    logo_url: string,
-    rpc_endpoint: string,
-    denom: string,
-    vault_creation_fee: Coin,
-    sudomod_address: string,
-    full_chain_info: JsonObject
+type Currency = {
+    coinDenom: string,
+    coinMinimalDenom: string,
+    coinDecimals: number,
+    coinGeckoId: string,
 };
 
-const archwayCurrency = {
+export type ChainInfo = {
+    logo_url: string,
+    vault_creation_fee: Coin,
+    sudomod_address: string,
+    src: JsonObject,
+    usdc: Currency,
+};
+
+// Describe Archway chain info
+const archwayCurrency: Currency = {
     coinDenom: 'CONST',
     coinMinimalDenom: 'aconst',
     coinDecimals: 18,
@@ -41,25 +47,30 @@ const archwayChainInfo = {
     // walletUrlForStaking: '',
 };
 
-
 export const supportedChains: ChainInfo[] = [
     {
-        chain_id: 'constantine-3',
         logo_url: '/archway.png',
-        rpc_endpoint: 'https://rpc.constantine.archway.tech:443',
-        denom: 'aconst',
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
         sudomod_address: 'archway1unl5gda9zxr0dzcvsqs057quzku532vakprq44t8emz2edwcqcvs6z8aug',
-        full_chain_info: archwayChainInfo
+        src: archwayChainInfo,
+        usdc: {
+            coinDenom: 'USDC',
+            coinMinimalDenom: 'usdc',
+            coinDecimals: 18,
+            coinGeckoId: 'constantine-network',
+        }
     },
     {
-        chain_id: 'chihuahua-1',
         logo_url: '/huahua.png',
-        rpc_endpoint: 'https://rpc.chihuahua.wtf:443/',
-        denom: 'aconst',
         vault_creation_fee: coin('1000000', 'uhuahua'),
         sudomod_address: '',
-        full_chain_info: {}
+        src: {},
+        usdc: {
+            coinDenom: 'USDC',
+            coinMinimalDenom: 'usdc',
+            coinDecimals: 6,
+            coinGeckoId: '',
+        }
     },
 ];
 

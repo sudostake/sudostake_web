@@ -1,10 +1,13 @@
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
+import { useTransferVaultOwnership } from '../hooks/use_exec_vault';
+import { FaSpinner } from 'react-icons/fa';
 
-export default function TransferVaultDialog() {
-    let [isOpen, setIsOpen] = useState(false)
-    const [name, setName] = useState("");
+export default function TransferVaultDialog(props: any) {
+    const [isOpen, setIsOpen] = useState(false);
+    const [address, setAddress] = useState("");
+    const { mutate: transferVault, isLoading } = useTransferVaultOwnership(props.vault);
 
     function closeModal() {
         setIsOpen(false)
@@ -45,24 +48,24 @@ export default function TransferVaultDialog() {
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
-                                    " bg-slate-800": true,
+                                    "bg-slate-800": true,
                                     "w-full max-w-lg overflow-hidden rounded p-4 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
                                         as="h2"
                                         className="text-lg font-bold leading-6 text-gray-400">
-                                        Transfer Vault#12
+                                        Transfer Vault: ID #{props.vault.config.index_number}
                                     </Dialog.Title>
 
                                     <div className="mt-2 mb-8">
                                         <p className="text-gray-400">
-                                            Please enter the recipient's address below
+                                            Please enter the recipient&apos;s address below
                                         </p>
                                     </div>
 
-                                    <input value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                    <input value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
                                         type="text" placeholder="arch..."
                                         className={classNames({
                                             "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
@@ -71,11 +74,21 @@ export default function TransferVaultDialog() {
 
                                     <div className="flex mt-8 w-full justify-end">
                                         <button
+                                            disabled={!Boolean(address)}
                                             type="button"
-                                            className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-sm font-medium text-gray-300"
-                                            onClick={closeModal}
-                                        >
-                                            continue
+                                            onClick={() => { !isLoading && transferVault(address) }}
+                                            className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-sm font-medium text-gray-300">
+                                            {
+                                                isLoading && <>
+                                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                    <span>transferring ...</span>
+                                                </>
+                                            }
+                                            {
+                                                !isLoading && <>
+                                                    <span>transfer</span>
+                                                </>
+                                            }
                                         </button>
                                     </div>
                                 </Dialog.Panel>

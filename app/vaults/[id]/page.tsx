@@ -1,8 +1,8 @@
 'use client'
 
-import { useQueryVaultInfo } from "@/app/hooks/use_query_vault_info";
+import { useQueryVaultMetaData } from "@/app/hooks/use_query_vault";
 import { db } from "@/app/services/firebase_client";
-import { WalletStatusType, toolBarState, walletState } from "@/app/state";
+import { WalletStatusType, selectedChainState, toolBarState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { onSnapshot, doc } from "firebase/firestore";
 import { useEffect, useState } from "react"
@@ -13,10 +13,11 @@ import StakeActionsDropdown from "./stake_actions";
 export default function Vault({ params }: { params: { id: string } }) {
     const [vault_info, setVaultInfo] = useState<any | null>(null);
     const setToolBarState = useSetRecoilState(toolBarState);
-    const { info: vault_metadata } = useQueryVaultInfo(params.id);
+    const { vault_metadata } = useQueryVaultMetaData(params.id);
     const { status } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
-    // Subscribe to all vaults owned by the connected user address
+    // Subscribe to selected vault
     useEffect(() => {
         if (status === WalletStatusType.connected) {
             return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
@@ -26,7 +27,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         } else {
             setVaultInfo(null);
         }
-    }, [status, setToolBarState]);
+    }, [status, params.id]);
 
     useEffect(() => {
         if (Boolean(vault_info)) {
@@ -35,18 +36,18 @@ export default function Vault({ params }: { params: { id: string } }) {
                 show_back_nav: true
             })
         }
-    }, [vault_info]);
+    }, [vault_info, setToolBarState]);
 
     return (
         <div className="h-full w-full flex flex-col">
             <div className={classNames({
                 "overflow-y-scroll text-sm lg:text-lg pt-4 pb-2 px-4 lg:px-8": true,
                 "flex flex-col": true,
-                "gap-12 divide-current divide-y": true,
+                "gap-12 dark:divide-slate-500 divide-current divide-y": true,
             })}>
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
-                        <span>CONST Balance</span>
+                        <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                         <span>
                             {vault_metadata && vault_metadata.native_balance}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
@@ -64,7 +65,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
-                        <span>USDC Balance</span>
+                        <span>{chainInfo.usdc.coinDenom}</span>
                         <span>
                             {vault_metadata && vault_metadata.usdc_balance}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}

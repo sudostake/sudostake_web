@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { WalletStatusType, walletState } from "../state";
+import { WalletStatusType, selectedChainState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom } from "../utils/conversion";
@@ -55,10 +55,11 @@ async function fetchUnbondingInfo({
     return convertMicroDenomToDenom(total.toString(), decimals)
 }
 
-export const useQueryVaultInfo = (vault_address: string) => {
+export const useQueryVaultMetaData = (vault_address: string) => {
     const { status, client } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
-    const { data: info, isLoading } = useQuery(
+    const { data: vault_metadata, isLoading } = useQuery(
         ['vault_info', vault_address],
         async () => {
             const [native_balance, usdc_balance, unbonding_amount, staking_info] = await Promise.all([
@@ -67,8 +68,8 @@ export const useQueryVaultInfo = (vault_address: string) => {
                     client,
                     address: vault_address,
                     token: {
-                        decimals: 18,
-                        denom: 'aconst'
+                        decimals: chainInfo.src.stakeCurrency.coinDenom,
+                        denom: chainInfo.src.stakeCurrency.coinMinimalDenom
                     },
                 }),
 
@@ -77,8 +78,8 @@ export const useQueryVaultInfo = (vault_address: string) => {
                     client,
                     address: vault_address,
                     token: {
-                        decimals: 18,
-                        denom: 'usdc'
+                        decimals: chainInfo.usdc.coinDecimals,
+                        denom: chainInfo.usdc.coinMinimalDenom
                     },
                 }),
 
@@ -105,5 +106,5 @@ export const useQueryVaultInfo = (vault_address: string) => {
         { enabled: status === WalletStatusType.connected, }
     )
 
-    return { info, isLoading }
+    return { vault_metadata, isLoading }
 }

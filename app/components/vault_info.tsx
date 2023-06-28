@@ -1,11 +1,14 @@
 import { FaSpinner } from "react-icons/fa";
-import { useQueryVaultInfo } from "../hooks/use_query_vault_info";
+import { useQueryVaultMetaData } from "../hooks/use_query_vault";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
+import { useRecoilValue } from "recoil";
+import { selectedChainState } from "../state";
 
 export default function VaultInfo(props: any) {
-    const { info } = useQueryVaultInfo(props.vault.id);
+    const { vault_metadata } = useQueryVaultMetaData(props.vault.id);
     const router = useRouter();
+    const chainInfo = useRecoilValue(selectedChainState);
 
     return (
         <div className="w-full p-4 border border-current rounded grid grid-cols-1 gap-2">
@@ -16,38 +19,38 @@ export default function VaultInfo(props: any) {
                 </span>
             </span>
             <span className="flex items-center">
-                <span>CONST</span>
+                <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                 <span className="ml-auto">
-                    {info && info.native_balance}
-                    {!info && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    {vault_metadata && vault_metadata.native_balance}
+                    {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
-                <span>USDC</span>
+                <span>{chainInfo.usdc.coinDenom}</span>
                 <span className="ml-auto">
-                    {info && info.usdc_balance}
-                    {!info && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    {vault_metadata && vault_metadata.usdc_balance}
+                    {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Delegated</span>
                 <span className="ml-auto">
-                    {info && info.total_staked}
-                    {!info && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    {vault_metadata && vault_metadata.total_staked}
+                    {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Staking Rewards</span>
                 <span className="ml-auto">
-                    {info && info.acc_rewards}
-                    {!info && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    {vault_metadata && vault_metadata.acc_rewards}
+                    {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Unbonding</span>
                 <span className="ml-auto">
-                    {info && info.unbonding}
-                    {!info && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    {vault_metadata && vault_metadata.unbonding}
+                    {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
 
@@ -55,7 +58,7 @@ export default function VaultInfo(props: any) {
                 <button onClick={() => { router.push(`/vaults/${props.vault['id']}`) }} className="flex items-center justify-center mt-4 border border-current rounded p-2">
                     view
                 </button>
-                <TransferVaultDialog key={props.vault.id} />
+                <TransferVaultDialog key={props.vault.id} vault={props.vault} />
             </span>
         </div>
     );

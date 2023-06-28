@@ -26,19 +26,19 @@ export const useConnectWallet = () => {
         }
 
         // Connec wallet
-        await window.keplr.experimentalSuggestChain(chainInfo.full_chain_info);
-        await window.keplr.enable(chainInfo.chain_id);
+        await window.keplr.experimentalSuggestChain(chainInfo.src);
+        await window.keplr.enable(chainInfo.src.chainId);
 
-        const offlineSigner = window.keplr.getOfflineSigner(chainInfo.chain_id);
+        const offlineSigner = window.keplr.getOfflineSigner(chainInfo.src.chainId);
         const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-            chainInfo.rpc_endpoint,
+            chainInfo.src.rpc,
             offlineSigner,
             {
                 gasPrice: GasPrice.fromString(GAS_PRICE),
             }
         )
         const [{ address }] = await offlineSigner.getAccounts();
-        const key = await window.keplr.getKey(chainInfo.chain_id);
+        const key = await window.keplr.getKey(chainInfo.src.chainId);
 
         // Return success response
         return {
