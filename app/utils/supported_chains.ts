@@ -1,18 +1,41 @@
-import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { Coin, coin } from "@cosmjs/stargate";
 
-type Currency = {
+export type Currency = {
     coinDenom: string,
     coinMinimalDenom: string,
     coinDecimals: number,
     coinGeckoId: string,
 };
 
+export type ChainInfoFull = {
+    chainId: string,
+    chainName: string,
+    rpc: string,
+    rest: string,
+    stakeCurrency: Currency,
+    bip44: {
+        coinType: number,
+    },
+    bech32Config: {
+        bech32PrefixAccAddr: string,
+        bech32PrefixAccPub: string,
+        bech32PrefixValAddr: string,
+        bech32PrefixValPub: string,
+        bech32PrefixConsAddr: string,
+        bech32PrefixConsPub: string,
+    },
+    currencies: [Currency],
+    feeCurrencies: [Currency],
+    coinType: number,
+    features: ['cosmwasm', 'ibc-transfer', 'ibc-go'],
+    walletUrlForStaking: string,
+};
+
 export type ChainInfo = {
     logo_url: string,
     vault_creation_fee: Coin,
     sudomod_address: string,
-    src: JsonObject,
+    src: ChainInfoFull,
     usdc: Currency,
 };
 
@@ -23,7 +46,7 @@ const archwayCurrency: Currency = {
     coinDecimals: 18,
     coinGeckoId: 'constantine-network',
 };
-const archwayChainInfo = {
+const archwayChainInfo: ChainInfoFull = {
     chainId: 'constantine-3',
     chainName: 'Constantine',
     rpc: 'https://rpc.constantine.archway.tech',
@@ -44,7 +67,7 @@ const archwayChainInfo = {
     feeCurrencies: [archwayCurrency],
     coinType: 118,
     features: ['cosmwasm', 'ibc-transfer', 'ibc-go'],
-    // walletUrlForStaking: '',
+    walletUrlForStaking: '',
 };
 
 export const supportedChains: ChainInfo[] = [
@@ -59,18 +82,6 @@ export const supportedChains: ChainInfo[] = [
             coinDecimals: 18,
             coinGeckoId: 'constantine-network',
         }
-    },
-    {
-        logo_url: '/huahua.png',
-        vault_creation_fee: coin('1000000', 'uhuahua'),
-        sudomod_address: '',
-        src: {},
-        usdc: {
-            coinDenom: 'USDC',
-            coinMinimalDenom: 'usdc',
-            coinDecimals: 6,
-            coinGeckoId: '',
-        }
-    },
+    }
 ];
 

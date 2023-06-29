@@ -3,6 +3,10 @@ import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
+import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { coin } from "cosmwasm";
+import { Currency } from "../utils/supported_chains";
+import { convertDenomToMicroDenom } from "../utils/conversion";
 
 export const indexVault = async (client: SigningCosmWasmClient, vault_address: string) => {
     // TODO we also pass in the action description for historic purposes
@@ -47,7 +51,7 @@ export const useTransferVaultOwnership = (vault: any) => {
     const { address, client } = useRecoilValue(walletState);
 
     return useMutation(async (to_address: string) => {
-        const exec_res = await client.execute(
+        await client.execute(
             address,
             vault.id,
             { transfer_ownership: { to_address } },
@@ -62,6 +66,31 @@ export const useTransferVaultOwnership = (vault: any) => {
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })
+        }
+    });
+}
+
+export const useDeposit = (to_address: string) => {
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, currency }: { amount: number, currency: Currency }) => {
+        const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
+        return await client.sendTokens(
+            address,
+            to_address,
+            [coin(`${microAmount}`, currency.coinMinimalDenom)],
+            "auto",
+            '',
+        )
+    }, {
+        async onSuccess(res) {
+            toast(`Deposit successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', to_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', to_address] });
+        },
+        onError(e) {
+            toast("Error depositing funds", { type: 'error' })
         }
     });
 }

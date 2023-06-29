@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom } from "../utils/conversion";
 import BigNumber from "bignumber.js";
+import { Currency } from "../utils/supported_chains";
 
 async function fetchTokenBalance({
     client,
@@ -60,7 +61,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
 
     const { data: vault_metadata, isLoading } = useQuery(
-        ['vault_info', vault_address],
+        ['vault_metadata', vault_address],
         async () => {
             const [native_balance, usdc_balance, unbonding_amount, staking_info] = await Promise.all([
                 // Fetch native balance
@@ -68,7 +69,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                     client,
                     address: vault_address,
                     token: {
-                        decimals: chainInfo.src.stakeCurrency.coinDenom,
+                        decimals: chainInfo.src.stakeCurrency.coinDecimals,
                         denom: chainInfo.src.stakeCurrency.coinMinimalDenom
                     },
                 }),
@@ -108,3 +109,25 @@ export const useQueryVaultMetaData = (vault_address: string) => {
 
     return { vault_metadata, isLoading }
 }
+
+export const useQueryBalance = (address: string, currency: Currency) => {
+    const { status, client } = useRecoilValue(walletState);
+
+    const { data: balance = 0, isLoading } = useQuery(
+        ['address_balance', address, currency.coinMinimalDenom],
+        async () => {
+            return await fetchTokenBalance({
+                client,
+                address,
+                token: {
+                    decimals: currency.coinDecimals,
+                    denom: currency.coinMinimalDenom
+                },
+            });
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { balance, isLoading }
+}
+

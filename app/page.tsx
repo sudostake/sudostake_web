@@ -7,7 +7,7 @@ import { collection, onSnapshot, where, query, orderBy } from "firebase/firestor
 import { db } from "./services/firebase_client";
 import { FaPlus, FaSpinner } from "react-icons/fa";
 import VaultInfo from "./components/vault_info";
-import { useCreateVault } from "./hooks/use_exec_vault";
+import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 
 export default function Home() {

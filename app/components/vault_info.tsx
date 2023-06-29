@@ -1,5 +1,5 @@
 import { FaSpinner } from "react-icons/fa";
-import { useQueryVaultMetaData } from "../hooks/use_query_vault";
+import { useQueryVaultMetaData } from "../hooks/use_query";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
 import { useRecoilValue } from "recoil";

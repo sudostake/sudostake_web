@@ -1,6 +1,6 @@
 'use client'
 
-import { useQueryVaultMetaData } from "@/app/hooks/use_query_vault";
+import { useQueryVaultMetaData } from "@/app/hooks/use_query";
 import { db } from "@/app/services/firebase_client";
 import { WalletStatusType, selectedChainState, toolBarState, walletState } from "@/app/state";
 import classNames from "classnames";
@@ -9,15 +9,15 @@ import { useEffect, useState } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import StakeActionsDropdown from "./stake_actions";
+import DepositDialog from "./deposit_dialog";
 
 export default function Vault({ params }: { params: { id: string } }) {
-    const [vault_info, setVaultInfo] = useState<any | null>(null);
     const setToolBarState = useSetRecoilState(toolBarState);
-    const { vault_metadata } = useQueryVaultMetaData(params.id);
     const { status } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
+    const [vault_info, setVaultInfo] = useState<any | null>(null);
+    const { vault_metadata } = useQueryVaultMetaData(params.id);
 
-    // Subscribe to selected vault
     useEffect(() => {
         if (status === WalletStatusType.connected) {
             return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
@@ -54,10 +54,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                         </span>
                     </span>
                     <span className="flex flex-row gap-2 py-2">
-                        <button className="items-center border border-current rounded w-24">
-                            Deposit
-                        </button>
-                        <button className="items-center border border-current rounded w-24">
+                        <DepositDialog to_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
                             Withdraw
                         </button>
                     </span>
@@ -72,10 +70,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                         </span>
                     </span>
                     <span className="flex flex-row gap-2 py-2">
-                        <button className="items-center border border-current rounded w-24">
-                            Deposit
-                        </button>
-                        <button className="items-center border border-current rounded w-24">
+                        <DepositDialog to_address={params.id} currency={chainInfo.usdc} />
+                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
                             Withdraw
                         </button>
                     </span>
@@ -88,9 +84,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
-                    <span className="flex flex-row py-2">
-                        <StakeActionsDropdown />
-                    </span>
+                    <StakeActionsDropdown />
                 </span>
 
                 <span className="flex flex-row justify-between w-full">
@@ -100,7 +94,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button className="items-center border border-current rounded w-24">
+                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
                             Claim
                         </button>
                     </span>
@@ -113,7 +107,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button className="items-center border border-current rounded w-24 text-sm lg:text-lg">
+                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
                             Info
                         </button>
                     </span>

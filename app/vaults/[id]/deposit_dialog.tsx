@@ -1,30 +1,49 @@
+import { useDeposit } from '@/app/hooks/use_exec';
+import { useQueryBalance } from '@/app/hooks/use_query';
+import { walletState } from '@/app/state';
+import { Currency } from '@/app/utils/supported_chains';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
-import { Fragment, useState } from 'react'
-import { useTransferVaultOwnership } from '../hooks/use_exec';
+import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
+import { useRecoilValue } from 'recoil';
 
-export default function TransferVaultDialog(props: any) {
+type DepositDialogProps = {
+    to_address: string,
+    currency: Currency
+}
+
+export default function DepositDialog({ to_address, currency }: DepositDialogProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const [address, setAddress] = useState("");
-    const { mutate: transferVault, isLoading } = useTransferVaultOwnership(props.vault);
+    const [amount, setAmount] = useState('');
+    const { address } = useRecoilValue(walletState);
+    const { balance } = useQueryBalance(address, currency);
+    const { mutate: deposit, isLoading, isSuccess } = useDeposit(to_address);
 
-    function closeModal() {
-        setIsOpen(false)
-    }
+    // Close modal when the deposit is done
+    useEffect(() => {
+        if (isSuccess) {
+            setIsOpen(false);
+        }
+    }, [isSuccess]);
 
-    function openModal() {
-        setIsOpen(true)
+    // Validate user input to make sure it is not bigger than available balance
+    function validate_amount(amount: number) {
+        if (amount > Number(balance)) {
+            setAmount('');
+        } else {
+            setAmount(`${amount}`);
+        }
     }
 
     return (
         <>
-            <button type="button" onClick={openModal} className="flex items-center  justify-center  mt-4 border border-current rounded p-2">
-                transfer
+            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
+                Deposit
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -55,18 +74,20 @@ export default function TransferVaultDialog(props: any) {
                                     <Dialog.Title
                                         as="h2"
                                         className="text-lg font-bold leading-6 text-gray-300">
-                                        Transfer Vault: ID #{props.vault.config.index_number}
+                                        Deposit Tokens
                                     </Dialog.Title>
 
-                                    <div className="mt-2 mb-8">
-                                        <p className="text-xs lg:text-lg text-gray-300">
-                                            Please enter the recipient&apos;s address below
-                                        </p>
+                                    <p className="text-gray-300 text-xs lg:text-lg mt-2 mb-8">
+                                        Please enter the amount of {currency.coinDenom} to deposit
+                                    </p>
+
+                                    <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
+                                        Available: {balance} {currency.coinDenom}
                                     </div>
 
-                                    <input value={address}
-                                        onChange={(e) => setAddress(e.target.value)}
-                                        type="text" placeholder="arch..."
+                                    <input value={amount}
+                                        onChange={(e) => validate_amount(Number(e.target.value))}
+                                        type="number" placeholder="0.00"
                                         className={classNames({
                                             "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
                                             "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
@@ -74,19 +95,19 @@ export default function TransferVaultDialog(props: any) {
 
                                     <div className="flex mt-20 w-full justify-end">
                                         <button
-                                            disabled={!Boolean(address)}
+                                            disabled={!Boolean(amount)}
                                             type="button"
-                                            onClick={() => { !isLoading && transferVault(address) }}
+                                            onClick={() => { !isLoading && deposit({ amount: Number(amount), currency }) }}
                                             className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                             {
                                                 isLoading && <>
                                                     <FaSpinner className="w-5 h-5 mr-3 spinner" />
-                                                    <span>transferring ...</span>
+                                                    <span>depositing ...</span>
                                                 </>
                                             }
                                             {
                                                 !isLoading && <>
-                                                    <span>transfer</span>
+                                                    <span>deposit</span>
                                                 </>
                                             }
                                         </button>
