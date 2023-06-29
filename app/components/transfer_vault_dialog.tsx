@@ -60,7 +60,7 @@ export default function TransferVaultDialog(props: any) {
 
                                     <div className="mt-2 mb-8">
                                         <p className="text-xs lg:text-lg text-gray-300">
-                                            Please enter the recipient&apos;s address below
+                                            Enter the recipient&apos;s address below
                                         </p>
                                     </div>
 

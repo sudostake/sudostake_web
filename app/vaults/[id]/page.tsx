@@ -11,6 +11,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import StakeActionsDropdown from "./stake_actions";
 import DepositDialog from "./deposit_dialog";
 import WithdrawDialog from "./withdraw_dialog";
+import { useClaimRewards } from "@/app/hooks/use_exec";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
@@ -18,6 +19,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     const chainInfo = useRecoilValue(selectedChainState);
     const [vault_info, setVaultInfo] = useState<any | null>(null);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
+    const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
 
     useEffect(() => {
         if (status === WalletStatusType.connected) {
@@ -91,8 +93,21 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
-                            Claim
+                        <button onClick={() => { claimRewards() }} className={classNames({
+                            "px-2 inline-flex items-center justify-center border border-current rounded text-xs lg:text-sm lg:font-medium": true,
+                            "w-24": !isLoading
+                        })}>
+                            {
+                                isLoading && <>
+                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                    <span>Claiming</span>
+                                </>
+                            }
+                            {
+                                !isLoading && <>
+                                    <span>Claim</span>
+                                </>
+                            }
                         </button>
                     </span>
                 </span>
@@ -104,7 +119,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
+                        <button className="w-24 items-center border border-current rounded text-xs lg:text-sm lg:font-medium">
                             Info
                         </button>
                     </span>

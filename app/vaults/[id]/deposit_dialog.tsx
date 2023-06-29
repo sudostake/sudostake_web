@@ -38,7 +38,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded w-24 text-xs lg:text-sm lg:font-medium">
                 Deposit
             </button>
 
@@ -78,7 +78,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
                                     </Dialog.Title>
 
                                     <p className="text-gray-300 text-xs lg:text-lg mt-2 mb-8">
-                                        Please enter the amount of {currency.coinDenom} to deposit
+                                        Enter the amount of {currency.coinDenom} to deposit
                                     </p>
 
                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
@@ -95,9 +95,9 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
 
                                     <div className="flex mt-20 w-full justify-end">
                                         <button
-                                            disabled={!Boolean(amount)}
+                                            disabled={!Boolean(amount) && isLoading}
                                             type="button"
-                                            onClick={() => { !isLoading && deposit({ amount: Number(amount), currency }) }}
+                                            onClick={() => { deposit({ amount: Number(amount), currency }) }}
                                             className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                             {
                                                 isLoading && <>

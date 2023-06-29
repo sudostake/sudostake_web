@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
@@ -100,7 +100,6 @@ export const useWithdraw = (from_address: string) => {
     const queryClient = useQueryClient();
 
     return useMutation(async ({ amount, currency, to_address }: { amount: number, currency: Currency, to_address?: string }) => {
-        // return new Promise(resolve => setTimeout(resolve, 3000));
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
         return await client.execute(
             address,
@@ -117,6 +116,31 @@ export const useWithdraw = (from_address: string) => {
         },
         onError(e) {
             toast("Error withdrawing funds", { type: 'error' })
+        }
+    });
+}
+
+export const useClaimRewards = (vault_address: string) => {
+    const queryClient = useQueryClient();
+    const { address, client } = useRecoilValue(walletState);
+
+    return useMutation(async () => {
+        // return new Promise(resolve => setTimeout(resolve, 3000));
+        return await client.execute(
+            address,
+            vault_address,
+            { claim_delegator_rewards: {} },
+            'auto',
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Claim rewards successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            toast("Error claiming rewards", { type: 'error' })
         }
     });
 }

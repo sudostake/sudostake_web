@@ -27,7 +27,8 @@ async function fetchUnbondingInfo({
     vault_address,
     token: { decimals }
 }: {
-    vault_address: string, token: {
+    vault_address: string,
+    token: {
         decimals: number
     }
 }) {
