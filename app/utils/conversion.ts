@@ -12,11 +12,10 @@ export function convertMicroDenomToDenom(
 export function convertDenomToMicroDenom(
   value: number | string,
   decimals: number
-): number {
-  if (decimals === 0) return Number(value)
+): number | string {
+  if (decimals === 0) return Number(value);
 
-  return protectAgainstNaN(
-    parseInt(String(Number(value) * Math.pow(10, decimals)), 10)
-  )
+  let val = Number(value) * Math.pow(10, decimals);
+  return val.toLocaleString('fullwide', { useGrouping: false });
 }
 

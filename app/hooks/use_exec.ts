@@ -94,3 +94,29 @@ export const useDeposit = (to_address: string) => {
         }
     });
 }
+
+export const useWithdraw = (from_address: string) => {
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, currency, to_address }: { amount: number, currency: Currency, to_address?: string }) => {
+        // return new Promise(resolve => setTimeout(resolve, 3000));
+        const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
+        return await client.execute(
+            address,
+            from_address,
+            { withdraw_balance: { to_address, funds: coin(`${microAmount}`, currency.coinMinimalDenom) } },
+            'auto',
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Withdraw successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', from_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', from_address] });
+        },
+        onError(e) {
+            toast("Error withdrawing funds", { type: 'error' })
+        }
+    });
+}

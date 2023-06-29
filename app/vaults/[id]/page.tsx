@@ -10,6 +10,7 @@ import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import StakeActionsDropdown from "./stake_actions";
 import DepositDialog from "./deposit_dialog";
+import WithdrawDialog from "./withdraw_dialog";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
@@ -43,7 +44,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             <div className={classNames({
                 "overflow-y-scroll text-sm lg:text-lg pt-4 pb-2 px-4 lg:px-8": true,
                 "flex flex-col": true,
-                "gap-12 dark:divide-slate-500 divide-current divide-y": true,
+                "gap-12 divide-slate-500 divide-y": true,
             })}>
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
@@ -55,9 +56,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                     <span className="flex flex-row gap-2 py-2">
                         <DepositDialog to_address={params.id} currency={chainInfo.src.stakeCurrency} />
-                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
-                            Withdraw
-                        </button>
+                        <WithdrawDialog from_address={params.id} currency={chainInfo.src.stakeCurrency} />
                     </span>
                 </span>
 
@@ -71,9 +70,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                     <span className="flex flex-row gap-2 py-2">
                         <DepositDialog to_address={params.id} currency={chainInfo.usdc} />
-                        <button className="items-center border border-current rounded w-20 text-xs lg:text-sm lg:font-medium">
-                            Withdraw
-                        </button>
+                        <WithdrawDialog from_address={params.id} currency={chainInfo.usdc} />
                     </span>
                 </span>
 
