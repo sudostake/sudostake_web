@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
 import { FaPlus, FaSpinner } from "react-icons/fa";
-import VaultInfo from "./components/vault_info";
+import VaultInfo from "./widgets/vault_info";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 

@@ -8,9 +8,9 @@ import { onSnapshot, doc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import StakeActionsDropdown from "./stake_actions";
-import DepositDialog from "./deposit_dialog";
-import WithdrawDialog from "./withdraw_dialog";
+import StakeActionsDropdown from "./widgets/stake_actions";
+import DepositDialog from "./dialogs/deposit_dialog";
+import WithdrawDialog from "./dialogs/withdraw_dialog";
 import { useClaimRewards } from "@/app/hooks/use_exec";
 
 export default function Vault({ params }: { params: { id: string } }) {
@@ -93,10 +93,13 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button onClick={() => { claimRewards() }} className={classNames({
-                            "px-2 inline-flex items-center justify-center border border-current rounded text-xs lg:text-sm lg:font-medium": true,
-                            "w-24": !isLoading
-                        })}>
+                        <button
+                            type="button"
+                            disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
+                            onClick={() => { claimRewards() }} className={classNames({
+                                "px-2 inline-flex items-center justify-center border border-current rounded text-xs lg:text-sm lg:font-medium": true,
+                                "w-24": !isLoading
+                            })}>
                             {
                                 isLoading && <>
                                     <FaSpinner className="w-5 h-5 mr-3 spinner" />
@@ -119,7 +122,9 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button className="w-24 items-center border border-current rounded text-xs lg:text-sm lg:font-medium">
+                        <button type="button"
+                            disabled={vault_metadata && Number(vault_metadata.unbonding) <= 0}
+                            className="w-24 items-center border border-current rounded text-xs lg:text-sm lg:font-medium">
                             Info
                         </button>
                     </span>

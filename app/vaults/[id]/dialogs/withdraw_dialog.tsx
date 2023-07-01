@@ -1,12 +1,10 @@
 import { useWithdraw } from '@/app/hooks/use_exec';
 import { useQueryBalance } from '@/app/hooks/use_query';
-import { walletState } from '@/app/state';
 import { Currency } from '@/app/utils/supported_chains';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
-import { useRecoilValue } from 'recoil';
 
 type WithdrawDialogProps = {
     from_address: string,
@@ -85,13 +83,18 @@ export default function WithdrawDialog({ from_address, currency }: WithdrawDialo
                                         Available: {balance} {currency.coinDenom}
                                     </div>
 
-                                    <input value={amount}
-                                        onChange={(e) => validate_amount(Number(e.target.value))}
-                                        type="number" placeholder="0.00"
-                                        className={classNames({
-                                            "p-3 mb-8 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
-                                            "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
-                                        })} />
+                                    <div className="relative flex w-full flex-wrap items-stretch mb-8">
+                                        <input value={amount}
+                                            onChange={(e) => validate_amount(Number(e.target.value))}
+                                            type="number" placeholder="0.00"
+                                            className={classNames({
+                                                "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
+                                                "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
+                                            })} />
+                                        <span onClick={() => setAmount(`${balance}`)} role="button" className="right-0 mr-8 flex z-10 h-full leading-snug font-normal text-center text-base items-center justify-center text-slate-100 absolute bg-transparent rounded  w-8 ">
+                                            max
+                                        </span>
+                                    </div>
 
                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                         Optional: Provide the address to send funds to, else funds will be sent to your primary address

@@ -1,8 +1,8 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
-import SideBar from './components/sidebar'
+import SideBar from './widgets/sidebar'
 import { Providers } from './providers';
-import ToolBar from './components/toolbar';
+import ToolBar from './widgets/toolbar';
 import { Suspense } from 'react';
 import Loading from './loading';
 import { ToastContainer, toast } from 'react-toastify';

@@ -73,8 +73,9 @@ const archwayChainInfo: ChainInfoFull = {
 export const supportedChains: ChainInfo[] = [
     {
         logo_url: '/archway.png',
+        // TODO dynamically get vault_creation_fee from sudomod_address
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
-        sudomod_address: 'archway1unl5gda9zxr0dzcvsqs057quzku532vakprq44t8emz2edwcqcvs6z8aug',
+        sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         src: archwayChainInfo,
         usdc: {
             coinDenom: 'USDC',
