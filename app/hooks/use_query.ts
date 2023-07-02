@@ -57,6 +57,7 @@ async function fetchUnbondingInfo({
     return convertMicroDenomToDenom(total.toString(), decimals)
 }
 
+
 export const useQueryVaultMetaData = (vault_address: string) => {
     const { status, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
@@ -64,7 +65,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
-            const [native_balance, usdc_balance, unbonding_amount, staking_info] = await Promise.all([
+            const [native_balance, usdc_balance, unbonding_amount, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
                     client,
@@ -94,7 +95,10 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 }),
 
                 // Fetch staking info
-                client.queryContractSmart(vault_address, { staking_info: {} })
+                client.queryContractSmart(vault_address, { staking_info: {} }),
+
+                // Fetch all delegations info
+                client.queryContractSmart(vault_address, { all_delegations: {} })
             ]);
 
             return {
@@ -103,6 +107,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 total_staked: convertMicroDenomToDenom(staking_info['total_staked'], 18),
                 acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], 18),
                 unbonding: unbonding_amount,
+                all_delegations: all_delegations.data,
             };
         },
         { enabled: status === WalletStatusType.connected, }
@@ -132,3 +137,20 @@ export const useQueryBalance = (address: string, currency: Currency) => {
     return { balance, isLoading }
 }
 
+export const useQueryValidatorList = () => {
+    const { status } = useRecoilValue(walletState);
+    const api = "https://api.mintscan.io/v1/archway-testnet/validators";
+
+    const { data: validator_list = [], isLoading } = useQuery<any[]>(
+        ['validator_list'],
+        async () => {
+            const response = await fetch(api, {
+                method: "GET",
+            });
+            return await response.json();
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { validator_list, isLoading }
+}

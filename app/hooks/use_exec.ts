@@ -1,7 +1,7 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
-import { selectedChainState, walletState } from "../state";
+import { ValidatorInfo, selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
 import { coin } from "cosmwasm";
@@ -125,7 +125,6 @@ export const useClaimRewards = (vault_address: string) => {
     const { address, client } = useRecoilValue(walletState);
 
     return useMutation(async () => {
-        // return new Promise(resolve => setTimeout(resolve, 3000));
         return await client.execute(
             address,
             vault_address,
@@ -141,6 +140,32 @@ export const useClaimRewards = (vault_address: string) => {
         },
         onError(e) {
             toast("Error claiming rewards", { type: 'error' })
+        }
+    });
+}
+
+export const useDelegate = (vault_address: string) => {
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
+        // return new Promise(resolve => setTimeout(resolve, 3000));
+        const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
+        return await client.execute(
+            address,
+            vault_address,
+            { delegate: { validator: validator.address, amount: microAmount } },
+            'auto',
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Delegate successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            toast("Error delegating funds", { type: 'error' })
         }
     });
 }

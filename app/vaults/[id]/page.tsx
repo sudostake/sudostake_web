@@ -1,26 +1,31 @@
 'use client'
 
-import { useQueryVaultMetaData } from "@/app/hooks/use_query";
+import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
 import { db } from "@/app/services/firebase_client";
-import { WalletStatusType, selectedChainState, toolBarState, walletState } from "@/app/state";
+import { ValidatorInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { onSnapshot, doc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import StakeActionsDropdown from "./widgets/stake_actions";
 import DepositDialog from "./dialogs/deposit_dialog";
 import WithdrawDialog from "./dialogs/withdraw_dialog";
 import { useClaimRewards } from "@/app/hooks/use_exec";
+import ManageStakeActionsMenu from "./dialogs/stake_actions";
+import { IObjectMap } from "@/app/utils/generic_interface";
+import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
     const { status } = useRecoilValue(walletState);
+    const setValidatorListState = useSetRecoilState(validatorListState);
     const chainInfo = useRecoilValue(selectedChainState);
     const [vault_info, setVaultInfo] = useState<any | null>(null);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
+    const { validator_list } = useQueryValidatorList();
     const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
 
+    // Listen to vault info from firebase
     useEffect(() => {
         if (status === WalletStatusType.connected) {
             return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
@@ -32,6 +37,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         }
     }, [status, params.id]);
 
+    // Set toolbar state
     useEffect(() => {
         if (Boolean(vault_info)) {
             setToolBarState({
@@ -40,6 +46,67 @@ export default function Vault({ params }: { params: { id: string } }) {
             })
         }
     }, [vault_info, setToolBarState]);
+
+    // Update validatorListState
+    useEffect(() => {
+        const validators_without_delegations_list: ValidatorInfo[] = [];
+        const jailed_validator_list: ValidatorInfo[] = [];
+        const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {
+            /*"archwayvaloper1sk23ewl2kzfu9mfh3sdh6gpm9xkq56m7tjnl25": {
+                name: 'constantine-validator-0',
+                address: 'archwayvaloper1sk23ewl2kzfu9mfh3sdh6gpm9xkq56m7tjnl25',
+                delegated_amount: '7500'
+            }*/
+        };
+
+        // Update validators_with_delegations_map
+        if (Boolean(vault_metadata)) {
+            const validators_with_delegations_list: any[] = vault_metadata.all_delegations;
+            validators_with_delegations_list.forEach((info) => {
+                const address: string = info['validator'];
+                const amount = convertMicroDenomToDenom(info['amount']['amount'], chainInfo.src.stakeCurrency.coinDecimals)
+                validators_with_delegations_map[address] = {
+                    name: '',
+                    address,
+                    delegated_amount: `${amount}`
+                };
+            });
+        }
+
+        // Update validators_without_delegations_list and jailed_validator_list
+        // as well as the names of the validators_with_delegations
+        validator_list.forEach((info) => {
+            const operator_address = info['operator_address'];
+            const is_jailed = info['jailed'];
+            const name = info['moniker'];
+
+            if (!Boolean(validators_with_delegations_map[operator_address])) {
+                if (!is_jailed) {
+                    validators_without_delegations_list.push({
+                        name,
+                        address: operator_address,
+                        delegated_amount: '0.00'
+                    });
+                } else {
+                    jailed_validator_list.push({
+                        name,
+                        address: operator_address,
+                        delegated_amount: '0.00'
+                    });
+                }
+            } else {
+                validators_with_delegations_map[operator_address].name = name;
+            }
+        });
+
+        // setValidatorListState
+        setValidatorListState([
+            ...Object.values(validators_with_delegations_map),
+            ...validators_without_delegations_list,
+            ...jailed_validator_list
+        ]);
+
+    }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
     return (
         <div className="h-full w-full flex flex-col">
@@ -83,7 +150,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
-                    <StakeActionsDropdown />
+                    <ManageStakeActionsMenu vault_address={params.id} />
                 </span>
 
                 <span className="flex flex-row justify-between w-full">

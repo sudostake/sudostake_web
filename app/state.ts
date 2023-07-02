@@ -49,3 +49,14 @@ export const selectedChainState = atom<ChainInfo>({
     key: 'selectedChainState',
     default: supportedChains[0],
 });
+
+export type ValidatorInfo = {
+    name: string,
+    address: string,
+    delegated_amount: string
+};
+
+export const validatorListState = atom<ValidatorInfo[]>({
+    key: 'validatorListState',
+    default: [],
+});
