@@ -51,13 +51,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     useEffect(() => {
         const validators_without_delegations_list: ValidatorInfo[] = [];
         const jailed_validator_list: ValidatorInfo[] = [];
-        const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {
-            /*"archwayvaloper1sk23ewl2kzfu9mfh3sdh6gpm9xkq56m7tjnl25": {
-                name: 'constantine-validator-0',
-                address: 'archwayvaloper1sk23ewl2kzfu9mfh3sdh6gpm9xkq56m7tjnl25',
-                delegated_amount: '7500'
-            }*/
-        };
+        const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {};
 
         // Update validators_with_delegations_map
         if (Boolean(vault_metadata)) {
@@ -101,7 +95,8 @@ export default function Vault({ params }: { params: { id: string } }) {
 
         // setValidatorListState
         setValidatorListState([
-            ...Object.values(validators_with_delegations_map),
+            // sort this from largest to smallest
+            ...Object.values(validators_with_delegations_map).sort((a, b) => Number(b.delegated_amount) - Number(a.delegated_amount)),
             ...validators_without_delegations_list,
             ...jailed_validator_list
         ]);
@@ -119,7 +114,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     <span className="flex flex-col">
                         <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                         <span>
-                            {vault_metadata && vault_metadata.native_balance}
+                            {vault_metadata && Number(vault_metadata.native_balance).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
@@ -133,7 +128,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     <span className="flex flex-col">
                         <span>{chainInfo.usdc.coinDenom}</span>
                         <span>
-                            {vault_metadata && vault_metadata.usdc_balance}
+                            {vault_metadata && Number(vault_metadata.usdc_balance).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
@@ -146,7 +141,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
                         <span>Delegated</span>
-                        <span>{vault_metadata && vault_metadata.total_staked}
+                        <span>{vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
@@ -156,7 +151,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
                         <span>Rewards</span>
-                        <span>{vault_metadata && vault_metadata.acc_rewards}
+                        <span>{vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
@@ -185,7 +180,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
                         <span>Unbonding</span>
-                        <span> {vault_metadata && vault_metadata.unbonding}
+                        <span> {vault_metadata && Number(vault_metadata.unbonding).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">

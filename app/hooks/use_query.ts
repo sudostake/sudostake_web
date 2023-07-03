@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { WalletStatusType, selectedChainState, walletState } from "../state";
+import { ValidatorInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom } from "../utils/conversion";
@@ -153,4 +153,44 @@ export const useQueryValidatorList = () => {
     )
 
     return { validator_list, isLoading }
+}
+
+export const useQueryRedelegationList = (vault_address: string) => {
+    const { status } = useRecoilValue(walletState);
+    const api = [
+        'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
+        vault_address,
+        '/redelegations'
+    ].join('');
+
+    const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
+        ['redelegation_list', vault_address],
+        async () => {
+            const response = await fetch(api, {
+                method: "GET",
+            });
+            return (await response.json())['redelegation_responses'];
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { redelegation_list, isLoading }
+}
+
+export const useQueryValidators = (hide_zero_balance?: boolean) => {
+    const { status } = useRecoilValue(walletState);
+    const validators = useRecoilValue(validatorListState);
+
+    const { data: validator_list = [] } = useQuery<ValidatorInfo[]>(
+        ['validators_merged_list', `${Boolean(hide_zero_balance)}`],
+        () => {
+            if (Boolean(hide_zero_balance)) {
+                return validators.filter(v => Number(v.delegated_amount) > 0.0099)
+            }
+            return validators;
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { validator_list }
 }

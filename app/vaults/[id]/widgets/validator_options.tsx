@@ -4,15 +4,17 @@ import { FaChevronDown, FaUserShield } from 'react-icons/fa'
 import classNames from 'classnames'
 import { ValidatorInfo, validatorListState } from '@/app/state'
 import { useRecoilValue } from 'recoil'
+import { useQueryValidators } from '@/app/hooks/use_query'
 
 type ValidatorOptionsProps = {
+    hide_zero_balance?: boolean,
     onValidatorSelected: (val: ValidatorInfo) => void
 }
 
-export default function ValidatorOptions({ onValidatorSelected }: ValidatorOptionsProps) {
+export default function ValidatorOptions({ onValidatorSelected, hide_zero_balance }: ValidatorOptionsProps) {
     const [selected, setSelected] = useState<ValidatorInfo>(null)
     const [query, setQuery] = useState('')
-    const validators = useRecoilValue(validatorListState)
+    const { validator_list: validators } = useQueryValidators(hide_zero_balance);
 
     const filteredValidators =
         query === ''
@@ -28,24 +30,26 @@ export default function ValidatorOptions({ onValidatorSelected }: ValidatorOptio
         <Combobox value={selected}
             onChange={(val) => { setSelected(val); onValidatorSelected(val); }}>
             <div className="relative mt-1">
-                <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                <div className="relative w-full cursor-default overflow-hidden rounded-md text-left">
                     <Combobox.Input
                         className={classNames({
-                            "font-medium py-3 pl-10 pr-4 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
-                            "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
+                            "py-3 pl-10 pr-4 w-full  border-2 border-current rounded ": true,
+                            " text-xs lg:text-sm w-full": true,
+                            "placeholder-slate-500 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                         })}
+                        placeholder='Type or select a validator name'
                         displayValue={(validator?: ValidatorInfo) => validator && validator.name}
                         onChange={(event) => setQuery(event.target.value)}
                     />
-                    <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <Combobox.Button className="rounded absolute inset-y-0 right-0 flex items-center pr-3">
                         <FaChevronDown
-                            className="h-5 w-5 text-gray-400"
+                            className="h-4 w-4 text-gray-400"
                             aria-hidden="true"
                         />
                     </Combobox.Button>
                     <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
                         <FaUserShield
-                            className="h-5 w-5 text-gray-400"
+                            className="h-4 w-4 text-gray-400"
                             aria-hidden="true"
                         />
                     </span>
@@ -79,13 +83,13 @@ export default function ValidatorOptions({ onValidatorSelected }: ValidatorOptio
                                             />
                                         </span>
 
-                                        <span className={`block truncate ${selected ? 'font-medium' : 'font-normal'} ${active || selected ? 'text-teal-600' : 'text-gray-400'}`}>
+                                        <span className={`block truncate mr-36 text-xs lg:text-base ${selected ? 'font-medium' : 'font-normal'} ${active || selected ? 'text-teal-600' : 'text-gray-400'}`}>
                                             {validator.name}
                                         </span>
 
                                         <span
-                                            className={`absolute inset-y-0 right-0 flex items-center pr-3 ${active || selected ? 'text-teal-600' : 'text-gray-400'}`}>
-                                            {validator.delegated_amount}
+                                            className={`text-xs lg:text-base absolute inset-y-0 right-0 flex items-center pr-3 ${active || selected ? 'text-teal-600' : 'text-gray-400'}`}>
+                                            {Number(validator.delegated_amount).toFixed(2)}
                                         </span>
                                     </span>
                                 )}

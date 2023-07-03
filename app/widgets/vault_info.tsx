@@ -21,28 +21,28 @@ export default function VaultInfo(props: any) {
             <span className="flex items-center">
                 <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.native_balance}
+                    {vault_metadata && Number(vault_metadata.native_balance).toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>{chainInfo.usdc.coinDenom}</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.usdc_balance}
+                    {vault_metadata && Number(vault_metadata.usdc_balance).toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Delegated</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.total_staked}
+                    {vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Staking Rewards</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.acc_rewards}
+                    {vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>

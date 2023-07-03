@@ -20,6 +20,9 @@ export default function DelegateDialog({ vault_address, currency }: DelegateDial
     const { balance } = useQueryBalance(vault_address, currency);
     const { mutate: delegate, isLoading, isSuccess } = useDelegate(vault_address);
 
+    // Check when the continue button should be active
+    const can_continue = Number(amount) > 0 && Boolean(selected_validator);
+
     // Close modal when the withdrawal is done
     useEffect(() => {
         if (isSuccess) {
@@ -78,7 +81,7 @@ export default function DelegateDialog({ vault_address, currency }: DelegateDial
                                     </Dialog.Title>
 
                                     <div className="mt-8 flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
-                                        Select a validator
+                                        Choose Validator
                                     </div>
 
                                     <ValidatorOptions onValidatorSelected={setSelectedValidator} />
@@ -95,14 +98,14 @@ export default function DelegateDialog({ vault_address, currency }: DelegateDial
                                                 "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
                                                 "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                                             })} />
-                                        <span onClick={() => setAmount(`${balance}`)} role="button" className="right-0 mr-8 flex h-full leading-snug font-normal text-center text-base items-center justify-center text-slate-100 absolute bg-transparent rounded  w-8 ">
+                                        <span onClick={() => setAmount(`${balance}`)} role="button" className="right-0 mr-2 lg:mr-8 flex h-full leading-snug font-normal text-center text-xs lg:text-base items-center justify-center text-slate-100 absolute bg-transparent rounded  w-8 ">
                                             max
                                         </span>
                                     </div>
 
                                     <div className="flex mt-20 w-full justify-end">
                                         <button
-                                            disabled={Number(amount) == 0 && Boolean(selected_validator)}
+                                            disabled={!can_continue}
                                             type="button"
                                             onClick={() => { delegate({ amount: Number(amount), currency, validator: selected_validator }) }}
                                             className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">

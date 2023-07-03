@@ -165,7 +165,36 @@ export const useDelegate = (vault_address: string) => {
             return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
         },
         onError(e) {
+            console.log(e);
             toast("Error delegating funds", { type: 'error' })
+        }
+    });
+}
+
+export const useRedelegate = (vault_address: string) => {
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, currency, from_validator, to_validator }:
+        { amount: number, currency: Currency, from_validator: ValidatorInfo, to_validator: ValidatorInfo }) => {
+        // return new Promise(resolve => setTimeout(resolve, 3000));
+        const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
+        return await client.execute(
+            address,
+            vault_address,
+            { redelegate: { src_validator: from_validator.address, dst_validator: to_validator.address, amount: microAmount } },
+            'auto',
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Redelegate successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error redelegating funds", { type: 'error' })
         }
     });
 }

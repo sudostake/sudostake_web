@@ -6,7 +6,7 @@ export function convertMicroDenomToDenom(
 ): number | string {
   if (decimals === 0) return Number(value)
 
-  return protectAgainstNaN(Number(value) / Math.pow(10, decimals)).toFixed(2)
+  return protectAgainstNaN(Number(value) / Math.pow(10, decimals))
 }
 
 export function convertDenomToMicroDenom(
