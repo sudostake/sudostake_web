@@ -8,7 +8,7 @@ import { onSnapshot, doc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import DepositDialog from "./dialogs/deposit_dialog";
+import DepositDialog from "./dialogs/deposit";
 import WithdrawDialog from "./dialogs/withdraw_dialog";
 import { useClaimRewards } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./dialogs/stake_actions";

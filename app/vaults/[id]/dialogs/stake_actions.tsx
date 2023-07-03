@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import { FaChevronDown } from 'react-icons/fa';
-import DelegateDialog from './delegate_dialog';
+import DelegateDialog from './delegate';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
-import RedelegateDialog from './redelegate_dialog';
+import RedelegateDialog from './redelegate';
+import UndelegateDialog from './undelegate';
 
 type ManageStakeActionsMenuProps = {
     vault_address: string,
@@ -39,9 +40,7 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
                 </div>
 
                 <div className="px-1 py-1">
-                    <button className='group flex w-full items-center rounded-md px-2 py-2 text-sm'>
-                        Undelegate
-                    </button>
+                    <UndelegateDialog vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
                 </div>
             </div>
         </div>

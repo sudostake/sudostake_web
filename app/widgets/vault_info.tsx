@@ -49,7 +49,7 @@ export default function VaultInfo(props: any) {
             <span className="flex items-center">
                 <span>Unbonding</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.unbonding}
+                    {vault_metadata && Number(vault_metadata.unbonding).toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>

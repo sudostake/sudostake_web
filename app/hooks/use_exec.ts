@@ -149,7 +149,6 @@ export const useDelegate = (vault_address: string) => {
     const queryClient = useQueryClient();
 
     return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
-        // return new Promise(resolve => setTimeout(resolve, 3000));
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
         return await client.execute(
             address,
@@ -167,6 +166,33 @@ export const useDelegate = (vault_address: string) => {
         onError(e) {
             console.log(e);
             toast("Error delegating funds", { type: 'error' })
+        }
+    });
+}
+
+export const useUndelegate = (vault_address: string) => {
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
+        // return new Promise(resolve => setTimeout(resolve, 3000));
+        const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
+        return await client.execute(
+            address,
+            vault_address,
+            { undelegate: { validator: validator.address, amount: microAmount } },
+            'auto',
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Undelegate successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error undelegating funds", { type: 'error' })
         }
     });
 }

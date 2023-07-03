@@ -59,6 +59,13 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
         }
     }
 
+    // Handle when the modal is closed
+    function handle_modal_closed() {
+        setIsOpen(false);
+        setAmount('');
+        setSelectedFromError(false);
+    }
+
     return (
         <>
             <button onClick={() => setIsOpen(true)} className='group flex w-full items-center rounded-md px-2 py-2 text-sm'>
@@ -66,7 +73,7 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => { setIsOpen(false); setAmount(''); }}>
+                <Dialog as="div" className="relative z-10" onClose={handle_modal_closed}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"

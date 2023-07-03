@@ -23,6 +23,8 @@ async function fetchTokenBalance({
     return convertMicroDenomToDenom(amount, decimals)
 }
 
+// TODO
+// Refactor this into a query
 async function fetchUnbondingInfo({
     vault_address,
     token: { decimals }
@@ -44,12 +46,12 @@ async function fetchUnbondingInfo({
 
     // Calculate total unbonding amount
     // Note! this API may change as it is controlled by a third party
-    let total = new BigNumber(0);
+    let total = BigNumber(0);
     let unbonding_responses: any[] = data['unbonding_responses'];
     unbonding_responses.forEach((res) => {
         let entries: any[] = res['entries'];
         entries.forEach((entry) => {
-            let amount = new BigNumber(entry['balance'])
+            let amount = BigNumber(entry['balance'])
             total = total.plus(amount);
         })
     });
@@ -90,7 +92,6 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 fetchUnbondingInfo({
                     vault_address, token: {
                         decimals: 18,
-
                     },
                 }),
 
@@ -177,12 +178,12 @@ export const useQueryRedelegationList = (vault_address: string) => {
     return { redelegation_list, isLoading }
 }
 
-export const useQueryValidators = (hide_zero_balance?: boolean) => {
+export const useFilteredValidators = (hide_zero_balance?: boolean) => {
     const { status } = useRecoilValue(walletState);
     const validators = useRecoilValue(validatorListState);
 
     const { data: validator_list = [] } = useQuery<ValidatorInfo[]>(
-        ['validators_merged_list', `${Boolean(hide_zero_balance)}`],
+        ['filtered_validators', `${Boolean(hide_zero_balance)}`],
         () => {
             if (Boolean(hide_zero_balance)) {
                 return validators.filter(v => Number(v.delegated_amount) > 0.0099)

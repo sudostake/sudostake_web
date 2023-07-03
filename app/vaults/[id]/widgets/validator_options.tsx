@@ -4,7 +4,7 @@ import { FaChevronDown, FaUserShield } from 'react-icons/fa'
 import classNames from 'classnames'
 import { ValidatorInfo, validatorListState } from '@/app/state'
 import { useRecoilValue } from 'recoil'
-import { useQueryValidators } from '@/app/hooks/use_query'
+import { useFilteredValidators } from '@/app/hooks/use_query'
 
 type ValidatorOptionsProps = {
     hide_zero_balance?: boolean,
@@ -14,7 +14,7 @@ type ValidatorOptionsProps = {
 export default function ValidatorOptions({ onValidatorSelected, hide_zero_balance }: ValidatorOptionsProps) {
     const [selected, setSelected] = useState<ValidatorInfo>(null)
     const [query, setQuery] = useState('')
-    const { validator_list: validators } = useQueryValidators(hide_zero_balance);
+    const { validator_list: validators } = useFilteredValidators(hide_zero_balance);
 
     const filteredValidators =
         query === ''
