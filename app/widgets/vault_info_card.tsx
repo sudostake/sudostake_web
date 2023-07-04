@@ -5,7 +5,7 @@ import TransferVaultDialog from "./transfer_vault_dialog";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 
-export default function VaultInfo(props: any) {
+export default function VaultInfoCard(props: any) {
     const { vault_metadata } = useQueryVaultMetaData(props.vault.id);
     const router = useRouter();
     const chainInfo = useRecoilValue(selectedChainState);
@@ -49,7 +49,7 @@ export default function VaultInfo(props: any) {
             <span className="flex items-center">
                 <span>Unbonding</span>
                 <span className="ml-auto">
-                    {vault_metadata && Number(vault_metadata.unbonding).toFixed(2)}
+                    {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                 </span>
             </span>

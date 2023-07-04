@@ -56,7 +56,25 @@ export type ValidatorInfo = {
     delegated_amount: string
 };
 
-export const validatorListState = atom<ValidatorInfo[]>({
+type UnbondingEntry = {
+    amount: number,
+    completion_time: string
+}
+
+export type ValidatorUnbondingInfo = {
+    name: string,
+    address: string,
+    entries: UnbondingEntry[]
+};
+
+export const validatorListState = atom<{
+    validator_list: ValidatorInfo[],
+    validator_unbonding_list: ValidatorUnbondingInfo[]
+
+}>({
     key: 'validatorListState',
-    default: [],
+    default: {
+        validator_list: [],
+        validator_unbonding_list: []
+    },
 });

@@ -6,9 +6,9 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
 import { FaPlus, FaSpinner } from "react-icons/fa";
-import VaultInfo from "./widgets/vault_info";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
+import VaultInfoCard from "./widgets/vault_info_card";
 
 export default function Home() {
   const [vaults, setVaults] = useState<any[]>([]);
@@ -55,7 +55,7 @@ export default function Home() {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {vaults.map((vault, index) => {
           return (
-            <VaultInfo key={index} vault={vault} />
+            <VaultInfoCard key={index} vault={vault} />
           );
         })}
       </div>

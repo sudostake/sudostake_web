@@ -2,8 +2,7 @@ import { useState } from 'react'
 import { Combobox } from '@headlessui/react'
 import { FaChevronDown, FaUserShield } from 'react-icons/fa'
 import classNames from 'classnames'
-import { ValidatorInfo, validatorListState } from '@/app/state'
-import { useRecoilValue } from 'recoil'
+import { ValidatorInfo } from '@/app/state'
 import { useFilteredValidators } from '@/app/hooks/use_query'
 
 type ValidatorOptionsProps = {
@@ -14,7 +13,7 @@ type ValidatorOptionsProps = {
 export default function ValidatorOptions({ onValidatorSelected, hide_zero_balance }: ValidatorOptionsProps) {
     const [selected, setSelected] = useState<ValidatorInfo>(null)
     const [query, setQuery] = useState('')
-    const { validator_list: validators } = useFilteredValidators(hide_zero_balance);
+    const { filtered_list: validators } = useFilteredValidators(hide_zero_balance);
 
     const filteredValidators =
         query === ''
@@ -61,9 +60,9 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
                     "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
                     "max-h-48 overflow-auto": true
                 })}>
-                    {filteredValidators.length === 0 && query !== '' ? (
-                        <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                            Nothing found.
+                    {filteredValidators.length === 0 ? (
+                        <div className="relative cursor-default select-none py-2 px-4 text-rose-500 text-xs lg:text-sm">
+                            No validators with delegations
                         </div>
                     ) : (
                         filteredValidators.map((validator) => (

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { ValidatorInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
+import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom } from "../utils/conversion";
@@ -23,8 +23,6 @@ async function fetchTokenBalance({
     return convertMicroDenomToDenom(amount, decimals)
 }
 
-// TODO
-// Refactor this into a query
 async function fetchUnbondingInfo({
     vault_address,
     token: { decimals }
@@ -33,7 +31,10 @@ async function fetchUnbondingInfo({
     token: {
         decimals: number
     }
-}) {
+}): Promise<{
+    total_unbonding_amount: number,
+    unbonding_list: ValidatorUnbondingInfo[]
+}> {
     const api = [
         'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
         vault_address,
@@ -42,21 +43,74 @@ async function fetchUnbondingInfo({
     const response = await fetch(api, {
         method: "GET",
     });
-    const data = await response.json();
 
     // Calculate total unbonding amount
     // Note! this API may change as it is controlled by a third party
     let total = BigNumber(0);
-    let unbonding_responses: any[] = data['unbonding_responses'];
-    unbonding_responses.forEach((res) => {
-        let entries: any[] = res['entries'];
-        entries.forEach((entry) => {
-            let amount = BigNumber(entry['balance'])
-            total = total.plus(amount);
+    let unbonding_responses: any[] = (await response.json())['unbonding_responses'];
+    let unbonding_list = unbonding_responses.map((res) => {
+        let unbonding_info: ValidatorUnbondingInfo = {
+            name: '',
+            address: res['validator_address'],
+            entries: []
+        };
+
+        // Update unbonding_info.entries and total
+        Array.from<any[]>(res['entries']).forEach((entry) => {
+            total = total.plus(BigNumber(entry['balance']));
+            unbonding_info.entries.push({
+                amount: convertMicroDenomToDenom(entry['balance'], decimals),
+                completion_time: new Date(entry['completion_time']).toLocaleString()
+            });
         })
+
+        return unbonding_info;
     });
 
-    return convertMicroDenomToDenom(total.toString(), decimals)
+    return {
+        total_unbonding_amount: convertMicroDenomToDenom(total.toString(), decimals),
+        unbonding_list
+    }
+}
+
+export const useQueryRedelegationList = (vault_address: string) => {
+    const { status } = useRecoilValue(walletState);
+    const api = [
+        'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
+        vault_address,
+        '/redelegations'
+    ].join('');
+
+    const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
+        ['redelegation_list', vault_address],
+        async () => {
+            const response = await fetch(api, {
+                method: "GET",
+            });
+            return (await response.json())['redelegation_responses'];
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { redelegation_list, isLoading }
+}
+
+export const useQueryValidatorList = () => {
+    const { status } = useRecoilValue(walletState);
+    const api = "https://api.mintscan.io/v1/archway-testnet/validators";
+
+    const { data: validator_list = [], isLoading } = useQuery<any[]>(
+        ['validator_list'],
+        async () => {
+            const response = await fetch(api, {
+                method: "GET",
+            });
+            return await response.json();
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { validator_list, isLoading }
 }
 
 
@@ -67,7 +121,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
-            const [native_balance, usdc_balance, unbonding_amount, staking_info, all_delegations] = await Promise.all([
+            const [native_balance, usdc_balance, unbonding_details, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
                     client,
@@ -107,8 +161,8 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 usdc_balance: usdc_balance,
                 total_staked: convertMicroDenomToDenom(staking_info['total_staked'], 18),
                 acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], 18),
-                unbonding: unbonding_amount,
-                all_delegations: all_delegations.data,
+                unbonding_details,
+                all_delegations: Array.from<any>(all_delegations.data),
             };
         },
         { enabled: status === WalletStatusType.connected, }
@@ -138,60 +192,20 @@ export const useQueryBalance = (address: string, currency: Currency) => {
     return { balance, isLoading }
 }
 
-export const useQueryValidatorList = () => {
-    const { status } = useRecoilValue(walletState);
-    const api = "https://api.mintscan.io/v1/archway-testnet/validators";
-
-    const { data: validator_list = [], isLoading } = useQuery<any[]>(
-        ['validator_list'],
-        async () => {
-            const response = await fetch(api, {
-                method: "GET",
-            });
-            return await response.json();
-        },
-        { enabled: status === WalletStatusType.connected, }
-    )
-
-    return { validator_list, isLoading }
-}
-
-export const useQueryRedelegationList = (vault_address: string) => {
-    const { status } = useRecoilValue(walletState);
-    const api = [
-        'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
-        vault_address,
-        '/redelegations'
-    ].join('');
-
-    const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
-        ['redelegation_list', vault_address],
-        async () => {
-            const response = await fetch(api, {
-                method: "GET",
-            });
-            return (await response.json())['redelegation_responses'];
-        },
-        { enabled: status === WalletStatusType.connected, }
-    )
-
-    return { redelegation_list, isLoading }
-}
-
 export const useFilteredValidators = (hide_zero_balance?: boolean) => {
     const { status } = useRecoilValue(walletState);
-    const validators = useRecoilValue(validatorListState);
+    const { validator_list } = useRecoilValue(validatorListState);
 
-    const { data: validator_list = [] } = useQuery<ValidatorInfo[]>(
+    const { data: filtered_list = [] } = useQuery<ValidatorInfo[]>(
         ['filtered_validators', `${Boolean(hide_zero_balance)}`],
         () => {
             if (Boolean(hide_zero_balance)) {
-                return validators.filter(v => Number(v.delegated_amount) > 0.0099)
+                return validator_list.filter(v => Number(v.delegated_amount) > 0.0099)
             }
-            return validators;
+            return validator_list;
         },
         { enabled: status === WalletStatusType.connected, }
     )
 
-    return { validator_list }
+    return { filtered_list }
 }

@@ -2,18 +2,19 @@
 
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
 import { db } from "@/app/services/firebase_client";
-import { ValidatorInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
+import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { onSnapshot, doc } from "firebase/firestore";
 import { useEffect, useState } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import DepositDialog from "./dialogs/deposit";
-import WithdrawDialog from "./dialogs/withdraw_dialog";
+import WithdrawDialog from "./dialogs/withdraw";
 import { useClaimRewards } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./dialogs/stake_actions";
 import { IObjectMap } from "@/app/utils/generic_interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
+import UnbondingInfoDialog from "./dialogs/undelegations_info";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
@@ -52,11 +53,11 @@ export default function Vault({ params }: { params: { id: string } }) {
         const validators_without_delegations_list: ValidatorInfo[] = [];
         const jailed_validator_list: ValidatorInfo[] = [];
         const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {};
+        const validators_with_unbondings_map: IObjectMap<ValidatorUnbondingInfo> = {};
 
-        // Update validators_with_delegations_map
         if (Boolean(vault_metadata)) {
-            const validators_with_delegations_list: any[] = vault_metadata.all_delegations;
-            validators_with_delegations_list.forEach((info) => {
+            // Update validators_with_delegations_map
+            vault_metadata.all_delegations.forEach((info) => {
                 const address: string = info['validator'];
                 const amount = convertMicroDenomToDenom(info['amount']['amount'], chainInfo.src.stakeCurrency.coinDecimals)
                 validators_with_delegations_map[address] = {
@@ -65,41 +66,55 @@ export default function Vault({ params }: { params: { id: string } }) {
                     delegated_amount: `${amount}`
                 };
             });
+
+            // Update validators_with_unbondings_map
+            vault_metadata.unbonding_details.unbonding_list.forEach((info) => {
+                validators_with_unbondings_map[info.address] = { ...info }
+            })
         }
 
-        // Update validators_without_delegations_list and jailed_validator_list
-        // as well as the names of the validators_with_delegations
+        // Update validators_without_delegations_list, 
+        // jailed_validator_list and validators_with_delegations
         validator_list.forEach((info) => {
-            const operator_address = info['operator_address'];
+            const address = info['operator_address'];
             const is_jailed = info['jailed'];
             const name = info['moniker'];
 
-            if (!Boolean(validators_with_delegations_map[operator_address])) {
+            // Update the names on validators_with_unbondings_map
+            if (Boolean(validators_with_unbondings_map[address])) {
+                validators_with_unbondings_map[address].name = name;
+            }
+
+            // Update validator list groups
+            if (!Boolean(validators_with_delegations_map[address])) {
                 if (!is_jailed) {
                     validators_without_delegations_list.push({
                         name,
-                        address: operator_address,
+                        address,
                         delegated_amount: '0.00'
                     });
                 } else {
                     jailed_validator_list.push({
                         name,
-                        address: operator_address,
+                        address,
                         delegated_amount: '0.00'
                     });
                 }
             } else {
-                validators_with_delegations_map[operator_address].name = name;
+                // Update the names on validators_with_delegations_map
+                validators_with_delegations_map[address].name = name;
             }
         });
 
         // setValidatorListState
-        setValidatorListState([
-            // sort this from largest to smallest
-            ...Object.values(validators_with_delegations_map).sort((a, b) => Number(b.delegated_amount) - Number(a.delegated_amount)),
-            ...validators_without_delegations_list,
-            ...jailed_validator_list
-        ]);
+        setValidatorListState({
+            validator_unbonding_list: Object.values(validators_with_unbondings_map),
+            validator_list: [
+                ...Object.values(validators_with_delegations_map).sort((a, b) => Number(b.delegated_amount) - Number(a.delegated_amount)),
+                ...validators_without_delegations_list,
+                ...jailed_validator_list
+            ],
+        });
 
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
@@ -180,15 +195,11 @@ export default function Vault({ params }: { params: { id: string } }) {
                 <span className="flex flex-row justify-between w-full">
                     <span className="flex flex-col">
                         <span>Unbonding</span>
-                        <span> {vault_metadata && Number(vault_metadata.unbonding).toFixed(2)}
+                        <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                     </span>
                     <span className="flex flex-row py-2">
-                        <button type="button"
-                            disabled={vault_metadata && Number(vault_metadata.unbonding) <= 0}
-                            className="w-24 items-center border border-current rounded text-xs lg:text-sm lg:font-medium">
-                            Info
-                        </button>
+                        <UnbondingInfoDialog />
                     </span>
                 </span>
             </div>
