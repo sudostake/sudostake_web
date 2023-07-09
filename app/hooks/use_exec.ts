@@ -1,4 +1,3 @@
-import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue } from "recoil";
 import { ValidatorInfo, selectedChainState, walletState } from "../state";
@@ -8,12 +7,11 @@ import { coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
 
-export const indexVault = async (client: SigningCosmWasmClient, vault_address: string) => {
+export const indexVault = async (rpc: string, vault_address: string) => {
     // TODO we also pass in the action description for historic purposes
-    const vault_info = await client.queryContractSmart(vault_address, { info: {} });
     const response = await fetch("/api", {
         method: "POST",
-        body: JSON.stringify({ vault_info, vault_address }),
+        body: JSON.stringify({ rpc, vault_address }),
     });
 
     return await response.json();
@@ -36,7 +34,7 @@ export const useCreateVault = () => {
         );
 
         const vault_address = exec_res.events[18].attributes[0].value;
-        return await indexVault(client, vault_address);
+        return await indexVault(chainInfo.src.rpc, vault_address);
     }, {
         onSuccess(res) {
             toast("New vault created!", { type: 'success' })
@@ -49,6 +47,7 @@ export const useCreateVault = () => {
 
 export const useTransferVaultOwnership = (vault: any) => {
     const { address, client } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
     return useMutation(async (to_address: string) => {
         await client.execute(
@@ -59,7 +58,7 @@ export const useTransferVaultOwnership = (vault: any) => {
             ''
         );
 
-        return await indexVault(client, vault.id);
+        return await indexVault(chainInfo.src.rpc, vault.id);
     }, {
         onSuccess(res) {
             toast(`Vault #${vault.config.index_number} transferred successfully`, { type: 'success' })

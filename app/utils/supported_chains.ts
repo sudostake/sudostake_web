@@ -26,9 +26,13 @@ export type ChainInfoFull = {
     },
     currencies: [Currency],
     feeCurrencies: [Currency],
-    coinType: number,
     features: ['cosmwasm', 'ibc-transfer', 'ibc-go'],
-    walletUrlForStaking: string,
+    chainSymbolImageUrl: string,
+    nodeProvider: {
+        name: string,
+        email: string,
+        website: string,
+    }
 };
 
 export type ChainInfo = {
@@ -40,34 +44,52 @@ export type ChainInfo = {
 };
 
 // Describe Archway chain info
-const archwayCurrency: Currency = {
-    coinDenom: 'CONST',
-    coinMinimalDenom: 'aconst',
-    coinDecimals: 18,
-    coinGeckoId: 'constantine-network',
-};
 const archwayChainInfo: ChainInfoFull = {
-    chainId: 'constantine-3',
-    chainName: 'Constantine',
-    rpc: 'https://rpc.constantine.archway.tech',
-    rest: 'https://api.constantine.archway.tech',
-    stakeCurrency: archwayCurrency,
-    bip44: {
-        coinType: 118,
+    "bech32Config": {
+        "bech32PrefixAccAddr": "archway",
+        "bech32PrefixAccPub": "archwaypub",
+        "bech32PrefixConsAddr": "archwayvalcons",
+        "bech32PrefixConsPub": "archwayvalconspub",
+        "bech32PrefixValAddr": "archwayvaloper",
+        "bech32PrefixValPub": "archwayvaloperpub"
     },
-    bech32Config: {
-        bech32PrefixAccAddr: 'archway',
-        bech32PrefixAccPub: 'archwaypub',
-        bech32PrefixValAddr: 'archwayvaloper',
-        bech32PrefixValPub: 'archwayvaloperpub',
-        bech32PrefixConsAddr: 'archwayvalcons',
-        bech32PrefixConsPub: 'archwayvalconspub',
+    "bip44": {
+        "coinType": 118
     },
-    currencies: [archwayCurrency],
-    feeCurrencies: [archwayCurrency],
-    coinType: 118,
-    features: ['cosmwasm', 'ibc-transfer', 'ibc-go'],
-    walletUrlForStaking: '',
+    "chainId": "constantine-3",
+    "chainName": "Archway (Testnet)",
+    "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/constantine/chain.png",
+    "currencies": [
+        {
+            "coinDecimals": 18,
+            "coinDenom": "CONST",
+            "coinGeckoId": "constantine-network",
+            "coinMinimalDenom": "aconst"
+        }
+    ],
+    "features": ['cosmwasm', 'ibc-transfer', 'ibc-go'],
+    "feeCurrencies": [
+        {
+            "coinDecimals": 18,
+            "coinDenom": "CONST",
+            "coinGeckoId": "constantine-network",
+            "coinMinimalDenom": "aconst",
+
+        }
+    ],
+    "rest": "https://api.constantine.archway.tech",
+    "rpc": "https://rpc.constantine.archway.tech",
+    "stakeCurrency": {
+        "coinDecimals": 18,
+        "coinDenom": "CONST",
+        "coinGeckoId": "constantine-network",
+        "coinMinimalDenom": "aconst"
+    },
+    "nodeProvider": {
+        "name": "Phi Labs",
+        "email": "support@philabs.xyz",
+        "website": "https://philabs.xyz"
+    }
 };
 
 export const supportedChains: ChainInfo[] = [
@@ -85,4 +107,3 @@ export const supportedChains: ChainInfo[] = [
         }
     }
 ];
-

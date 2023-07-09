@@ -1,8 +1,5 @@
 import * as admin from 'firebase-admin';
-
-interface IObjectMap<T> {
-    [key: string]: T;
-}
+import { IObjectMap } from '../utils/generic_interface';
 
 const serviceAccount = JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string
