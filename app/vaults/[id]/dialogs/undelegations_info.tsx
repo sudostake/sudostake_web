@@ -9,13 +9,12 @@ export default function UnbondingInfoDialog() {
     const [isOpen, setIsOpen] = useState(false);
     const { validator_unbonding_list } = useRecoilValue(validatorListState);
 
-
     return (
         <>
             <button type="button"
                 onClick={() => setIsOpen(true)}
-                disabled={!Boolean(validator_unbonding_list)}
-                className="w-24 items-center border border-current rounded text-xs lg:text-sm lg:font-medium">
+                disabled={validator_unbonding_list.length === 0}
+                className="w-24 items-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
                 Info
             </button>
 
@@ -50,7 +49,7 @@ export default function UnbondingInfoDialog() {
                                 })}>
                                     <Dialog.Title
                                         as="h2"
-                                        className="flex items-center text-base lg:text-lg font-bold leading-6 text-gray-300">
+                                        className="flex items-center text-base lg:text-base font-bold leading-6 text-gray-300">
                                         <span>
                                             Unbonding Details
                                         </span>

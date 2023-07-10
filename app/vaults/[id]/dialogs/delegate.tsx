@@ -48,7 +48,7 @@ export default function DelegateDialog({ vault_address, currency }: DelegateDial
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className='group flex w-full items-center rounded-md px-2 py-2 text-sm'>
+            <button onClick={() => setIsOpen(true)} className='group flex w-full items-center p-2 text-xs lg:text-sm'>
                 Delegate
             </button>
 

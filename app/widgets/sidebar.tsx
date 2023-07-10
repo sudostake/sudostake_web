@@ -85,7 +85,7 @@ export default function SideBar() {
                                     "border border-transparent": nav_item.href !== pathname
                                 })}>
                                     {nav_item.icon}
-                                    <span className="ml-2 text-sm lg:text-lg font-medium">{nav_item.label}</span>
+                                    <span className="ml-2 text-sm lg:text-base font-medium">{nav_item.label}</span>
                                     {nav_item.target && <span className="ml-auto"><FaLink className="w-4 h-4 mr-3" /></span>}
                                 </li>
                             </Link>

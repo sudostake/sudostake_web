@@ -55,8 +55,8 @@ export default function VaultInfoCard(props: any) {
             </span>
 
             <span className="grid gap-4 grid-cols-2">
-                <button onClick={() => { router.push(`/vaults/${props.vault['id']}`) }} className="flex items-center justify-center mt-4 border border-current rounded p-2">
-                    view
+                <button onClick={() => { router.push(`/vaults/${props.vault['id']}`) }} className="flex items-center justify-center  mt-4 border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                    View
                 </button>
                 <TransferVaultDialog key={props.vault.id} vault={props.vault} />
             </span>

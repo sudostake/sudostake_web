@@ -5,7 +5,7 @@ import { WalletStatusType, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
-import { FaPlus, FaSpinner } from "react-icons/fa";
+import { FaPlusSquare, FaSpinner } from "react-icons/fa";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
@@ -35,8 +35,8 @@ export default function Home() {
   }, [address, status]);
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-lg py-4 px-4 lg:px-8">
-      <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded p-2">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-4 lg:px-8">
+      <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded hover:ring-2 hover:ring-offset-2 p-2 text-xs lg:text-sm lg:font-medium">
         {
           isLoading && <>
             <FaSpinner className="w-6 h-6 mr-3 spinner" />
@@ -46,7 +46,7 @@ export default function Home() {
 
         {
           !isLoading && <>
-            <FaPlus className="w-5 h-5 mr-3" />
+            <FaPlusSquare className="w-5 h-5 mr-3" />
             <span>Create Vault</span>
           </>
         }

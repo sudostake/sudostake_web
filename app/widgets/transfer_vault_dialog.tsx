@@ -19,8 +19,8 @@ export default function TransferVaultDialog(props: any) {
 
     return (
         <>
-            <button type="button" onClick={openModal} className="flex items-center  justify-center  mt-4 border border-current rounded p-2">
-                transfer
+            <button type="button" onClick={openModal} className="flex items-center justify-center  mt-4 border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                Transfer
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
@@ -59,7 +59,7 @@ export default function TransferVaultDialog(props: any) {
                                     </Dialog.Title>
 
                                     <div className="mt-2 mb-8">
-                                        <p className="text-xs lg:text-lg text-gray-300">
+                                        <p className="text-xs lg:text-base text-gray-300">
                                             Enter the recipient&apos;s address below
                                         </p>
                                     </div>

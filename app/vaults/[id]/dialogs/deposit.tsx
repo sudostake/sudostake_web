@@ -38,7 +38,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded w-24 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded hover:ring-2 hover:ring-offset-2 w-24 text-xs lg:text-sm lg:font-medium">
                 Deposit
             </button>
 
@@ -77,7 +77,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
                                         Deposit Tokens
                                     </Dialog.Title>
 
-                                    <p className="text-gray-300 text-xs lg:text-lg mt-2 mb-8">
+                                    <p className="text-gray-300 text-xs lg:text-base mt-2 mb-8">
                                         Enter the amount of {currency.coinDenom} to deposit
                                     </p>
 

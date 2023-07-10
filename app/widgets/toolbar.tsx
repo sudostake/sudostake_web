@@ -27,7 +27,7 @@ export default function ToolBar() {
                 {toolbarInfo.show_back_nav &&
                     <FaChevronLeft className="w-6 h-6 mr-5" />
                 }
-                <span className="text-sm lg:text-lg font-bold">
+                <span className="text-sm lg:text-base font-bold">
                     {toolbarInfo.title}
                 </span>
             </button>

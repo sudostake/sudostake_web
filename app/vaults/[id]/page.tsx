@@ -11,7 +11,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import DepositDialog from "./dialogs/deposit";
 import WithdrawDialog from "./dialogs/withdraw";
 import { useClaimRewards } from "@/app/hooks/use_exec";
-import ManageStakeActionsMenu from "./dialogs/stake_actions";
+import ManageStakeActionsMenu from "./widgets/stake_actions";
 import { IObjectMap } from "@/app/utils/generic_interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
@@ -27,6 +27,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
 
     // Listen to vault info from firebase
+    // TODO start from here
     useEffect(() => {
         if (status === WalletStatusType.connected) {
             return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
@@ -78,7 +79,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         validator_list.forEach((info) => {
             const address = info['operator_address'];
             const is_jailed = info['jailed'];
-            const name = info['moniker'];
+            const name = info['description']['moniker'];
 
             // Update the names on validators_with_unbondings_map
             if (Boolean(validators_with_unbondings_map[address])) {
@@ -121,11 +122,11 @@ export default function Vault({ params }: { params: { id: string } }) {
     return (
         <div className="h-full w-full flex flex-col">
             <div className={classNames({
-                "overflow-y-scroll text-sm lg:text-lg pt-4 pb-2 px-4 lg:px-8": true,
+                "overflow-y-scroll text-sm lg:text-base p-4 lg:px-8": true,
                 "flex flex-col": true,
-                "gap-12 divide-slate-500 divide-y": true,
+                "divide-current divide-opacity-30 divide-y": true,
             })}>
-                <span className="flex flex-row justify-between w-full">
+                <span className="flex flex-row justify-between w-full pb-4">
                     <span className="flex flex-col">
                         <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                         <span>
@@ -139,7 +140,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                 </span>
 
-                <span className="flex flex-row justify-between w-full">
+                <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>{chainInfo.usdc.coinDenom}</span>
                         <span>
@@ -153,7 +154,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                 </span>
 
-                <span className="flex flex-row justify-between w-full">
+                <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>Delegated</span>
                         <span>{vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
@@ -163,7 +164,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     <ManageStakeActionsMenu vault_address={params.id} />
                 </span>
 
-                <span className="flex flex-row justify-between w-full">
+                <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>Rewards</span>
                         <span>{vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
@@ -174,7 +175,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             type="button"
                             disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
                             onClick={() => { claimRewards() }} className={classNames({
-                                "px-2 inline-flex items-center justify-center border border-current rounded text-xs lg:text-sm lg:font-medium": true,
+                                "px-2 inline-flex items-center justify-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
                                 "w-24": !isLoading
                             })}>
                             {
@@ -192,7 +193,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                 </span>
 
-                <span className="flex flex-row justify-between w-full">
+                <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>Unbonding</span>
                         <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
@@ -203,10 +204,12 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
                 </span>
             </div>
-            <span className="mt-auto p-4">
-                <button className="text-sm lg:text-lg items-center border border-current rounded p-2">
-                    Request Liquidity
-                </button>
+            <span className="flex-grow">
+                <div className="flex flex-col items-center justify-center text-sm lg:text-base p-4 lg:px-8 border-t border-current h-full bg-inherit rounded ">
+                    <div role="button" className="lg:w-96 p-4 rounded text-xs lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
+                        Request liquidity by sharing rights to your staked tokens with lenders
+                    </div>
+                </div>
             </span>
         </div>
     )

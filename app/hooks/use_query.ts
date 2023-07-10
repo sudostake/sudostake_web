@@ -97,7 +97,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
 
 export const useQueryValidatorList = () => {
     const { status } = useRecoilValue(walletState);
-    const api = "https://api.mintscan.io/v1/archway-testnet/validators";
+    const api = "https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/validators";
 
     const { data: validator_list = [], isLoading } = useQuery<any[]>(
         ['validator_list'],
@@ -105,7 +105,8 @@ export const useQueryValidatorList = () => {
             const response = await fetch(api, {
                 method: "GET",
             });
-            return await response.json();
+            const data = await response.json();
+            return data['validators'];
         },
         { enabled: status === WalletStatusType.connected, }
     )

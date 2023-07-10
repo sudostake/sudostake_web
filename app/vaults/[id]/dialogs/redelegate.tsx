@@ -68,7 +68,7 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className='group flex w-full items-center rounded-md px-2 py-2 text-sm'>
+            <button onClick={() => setIsOpen(true)} className='group flex w-full items-center p-2 text-xs lg:text-sm'>
                 Redelegate
             </button>
 

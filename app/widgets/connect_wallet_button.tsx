@@ -31,13 +31,13 @@ export default function ConnectWalletButton() {
             case WalletStatusType.idle:
                 return <button onClick={() => connectWallet()} className="flex items-center px-3 w-full h-16 border-t border-current">
                     <FaSignInAlt className="w-6 h-6 mr-3" />
-                    <span className="ml-2 text-sm lg:text-lg font-medium">Connect Wallet</span>
+                    <span className="ml-2 text-sm lg:text-base font-medium">Connect Wallet</span>
                 </button>
 
             case WalletStatusType.connecting:
                 return <button className="flex items-center px-3 w-full h-16 border-t border-current">
                     <FaSpinner className="w-6 h-6 mr-3 spinner" />
-                    <span className="ml-2 text-sm lg:text-lg font-medium">Connecting...</span>
+                    <span className="ml-2 text-sm lg:text-base font-medium">Connecting...</span>
                 </button>
 
             case WalletStatusType.connected:
@@ -53,7 +53,7 @@ export default function ConnectWalletButton() {
                             priority
                         />
 
-                        <span className="ml-2 text-sm lg:text-lg font-medium">{name.charAt(0).toUpperCase() + name.slice(1).toLocaleLowerCase()}</span>
+                        <span className="ml-2 text-sm lg:text-base font-medium">{name.charAt(0).toUpperCase() + name.slice(1).toLocaleLowerCase()}</span>
                         <span className="flex justify-center w-10 h-10 rounded-full border border-transparent hover:border-current ml-auto mr-4">
                             <ClipBoardButton />
                         </span>
