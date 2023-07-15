@@ -12,26 +12,29 @@ import DepositDialog from "./dialogs/deposit";
 import WithdrawDialog from "./dialogs/withdraw";
 import { useClaimRewards } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { IObjectMap } from "@/app/utils/generic_interface";
+import { IObjectMap, VaultInfo } from "@/app/utils/generic_interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
+import RequestLiquidityFlow from "./request_liquidity_flow";
+import PendingLiquidityRequest from "./widgets/pending_liquidity_request";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
     const { status } = useRecoilValue(walletState);
     const setValidatorListState = useSetRecoilState(validatorListState);
     const chainInfo = useRecoilValue(selectedChainState);
-    const [vault_info, setVaultInfo] = useState<any | null>(null);
+    const [vault_info, setVaultInfo] = useState<VaultInfo | null>(null);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
     const { validator_list } = useQueryValidatorList();
     const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
+    const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
 
     // Listen to vault info from firebase
     // TODO start from here
     useEffect(() => {
         if (status === WalletStatusType.connected) {
             return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
-                const info = doc.data();
+                const info = doc.data() as VaultInfo;
                 setVaultInfo(info);
             });
         } else {
@@ -120,11 +123,11 @@ export default function Vault({ params }: { params: { id: string } }) {
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
     return (
-        <div className="h-full w-full flex flex-col">
+        <div className="flex h-full w-full">
             <div className={classNames({
                 "overflow-y-scroll text-sm lg:text-base p-4 lg:px-8": true,
                 "flex flex-col": true,
-                "divide-current divide-opacity-30 divide-y": true,
+                "w-full xl:w-3/4 xl:border-r xl:border-current": true,
             })}>
                 <span className="flex flex-row justify-between w-full pb-4">
                     <span className="flex flex-col">
@@ -142,22 +145,23 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                 <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
-                        <span>{chainInfo.usdc.coinDenom}</span>
+                        <span>{usd_currency.coinDenom}</span>
                         <span>
                             {vault_metadata && Number(vault_metadata.usdc_balance).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
                     <span className="flex flex-row gap-2 py-2">
-                        <DepositDialog to_address={params.id} currency={chainInfo.usdc} />
-                        <WithdrawDialog from_address={params.id} currency={chainInfo.usdc} />
+                        <DepositDialog to_address={params.id} currency={usd_currency} />
+                        <WithdrawDialog from_address={params.id} currency={usd_currency} />
                     </span>
                 </span>
 
                 <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>Delegated</span>
-                        <span>{vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
+                        <span>
+                            {vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
                             {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                         </span>
                     </span>
@@ -167,8 +171,10 @@ export default function Vault({ params }: { params: { id: string } }) {
                 <span className="flex flex-row justify-between w-full py-4">
                     <span className="flex flex-col">
                         <span>Rewards</span>
-                        <span>{vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
-                            {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
+                        <span>
+                            {vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
+                            {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                        </span>
                     </span>
                     <span className="flex flex-row py-2">
                         <button
@@ -180,7 +186,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             })}>
                             {
                                 isLoading && <>
-                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                    <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                     <span>Claiming</span>
                                 </>
                             }
@@ -203,14 +209,19 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <UnbondingInfoDialog />
                     </span>
                 </span>
-            </div>
-            <span className="flex-grow">
-                <div className="flex flex-col items-center justify-center text-sm lg:text-base p-4 lg:px-8 border-t border-current h-full bg-inherit rounded ">
-                    <div role="button" className="lg:w-96 p-4 rounded text-xs lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
-                        Request liquidity by sharing rights to your staked tokens with lenders
+
+                {vault_info && (!Boolean(vault_info.liquidity_request)) &&
+                    <span className="py-20">
+                        <RequestLiquidityFlow vault_address={params.id} />
+                    </span>
+                }
+
+                {vault_info && Boolean(vault_info.liquidity_request) && (!Boolean(vault_info.liquidity_request.lender)) &&
+                    <div className="flex w-full mt-8">
+                        <PendingLiquidityRequest vault_address={params.id} vault_info={vault_info} />
                     </div>
-                </div>
-            </span>
+                }
+            </div>
         </div>
     )
 }

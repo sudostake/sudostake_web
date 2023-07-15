@@ -14,7 +14,7 @@ export default function UnbondingInfoDialog() {
             <button type="button"
                 onClick={() => setIsOpen(true)}
                 disabled={validator_unbonding_list.length === 0}
-                className="w-24 items-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
+                className="px-2 w-24 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
                 Info
             </button>
 
@@ -42,57 +42,60 @@ export default function UnbondingInfoDialog() {
                                 leave="ease-in duration-200"
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95">
-                                <Dialog.Panel className={classNames({
-                                    "bg-slate-800": true,
-                                    "w-full max-w-lg overflow-hidden rounded p-8 text-left align-middle shadow-lg": true,
-                                    "transform transition-all": true
-                                })}>
-                                    <Dialog.Title
-                                        as="h2"
-                                        className="flex items-center text-base lg:text-base font-bold leading-6 text-gray-300">
-                                        <span>
-                                            Unbonding Details
-                                        </span>
-                                        <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
-                                    </Dialog.Title>
 
-                                    <div className="mt-8 flex-col items-center mb-2 w-full text-xs lg:text-sm">
-                                        {validator_unbonding_list.map((list, index) => {
-                                            return (
-                                                <div key={index} className="relative overflow-x-auto mt-8">
-                                                    <table className="w-full text-sm text-left text-slate-400">
-                                                        <caption className="mb-4 text-left">
-                                                            {list.name}
-                                                        </caption>
-                                                        <thead className="text-xs uppercase  bg-slate-700">
-                                                            <tr>
-                                                                <th scope="col" className="px-6 py-3">
-                                                                    Amount
-                                                                </th>
-                                                                <th scope="col" className="px-6 py-3">
-                                                                    Completion time
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {list.entries.map((entry, e_index) => {
-                                                                return (
-                                                                    <tr key={e_index} className="border-b border-slate-700">
-                                                                        <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                                                                            {entry.amount}
+                                <Dialog.Panel className={classNames({
+                                    "bg-slate-800 fixed w-full max-w-lg": true,
+                                    "lg:rounded-lg text-left align-middle shadow-lg": true,
+                                    "transform transition-all": true,
+                                    "h-full lg:h-max": true
+                                })}>
+                                    <span className="flex flex-col w-full h-full">
+                                        <h2 className="flex items-center text-sm lg:text-base font-bold leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
+                                            Unbonding Details
+                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
+                                        </h2>
+
+
+                                        <span className='flex overflow-y-auto p-4 lg:p-8'>
+                                            <div className="flex-col items-center mb-2 w-full text-xs lg:text-sm">
+                                                {validator_unbonding_list.map((list, index) => {
+                                                    return (
+                                                        <div key={index} className="relative overflow-x-auto mt-8">
+                                                            <table className="table-fixed caption-top w-full text-sm text-left text-slate-400">
+                                                                <caption className="mb-4 text-left">
+                                                                    {list.name}
+                                                                </caption>
+                                                                <thead className="text-xs uppercase  bg-slate-700">
+                                                                    <tr>
+                                                                        <th scope="col" className="px-6 py-3">
+                                                                            Amount
                                                                         </th>
-                                                                        <td className="px-6 py-4">
-                                                                            {entry.completion_time}
-                                                                        </td>
+                                                                        <th scope="col" className="px-6 py-3">
+                                                                            Completion time
+                                                                        </th>
                                                                     </tr>
-                                                                )
-                                                            })}
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {list.entries.map((entry, e_index) => {
+                                                                        return (
+                                                                            <tr key={e_index} className="border-b border-slate-700">
+                                                                                <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
+                                                                                    {entry.amount}
+                                                                                </th>
+                                                                                <td className="px-6 py-4">
+                                                                                    {entry.completion_time}
+                                                                                </td>
+                                                                            </tr>
+                                                                        )
+                                                                    })}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </span>
+                                    </span>
                                 </Dialog.Panel>
                             </Transition.Child>
                         </div>

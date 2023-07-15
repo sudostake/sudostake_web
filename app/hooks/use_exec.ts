@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import { coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
+import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 
 export const indexVault = async (rpc: string, vault_address: string) => {
     // TODO we also pass in the action description for historic purposes
@@ -174,7 +175,6 @@ export const useUndelegate = (vault_address: string) => {
     const queryClient = useQueryClient();
 
     return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
-        // return new Promise(resolve => setTimeout(resolve, 3000));
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
         return await client.execute(
             address,
@@ -202,7 +202,6 @@ export const useRedelegate = (vault_address: string) => {
 
     return useMutation(async ({ amount, currency, from_validator, to_validator }:
         { amount: number, currency: Currency, from_validator: ValidatorInfo, to_validator: ValidatorInfo }) => {
-        // return new Promise(resolve => setTimeout(resolve, 3000));
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
         return await client.execute(
             address,
@@ -220,6 +219,63 @@ export const useRedelegate = (vault_address: string) => {
         onError(e) {
             console.log(e);
             toast("Error redelegating funds", { type: 'error' })
+        }
+    });
+}
+
+export const useRequestLiquidity = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async (payload: JsonObject) => {
+        await client.execute(
+            address,
+            vault_address,
+            payload,
+            'auto',
+            ''
+        );
+
+        return await indexVault(chainInfo.src.rpc, vault_address);
+    }, {
+        async onSuccess(res) {
+            toast(`Liquidity request successful`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error requesting liquidity", { type: 'error' })
+        }
+    });
+}
+
+export const useClosePendingLiquidityRequest = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async () => {
+        //return new Promise(resolve => setTimeout(resolve, 3000));
+        await client.execute(
+            address,
+            vault_address,
+            { close_pending_liquidity_request: {} },
+            'auto',
+            ''
+        );
+
+        return await indexVault(chainInfo.src.rpc, vault_address);
+    }, {
+        async onSuccess(res) {
+            toast(`Liquidity request closed successfully`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error closing liquidity request", { type: 'error' })
         }
     });
 }

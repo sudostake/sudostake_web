@@ -35,8 +35,8 @@ export default function Home() {
   }, [address, status]);
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-4 lg:px-8">
-      <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded hover:ring-2 hover:ring-offset-2 p-2 text-xs lg:text-sm lg:font-medium">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-4 lg:px-8">
+      <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-2 text-xs lg:text-sm lg:font-medium">
         {
           isLoading && <>
             <FaSpinner className="w-6 h-6 mr-3 spinner" />

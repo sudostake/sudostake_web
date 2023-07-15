@@ -38,7 +38,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded hover:ring-2 hover:ring-offset-2 w-24 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 w-24 text-xs lg:text-sm lg:font-medium">
                 Deposit
             </button>
 
@@ -68,7 +68,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-lg overflow-hidden rounded p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-lg overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
@@ -89,7 +89,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
                                         onChange={(e) => validate_amount(Number(e.target.value))}
                                         type="number" placeholder="0.00"
                                         className={classNames({
-                                            "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
+                                            "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
                                             "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                                         })} />
 

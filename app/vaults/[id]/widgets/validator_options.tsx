@@ -32,7 +32,7 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
                 <div className="relative w-full cursor-default overflow-hidden rounded-md text-left">
                     <Combobox.Input
                         className={classNames({
-                            "py-3 pl-10 pr-4 w-full  border-2 border-current rounded ": true,
+                            "py-3 pl-10 pr-4 w-full  border-2 border-current rounded-lg ": true,
                             " text-xs lg:text-sm w-full": true,
                             "placeholder-slate-500 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                         })}
@@ -40,18 +40,18 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
                         displayValue={(validator?: ValidatorInfo) => validator && validator.name}
                         onChange={(event) => setQuery(event.target.value)}
                     />
-                    <Combobox.Button className="rounded absolute inset-y-0 right-0 flex items-center pr-3">
+                    <Combobox.Button className="rounded-lg absolute inset-y-0 right-0 flex items-center pr-3">
                         <FaChevronDown
                             className="h-4 w-4 text-gray-400"
                             aria-hidden="true"
                         />
                     </Combobox.Button>
-                    <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
+                    <Combobox.Button className='absolute inset-y-0 left-0 flex items-center pl-3'>
                         <FaUserShield
                             className="h-4 w-4 text-gray-400"
                             aria-hidden="true"
                         />
-                    </span>
+                    </Combobox.Button>
                 </div>
 
                 <Combobox.Options className={classNames({

@@ -79,7 +79,7 @@ export default function SideBar() {
                         return (
                             <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)} passHref>
                                 <li className={classNames({
-                                    "flex items-center w-full h-16 px-3 mb-2 rounded": true,
+                                    "flex items-center w-full h-16 px-3 mb-2 rounded-lg": true,
                                     "hover:border hover:border-current": true,
                                     "border border-current": nav_item.href === pathname,
                                     "border border-transparent": nav_item.href !== pathname

@@ -17,7 +17,7 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
 
     return (
         <div className="relative inline-block text-left py-2">
-            <button onClick={() => setIsOpen(!isOpen)} className="w-24 h-full inline-flex px-2 items-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(!isOpen)} className="w-24 h-full inline-flex px-2 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
                 <span>Manage</span>
                 <FaChevronDown className="ml-auto mt-1 h-4 w-4" aria-hidden="true" />
             </button>

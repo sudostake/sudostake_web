@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
-import { convertMicroDenomToDenom } from "../utils/conversion";
+import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import BigNumber from "bignumber.js";
 import { Currency } from "../utils/supported_chains";
 
@@ -60,7 +60,7 @@ async function fetchUnbondingInfo({
             total = total.plus(BigNumber(entry['balance']));
             unbonding_info.entries.push({
                 amount: convertMicroDenomToDenom(entry['balance'], decimals),
-                completion_time: new Date(entry['completion_time']).toLocaleString()
+                completion_time: secondsToDhms(new Date(entry['completion_time']))
             });
         })
 
@@ -122,6 +122,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
+            const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
             const [native_balance, usdc_balance, unbonding_details, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
@@ -138,8 +139,8 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                     client,
                     address: vault_address,
                     token: {
-                        decimals: chainInfo.usdc.coinDecimals,
-                        denom: chainInfo.usdc.coinMinimalDenom
+                        decimals: usd_currency.coinDecimals,
+                        denom: usd_currency.coinMinimalDenom
                     },
                 }),
 

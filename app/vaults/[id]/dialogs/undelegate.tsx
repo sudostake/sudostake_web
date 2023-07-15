@@ -76,7 +76,7 @@ export default function UndelegateDialog({ vault_address, currency }: ComponentP
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-lg overflow-hidden rounded p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-lg overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
@@ -100,10 +100,10 @@ export default function UndelegateDialog({ vault_address, currency }: ComponentP
                                             onChange={(e) => validate_amount(Number(e.target.value))}
                                             type="number" placeholder="0.00"
                                             className={classNames({
-                                                "p-3 rounded text-sm outline-none focus:outline-none focus:ring w-full": true,
+                                                "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
                                                 "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                                             })} />
-                                        <span onClick={() => selected_validator && setAmount(selected_validator.delegated_amount)} role="button" className="right-0 mr-2 lg:mr-8 flex h-full leading-snug font-normal text-center text-xs lg:text-base items-center justify-center text-slate-100 absolute bg-transparent rounded  w-8 ">
+                                        <span onClick={() => selected_validator && setAmount(selected_validator.delegated_amount)} role="button" className="right-0 mr-2 lg:mr-8 flex h-full leading-snug font-normal text-center text-xs lg:text-base items-center justify-center text-slate-100 absolute bg-transparent rounded-lg  w-8 ">
                                             max
                                         </span>
                                     </div>

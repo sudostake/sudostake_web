@@ -1,10 +1,10 @@
 import { Coin, coin } from "@cosmjs/stargate";
+import { IObjectMap } from "./generic_interface";
 
 export type Currency = {
     coinDenom: string,
     coinMinimalDenom: string,
     coinDecimals: number,
-    coinGeckoId: string,
 };
 
 export type ChainInfoFull = {
@@ -40,7 +40,7 @@ export type ChainInfo = {
     vault_creation_fee: Coin,
     sudomod_address: string,
     src: ChainInfoFull,
-    usdc: Currency,
+    request_denoms: Currency[],
 };
 
 // Describe Archway chain info
@@ -63,7 +63,6 @@ const archwayChainInfo: ChainInfoFull = {
         {
             "coinDecimals": 18,
             "coinDenom": "CONST",
-            "coinGeckoId": "constantine-network",
             "coinMinimalDenom": "aconst"
         }
     ],
@@ -72,7 +71,6 @@ const archwayChainInfo: ChainInfoFull = {
         {
             "coinDecimals": 18,
             "coinDenom": "CONST",
-            "coinGeckoId": "constantine-network",
             "coinMinimalDenom": "aconst",
 
         }
@@ -82,7 +80,6 @@ const archwayChainInfo: ChainInfoFull = {
     "stakeCurrency": {
         "coinDecimals": 18,
         "coinDenom": "CONST",
-        "coinGeckoId": "constantine-network",
         "coinMinimalDenom": "aconst"
     },
     "nodeProvider": {
@@ -92,6 +89,7 @@ const archwayChainInfo: ChainInfoFull = {
     }
 };
 
+// TODO update this
 export const supportedChains: ChainInfo[] = [
     {
         logo_url: '/archway.png',
@@ -99,11 +97,17 @@ export const supportedChains: ChainInfo[] = [
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
         sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         src: archwayChainInfo,
-        usdc: {
-            coinDenom: 'USDC',
-            coinMinimalDenom: 'usdc',
-            coinDecimals: 18,
-            coinGeckoId: 'constantine-network',
-        }
+        request_denoms: [
+            {
+                coinDenom: 'CONST',
+                coinMinimalDenom: 'aconst',
+                coinDecimals: 18,
+            },
+            {
+                coinDenom: 'USDC',
+                coinMinimalDenom: 'ibc/usdc',
+                coinDecimals: 18,
+            }
+        ]
     }
 ];
