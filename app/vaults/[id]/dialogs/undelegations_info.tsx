@@ -14,7 +14,7 @@ export default function UnbondingInfoDialog() {
             <button type="button"
                 onClick={() => setIsOpen(true)}
                 disabled={validator_unbonding_list.length === 0}
-                className="px-2 w-24 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
+                className="px-2 w-24 h-10 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
                 Info
             </button>
 

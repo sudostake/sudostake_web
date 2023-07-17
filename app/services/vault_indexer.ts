@@ -2,7 +2,6 @@ import { CosmWasmClient } from "cosmwasm";
 import { IObjectMap, LiquidityRequestTypes, VaultIndex } from "../utils/generic_interface";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom } from "../utils/conversion";
-import LiquidityRequests from "../liquidity_requests/page";
 
 // All chains connection instances
 const connections: IObjectMap<CosmWasmClient> = {};

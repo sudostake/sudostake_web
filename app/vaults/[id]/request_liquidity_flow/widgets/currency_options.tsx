@@ -22,7 +22,7 @@ export default function CurrencyOptions({ onOptionSelected }: ComponentProps) {
     // Whenever selected is updated, we trigger onOptionSelected
     useEffect(() => {
         onOptionSelected(selected);
-    }, [selected]);
+    }, [selected, onOptionSelected]);
 
     return (
         <div className="relative inline-block text-left">

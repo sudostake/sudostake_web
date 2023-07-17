@@ -15,7 +15,7 @@ export type RequestOption = {
 };
 
 export type VaultIndex = {
-    status?: string,
+    status?: 'pending' | 'active',
     request_type?: LiquidityRequestTypes,
     requested_amount?: {
         denom: string,
@@ -29,6 +29,7 @@ export type VaultIndex = {
 };
 
 export type VaultInfo = {
+    id: string,
     index: VaultIndex,
     config: any,
     liquidity_request: any

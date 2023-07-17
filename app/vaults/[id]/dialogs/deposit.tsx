@@ -38,7 +38,7 @@ export default function DepositDialog({ to_address, currency }: DepositDialogPro
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 w-24 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 w-24 h-10 text-xs lg:text-sm lg:font-medium">
                 Deposit
             </button>
 

@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { ValidatorInfo, selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
-import { coin } from "cosmwasm";
+import { Coin, coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
@@ -79,7 +79,7 @@ export const useDeposit = (to_address: string) => {
         return await client.sendTokens(
             address,
             to_address,
-            [coin(`${microAmount}`, currency.coinMinimalDenom)],
+            [coin(microAmount, currency.coinMinimalDenom)],
             "auto",
             '',
         )
@@ -104,7 +104,7 @@ export const useWithdraw = (from_address: string) => {
         return await client.execute(
             address,
             from_address,
-            { withdraw_balance: { to_address, funds: coin(`${microAmount}`, currency.coinMinimalDenom) } },
+            { withdraw_balance: { to_address, funds: coin(microAmount, currency.coinMinimalDenom) } },
             'auto',
             ''
         );
@@ -257,7 +257,6 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
     const queryClient = useQueryClient();
 
     return useMutation(async () => {
-        //return new Promise(resolve => setTimeout(resolve, 3000));
         await client.execute(
             address,
             vault_address,
@@ -279,3 +278,43 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
         }
     });
 }
+
+export const useAcceptLiquidityRequest = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async ({ amount, denom }: { amount: number, denom: string }) => {
+        const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === denom);
+        const microAmount = convertDenomToMicroDenom(`${amount}`, request_currency.coinDecimals);
+        const requested_amount: Coin = coin(
+            microAmount,
+            denom
+        );
+
+        await client.execute(
+            address,
+            vault_address,
+            { accept_liquidity_request: {} },
+            'auto',
+            '',
+            [
+                requested_amount,
+            ]
+        );
+
+        return await indexVault(chainInfo.src.rpc, vault_address);
+    }, {
+        async onSuccess(res) {
+            toast(`Liquidity request accepted successfully`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error accepting liquidity request", { type: 'error' })
+        }
+    });
+}
+
+//  return new Promise(resolve => setTimeout(resolve, 3000));
