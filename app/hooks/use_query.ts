@@ -35,11 +35,7 @@ async function fetchUnbondingInfo({
     total_unbonding_amount: number,
     unbonding_list: ValidatorUnbondingInfo[]
 }> {
-    const api = [
-        'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
-        vault_address,
-        '/unbonding_delegations'
-    ].join('');
+    const api = `/api/unbonding_delegations?vault_address=${vault_address}`;
     const response = await fetch(api, {
         method: "GET",
     });
@@ -75,17 +71,13 @@ async function fetchUnbondingInfo({
 
 export const useQueryRedelegationList = (vault_address: string) => {
     const { status } = useRecoilValue(walletState);
-    const api = [
-        'https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/delegators/',
-        vault_address,
-        '/redelegations'
-    ].join('');
+    const api = `/api/redelegations?vault_address=${vault_address}`;
 
     const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
         ['redelegation_list', vault_address],
         async () => {
             const response = await fetch(api, {
-                method: "GET",
+                method: "GET"
             });
             return (await response.json())['redelegation_responses'];
         },
@@ -97,7 +89,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
 
 export const useQueryValidatorList = () => {
     const { status } = useRecoilValue(walletState);
-    const api = "https://lcd-office.cosmostation.io/archway-testnet/cosmos/staking/v1beta1/validators";
+    const api = "/api/validators";
 
     const { data: validator_list = [], isLoading } = useQuery<any[]>(
         ['validator_list'],

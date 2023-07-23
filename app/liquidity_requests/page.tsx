@@ -29,7 +29,7 @@ export default function LiquidityRequests() {
   }, []);
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base p-4 lg:p-8">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-2 lg:px-8">
       {
         vaults.length > 0 &&
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">

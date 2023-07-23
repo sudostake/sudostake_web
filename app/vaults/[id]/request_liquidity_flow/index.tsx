@@ -207,7 +207,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                                         type="number" placeholder="0.00"
                                                         className={classNames({
                                                             "flex-grow p-3 rounded-l-lg text-sm outline-none focus:outline-none focus:ring": true,
-                                                            "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
+                                                            "placeholder-slate-100 text-slate-100 relative bg-slate-800 border-t border-b border-l rounded-l-lg border-slate-500": true,
                                                         })} />
 
                                                     <CurrencyOptions onOptionSelected={setRequestedDenom} />
