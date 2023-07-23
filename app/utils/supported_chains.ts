@@ -1,5 +1,4 @@
 import { Coin, coin } from "@cosmjs/stargate";
-import { IObjectMap } from "./generic_interface";
 
 export type Currency = {
     coinDenom: string,
@@ -38,9 +37,10 @@ export type ChainInfoFull = {
 export type ChainInfo = {
     logo_url: string,
     vault_creation_fee: Coin,
-    sudomod_address: string,
     src: ChainInfoFull,
     request_denoms: Currency[],
+    sudomod_address: string,
+    vault_code_ids: number[]
 };
 
 // Describe Archway chain info
@@ -89,13 +89,9 @@ const archwayChainInfo: ChainInfoFull = {
     }
 };
 
-// TODO update this
 export const supportedChains: ChainInfo[] = [
     {
         logo_url: '/archway.png',
-        // TODO dynamically get vault_creation_fee from sudomod_address
-        vault_creation_fee: coin('10000000000000000000', 'aconst'),
-        sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         src: archwayChainInfo,
         request_denoms: [
             {
@@ -108,6 +104,13 @@ export const supportedChains: ChainInfo[] = [
                 coinMinimalDenom: 'ibc/usdc',
                 coinDecimals: 18,
             }
-        ]
+        ],
+        sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
+        vault_creation_fee: coin('10000000000000000000', 'aconst'),
+        vault_code_ids: [484]
     }
 ];
+
+export function get_chain_info_from_rpc(rpc: string): ChainInfo | null {
+    return supportedChains.find(c => c.src.rpc === rpc);
+}

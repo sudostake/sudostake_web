@@ -123,7 +123,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
         ['vault_metadata', vault_address],
         async () => {
             const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
-            const [native_balance, usdc_balance, unbonding_details, staking_info, all_delegations] = await Promise.all([
+            const [native_balance, usdc_balance, unbonding_details, vault_info, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
                     client,
@@ -151,6 +151,9 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                     },
                 }),
 
+                // Fetch vault info
+                client.queryContractSmart(vault_address, { info: {} }),
+
                 // Fetch staking info
                 client.queryContractSmart(vault_address, { staking_info: {} }),
 
@@ -165,6 +168,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], 18),
                 unbonding_details,
                 all_delegations: Array.from<any>(all_delegations.data),
+                vault_info
             };
         },
         { enabled: status === WalletStatusType.connected, }

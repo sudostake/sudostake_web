@@ -22,10 +22,14 @@ export function convertDenomToMicroDenom(
 
 
 // https://medium.com/@vipinc.007/javascript-function-translate-seconds-into-days-hours-minutes-and-seconds-91080a8b5383
-export function secondsToDhms(date: Date) {
+export function secondsToDhms(date: Date): string | 'EXPIRED' {
   let diff = date.getTime() - Date.now();
-  let seconds = diff / 1000;
 
+  if (diff <= 0) {
+    return 'EXPIRED';
+  }
+
+  let seconds = diff / 1000;
   var d = Math.floor(seconds / (3600 * 24))
   var h = Math.floor((seconds % (3600 * 24)) / 3600)
   var m = Math.floor((seconds % 3600) / 60)

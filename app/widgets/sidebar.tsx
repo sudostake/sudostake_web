@@ -23,23 +23,23 @@ const nav_itemLinks: nav_itemItem[] = [
         label: "Manage Vaults",
         href: "/",
         target: "",
-        icon: <FaDatabase className="w-6 h-6 mr-3" />,
+        icon: <FaDatabase className="w-6 h-6 mr-2" />,
     },
     {
         label: "Liquidity Requests",
         href: "/liquidity_requests",
         target: "",
-        icon: <FaExchangeAlt className="w-6 h-6 mr-3" />,
+        icon: <FaExchangeAlt className="w-6 h-6 mr-2" />,
     },
     {
         label: "Governance",
         href: "/governance",
         target: "",
-        icon: <FaGlobe className="w-6 h-6 mr-3" />,
+        icon: <FaGlobe className="w-6 h-6 mr-2" />,
     },
     {
         label: "Docs",
-        href: "https://github.com/sudostake",
+        href: "https://github.com/orgs/sudostake/repositories",
         target: "_blank",
         icon: <FaBook className="w-6 h-6 mr-3" />,
     },
@@ -55,13 +55,13 @@ export default function SideBar() {
         <div className={
             classNames({
                 "fixed w-full h-full lg:w-80 z-20 lg:z-0": true,
-                "md:translate-x-0": true,
+                "lg:translate-x-0": true,
                 "bg-inherit": true,
                 "-translate-x-full": !isOpen
             })
         }>
             <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
-                <span className="flex items-center h-20 lg:h-24 py-4 px-2 lg:px-4 w-full border-b border-current">
+                <span role='button' onClick={() => setSideBarState(!isOpen)} className="flex items-center h-20 lg:h-24 py-4 px-2 lg:px-4 w-full border-b border-current">
                     <Image
                         src="/l1.png"
                         alt="sudostake Logo"
@@ -71,7 +71,7 @@ export default function SideBar() {
                         priority
                     />
                     <span className="ml-2 text-lg lg:text-2xl font-bold">SudoStake</span>
-                    <button onClick={() => setSideBarState(!isOpen)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
+                    <span className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></span>
                 </span>
 
                 <ul className="w-full flex flex-col mt-4 px-2">

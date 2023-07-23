@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import LiquidityRequestOptions from './widgets/liquidity_request_options';
 import { FaSpinner, FaTimes } from 'react-icons/fa';
-import { IObjectMap, LiquidityRequestTypes, RequestOption } from '@/app/utils/generic_interface';
+import { IObjectMap, LiquidityRequestTypes, RequestOption } from '@/app/utils/interface';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
 import { useQueryVaultMetaData } from '@/app/hooks/use_query';
@@ -131,7 +131,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
     return (
         <>
             <div role="button" onClick={() => setIsOpen(true)} className="p-4 rounded-lg text-xs lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
-                Request liquidity by sharing rights to your staked tokens with lenders
+                Request liquidity by sharing rights to your vault with lenders
             </div>
 
             <Transition appear show={isOpen} as={Fragment}>
@@ -166,7 +166,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                 })}>
                                     <span className={`${step_history !== 0 && 'hidden'} flex flex-col w-full h-full`} >
                                         <h2 className="flex items-center text-sm lg:text-base font-bold leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
-                                            Select Request Type
+                                            Select Option Type
                                             <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
                                         </h2>
 

@@ -1,57 +1,73 @@
 'use client'
 
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
-import { db } from "@/app/services/firebase_client";
-import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
+import { ValidatorInfo, ValidatorUnbondingInfo, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
-import { onSnapshot, doc } from "firebase/firestore";
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import DepositDialog from "./dialogs/deposit";
 import WithdrawDialog from "./dialogs/withdraw";
-import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest } from "@/app/hooks/use_exec";
+import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { IObjectMap, VaultInfo } from "@/app/utils/generic_interface";
+import { IObjectMap, LiquidityRequestTypes } from "@/app/utils/interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
 import RequestLiquidityFlow from "./request_liquidity_flow";
 import PendingLiquidityRequestInfo from "@/app/widgets/pending_request_info";
 import ActiveLiquidityRequestInfo from "@/app/widgets/active_request_info";
+import { index_vault_data } from "@/app/services/vault_indexer";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
-    const { status, address: vault_owner } = useRecoilValue(walletState);
+    const { address: current_user } = useRecoilValue(walletState);
     const setValidatorListState = useSetRecoilState(validatorListState);
     const chainInfo = useRecoilValue(selectedChainState);
-    const [vault_info, setVaultInfo] = useState<VaultInfo | null>(null);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
     const { validator_list } = useQueryValidatorList();
+    const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+
+    // Here we index the vault_info from the vault metadata to also include state from
+    // active liquidity request option
+    const vault_info = (vault_metadata && index_vault_data({
+        vault_info: vault_metadata.vault_info,
+        rpc: chainInfo.src.rpc,
+        include_request_state: true
+    }));
+
+    // Vault actions
     const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
     const { mutate: close_request, isLoading: isCloseRequestLoading } = useClosePendingLiquidityRequest(params.id);
     const { mutate: accept_request, isLoading: isAcceptLoading } = useAcceptLiquidityRequest(params.id);
-    const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+    const { mutate: repay_loan, isLoading: isRepayLoanLoading } = useRepayLoan(params.id);
+    const { mutate: liquidate_collateral, isLoading: isLiquidatingCollateralLoading } = useLiquidateCollateral(params.id);
 
-    // Check who is viewing the vault
-    const is_owner = vault_owner === (vault_info && vault_info.config.owner);
+    // Vault conditions
+    const is_owner = current_user === (vault_info && vault_info.owner);
+    const has_active_rental_option = vault_info &&
+        vault_info.liquidity_request_status === 'active' &&
+        vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan;
+    const can_claim_rewards = is_owner || has_active_rental_option;
 
-    // Listen to vault info from firebase
-    useEffect(() => {
-        if (status === WalletStatusType.connected) {
-            return onSnapshot(doc(db, "/vaults", params.id), (doc) => {
-                const info = doc.data() as VaultInfo;
-                setVaultInfo(info);
-            });
-        } else {
-            setVaultInfo(null);
-        }
-    }, [status, params.id]);
+    // Fixed term loan conditions
+    const can_repay_loan = is_owner && vault_info &&
+        vault_info.liquidity_request_status === 'active' &&
+        vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+        !vault_info.processing_liquidation;
+    const has_expired_fixed_term_loan = vault_info &&
+        vault_info.liquidity_request_status === 'active' &&
+        vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+        vault_info.end_time === 'EXPIRED';
+    const native_balance = vault_metadata && vault_metadata.native_balance;
+    const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
+    const total_available_native_balance = native_balance + accumulated_rewards;
+    const outstanding_fixed_term_loan_debt = has_expired_fixed_term_loan && (vault_info.collateral_amount - vault_info.already_claimed);
 
     // Set toolbar state
     useEffect(() => {
         if (Boolean(vault_info)) {
             setToolBarState({
-                title: `Vault #${vault_info.config.index_number}`,
+                title: `Vault #${vault_info.index_number}`,
                 show_back_nav: true
             })
         }
@@ -140,7 +156,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.native_balance).toFixed(2)}
+                                {native_balance.toFixed(2)}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -182,21 +198,21 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
 
                     <span className="flex flex-row justify-between w-full py-4">
-                        <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                        <span className={can_claim_rewards ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>Rewards</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
+                                {accumulated_rewards.toFixed(2)}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
                         {
-                            is_owner &&
+                            can_claim_rewards &&
                             <span className="flex flex-row py-2">
                                 <button
                                     type="button"
                                     disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
-                                    onClick={() => { claimRewards() }} className={classNames({
-                                        "px-2 h-10 inline-flex items-center justify-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                    onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
+                                        "px-2 h-9 inline-flex items-center justify-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
                                         "w-24": !isLoading
                                     })}>
                                     {
@@ -216,32 +232,30 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
 
                     <span className="flex flex-row justify-between w-full py-4">
-                        <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                        <span className="flex flex-col">
                             <span>Unbonding</span>
                             <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                         </span>
-                        {
-                            is_owner &&
-                            <span className="flex flex-row py-2">
-                                <UnbondingInfoDialog />
-                            </span>
-                        }
+                        <span className="flex flex-row py-2">
+                            <UnbondingInfoDialog />
+                        </span>
                     </span>
 
-                    {is_owner && vault_info && (!Boolean(vault_info.liquidity_request)) &&
+                    {is_owner && vault_info && vault_info.liquidity_request_status === 'idle' &&
                         <span className="py-20">
                             <RequestLiquidityFlow vault_address={params.id} />
                         </span>
                     }
 
-                    {vault_info && Boolean(vault_info.liquidity_request) && vault_info.index.status === 'pending' &&
+                    {vault_info && vault_info.liquidity_request_status === 'pending' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
                             <h2 className="flex flex-row items-center justify-between border-b border-current font-medium py-4">
                                 <span>Request Details</span>
                                 {
-                                    is_owner && <button onClick={() => { close_request() }} className={classNames({
-                                        "h-10 inline-flex px-4 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                    is_owner &&
+                                    <button onClick={() => { close_request() }} className={classNames({
+                                        "h-9 inline-flex px-4 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
                                     })}>
                                         {
                                             isCloseRequestLoading && <>
@@ -259,9 +273,9 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                                 {
                                     !is_owner &&
-                                    <button onClick={() => { accept_request(vault_info.index.requested_amount) }}
+                                    <button onClick={() => { accept_request(vault_info.requested_amount) }}
                                         className={classNames({
-                                            "h-10 inline-flex px-4 items-center text-xs lg:text-sm lg:font-medium": true,
+                                            "h-9 inline-flex px-4 items-center text-xs lg:text-sm lg:font-medium": true,
                                             "border border-current rounded-lg hover:ring-2 hover:ring-offset-2 ": true
                                         })}>
                                         {
@@ -283,9 +297,62 @@ export default function Vault({ params }: { params: { id: string } }) {
                         </div>
                     }
 
-                    {vault_info && Boolean(vault_info.liquidity_request) && vault_info.index.status === 'active' &&
+                    {vault_info && vault_info.liquidity_request_status === 'active' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
+                            <h2 className="flex flex-row items-center justify-between border-b border-current font-medium py-4">
+                                <span>Request Details</span>
+                                {
+                                    can_repay_loan &&
+                                    <button onClick={() => { repay_loan() }} className={classNames({
+                                        "h-9 inline-flex px-4 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                    })}>
+                                        {
+                                            isRepayLoanLoading && <>
+                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                <span>Repaying Loan</span>
+                                            </>
+                                        }
+                                        {
+                                            !isRepayLoanLoading && <>
+                                                <span>Repay Loan</span>
+                                            </>
+                                        }
+                                    </button>
+                                }
+                            </h2>
+
                             <ActiveLiquidityRequestInfo vault_info={vault_info} />
+
+                            {
+                                has_expired_fixed_term_loan &&
+                                <div className={classNames({
+                                    "flex flex-col": true,
+                                    "mt-8": true,
+                                })}>
+                                    <div className="text-red-500">
+                                        {`Your option has expired and ${is_owner ? 'you' : 'the vault owner'} did not repay the principal + interest to ${is_owner ? 'the lender' : 'you'}.`}
+                                    </div>
+                                    <div className="mt-4">
+                                        <button onClick={() => { liquidate_collateral() }} className={classNames({
+                                            "inline-flex items-center text-xs text-red-500 lg:text-sm lg:font-medium": true,
+                                            "h-9 px-4": true,
+                                            "border border-current rounded-lg hover:ring-2 hover:ring-offset-2": true,
+                                        })}>
+                                            {
+                                                isLiquidatingCollateralLoading && <>
+                                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                    <span>Processing ...</span>
+                                                </>
+                                            }
+                                            {
+                                                !isLiquidatingCollateralLoading && <>
+                                                    <span>Process Liquidation</span>
+                                                </>
+                                            }
+                                        </button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     }
                 </>

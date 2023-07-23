@@ -9,73 +9,115 @@ import { FaPlusSquare, FaSpinner } from "react-icons/fa";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
+import { VaultIndex } from "./utils/interface";
+import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const [vaults, setVaults] = useState<any[]>([]);
+  const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
+  const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
   const { mutate: createVault, isLoading } = useCreateVault();
+  const router = useRouter();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
     show_back_nav: false
   }), [setToolBarState])
 
-  // Subscribe to all vaults owned by the connected user address
+  // Subscribe to all owner_vaults owned by the connected user address
   useEffect(() => {
     if (status === WalletStatusType.connected) {
-      return onSnapshot(query(collection(db, "vaults"), where("config.owner", "==", address), orderBy("config.index_number", "desc")), (res) => {
-        const vaults = res.docs
+      return onSnapshot(query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
+        const owner_vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
-        setVaults(vaults);
+        setOwnerVaults(owner_vaults);
       });
     } else {
-      setVaults([]);
+      setOwnerVaults([]);
     }
-  }, [address, status]);
+  }, [address, status, setOwnerVaults]);
+
+  // Subscribe to all vaults where owner has active lending positions
+  useEffect(() => {
+    if (status === WalletStatusType.connected) {
+      return onSnapshot(query(collection(db, "vaults"), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
+        const lending_vaults = res.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }));
+        setActiveLendingVaults(lending_vaults);
+      });
+    } else {
+      setActiveLendingVaults([]);
+    }
+  }, [address, status, setActiveLendingVaults]);
 
   return (
 
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-4 lg:px-8">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-2 lg:px-8">
       {status === WalletStatusType.connected &&
         <>
-          <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 h-10 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-2 text-xs lg:text-sm lg:font-medium">
+          <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-16 px-3 text-sm lg:text-base font-medium lg:font-medium">
             {
               isLoading && <>
-                <FaSpinner className="w-6 h-6 mr-3 spinner" />
+                <FaSpinner className="w-6 h-6 mr-4 spinner" />
                 <span>Creating ...</span>
               </>
             }
 
             {
               !isLoading && <>
-                <FaPlusSquare className="w-5 h-5 mr-3" />
+                <FaPlusSquare className="w-6 h-6 mr-4" />
                 <span>Create Vault</span>
               </>
             }
           </button>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            {vaults.map((vault, index) => {
-              return (
-                <VaultInfoCard key={index} vault={vault} />
-              );
-            })}
-          </div>
+          {
+            owner_vaults.length > 0 &&
+            <>
+              <h2 className="mt-14 mb-4 font-bold">My Vaults</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {owner_vaults.map((vault, index) => {
+                  return (
+                    <VaultInfoCard key={index} vault_info={vault} />
+                  );
+                })}
+              </div>
+            </>
+          }
 
-          <h2 className="mt-14 mb-4 font-bold">Active lending positions</h2>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="w-full h-60 p-4 border border-current rounded">
-              coming soon...
-            </div>
-          </div>
+          {
+            active_lending_vaults.length > 0 &&
+            <>
+              <h2 className="mt-14 mb-4 font-bold">Active lending positions</h2>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                {active_lending_vaults.map((vault, index) => {
+                  return (
+                    <div key={index} className="w-full p-4 border border-current rounded-lg grid grid-cols-1 gap-2">
+                      <span className="flex items-center">
+                        <span>Vault ID</span>
+                        <span className="ml-auto">
+                          #{vault.index_number}
+                        </span>
+                      </span>
+                      <ActiveLiquidityRequestInfo vault_info={vault} hide_state_info={true} />
+                      <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="flex items-center justify-center h-9 mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                        View
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </>
+          }
         </>
       }
 
       {
         status !== WalletStatusType.connected &&
         <div className="flex w-full h-full items-center justify-center">
-          <h2 className="flex items-center"><span>Connect wallet to view vault details</span></h2>
+          <h2 className="flex items-center"><span>Connect wallet to manage your vaults</span></h2>
         </div>
       }
     </div>

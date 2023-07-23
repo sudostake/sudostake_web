@@ -4,19 +4,32 @@ import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
+import { VaultIndex } from "../utils/interface";
+import classNames from "classnames";
 
-export default function VaultInfoCard(props: any) {
-    const { vault_metadata } = useQueryVaultMetaData(props.vault.id);
+type ComponentProps = {
+    vault_info: VaultIndex
+}
+
+export default function VaultInfoCard({ vault_info }: ComponentProps) {
+    const { vault_metadata } = useQueryVaultMetaData(vault_info.id);
     const router = useRouter();
     const chainInfo = useRecoilValue(selectedChainState);
     const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
 
     return (
-        <div className="w-full p-4 border border-current rounded-lg grid grid-cols-1 gap-2">
+        <div className={
+            classNames({
+                "w-full p-4 border-2 rounded-lg grid grid-cols-1 gap-2": true,
+                "border-current": vault_info.liquidity_request_status === 'idle',
+                "border-orange-500": vault_info.liquidity_request_status === 'pending',
+                "border-green-500": vault_info.liquidity_request_status === 'active',
+            })
+        }>
             <span className="flex items-center">
                 <span>ID</span>
                 <span className="ml-auto">
-                    #{props.vault.config.index_number}
+                    #{vault_info.index_number}
                 </span>
             </span>
             <span className="flex items-center">
@@ -56,10 +69,10 @@ export default function VaultInfoCard(props: any) {
             </span>
 
             <span className="grid gap-4 grid-cols-2">
-                <button onClick={() => { router.push(`/vaults/${props.vault['id']}`) }} className="flex items-center justify-center  mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex items-center justify-center  mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>
-                <TransferVaultDialog key={props.vault.id} vault={props.vault} />
+                <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />
             </span>
         </div>
     );

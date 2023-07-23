@@ -3,11 +3,16 @@ import classNames from 'classnames';
 import { Fragment, useState } from 'react'
 import { useTransferVaultOwnership } from '../hooks/use_exec';
 import { FaSpinner } from 'react-icons/fa';
+import { VaultIndex } from '../utils/interface';
 
-export default function TransferVaultDialog(props: any) {
+type ComponentProps = {
+    vault_info: VaultIndex
+}
+
+export default function TransferVaultDialog({ vault_info }: ComponentProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [address, setAddress] = useState("");
-    const { mutate: transferVault, isLoading } = useTransferVaultOwnership(props.vault);
+    const { mutate: transferVault, isLoading } = useTransferVaultOwnership(vault_info);
 
     function closeModal() {
         setIsOpen(false)
@@ -55,7 +60,7 @@ export default function TransferVaultDialog(props: any) {
                                     <Dialog.Title
                                         as="h2"
                                         className="text-lg font-bold leading-6 text-gray-300">
-                                        Transfer Vault: ID #{props.vault.config.index_number}
+                                        Transfer Vault: ID #{vault_info.index_number}
                                     </Dialog.Title>
 
                                     <div className="mt-2 mb-8">

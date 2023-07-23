@@ -7,6 +7,7 @@ import { Coin, coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
+import { VaultIndex } from "../utils/interface";
 
 export const indexVault = async (rpc: string, vault_address: string) => {
     // TODO we also pass in the action description for historic purposes
@@ -46,7 +47,7 @@ export const useCreateVault = () => {
     });
 }
 
-export const useTransferVaultOwnership = (vault: any) => {
+export const useTransferVaultOwnership = (vault: VaultIndex) => {
     const { address, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
 
@@ -62,7 +63,7 @@ export const useTransferVaultOwnership = (vault: any) => {
         return await indexVault(chainInfo.src.rpc, vault.id);
     }, {
         onSuccess(res) {
-            toast(`Vault #${vault.config.index_number} transferred successfully`, { type: 'success' })
+            toast(`Vault #${vault.index_number} transferred successfully`, { type: 'success' })
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })
@@ -123,15 +124,20 @@ export const useWithdraw = (from_address: string) => {
 export const useClaimRewards = (vault_address: string) => {
     const queryClient = useQueryClient();
     const { address, client } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
-    return useMutation(async () => {
-        return await client.execute(
+    return useMutation(async (index_data: boolean) => {
+        await client.execute(
             address,
             vault_address,
             { claim_delegator_rewards: {} },
             'auto',
             ''
         );
+
+        if (index_data) {
+            return await indexVault(chainInfo.src.rpc, vault_address);
+        }
     }, {
         async onSuccess(res) {
             toast(`Claim rewards successful`, { type: 'success' })
@@ -317,4 +323,58 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
     });
 }
 
-//  return new Promise(resolve => setTimeout(resolve, 3000));
+export const useRepayLoan = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async () => {
+        await client.execute(
+            address,
+            vault_address,
+            { repay_loan: {} },
+            'auto',
+            '',
+        );
+
+        return await indexVault(chainInfo.src.rpc, vault_address);
+    }, {
+        async onSuccess(res) {
+            toast(`Loan repaid successfully`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error repaying loan", { type: 'error' })
+        }
+    });
+}
+
+export const useLiquidateCollateral = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
+
+    return useMutation(async () => {
+        await client.execute(
+            address,
+            vault_address,
+            { liquidate_collateral: {} },
+            'auto',
+            '',
+        );
+
+        return await indexVault(chainInfo.src.rpc, vault_address);
+    }, {
+        async onSuccess(res) {
+            toast(`Liquidation successfully`, { type: 'success' })
+            await queryClient.invalidateQueries({ queryKey: ['vault_metadata', vault_address] });
+            return await queryClient.refetchQueries({ queryKey: ['vault_metadata', vault_address] });
+        },
+        onError(e) {
+            console.log(e);
+            toast("Error liquidating collateral", { type: 'error' })
+        }
+    });
+}

@@ -1,20 +1,12 @@
-import { CosmWasmClient } from "cosmwasm";
-import { IObjectMap, LiquidityRequestTypes, VaultIndex } from "../utils/generic_interface";
+import { CosmWasmClient, coin } from "cosmwasm";
+import { IObjectMap, LiquidityRequestTypes, VaultIndex } from "../utils/interface";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
-import { convertMicroDenomToDenom } from "../utils/conversion";
+import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
+import { get_chain_info_from_rpc } from "../utils/supported_chains";
+import BigNumber from "bignumber.js";
 
 // All chains connection instances
 const connections: IObjectMap<CosmWasmClient> = {};
-
-// TODO for now, only archway supported
-export const rpc_to_vault_code_ids_map: IObjectMap<{ vault_code_ids: number[], coinDecimals: number }> = {
-    'https://rpc.constantine.archway.tech': {
-        vault_code_ids: [
-            484
-        ],
-        coinDecimals: 18
-    }
-};
 
 export async function get_connection(rpc: string): Promise<CosmWasmClient> {
     // Return an existing connection
@@ -22,8 +14,8 @@ export async function get_connection(rpc: string): Promise<CosmWasmClient> {
         return connections[rpc];
     }
 
-    // Throws error when the rpc is not in the whitelist
-    if (!rpc_to_vault_code_ids_map[rpc]) {
+    // Throws error when the rpc is not supported
+    if (!Boolean(get_chain_info_from_rpc(rpc))) {
         throw new Error('selected network not whitelisted');
     }
 
@@ -33,13 +25,18 @@ export async function get_connection(rpc: string): Promise<CosmWasmClient> {
     return client;
 }
 
-export function index_vault_data(data: JsonObject, rpc: string): JsonObject {
-    const coinDecimals = rpc_to_vault_code_ids_map[rpc].coinDecimals;
-    const index: VaultIndex = {};
+export function index_vault_data({ vault_info, rpc, include_request_state }: { vault_info: JsonObject, rpc: string, include_request_state?: boolean }) {
+    const coinDecimals = get_chain_info_from_rpc(rpc).src.stakeCurrency.coinDecimals;
+    const index: VaultIndex = {
+        from_code_id: vault_info['config']['from_code_id'],
+        index_number: vault_info['config']['index_number'],
+        owner: vault_info['config']['owner'],
+        liquidity_request_status: 'idle'
+    };
 
-    if (Boolean(data['liquidity_request'])) {
-        const msg = data['liquidity_request']['msg'];
-        index.status = Boolean(data['liquidity_request']['state']) ? 'active' : 'pending';
+    if (Boolean(vault_info['liquidity_request'])) {
+        const msg = vault_info['liquidity_request']['msg'];
+        index.liquidity_request_status = Boolean(vault_info['liquidity_request']['state']) ? 'active' : 'pending';
 
         // Index fixed_interest_rental
         if (Boolean(msg['fixed_interest_rental'])) {
@@ -74,7 +71,30 @@ export function index_vault_data(data: JsonObject, rpc: string): JsonObject {
             index.interest_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['interest_amount'], coinDecimals);
             index.collateral_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['collateral_amount'], coinDecimals);
         }
+
+        // Index state data for active liquidity requests
+        if (index.liquidity_request_status === 'active') {
+            index.lender = vault_info['liquidity_request']['lender'];
+
+            if (include_request_state) {
+                const state = vault_info['liquidity_request']['state'];
+
+                if (Boolean(state['FixedInterestRental'])) {
+                    index.already_claimed = convertMicroDenomToDenom(state['FixedInterestRental']['already_claimed'], coinDecimals);
+                }
+
+                if (Boolean(state['FixedTermRental'])) {
+                    index.end_time = secondsToDhms(new Date(Number(state['FixedTermRental']['end_time']) / 1000000));
+                }
+
+                if (Boolean(state['FixedTermLoan'])) {
+                    index.end_time = secondsToDhms(new Date(Number(state['FixedTermLoan']['end_time']) / 1000000));
+                    index.processing_liquidation = state['FixedTermLoan']['processing_liquidation'];
+                    index.already_claimed = convertMicroDenomToDenom(state['FixedTermLoan']['already_claimed'], coinDecimals);
+                }
+            }
+        }
     }
 
-    return { ...data, index };
+    return index;
 }

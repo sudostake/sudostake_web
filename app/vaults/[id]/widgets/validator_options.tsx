@@ -29,12 +29,13 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
         <Combobox value={selected}
             onChange={(val) => { setSelected(val); onValidatorSelected(val); }}>
             <div className="relative mt-1">
-                <div className="relative w-full cursor-default overflow-hidden rounded-md text-left">
+                <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left">
                     <Combobox.Input
                         className={classNames({
                             "py-3 pl-10 pr-4 w-full  border-2 border-current rounded-lg ": true,
-                            " text-xs lg:text-sm w-full": true,
-                            "placeholder-slate-500 text-slate-100 relative bg-slate-800 border border-slate-500": true,
+                            " text-xs lg:text-sm": true,
+                            "outline-none focus:outline-none focus:ring": true,
+                            "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                         })}
                         placeholder='Type or select a validator name'
                         displayValue={(validator?: ValidatorInfo) => validator && validator.name}
@@ -55,7 +56,7 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
                 </div>
 
                 <Combobox.Options className={classNames({
-                    "absolute right-0 mt-2 w-full origin-top-right divide-y divide-current divide-opacity-1 rounded-md shadow-lg": true,
+                    "absolute right-0 mt-2 w-full origin-top-right divide-y divide-current divide-opacity-1 rounded-lg shadow-lg": true,
                     "bg-gray-900 z-10": true,
                     "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
                     "max-h-48 overflow-auto": true
