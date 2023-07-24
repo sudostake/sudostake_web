@@ -18,7 +18,7 @@ export default function Home() {
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
-  const { mutate: createVault, isLoading } = useCreateVault();
+  const { mutate: createVault, isLoading, isSuccess } = useCreateVault();
   const router = useRouter();
 
   useEffect(() => setToolBarState({
@@ -37,7 +37,7 @@ export default function Home() {
     } else {
       setOwnerVaults([]);
     }
-  }, [address, status, setOwnerVaults]);
+  }, [address, status, isSuccess, setOwnerVaults]);
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
