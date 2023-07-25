@@ -9,22 +9,24 @@ import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { VaultIndex } from "../utils/interface";
 
-// TODO
-// Refactor vault indexer
-export const indexVault = async (rpc: string, vault_address: string) => {
-    // TODO we also pass in the action description for historic purposes
-    const response = await fetch("/api", {
-        method: "POST",
-        body: JSON.stringify({ rpc, vault_address }),
+const useIndexVault = (rpc: string) => {
+    return useMutation(async (vault_address: string) => {
+        return await fetch("/api", {
+            method: "POST",
+            body: JSON.stringify({ rpc, vault_address }),
+        });
+    }, {
+        async onSuccess(res) { },
+        onError(e) { },
+        retry: 3,
     });
-
-    return await response.json();
 }
 
 export const useCreateVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async () => {
         const exec_res = await client.execute(
@@ -39,7 +41,7 @@ export const useCreateVault = () => {
         );
 
         const vault_address = exec_res.events[18].attributes[0].value;
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast("New vault created!", { type: 'success' });
@@ -56,6 +58,7 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
     const { address, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async (to_address: string) => {
         await client.execute(
@@ -66,12 +69,12 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
             ''
         );
 
-        return await indexVault(chainInfo.src.rpc, vault.id);
+        return await indexVault(vault.id);
     }, {
         async onSuccess(res) {
             toast(`Vault #${vault.index_number} transferred successfully`, { type: 'success' });
-            await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
-            return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
+            //await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
+            //return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })
@@ -133,6 +136,7 @@ export const useClaimRewards = (vault_address: string) => {
     const queryClient = useQueryClient();
     const { address, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async (index_data: boolean) => {
         await client.execute(
@@ -144,7 +148,7 @@ export const useClaimRewards = (vault_address: string) => {
         );
 
         if (index_data) {
-            return await indexVault(chainInfo.src.rpc, vault_address);
+            return await indexVault(vault_address);
         }
     }, {
         async onSuccess(res) {
@@ -241,6 +245,7 @@ export const useRequestLiquidity = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async (payload: JsonObject) => {
         await client.execute(
@@ -251,7 +256,7 @@ export const useRequestLiquidity = (vault_address: string) => {
             ''
         );
 
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Liquidity request successful`, { type: 'success' })
@@ -269,6 +274,7 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async () => {
         await client.execute(
@@ -279,7 +285,7 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
             ''
         );
 
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Liquidity request closed successfully`, { type: 'success' })
@@ -297,6 +303,7 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async ({ amount, denom }: { amount: number, denom: string }) => {
         const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === denom);
@@ -317,7 +324,7 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
             ]
         );
 
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Liquidity request accepted successfully`, { type: 'success' })
@@ -335,6 +342,7 @@ export const useRepayLoan = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async () => {
         await client.execute(
@@ -345,7 +353,7 @@ export const useRepayLoan = (vault_address: string) => {
             '',
         );
 
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Loan repaid successfully`, { type: 'success' })
@@ -363,6 +371,7 @@ export const useLiquidateCollateral = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
 
     return useMutation(async () => {
         await client.execute(
@@ -373,7 +382,7 @@ export const useLiquidateCollateral = (vault_address: string) => {
             '',
         );
 
-        return await indexVault(chainInfo.src.rpc, vault_address);
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Liquidation successfully`, { type: 'success' })

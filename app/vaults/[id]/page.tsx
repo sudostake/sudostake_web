@@ -6,8 +6,6 @@ import classNames from "classnames";
 import { useEffect } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import DepositDialog from "./dialogs/deposit";
-import WithdrawDialog from "./dialogs/withdraw";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
 import { IObjectMap, LiquidityRequestTypes } from "@/app/utils/interface";
@@ -17,6 +15,8 @@ import RequestLiquidityFlow from "./request_liquidity_flow";
 import PendingLiquidityRequestInfo from "@/app/widgets/pending_request_info";
 import ActiveLiquidityRequestInfo from "@/app/widgets/active_request_info";
 import { index_vault_data } from "@/app/services/vault_indexer";
+import DepositDialogButton from "./dialogs/deposit";
+import WithdrawDialogButton from "./dialogs/withdraw";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
@@ -163,8 +163,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                         {
                             is_owner &&
                             <span className="flex flex-row gap-2 py-2">
-                                <DepositDialog to_address={params.id} currency={chainInfo.src.stakeCurrency} />
-                                <WithdrawDialog from_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                                <DepositDialogButton to_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                                <WithdrawDialogButton from_address={params.id} currency={chainInfo.src.stakeCurrency} />
                             </span>
                         }
                     </span>
@@ -180,8 +180,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                         {
                             is_owner &&
                             <span className="flex flex-row gap-2 py-2">
-                                <DepositDialog to_address={params.id} currency={usd_currency} />
-                                <WithdrawDialog from_address={params.id} currency={usd_currency} />
+                                <DepositDialogButton to_address={params.id} currency={usd_currency} />
+                                <WithdrawDialogButton from_address={params.id} currency={usd_currency} />
                             </span>
                         }
                     </span>

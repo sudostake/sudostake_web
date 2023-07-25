@@ -13,21 +13,36 @@ import { VaultIndex } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
 import { useRouter } from 'next/navigation';
 import { useConnectWallet } from "./hooks/use_connect_wallet";
-import { useQueryOwnerVaults } from "./hooks/use_query";
+// import { useQueryOwnerVaults } from "./hooks/use_query";
 
 export default function Home() {
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
+  const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
   const { mutate: createVault, isLoading } = useCreateVault();
   const router = useRouter();
   const { mutate: connectWallet } = useConnectWallet();
-  const { vaults: owner_vaults } = useQueryOwnerVaults();
+  //  const { vaults: owner_vaults } = useQueryOwnerVaults();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
     show_back_nav: false
   }), [setToolBarState])
+
+  // Subscribe to owner's vaults
+  useEffect(() => {
+    if (status === WalletStatusType.connected) {
+      return onSnapshot(query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
+        const vaults = res.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }));
+        setOwnerVaults(vaults);
+      });
+    } else {
+      setOwnerVaults([]);
+    }
+  }, [address, status, setOwnerVaults]);
+
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {

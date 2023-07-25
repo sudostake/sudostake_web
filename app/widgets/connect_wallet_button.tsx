@@ -21,7 +21,7 @@ export default function ConnectWalletButton() {
                 connectWallet();
             }
         }, 100)
-    }, [status])
+    }, [status, connectWallet])
 
     const resetWalletConnection = () => {
         router.replace('/');
