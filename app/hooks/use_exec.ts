@@ -9,6 +9,8 @@ import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { VaultIndex } from "../utils/interface";
 
+// TODO
+// Refactor vault indexer
 export const indexVault = async (rpc: string, vault_address: string) => {
     // TODO we also pass in the action description for historic purposes
     const response = await fetch("/api", {
@@ -22,6 +24,7 @@ export const indexVault = async (rpc: string, vault_address: string) => {
 export const useCreateVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
+    const queryClient = useQueryClient();
 
     return useMutation(async () => {
         const exec_res = await client.execute(
@@ -38,8 +41,10 @@ export const useCreateVault = () => {
         const vault_address = exec_res.events[18].attributes[0].value;
         return await indexVault(chainInfo.src.rpc, vault_address);
     }, {
-        onSuccess(res) {
-            toast("New vault created!", { type: 'success' })
+        async onSuccess(res) {
+            toast("New vault created!", { type: 'success' });
+            await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
+            return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
         },
         onError(e) {
             toast("Error creating vault", { type: 'error' })
@@ -50,6 +55,7 @@ export const useCreateVault = () => {
 export const useTransferVaultOwnership = (vault: VaultIndex) => {
     const { address, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
+    const queryClient = useQueryClient();
 
     return useMutation(async (to_address: string) => {
         await client.execute(
@@ -62,8 +68,10 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
 
         return await indexVault(chainInfo.src.rpc, vault.id);
     }, {
-        onSuccess(res) {
-            toast(`Vault #${vault.index_number} transferred successfully`, { type: 'success' })
+        async onSuccess(res) {
+            toast(`Vault #${vault.index_number} transferred successfully`, { type: 'success' });
+            await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
+            return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })

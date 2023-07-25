@@ -5,6 +5,8 @@ import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import BigNumber from "bignumber.js";
 import { Currency } from "../utils/supported_chains";
+import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
+import { db } from "../services/firebase_client";
 
 async function fetchTokenBalance({
     client,
@@ -206,4 +208,22 @@ export const useFilteredValidators = (hide_zero_balance?: boolean) => {
     )
 
     return { filtered_list }
+}
+
+export const useQueryOwnerVaults = () => {
+    const { status, address } = useRecoilValue(walletState);
+
+    const { data: vaults = [], isLoading } = useQuery(['owner_vaults', address],
+        async () => {
+            const q = query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc"));
+            const querySnapshot = await getDocsFromServer(q);
+            const dataset = [];
+            querySnapshot
+                .forEach((doc) => dataset.push({ ...doc.data(), id: doc.id }));
+            return dataset;
+        },
+        { enabled: status === WalletStatusType.connected, }
+    )
+
+    return { vaults, isLoading }
 }

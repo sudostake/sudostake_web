@@ -5,7 +5,7 @@ import { WalletStatusType, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
-import { FaPlusSquare, FaSignInAlt, FaSpinner } from "react-icons/fa";
+import { FaPlusSquare, FaSpinner } from "react-icons/fa";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
@@ -13,33 +13,21 @@ import { VaultIndex } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
 import { useRouter } from 'next/navigation';
 import { useConnectWallet } from "./hooks/use_connect_wallet";
+import { useQueryOwnerVaults } from "./hooks/use_query";
 
 export default function Home() {
-  const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
   const { mutate: createVault, isLoading } = useCreateVault();
   const router = useRouter();
   const { mutate: connectWallet } = useConnectWallet();
+  const { vaults: owner_vaults } = useQueryOwnerVaults();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
     show_back_nav: false
   }), [setToolBarState])
-
-  // Subscribe to all owner_vaults owned by the connected user address
-  useEffect(() => {
-    if (status === WalletStatusType.connected) {
-      return onSnapshot(query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
-        const owner_vaults = res.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }));
-        setOwnerVaults(owner_vaults);
-      });
-    } else {
-      setOwnerVaults([]);
-    }
-  }, [address, status, setOwnerVaults]);
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
