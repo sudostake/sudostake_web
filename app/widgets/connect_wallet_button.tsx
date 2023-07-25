@@ -7,12 +7,21 @@ import { useConnectWallet } from "../hooks/use_connect_wallet";
 import ClipBoardButton from "./clipboard_button";
 import Image from 'next/image'
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function ConnectWalletButton() {
     const { mutate: connectWallet } = useConnectWallet()
     const [{ name, status }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
     const router = useRouter();
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (localStorage.getItem('connection_status') === WalletStatusType.connected && status !== WalletStatusType.connected) {
+                connectWallet();
+            }
+        }, 100)
+    }, [status])
 
     const resetWalletConnection = () => {
         router.replace('/');
@@ -23,6 +32,9 @@ export default function ConnectWalletButton() {
             name: '',
             client: null,
         })
+
+        // Update local storage
+        localStorage.setItem('connection_status', WalletStatusType.idle);
     }
 
     const get_button_state = () => {

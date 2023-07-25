@@ -25,7 +25,7 @@ export const useConnectWallet = () => {
             return
         }
 
-        // Connec wallet
+        // Connect wallet
         await window.keplr.experimentalSuggestChain(chainInfo.src);
         await window.keplr.enable(chainInfo.src.chainId);
 
@@ -50,6 +50,9 @@ export const useConnectWallet = () => {
     }, {
         onSuccess(res) {
             setWalletState(res);
+
+            // Update local storage
+            localStorage.setItem('connection_status', WalletStatusType.connected);
         },
         onError(e) {
             setWalletState({
@@ -69,7 +72,6 @@ export const useConnectWallet = () => {
                     mutation.mutate(null)
                 }
             }
-
             window.addEventListener('keplr_keystorechange', reconnectWallet)
 
             return () => {
