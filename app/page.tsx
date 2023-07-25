@@ -5,21 +5,23 @@ import { WalletStatusType, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
-import { FaPlusSquare, FaSpinner } from "react-icons/fa";
+import { FaPlusSquare, FaSignInAlt, FaSpinner } from "react-icons/fa";
 import { useCreateVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
 import { VaultIndex } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
 import { useRouter } from 'next/navigation';
+import { useConnectWallet } from "./hooks/use_connect_wallet";
 
 export default function Home() {
   const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
-  const { mutate: createVault, isLoading, isSuccess } = useCreateVault();
+  const { mutate: createVault, isLoading } = useCreateVault();
   const router = useRouter();
+  const { mutate: connectWallet } = useConnectWallet();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
@@ -37,7 +39,7 @@ export default function Home() {
     } else {
       setOwnerVaults([]);
     }
-  }, [address, status, isSuccess, setOwnerVaults]);
+  }, [address, status, setOwnerVaults]);
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
@@ -52,8 +54,26 @@ export default function Home() {
     }
   }, [address, status, setActiveLendingVaults]);
 
-  return (
+  const connect_wallet_home = () => {
+    switch (status) {
+      case WalletStatusType.error:
+      case WalletStatusType.idle:
+        return <button onClick={() => connectWallet()} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
+          <span className="ml-2 text-sm lg:text-base font-medium">Connect Wallet</span>
+        </button>
 
+      case WalletStatusType.connecting:
+        return <button className="flex items-center mb-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
+          <FaSpinner className="w-6 h-6 mr-3 spinner" />
+          <span className="ml-2 text-sm lg:text-base font-medium">Connecting...</span>
+        </button>
+
+      default:
+        return <></>
+    }
+  }
+
+  return (
     <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-2 lg:px-8">
       {status === WalletStatusType.connected &&
         <>
@@ -117,7 +137,7 @@ export default function Home() {
       {
         status !== WalletStatusType.connected &&
         <div className="flex w-full h-full items-center justify-center">
-          <h2 className="flex items-center"><span>Connect wallet to manage your vaults</span></h2>
+          {connect_wallet_home()}
         </div>
       }
     </div>
