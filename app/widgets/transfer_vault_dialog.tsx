@@ -24,7 +24,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
 
     return (
         <>
-            <button type="button" onClick={openModal} className="flex items-center justify-center  mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+            <button type="button" onClick={openModal} className="flex items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                 Transfer
             </button>
 

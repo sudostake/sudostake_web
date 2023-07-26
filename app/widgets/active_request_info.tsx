@@ -45,6 +45,15 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </td>
                 </tr>
 
+                <tr className="border-b border-current border-dashed">
+                    <th scope="row" className="py-4 font-medium whitespace-nowrap">
+                        <span>Liquidity Comission</span>
+                    </th>
+                    <td className="py-4 text-right">
+                        <span>{0.003 * vault_info.requested_amount.amount} {request_currency.coinDenom}</span>
+                    </td>
+                </tr>
+
                 {
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
                     <tr className="border-b border-current border-dashed">

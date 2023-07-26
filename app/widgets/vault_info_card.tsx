@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import { VaultIndex } from "../utils/interface";
 import classNames from "classnames";
+import ClipBoardButton from "./clipboard_button";
 
 type ComponentProps = {
     vault_info: VaultIndex
@@ -68,8 +69,11 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 </span>
             </span>
 
-            <span className="grid gap-4 grid-cols-2">
-                <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex items-center justify-center  mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+            <span className="flex flex-row gap-4 items-center justify-center mt-4">
+                <span className="flex items-center justify-center ">
+                    <ClipBoardButton address={vault_info.id} />
+                </span>
+                <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>
                 <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />

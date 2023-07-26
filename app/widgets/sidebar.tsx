@@ -1,6 +1,6 @@
 'use client'
 
-import { FaExchangeAlt, FaGlobe, FaDatabase, FaBook, FaTimes, FaLink } from 'react-icons/fa';
+import { FaExchangeAlt, FaGlobe, FaDatabase, FaBook, FaTimes, FaLink, FaHistory } from 'react-icons/fa';
 import Image from 'next/image'
 import Link from "next/link";
 import { usePathname } from 'next/navigation'
@@ -20,16 +20,22 @@ type nav_itemItem = {
 
 const nav_itemLinks: nav_itemItem[] = [
     {
-        label: "Manage Vaults",
+        label: "My Vaults",
         href: "/",
         target: "",
         icon: <FaDatabase className="w-6 h-6 mr-2" />,
     },
     {
-        label: "Liquidity Requests",
+        label: "Lend To Vaults",
         href: "/liquidity_requests",
         target: "",
         icon: <FaExchangeAlt className="w-6 h-6 mr-2" />,
+    },
+    {
+        label: "History",
+        href: "/history",
+        target: "",
+        icon: <FaHistory className="w-6 h-6 mr-2" />,
     },
     {
         label: "Governance",
@@ -37,6 +43,7 @@ const nav_itemLinks: nav_itemItem[] = [
         target: "",
         icon: <FaGlobe className="w-6 h-6 mr-2" />,
     },
+
     {
         label: "Docs",
         href: "https://github.com/orgs/sudostake/repositories",

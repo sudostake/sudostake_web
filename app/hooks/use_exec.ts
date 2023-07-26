@@ -9,6 +9,7 @@ import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { VaultIndex } from "../utils/interface";
 
+// TODO refactor this to be fail safe
 const useIndexVault = (rpc: string) => {
     return useMutation(async (vault_address: string) => {
         return await fetch("/api", {
@@ -73,8 +74,6 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
     }, {
         async onSuccess(res) {
             toast(`Vault #${vault.index_number} transferred successfully`, { type: 'success' });
-            //await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
-            //return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })

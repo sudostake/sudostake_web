@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 export default function ConnectWalletButton() {
     const { mutate: connectWallet } = useConnectWallet()
-    const [{ name, status }, setWalletState] = useRecoilState(walletState)
+    const [{ name, status, address }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
     const router = useRouter();
 
@@ -66,10 +66,10 @@ export default function ConnectWalletButton() {
                         />
 
                         <span className="ml-2 text-sm lg:text-base font-medium">{name.charAt(0).toUpperCase() + name.slice(1).toLocaleLowerCase()}</span>
-                        <span className="flex justify-center w-10 h-9 rounded-full border border-transparent hover:border-current ml-auto mr-4">
-                            <ClipBoardButton />
+                        <span className="ml-auto mr-4">
+                            <ClipBoardButton address={address} />
                         </span>
-                        <span className="flex justify-center w-10 h-9 rounded-full border border-transparent hover:border-current mr-4">
+                        <span className="flex justify-center w-9 h-9 rounded-full border border-transparent hover:border-current mr-4">
                             <button onClick={() => resetWalletConnection()}> <FaSignOutAlt className="w-5 h-5" /></button>
                         </span>
                     </span>

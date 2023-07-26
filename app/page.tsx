@@ -13,7 +13,6 @@ import { VaultIndex } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
 import { useRouter } from 'next/navigation';
 import { useConnectWallet } from "./hooks/use_connect_wallet";
-// import { useQueryOwnerVaults } from "./hooks/use_query";
 
 export default function Home() {
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
@@ -23,7 +22,6 @@ export default function Home() {
   const { mutate: createVault, isLoading } = useCreateVault();
   const router = useRouter();
   const { mutate: connectWallet } = useConnectWallet();
-  //  const { vaults: owner_vaults } = useQueryOwnerVaults();
 
   useEffect(() => setToolBarState({
     title: 'Manage Vaults',
@@ -42,7 +40,6 @@ export default function Home() {
       setOwnerVaults([]);
     }
   }, [address, status, setOwnerVaults]);
-
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {

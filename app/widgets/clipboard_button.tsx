@@ -4,9 +4,13 @@ import { FaClipboard, FaClipboardCheck } from "react-icons/fa"
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../state";
+import { toast } from "react-toastify";
 
-export default function ClipBoardButton() {
-    const { address } = useRecoilValue(walletState)
+type ComponentProps = {
+    address: string
+}
+
+export default function ClipBoardButton({ address }: ComponentProps) {
     const [isCopied, setIsCopied] = useState(false);
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
@@ -19,6 +23,7 @@ export default function ClipBoardButton() {
     const handleCopyClick = () => {
         copyTextToClipboard(address)
             .then(() => {
+                toast(`Address copied`, { type: 'success' });
                 setIsCopied(true);
                 setTimeout(() => {
                     setIsCopied(false);
@@ -30,7 +35,7 @@ export default function ClipBoardButton() {
     }
 
     return (
-        <button onClick={() => handleCopyClick()}>
+        <button className="flex items-center justify-center w-9 h-9 rounded-full border border-transparent hover:border-current" onClick={() => handleCopyClick()}>
             {!isCopied && <FaClipboard className="w-5 h-5" />}
             {isCopied && <FaClipboardCheck className="w-5 h-5" />}
         </button>
