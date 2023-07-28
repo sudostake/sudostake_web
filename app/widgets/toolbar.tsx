@@ -18,7 +18,7 @@ export default function ToolBar() {
                 "w-full h-20 lg:h-24": true,
                 "py-4 px-4 lg:px-8 lg:ml-80": true,
                 "border-b border-current": true,
-                "bg-inherit": true,
+                "bg-gray-200 dark:bg-black": true,
             })
         }>
             <button
@@ -32,11 +32,14 @@ export default function ToolBar() {
                 </span>
             </button>
 
-            <button
-                onClick={() => setSideBarState(true)}
-                className="rounded-full ml-auto mr-2 lg:hidden">
-                <FaBars className="w-5 h-5" />
-            </button>
+            {
+                !toolbarInfo.show_back_nav &&
+                <button
+                    onClick={() => setSideBarState(true)}
+                    className="rounded-full ml-auto mr-2 lg:hidden">
+                    <FaBars className="w-5 h-5" />
+                </button>
+            }
         </div>
     )
 }

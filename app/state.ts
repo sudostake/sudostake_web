@@ -13,12 +13,14 @@ export enum WalletStatusType {
     error = '@wallet-state/error',
 }
 
-export const walletState = atom<{
+export type WalletState = {
     client: SigningCosmWasmClient | null,
     status: WalletStatusType,
     name: string,
     address: string,
-}>({
+};
+
+export const walletState = atom<WalletState>({
     key: 'walletState',
     default: {
         client: null,

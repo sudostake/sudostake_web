@@ -107,7 +107,16 @@ export const supportedChains: ChainInfo[] = [
         ],
         sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
-        vault_code_ids: [484]
+        vault_code_ids: [
+            // 803215E894EF097E991E120601CB0B716744FE68E83B87DCF1AC18709B16A749
+            484,
+
+            // REMINDER
+            // on Tuesday 01 august 2023
+            // archwayd tx wasm execute $SUDOMOD_ADDR "$E_PAYLOAD" --from cashlex $NODE $TXFLAG -y
+            // 469A91C2561DB2AC08002936778239061267D69A78B2F8946E5FDDC45CE34D44
+            970
+        ]
     }
 ];
 

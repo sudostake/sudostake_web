@@ -17,8 +17,10 @@ export const metadata = {
 
 export default function RootLayout({
   children,
+  vault_info_modal
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
+  vault_info_modal: React.ReactNode,
 }) {
   return (
     <html lang="en">
@@ -29,9 +31,12 @@ export default function RootLayout({
             <SideBar />
             <ToastContainer position="top-right" />
             {/* main content is displayed in this section */}
-            <div className="flex-1 lg:ml-80 mt-20 lg:mt-24">
+            <div className="flex-1 lg:ml-80 mt-20 lg:mt-24 bg-gray-200 dark:bg-black">
               <Suspense fallback={<Loading />}>
-                {children}
+                <>
+                  {children}
+                  {vault_info_modal}
+                </>
               </Suspense>
             </div>
           </Providers>

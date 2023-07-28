@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
 import RedelegateDialog from '../dialogs/redelegate';
-import UndelegateDialog from '../dialogs/undelegate';
+import UndelegateDialogButton from '../dialogs/undelegate';
 import DelegateDialogButton from '../dialogs/delegate';
 
 type ManageStakeActionsMenuProps = {
@@ -40,7 +40,7 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
                 </div>
 
                 <div className="px-1 py-1">
-                    <UndelegateDialog vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
+                    <UndelegateDialogButton vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
                 </div>
             </div>
         </div>

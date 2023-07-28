@@ -16,6 +16,7 @@ type nav_itemItem = {
     href: string;
     target: string;
     icon: React.ReactNode;
+    disabled_in_vault_page: boolean;
 };
 
 const nav_itemLinks: nav_itemItem[] = [
@@ -24,24 +25,28 @@ const nav_itemLinks: nav_itemItem[] = [
         href: "/",
         target: "",
         icon: <FaDatabase className="w-6 h-6 mr-2" />,
+        disabled_in_vault_page: false,
     },
     {
-        label: "Lend To Vaults",
+        label: "Lend To Vault Owners",
         href: "/liquidity_requests",
         target: "",
         icon: <FaExchangeAlt className="w-6 h-6 mr-2" />,
+        disabled_in_vault_page: false,
     },
     {
         label: "History",
         href: "/history",
         target: "",
         icon: <FaHistory className="w-6 h-6 mr-2" />,
+        disabled_in_vault_page: true,
     },
     {
         label: "Governance",
         href: "/governance",
         target: "",
         icon: <FaGlobe className="w-6 h-6 mr-2" />,
+        disabled_in_vault_page: true,
     },
 
     {
@@ -49,21 +54,31 @@ const nav_itemLinks: nav_itemItem[] = [
         href: "https://github.com/orgs/sudostake/repositories",
         target: "_blank",
         icon: <FaBook className="w-6 h-6 mr-3" />,
+        disabled_in_vault_page: false,
     },
 ];
 
 export default function SideBar() {
     const pathname = usePathname();
+    const user_in_vault_page = pathname.startsWith('/vaults/');
     const [isOpen, setSideBarState] = useRecoilState(sideBarToggleState);
 
-    useEffect(() => setSideBarState(!isMobile), [setSideBarState])
+    useEffect(() => setSideBarState(!isMobile), [setSideBarState]);
+
+    function handle_link_click(event: any, link_disabled_in_vault_page: boolean) {
+        if (user_in_vault_page && link_disabled_in_vault_page) {
+            event.preventDefault();
+        } else {
+            setSideBarState(!isOpen);
+        }
+    }
 
     return (
         <div className={
             classNames({
                 "fixed w-full h-full lg:w-80 z-20 lg:z-0": true,
                 "lg:translate-x-0": true,
-                "bg-inherit": true,
+                "bg-gray-300 dark:bg-black": true,
                 "-translate-x-full": !isOpen
             })
         }>
@@ -84,10 +99,13 @@ export default function SideBar() {
                 <ul className="w-full flex flex-col mt-4 px-2">
                     {nav_itemLinks.map((nav_item, index) => {
                         return (
-                            <Link key={index} href={nav_item.href} target={nav_item.target} onClick={() => setSideBarState(!isOpen)} passHref>
+                            <Link key={index} href={nav_item.href} target={nav_item.target} onClick={(e) => {
+                                handle_link_click(e, nav_item.disabled_in_vault_page);
+                            }} passHref>
                                 <li className={classNames({
                                     "flex items-center w-full h-16 px-3 mb-2 rounded-lg": true,
-                                    "hover:border hover:border-current": true,
+                                    "hover:border hover:border-current": !(user_in_vault_page && nav_item.disabled_in_vault_page),
+                                    "cursor-none": user_in_vault_page && nav_item.disabled_in_vault_page,
                                     "border border-current": nav_item.href === pathname,
                                     "border border-transparent": nav_item.href !== pathname
                                 })}>

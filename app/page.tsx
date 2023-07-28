@@ -11,7 +11,7 @@ import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
 import { VaultIndex } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useConnectWallet } from "./hooks/use_connect_wallet";
 
 export default function Home() {
@@ -22,11 +22,18 @@ export default function Home() {
   const { mutate: createVault, isLoading } = useCreateVault();
   const router = useRouter();
   const { mutate: connectWallet } = useConnectWallet();
+  const pathname = usePathname();
 
-  useEffect(() => setToolBarState({
-    title: 'Manage Vaults',
-    show_back_nav: false
-  }), [setToolBarState])
+  // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
+  // Set it back to the title for this page, when pathname === /
+  useEffect(() => {
+    if (pathname === '/') {
+      setToolBarState({
+        title: 'Manage Vaults',
+        show_back_nav: false
+      });
+    }
+  }, [pathname, setToolBarState])
 
   // Subscribe to owner's vaults
   useEffect(() => {

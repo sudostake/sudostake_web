@@ -6,18 +6,25 @@ import { toolBarState } from '../state';
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from '../services/firebase_client';
 import PendingLiquidityRequestInfo from '../widgets/pending_request_info';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { VaultIndex } from '../utils/interface';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => setToolBarState({
-    title: 'Liquidity Requests',
-    show_back_nav: false
-  }), [setToolBarState]);
+  // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
+  // Set it back to the title for this page, when pathname === /liquidity_requests
+  useEffect(() => {
+    if (pathname === '/liquidity_requests') {
+      setToolBarState({
+        title: 'Lend to Vault Owners',
+        show_back_nav: false
+      });
+    }
+  }, [pathname, setToolBarState])
 
   // Subscribe to pending liquidity requests
   useEffect(() => {
