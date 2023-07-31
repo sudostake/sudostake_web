@@ -113,7 +113,7 @@ function UndelegateDialog({ vault_address, currency, is_open, on_close }: Compon
                                 <ValidatorOptions hide_zero_balance={true} onValidatorSelected={setSelectedValidator} />
 
                                 <div className="mt-8 flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
-                                    Available {selected_validator && selected_validator.delegated_amount} {currency.coinDenom}
+                                    Available {selected_validator && selected_validator.delegated_amount.toLocaleString('en-us')} {currency.coinDenom}
                                 </div>
 
                                 <div className="relative flex w-full flex-wrap items-stretch mb-8">
@@ -124,7 +124,7 @@ function UndelegateDialog({ vault_address, currency, is_open, on_close }: Compon
                                             "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
                                             "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                                         })} />
-                                    <span onClick={() => selected_validator && setAmount(selected_validator.delegated_amount)} role="button" className="right-0 mr-2 lg:mr-8 flex h-full leading-snug font-normal text-center text-xs lg:text-base items-center justify-center text-slate-100 absolute bg-transparent rounded-lg  w-8 ">
+                                    <span onClick={() => selected_validator && setAmount(`${selected_validator.delegated_amount}`)} role="button" className="right-0 mr-2 lg:mr-8 flex h-full leading-snug font-normal text-center text-xs lg:text-base items-center justify-center text-slate-100 absolute bg-transparent rounded-lg  w-8 ">
                                         max
                                     </span>
                                 </div>

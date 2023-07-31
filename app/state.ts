@@ -55,7 +55,7 @@ export const selectedChainState = atom<ChainInfo>({
 export type ValidatorInfo = {
     name: string,
     address: string,
-    delegated_amount: string
+    delegated_amount: number
 };
 
 type UnbondingEntry = {

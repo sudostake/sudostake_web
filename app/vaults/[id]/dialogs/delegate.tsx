@@ -107,7 +107,7 @@ function DelegateDialog({ vault_address, currency, is_open, on_close }: _Delegat
                                 <ValidatorOptions onValidatorSelected={setSelectedValidator} />
 
                                 <div className="mt-8 flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
-                                    Available: {balance} {currency.coinDenom}
+                                    Available: {balance.toLocaleString('en-us')} {currency.coinDenom}
                                 </div>
 
                                 <div className="relative flex w-full flex-wrap items-stretch mb-8">

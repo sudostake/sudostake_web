@@ -50,7 +50,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                         <span>Requested Amount</span>
                     </th>
                     <td className="py-4 text-right">
-                        <span>{vault_info.requested_amount.amount} {request_currency.coinDenom}</span>
+                        <span>{vault_info.requested_amount.amount.toLocaleString('en-us')} {request_currency.coinDenom}</span>
                     </td>
                 </tr>
 
@@ -59,7 +59,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                         <span>Liquidity Comission</span>
                     </th>
                     <td className="py-4 text-right">
-                        <span>{0.003 * vault_info.requested_amount.amount} {request_currency.coinDenom}</span>
+                        <span>{(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom}</span>
                     </td>
                 </tr>
 

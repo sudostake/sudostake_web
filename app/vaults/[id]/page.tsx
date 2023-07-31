@@ -44,6 +44,10 @@ export default function Vault({ params }: { params: { id: string } }) {
 
     // Vault conditions
     const is_owner = current_user === (vault_info && vault_info.owner);
+    const is_lender = current_user === (vault_info &&
+        vault_info.liquidity_request_status === 'active' &&
+        vault_info.lender);
+
     const has_active_rental_option = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
         vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan;
@@ -58,6 +62,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         vault_info.liquidity_request_status === 'active' &&
         vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
         vault_info.end_time === 'EXPIRED';
+    const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
     const native_balance = vault_metadata && vault_metadata.native_balance;
     const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
     const total_available_native_balance = native_balance + accumulated_rewards;
@@ -88,7 +93,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                 validators_with_delegations_map[address] = {
                     name: '',
                     address,
-                    delegated_amount: `${amount}`
+                    delegated_amount: amount
                 };
             });
 
@@ -116,13 +121,13 @@ export default function Vault({ params }: { params: { id: string } }) {
                     validators_without_delegations_list.push({
                         name,
                         address,
-                        delegated_amount: '0.00'
+                        delegated_amount: 0
                     });
                 } else {
                     jailed_validator_list.push({
                         name,
                         address,
-                        delegated_amount: '0.00'
+                        delegated_amount: 0
                     });
                 }
             } else {
@@ -232,14 +237,17 @@ export default function Vault({ params }: { params: { id: string } }) {
                     </span>
 
                     <span className="flex flex-row justify-between w-full py-4">
-                        <span className="flex flex-col">
-                            <span>Unbonding</span>
-                            <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
+                        <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                            <span>Unbonding Info</span>
+                            <span>
+                                {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
+                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                            </span>
                         </span>
-                        <span className="flex flex-row py-2">
+                        {
+                            can_view_unbonding_info &&
                             <UnbondingInfoDialog />
-                        </span>
+                        }
                     </span>
 
                     {is_owner && vault_info && vault_info.liquidity_request_status === 'idle' &&
