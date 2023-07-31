@@ -79,7 +79,8 @@ export default function SideBar() {
                 "fixed w-full h-full lg:w-80 z-20 lg:z-0": true,
                 "lg:translate-x-0": true,
                 "bg-gray-300 dark:bg-black": true,
-                "-translate-x-full": !isOpen
+                "-translate-x-full": !isOpen,
+                "transition ease-in-out duration-300 transform": true,
             })
         }>
             <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
