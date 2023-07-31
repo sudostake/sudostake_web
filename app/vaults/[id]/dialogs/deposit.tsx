@@ -104,7 +104,7 @@ function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDia
                                 </p>
 
                                 <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
-                                    Available: {balance} {currency.coinDenom}
+                                    Available: {balance.toLocaleString('en-us')} {currency.coinDenom}
                                 </div>
 
                                 <input value={amount}

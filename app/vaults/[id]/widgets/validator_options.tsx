@@ -89,7 +89,7 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
 
                                         <span
                                             className={`text-xs lg:text-base absolute inset-y-0 right-0 flex items-center pr-3 ${active || selected ? 'text-teal-600' : 'text-gray-400'}`}>
-                                            {Number(validator.delegated_amount).toFixed(2)}
+                                            {Number(validator.delegated_amount).toLocaleString('en-us')}
                                         </span>
                                     </span>
                                 )}

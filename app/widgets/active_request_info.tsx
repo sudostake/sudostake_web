@@ -96,7 +96,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
 
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.already_claimed.toFixed(2)} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.already_claimed.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }

@@ -80,7 +80,7 @@ export default function UnbondingInfoDialog() {
                                                                         return (
                                                                             <tr key={e_index} className="border-b border-slate-700">
                                                                                 <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                                                                                    {entry.amount}
+                                                                                    {entry.amount.toLocaleString('en-us')}
                                                                                 </th>
                                                                                 <td className="px-6 py-4">
                                                                                     {entry.completion_time}

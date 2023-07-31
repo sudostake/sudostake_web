@@ -36,35 +36,35 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
             <span className="flex items-center">
                 <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                 <span className="ml-auto">
-                    {vault_metadata && Number(vault_metadata.native_balance).toFixed(2)}
+                    {vault_metadata && Number(vault_metadata.native_balance).toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>{usd_currency.coinDenom}</span>
                 <span className="ml-auto">
-                    {vault_metadata && Number(vault_metadata.usdc_balance).toFixed(2)}
+                    {vault_metadata && Number(vault_metadata.usdc_balance).toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Delegated</span>
                 <span className="ml-auto">
-                    {vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
+                    {vault_metadata && Number(vault_metadata.total_staked).toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Staking Rewards</span>
                 <span className="ml-auto">
-                    {vault_metadata && Number(vault_metadata.acc_rewards).toFixed(2)}
+                    {vault_metadata && Number(vault_metadata.acc_rewards).toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Unbonding</span>
                 <span className="ml-auto">
-                    {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
+                    {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>

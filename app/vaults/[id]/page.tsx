@@ -156,7 +156,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
                             <span>
-                                {native_balance.toFixed(2)}
+                                {native_balance.toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -173,7 +173,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>{usd_currency.coinDenom}</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.usdc_balance).toFixed(2)}
+                                {vault_metadata && Number(vault_metadata.usdc_balance).toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -190,7 +190,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>Delegated</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.total_staked).toFixed(2)}
+                                {vault_metadata && Number(vault_metadata.total_staked).toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -201,7 +201,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={can_claim_rewards ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>Rewards</span>
                             <span>
-                                {accumulated_rewards.toFixed(2)}
+                                {accumulated_rewards.toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -212,7 +212,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                     type="button"
                                     disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
                                     onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
-                                        "px-2 h-9 inline-flex items-center justify-center border border-current rounded hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                        "items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
                                         "w-24": !isLoading
                                     })}>
                                     {
@@ -234,7 +234,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                     <span className="flex flex-row justify-between w-full py-4">
                         <span className="flex flex-col">
                             <span>Unbonding</span>
-                            <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toFixed(2)}
+                            <span> {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}</span>
                         </span>
                         <span className="flex flex-row py-2">
