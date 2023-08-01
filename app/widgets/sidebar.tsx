@@ -7,8 +7,8 @@ import { usePathname } from 'next/navigation'
 import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
-import { useRecoilState } from 'recoil';
-import { sideBarToggleState } from '../state';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { selectedChainState, sideBarToggleState, walletState } from '../state';
 import ConnectWalletButton from './connect_wallet_button';
 
 type nav_itemItem = {
@@ -19,49 +19,51 @@ type nav_itemItem = {
     disabled_in_vault_page: boolean;
 };
 
-const nav_itemLinks: nav_itemItem[] = [
-    {
-        label: "My Vaults",
-        href: "/",
-        target: "",
-        icon: <FaDatabase className="w-6 h-6 mr-2" />,
-        disabled_in_vault_page: false,
-    },
-    {
-        label: "Lend To Vault Owners",
-        href: "/liquidity_requests",
-        target: "",
-        icon: <FaExchangeAlt className="w-6 h-6 mr-2" />,
-        disabled_in_vault_page: false,
-    },
-    {
-        label: "History",
-        href: "/history",
-        target: "",
-        icon: <FaHistory className="w-6 h-6 mr-2" />,
-        disabled_in_vault_page: true,
-    },
-    {
-        label: "Governance",
-        href: "/governance",
-        target: "",
-        icon: <FaGlobe className="w-6 h-6 mr-2" />,
-        disabled_in_vault_page: true,
-    },
-
-    {
-        label: "Docs",
-        href: "https://github.com/orgs/sudostake/repositories",
-        target: "_blank",
-        icon: <FaBook className="w-6 h-6 mr-3" />,
-        disabled_in_vault_page: false,
-    },
-];
-
 export default function SideBar() {
     const pathname = usePathname();
     const user_in_vault_page = pathname.startsWith('/vaults/');
     const [isOpen, setSideBarState] = useRecoilState(sideBarToggleState);
+    const { address } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
+
+    const nav_itemLinks: nav_itemItem[] = [
+        {
+            label: "My Vaults",
+            href: "/",
+            target: "",
+            icon: <FaDatabase className="w-6 h-6 mr-2" />,
+            disabled_in_vault_page: false,
+        },
+        {
+            label: "Markets",
+            href: "/liquidity_requests",
+            target: "",
+            icon: <FaExchangeAlt className="w-6 h-6 mr-2" />,
+            disabled_in_vault_page: false,
+        },
+        {
+            label: "Governance",
+            href: "/governance",
+            target: "",
+            icon: <FaGlobe className="w-6 h-6 mr-2" />,
+            disabled_in_vault_page: true,
+        },
+        {
+            label: "History",
+            href: address && chainInfo && (`${chainInfo.explorer_url}/account/${address}`),
+            target: "_blank",
+            icon: <FaHistory className="w-6 h-6 mr-2" />,
+            disabled_in_vault_page: true,
+        },
+
+        {
+            label: "Docs",
+            href: "https://github.com/orgs/sudostake/repositories",
+            target: "_blank",
+            icon: <FaBook className="w-6 h-6 mr-3" />,
+            disabled_in_vault_page: false,
+        },
+    ];
 
     useEffect(() => setSideBarState(!isMobile), [setSideBarState]);
 

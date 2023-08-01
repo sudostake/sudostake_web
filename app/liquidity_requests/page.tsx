@@ -20,7 +20,7 @@ export default function LiquidityRequests() {
   useEffect(() => {
     if (pathname === '/liquidity_requests') {
       setToolBarState({
-        title: 'Lend to Vault Owners',
+        title: 'Lend to vault owners',
         show_back_nav: false
       });
     }

@@ -7,6 +7,7 @@ import { StrictMode, Suspense } from 'react';
 import Loading from './loading';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import FailedVaultIndexHandler from './widgets/vault_index_handler';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Providers>
             <ToolBar />
             <SideBar />
+            <FailedVaultIndexHandler />
             <ToastContainer position="top-right" />
             {/* main content is displayed in this section */}
             <div className="flex-1 lg:ml-80 mt-20 lg:mt-24 bg-gray-200 dark:bg-black">

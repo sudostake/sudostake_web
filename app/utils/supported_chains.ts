@@ -40,7 +40,8 @@ export type ChainInfo = {
     src: ChainInfoFull,
     request_denoms: Currency[],
     sudomod_address: string,
-    vault_code_ids: number[]
+    vault_code_ids: number[],
+    explorer_url: string,
 };
 
 // Describe Archway chain info
@@ -116,7 +117,8 @@ export const supportedChains: ChainInfo[] = [
             // archwayd tx wasm execute $SUDOMOD_ADDR "$E_PAYLOAD" --from cashlex $NODE $TXFLAG -y
             // 469A91C2561DB2AC08002936778239061267D69A78B2F8946E5FDDC45CE34D44
             970
-        ]
+        ],
+        explorer_url: 'https://testnet.mintscan.io/archway-testnet'
     }
 ];
 

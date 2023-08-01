@@ -80,3 +80,8 @@ export const validatorListState = atom<{
         validator_unbonding_list: []
     },
 });
+
+export const VaultIndexErrorState = atom<boolean>({
+    key: 'VaultIndexErrorState',
+    default: false,
+});

@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRecoilValue } from "recoil";
-import { ValidatorInfo, selectedChainState, walletState } from "../state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { ValidatorInfo, VaultIndexErrorState, selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
@@ -9,17 +9,23 @@ import { convertDenomToMicroDenom } from "../utils/conversion";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { VaultIndex } from "../utils/interface";
 
-// TODO refactor this to be fail safe
-const useIndexVault = (rpc: string) => {
+export const useIndexVault = () => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const setVaultIndexErrorState = useSetRecoilState(VaultIndexErrorState);
+
     return useMutation(async (vault_address: string) => {
         return await fetch("/api", {
             method: "POST",
-            body: JSON.stringify({ rpc, vault_address }),
+            body: JSON.stringify({ rpc: chainInfo.src.rpc, vault_address }),
         });
     }, {
-        async onSuccess(res) { },
-        onError(e) { },
-        retry: 3,
+        async onSuccess(_) {
+            localStorage.removeItem('failed_vault_index');
+        },
+        onError(_, vault_address) {
+            localStorage.setItem('failed_vault_index', vault_address);
+            setVaultIndexErrorState(true);
+        },
     });
 }
 
@@ -27,7 +33,7 @@ export const useCreateVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
         const exec_res = await client.execute(
@@ -57,9 +63,7 @@ export const useCreateVault = () => {
 
 export const useTransferVaultOwnership = (vault: VaultIndex) => {
     const { address, client } = useRecoilValue(walletState);
-    const chainInfo = useRecoilValue(selectedChainState);
-    const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async (to_address: string) => {
         await client.execute(
@@ -134,8 +138,7 @@ export const useWithdraw = (from_address: string) => {
 export const useClaimRewards = (vault_address: string) => {
     const queryClient = useQueryClient();
     const { address, client } = useRecoilValue(walletState);
-    const chainInfo = useRecoilValue(selectedChainState);
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async (index_data: boolean) => {
         await client.execute(
@@ -241,10 +244,9 @@ export const useRedelegate = (vault_address: string) => {
 }
 
 export const useRequestLiquidity = (vault_address: string) => {
-    const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async (payload: JsonObject) => {
         await client.execute(
@@ -270,10 +272,9 @@ export const useRequestLiquidity = (vault_address: string) => {
 }
 
 export const useClosePendingLiquidityRequest = (vault_address: string) => {
-    const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
         await client.execute(
@@ -302,7 +303,7 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async ({ amount, denom }: { amount: number, denom: string }) => {
         const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === denom);
@@ -338,10 +339,9 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
 }
 
 export const useRepayLoan = (vault_address: string) => {
-    const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
         await client.execute(
@@ -367,10 +367,9 @@ export const useRepayLoan = (vault_address: string) => {
 }
 
 export const useLiquidateCollateral = (vault_address: string) => {
-    const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
-    const { mutate: indexVault } = useIndexVault(chainInfo.src.rpc);
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
         await client.execute(

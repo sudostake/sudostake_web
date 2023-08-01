@@ -95,7 +95,7 @@ export default function Home() {
             {
               !isLoading && <>
                 <FaPlusSquare className="w-6 h-6 mr-4" />
-                <span>Create Vault</span>
+                <span>Create a New Vault</span>
               </>
             }
           </button>
