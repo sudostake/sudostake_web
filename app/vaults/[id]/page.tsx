@@ -36,7 +36,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     }));
 
     // Vault actions
-    const { mutate: claimRewards, isLoading } = useClaimRewards(params.id);
+    const { mutate: claimRewards, isLoading: isClaimRewardsLoading } = useClaimRewards(params.id);
     const { mutate: close_request, isLoading: isCloseRequestLoading } = useClosePendingLiquidityRequest(params.id);
     const { mutate: accept_request, isLoading: isAcceptLoading } = useAcceptLiquidityRequest(params.id);
     const { mutate: repay_loan, isLoading: isRepayLoanLoading } = useRepayLoan(params.id);
@@ -217,17 +217,17 @@ export default function Vault({ params }: { params: { id: string } }) {
                                     type="button"
                                     disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
                                     onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
-                                        "items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
-                                        "w-24": !isLoading
+                                        "px-2 inline-flex justify-center items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
+                                        "w-24": !isClaimRewardsLoading
                                     })}>
                                     {
-                                        isLoading && <>
+                                        isClaimRewardsLoading && <>
                                             <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                             <span>Claiming</span>
                                         </>
                                     }
                                     {
-                                        !isLoading && <>
+                                        !isClaimRewardsLoading && <>
                                             <span>Claim</span>
                                         </>
                                     }
