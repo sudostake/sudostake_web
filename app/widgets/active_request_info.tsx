@@ -83,7 +83,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                             <span>Collateral Amount</span>
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.collateral_amount} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.collateral_amount.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }

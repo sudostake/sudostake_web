@@ -74,10 +74,7 @@ export default function Home() {
       case WalletStatusType.idle: {
         return (
           <div className="flex flex-col gap-8">
-            <span className="text-sm font-medium text-center">CONNECT</span>
-
-
-
+            <span className="text-sm text-center">CONNECT WALLET</span>
             <button onClick={() => handle_select_wallet(WalletType.keplr)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
               <Image
                 src="/keplr_logo.svg"
@@ -86,7 +83,7 @@ export default function Home() {
                 height={30}
                 priority
               />
-              <span className="ml-2 text-sm lg:text-base font-medium">Keplr Wallet</span>
+              <span className="ml-2 text-sm lg:text-base font-medium">KEPLR</span>
             </button>
 
             <button onClick={() => handle_select_wallet(WalletType.leap)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
@@ -97,7 +94,7 @@ export default function Home() {
                 height={30}
                 priority
               />
-              <span className="ml-2 text-sm lg:text-base font-medium">Leap Wallet</span>
+              <span className="ml-2 text-sm lg:text-base font-medium">LEAP</span>
             </button>
 
             <button onClick={() => handle_select_wallet(WalletType.cosmostation)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
@@ -108,7 +105,7 @@ export default function Home() {
                 height={30}
                 priority
               />
-              <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
+              <span className="ml-2 text-sm lg:text-base font-medium">IBC</span>
             </button>
           </div>
         );
@@ -126,7 +123,7 @@ export default function Home() {
   }
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-2 lg:px-8">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
       {status === WalletStatusType.connected &&
         <>
           <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-16 px-3 text-sm lg:text-base font-medium lg:font-medium">
@@ -149,7 +146,7 @@ export default function Home() {
             owner_vaults.length > 0 &&
             <>
               <h2 className="mt-14 mb-4 font-bold">My Vaults</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 {owner_vaults.map((vault, index) => {
                   return (
                     <VaultInfoCard key={index} vault_info={vault} />
@@ -163,7 +160,7 @@ export default function Home() {
             active_lending_vaults.length > 0 &&
             <>
               <h2 className="mt-14 mb-4 font-bold">Active lending positions</h2>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                 {active_lending_vaults.map((vault, index) => {
                   return (
                     <div key={index} className="w-full p-4 border border-current rounded-lg grid grid-cols-1 gap-2">

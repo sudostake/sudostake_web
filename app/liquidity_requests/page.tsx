@@ -36,10 +36,10 @@ export default function LiquidityRequests() {
   }, []);
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-4 px-2 lg:px-8">
+    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
       {
         vaults.length > 0 &&
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {vaults.map((vault, index) => {
             return (
               <div key={index} className="w-full p-4 border border-current rounded-lg grid grid-cols-1 gap-2">

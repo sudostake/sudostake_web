@@ -21,10 +21,10 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
     return (
         <div className={
             classNames({
-                "w-full p-4 border-2 rounded-lg grid grid-cols-1 gap-2": true,
-                "border-current": vault_info.liquidity_request_status === 'idle',
-                "border-orange-500": vault_info.liquidity_request_status === 'pending',
-                "border-green-500": vault_info.liquidity_request_status === 'active',
+                "w-full p-4 rounded-lg grid grid-cols-1 gap-2": true,
+                "border border-current": vault_info.liquidity_request_status === 'idle',
+                "border-orange-500 border-2": vault_info.liquidity_request_status === 'pending',
+                "border-green-500 border-2": vault_info.liquidity_request_status === 'active',
             })
         }>
             <span className="flex items-center">

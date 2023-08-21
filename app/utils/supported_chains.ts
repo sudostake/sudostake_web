@@ -109,14 +109,12 @@ export const supportedChains: ChainInfo[] = [
         sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
         vault_code_ids: [
+            // 6F364E2FF1DBDE2514A66E27F7CD02600A71BA83279D266FC92ED9AE35F331C8
+            1160,
+            // 469A91C2561DB2AC08002936778239061267D69A78B2F8946E5FDDC45CE34D44
+            970,
             // 803215E894EF097E991E120601CB0B716744FE68E83B87DCF1AC18709B16A749
             484,
-
-            // REMINDER
-            // on Tuesday 01 august 2023
-            // archwayd tx wasm execute $SUDOMOD_ADDR "$E_PAYLOAD" --from cashlex $NODE $TXFLAG -y
-            // 469A91C2561DB2AC08002936778239061267D69A78B2F8946E5FDDC45CE34D44
-            970
         ],
         explorer_url: 'https://testnet.mintscan.io/archway-testnet'
     }

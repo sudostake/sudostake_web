@@ -53,7 +53,7 @@ export default function SideBar() {
             href: address && chainInfo && (`${chainInfo.explorer_url}/account/${address}`),
             target: "_blank",
             icon: <FaHistory className="w-6 h-6 mr-2" />,
-            disabled_in_vault_page: true,
+            disabled_in_vault_page: false,
         },
 
         {
@@ -99,7 +99,7 @@ export default function SideBar() {
                     <span className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></span>
                 </span>
 
-                <ul className="w-full flex flex-col mt-4 px-2">
+                <ul className="w-full flex flex-col mt-8 px-2">
                     {nav_itemLinks.map((nav_item, index) => {
                         return (
                             <Link key={index} href={nav_item.href} target={nav_item.target} onClick={(e) => {

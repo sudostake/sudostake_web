@@ -150,7 +150,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
     return (
         <div className={classNames({
-            "h-full overflow-y-scroll text-sm lg:text-base p-4 lg:px-8": true,
+            "h-full overflow-y-scroll text-sm lg:text-base px-4 py-8 lg:px-8": true,
             "flex flex-col": true,
             "w-full xl:w-3/4 xl:border-r xl:border-current": true,
         })}>
@@ -178,7 +178,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>{usd_currency.coinDenom}</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.usdc_balance).toLocaleString('en-us')}
+                                {vault_metadata && vault_metadata.usdc_balance.toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
@@ -195,7 +195,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                             <span>Delegated</span>
                             <span>
-                                {vault_metadata && Number(vault_metadata.total_staked).toLocaleString('en-us')}
+                                {vault_metadata && vault_metadata.total_staked.toLocaleString('en-us')}
                                 {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
                             </span>
                         </span>
