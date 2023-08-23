@@ -25,7 +25,8 @@ export const useConnectWallet = () => {
         switch (selected_wallet) {
             case WalletType.keplr: {
                 if (!window?.keplr) {
-                    alert('Please install Keplr extension and refresh the page')
+                    alert('Please install Keplr extension and refresh the page');
+                    throw new Error('Error connecting wallet');
                 } else {
                     window.wallet = window.keplr;
                 }
@@ -35,7 +36,8 @@ export const useConnectWallet = () => {
 
             case WalletType.leap: {
                 if (!window?.leap) {
-                    alert('Please install leap extension or use the in-app browser in the mobile app')
+                    alert('Please install leap extension or use the in-app browser in the mobile app');
+                    throw new Error('Error connecting wallet');
                 } else {
                     window.wallet = window.leap;
                 }
@@ -46,6 +48,7 @@ export const useConnectWallet = () => {
             case WalletType.cosmostation: {
                 if (!window?.cosmostation) {
                     alert('Please install cosmostation extension or use the in-app browser in the mobile app');
+                    throw new Error('Error connecting wallet');
                 } else {
                     window.wallet = window.cosmostation.providers.keplr;
                 }
