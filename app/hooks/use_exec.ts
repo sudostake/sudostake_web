@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ValidatorInfo, VaultIndexErrorState, selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
@@ -14,12 +14,20 @@ export const useIndexVault = () => {
     const setVaultIndexErrorState = useSetRecoilState(VaultIndexErrorState);
 
     return useMutation(async (vault_address: string) => {
-        return await fetch("/api", {
+        const response = await fetch("/api", {
             method: "POST",
             body: JSON.stringify({ rpc: chainInfo.src.rpc, vault_address }),
         });
+
+        // Return success if ok
+        if (response.ok) {
+            return response.json();
+        }
+
+        // Here we catch the server error
+        return Promise.reject(response)
     }, {
-        async onSuccess(_) {
+        onSuccess(_) {
             localStorage.removeItem('failed_vault_index');
         },
         onError(_, vault_address) {
@@ -47,8 +55,10 @@ export const useCreateVault = () => {
             ]
         );
 
-        const vault_address = exec_res.events[18].attributes[0].value;
-        return await indexVault(vault_address);
+        // Find the event of type instantiate and attribute with key _contract_address
+        const instantiate_event = exec_res.events.find(e => e.type === 'instantiate');
+        const vault_address_attr = instantiate_event.attributes.find(a => a.key === '_contract_address');
+        return await indexVault(vault_address_attr.value);
     }, {
         async onSuccess(res) {
             toast("New vault created!", { type: 'success' });

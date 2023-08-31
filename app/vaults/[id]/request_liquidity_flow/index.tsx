@@ -130,8 +130,8 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
 
     return (
         <>
-            <div role="button" onClick={() => setIsOpen(true)} className="p-4 rounded-lg text-xs lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
-                Request liquidity by sharing rights to your vault with lenders
+            <div role="button" onClick={() => setIsOpen(true)} className="p-8 rounded-lg text-sm lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
+                Request liquidity by sharing rights to this vault with lenders
             </div>
 
             <Transition appear show={isOpen} as={Fragment}>

@@ -84,7 +84,7 @@ export default function VaultIndexHandler({ }: ComponentProps) {
                                             }
                                             {
                                                 !isLoading && <>
-                                                    <span>Re-Index</span>
+                                                    <span>Retry</span>
                                                 </>
                                             }
                                         </button>

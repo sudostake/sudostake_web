@@ -58,12 +58,12 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
-                                        as="h2"
+                                        as="h1"
                                         className="text-lg font-bold leading-6 text-gray-300">
-                                        Transfer Vault: ID #{vault_info.index_number}
+                                        Transfer vault ownership: ID #{vault_info.index_number}
                                     </Dialog.Title>
 
-                                    <div className="mt-2 mb-8">
+                                    <div className="mt-8 mb-2">
                                         <p className="text-xs lg:text-base text-gray-300">
                                             Enter the recipient&apos;s address below
                                         </p>

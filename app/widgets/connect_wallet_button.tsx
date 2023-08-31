@@ -1,8 +1,8 @@
 'use client'
 
 import { FaSignOutAlt } from "react-icons/fa"
-import { useRecoilState, useRecoilValue } from "recoil";
-import { WalletStatusType, selectedChainState, walletState } from "../state";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { WalletStatusType, selectedChainState, sideBarToggleState, walletState } from "../state";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import ClipBoardButton from "./clipboard_button";
 import Image from 'next/image'
@@ -13,6 +13,7 @@ export default function ConnectWalletButton() {
     const { mutate: connectWallet } = useConnectWallet()
     const [{ name, status, address }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
+    const setSideBarState = useSetRecoilState(sideBarToggleState);
     const router = useRouter();
 
     useEffect(() => {
@@ -24,8 +25,10 @@ export default function ConnectWalletButton() {
     }, [status, connectWallet])
 
     const resetWalletConnection = () => {
+        // Go back to home route
         router.replace('/');
 
+        // Reset wallet connection state
         setWalletState({
             status: WalletStatusType.idle,
             address: '',
@@ -36,6 +39,9 @@ export default function ConnectWalletButton() {
         // Update local storage
         localStorage.setItem('connection_status', WalletStatusType.idle);
         localStorage.removeItem('selected_wallet');
+
+        // Close nav bar
+        setSideBarState(false);
     }
 
     return (
