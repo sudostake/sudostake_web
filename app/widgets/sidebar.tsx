@@ -9,7 +9,7 @@ import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedChainState, sideBarToggleState, walletState } from '../state';
-import ConnectWalletButton from './connect_wallet_button';
+import ConnectedWalletButton from './connected_wallet_button';
 
 type nav_itemItem = {
     label: string;
@@ -122,7 +122,7 @@ export default function SideBar() {
                 </ul>
 
                 <div className="flex items-center w-full mt-auto">
-                    <ConnectWalletButton />
+                    <ConnectedWalletButton />
                 </div>
             </div>
         </div>

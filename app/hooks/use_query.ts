@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import BigNumber from "bignumber.js";
-import { Currency } from "../utils/supported_chains";
+import { Currency, SudoStakeChainInfoSchema } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 
@@ -27,17 +27,19 @@ async function fetchTokenBalance({
 
 async function fetchUnbondingInfo({
     vault_address,
-    token: { decimals }
+    token: { decimals },
+    chain_id
 }: {
     vault_address: string,
     token: {
         decimals: number
-    }
+    },
+    chain_id: string
 }): Promise<{
     total_unbonding_amount: number,
     unbonding_list: ValidatorUnbondingInfo[]
 }> {
-    const api = `/api/unbonding_delegations?vault_address=${vault_address}`;
+    const api = `/api/unbonding_delegations?vault_address=${vault_address}&chain_id=${chain_id}`;
     const response = await fetch(api, {
         method: "GET",
     });
@@ -72,8 +74,9 @@ async function fetchUnbondingInfo({
 }
 
 export const useQueryRedelegationList = (vault_address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
     const { status } = useRecoilValue(walletState);
-    const api = `/api/redelegations?vault_address=${vault_address}`;
+    const api = `/api/redelegations?vault_address=${vault_address}&chain_id=${chainInfo.src.chainId}`;
 
     const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
         ['redelegation_list', vault_address],
@@ -90,8 +93,9 @@ export const useQueryRedelegationList = (vault_address: string) => {
 }
 
 export const useQueryValidatorList = () => {
+    const chainInfo = useRecoilValue(selectedChainState);
     const { status } = useRecoilValue(walletState);
-    const api = "/api/validators";
+    const api = `/api/validators?chain_id=${chainInfo.src.chainId}`;
 
     const { data: validator_list = [], isLoading } = useQuery<any[]>(
         ['validator_list'],
@@ -140,9 +144,11 @@ export const useQueryVaultMetaData = (vault_address: string) => {
 
                 // Fetch unbonding amount
                 fetchUnbondingInfo({
-                    vault_address, token: {
+                    vault_address,
+                    token: {
                         decimals: 18,
                     },
+                    chain_id: chainInfo.src.chainId
                 }),
 
                 // Fetch vault info

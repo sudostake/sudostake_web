@@ -1,32 +1,40 @@
 import { Coin, coin } from "@cosmjs/stargate";
 
+
 export type Currency = {
-    coinDenom: string,
-    coinMinimalDenom: string,
     coinDecimals: number,
+    coinDenom: string,
+    coinGeckoId: string,
+    coinMinimalDenom: string,
+    gasPriceStep?: {
+        low: number,
+        average: number,
+        high: number
+    },
+    coinImageUrl?: string,
 };
 
-export type ChainInfoFull = {
-    chainId: string,
-    chainName: string,
-    rpc: string,
-    rest: string,
-    stakeCurrency: Currency,
-    bip44: {
-        coinType: number,
-    },
+export type KeplrChainInfoSchema = {
     bech32Config: {
         bech32PrefixAccAddr: string,
         bech32PrefixAccPub: string,
-        bech32PrefixValAddr: string,
-        bech32PrefixValPub: string,
         bech32PrefixConsAddr: string,
         bech32PrefixConsPub: string,
+        bech32PrefixValAddr: string,
+        bech32PrefixValPub: string,
     },
-    currencies: [Currency],
-    feeCurrencies: [Currency],
-    features: ['cosmwasm', 'ibc-transfer', 'ibc-go'],
+    bip44: {
+        coinType: 118
+    },
+    chainId: string,
+    chainName: string,
     chainSymbolImageUrl: string,
+    currencies: Currency[],
+    features: ["cosmwasm"],
+    feeCurrencies: Currency[],
+    rest: string,
+    rpc: string,
+    stakeCurrency: Currency,
     nodeProvider: {
         name: string,
         email: string,
@@ -34,18 +42,7 @@ export type ChainInfoFull = {
     }
 };
 
-export type ChainInfo = {
-    logo_url: string,
-    vault_creation_fee: Coin,
-    src: ChainInfoFull,
-    request_denoms: Currency[],
-    sudomod_address: string,
-    vault_code_ids: number[],
-    explorer_url: string,
-};
-
-// Describe Archway chain info
-const archwayChainInfo: ChainInfoFull = {
+const ArchwayTestNet: KeplrChainInfoSchema = {
     "bech32Config": {
         "bech32PrefixAccAddr": "archway",
         "bech32PrefixAccPub": "archwaypub",
@@ -64,16 +61,22 @@ const archwayChainInfo: ChainInfoFull = {
         {
             "coinDecimals": 18,
             "coinDenom": "CONST",
+            "coinGeckoId": "constantine-network",
             "coinMinimalDenom": "aconst"
         }
     ],
-    "features": ['cosmwasm', 'ibc-transfer', 'ibc-go'],
+    "features": ["cosmwasm"],
     "feeCurrencies": [
         {
             "coinDecimals": 18,
             "coinDenom": "CONST",
+            "coinGeckoId": "constantine-network",
             "coinMinimalDenom": "aconst",
-
+            "gasPriceStep": {
+                "low": 1000000000000,
+                "average": 1500000000000,
+                "high": 2000000000000
+            }
         }
     ],
     "rest": "https://api.constantine.archway.tech",
@@ -81,6 +84,7 @@ const archwayChainInfo: ChainInfoFull = {
     "stakeCurrency": {
         "coinDecimals": 18,
         "coinDenom": "CONST",
+        "coinGeckoId": "constantine-network",
         "coinMinimalDenom": "aconst"
     },
     "nodeProvider": {
@@ -90,24 +94,79 @@ const archwayChainInfo: ChainInfoFull = {
     }
 };
 
-export const supportedChains: ChainInfo[] = [
-    {
-        logo_url: '/archway.png',
-        src: archwayChainInfo,
-        request_denoms: [
-            {
-                coinDenom: 'CONST',
-                coinMinimalDenom: 'aconst',
-                coinDecimals: 18,
+const ArchwayMainnet: KeplrChainInfoSchema = {
+    "bech32Config": {
+        "bech32PrefixAccAddr": "archway",
+        "bech32PrefixAccPub": "archwaypub",
+        "bech32PrefixConsAddr": "archwayvalcons",
+        "bech32PrefixConsPub": "archwayvalconspub",
+        "bech32PrefixValAddr": "archwayvaloper",
+        "bech32PrefixValPub": "archwayvaloperpub"
+    },
+    "bip44": {
+        "coinType": 118
+    },
+    "chainId": "archway-1",
+    "chainName": "Archway",
+    "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/chain.png",
+    "currencies": [
+        {
+            "coinDecimals": 18,
+            "coinDenom": "ARCH",
+            "coinGeckoId": "archway",
+            "coinMinimalDenom": "aarch",
+            "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+        }
+    ],
+    "features": ["cosmwasm"],
+    "feeCurrencies": [
+        {
+            "coinDecimals": 18,
+            "coinDenom": "ARCH",
+            "coinGeckoId": "archway",
+            "coinMinimalDenom": "aarch",
+            "gasPriceStep": {
+                "low": 1000000000000,
+                "average": 1500000000000,
+                "high": 2000000000000
             },
-            {
-                coinDenom: 'USDC',
-                coinMinimalDenom: 'ibc/usdc',
-                coinDecimals: 18,
-            }
-        ],
+            "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+        }
+    ],
+    "rest": "https://api.mainnet.archway.io",
+    "rpc": "https://rpc.mainnet.archway.io",
+    "stakeCurrency": {
+        "coinDecimals": 18,
+        "coinDenom": "ARCH",
+        "coinGeckoId": "archway",
+        "coinMinimalDenom": "aarch",
+        "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+    },
+    "nodeProvider": {
+        "name": "Phi Labs",
+        "email": "support@philabs.xyz",
+        "website": "https://philabs.xyz"
+    }
+};
+/**
+ * Define sudostake supported chains below
+ */
+export type SudoStakeChainInfoSchema = {
+    src: KeplrChainInfoSchema,
+    explorer_url: string,
+    vault_creation_fee: Coin,
+    request_denoms: Currency[],
+    sudomod_address: string,
+    vault_code_ids: number[],
+    vault_collection_path: string,
+};
+
+export const supportedChains: SudoStakeChainInfoSchema[] = [
+    {
+        src: ArchwayTestNet,
         sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
+        explorer_url: 'https://testnet.mintscan.io/archway-testnet',
         vault_code_ids: [
             // 6F364E2FF1DBDE2514A66E27F7CD02600A71BA83279D266FC92ED9AE35F331C8
             1160,
@@ -116,10 +175,51 @@ export const supportedChains: ChainInfo[] = [
             // 803215E894EF097E991E120601CB0B716744FE68E83B87DCF1AC18709B16A749
             484,
         ],
-        explorer_url: 'https://testnet.mintscan.io/archway-testnet'
-    }
+        request_denoms: [
+            {
+                coinDenom: 'CONST',
+                coinMinimalDenom: 'aconst',
+                coinDecimals: 18,
+                coinGeckoId: "constantine-network",
+            },
+            {
+                coinDenom: 'USDC',
+                coinMinimalDenom: 'ibc/usdc',
+                coinDecimals: 18,
+                coinGeckoId: "",
+            }
+        ],
+        vault_collection_path: 'vaults'
+    },
+
+    {
+        src: ArchwayMainnet,
+        sudomod_address: 'archway1wyq63wtaktujyp7zrd58ytzc76g9vtamlgwrq9qhhf0j32usvfesn9s38g',
+        vault_creation_fee: coin('10000000000000000000', 'aarch'),
+        explorer_url: 'https://mintscan.io/archway',
+        vault_code_ids: [156],
+        request_denoms: [
+            {
+                coinDenom: 'ARCH',
+                coinMinimalDenom: 'aarch',
+                coinDecimals: 18,
+                coinGeckoId: "archway",
+            },
+            {
+                coinDenom: 'USDC',
+                coinMinimalDenom: 'ibc/usdc',
+                coinDecimals: 18,
+                coinGeckoId: "",
+            }
+        ],
+        vault_collection_path: 'archway_mainnet_vaults'
+    },
 ];
 
-export function get_chain_info_from_rpc(rpc: string): ChainInfo | null {
+export function get_chain_info_from_rpc(rpc: string): SudoStakeChainInfoSchema | null {
     return supportedChains.find(c => c.src.rpc === rpc);
+}
+
+export function get_chain_info_from_id(id: string): SudoStakeChainInfoSchema | null {
+    return supportedChains.find(c => c.src.chainId === id);
 }

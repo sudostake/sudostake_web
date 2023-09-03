@@ -9,6 +9,8 @@ import { GAS_PRICE } from '../utils/constants'
 import { useEffect } from 'react'
 import { WalletType } from '../utils/supported_wallets'
 
+
+// TODO refactor such that keplr wallet supports ledger connection
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
@@ -57,28 +59,84 @@ export const useConnectWallet = () => {
             }
         }
 
-        // Connect wallet
-        await window.wallet.experimentalSuggestChain(chainInfo.src);
-        await window.wallet.enable(chainInfo.src.chainId);
+        // Try connect keplr
+        if (selected_wallet === WalletType.keplr) {
+            await window.keplr.experimentalSuggestChain(chainInfo.src)
+            await window.keplr.enable(chainInfo.src.chainId)
 
-        const offlineSigner = window.wallet.getOfflineSigner(chainInfo.src.chainId);
-        const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-            chainInfo.src.rpc,
-            offlineSigner,
-            {
-                gasPrice: GasPrice.fromString(GAS_PRICE),
-            }
-        )
-        const [{ address }] = await offlineSigner.getAccounts();
-        const key = await window.wallet.getKey(chainInfo.src.chainId);
+            const offlineSigner = await window.getOfflineSignerAuto(
+                chainInfo.src.chainId
+            )
+            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+                chainInfo.src.rpc,
+                offlineSigner,
+                {
+                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                }
+            )
+            const [{ address }] = await offlineSigner.getAccounts()
+            const key = await window.keplr.getKey(chainInfo.src.chainId)
 
-        // Return response
-        return {
-            name: key.name,
-            address,
-            client: wasmChainClient,
-            status: WalletStatusType.connected,
-        };
+            // Return response
+            return {
+                name: key.name,
+                address,
+                client: wasmChainClient,
+                status: WalletStatusType.connected,
+            };
+        }
+
+        // Try connect leap
+        if (selected_wallet === WalletType.leap) {
+            await window.leap.experimentalSuggestChain(chainInfo.src)
+            await window.leap.enable(chainInfo.src.chainId)
+
+            const offlineSigner = await window.leap.getOfflineSignerAuto(
+                chainInfo.src.chainId
+            )
+            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+                chainInfo.src.rpc,
+                offlineSigner,
+                {
+                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                }
+            )
+            const [{ address }] = await offlineSigner.getAccounts()
+            const key = await window.leap.getKey(chainInfo.src.chainId)
+
+            // Return response
+            return {
+                name: key.name,
+                address,
+                client: wasmChainClient,
+                status: WalletStatusType.connected,
+            };
+        }
+
+        // Try connect cosmostation
+        if (selected_wallet === WalletType.cosmostation) {
+            await window.wallet.experimentalSuggestChain(chainInfo.src);
+            await window.wallet.enable(chainInfo.src.chainId);
+
+            const offlineSigner = window.wallet.getOfflineSigner(chainInfo.src.chainId);
+            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+                chainInfo.src.rpc,
+                offlineSigner,
+                {
+                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                }
+            )
+            const [{ address }] = await offlineSigner.getAccounts();
+            const key = await window.wallet.getKey(chainInfo.src.chainId);
+
+            // Return response
+            return {
+                name: key.name,
+                address,
+                client: wasmChainClient,
+                status: WalletStatusType.connected,
+            };
+        }
     }, {
         onSuccess(res) {
             setWalletState(res);
@@ -147,6 +205,9 @@ export const useConnectWallet = () => {
         // eslint-disable-next-line
         [status]
     )
+
+    // TODO
+    // When the selectedChainState changes, we refresh the wallet connection
 
     return mutation;
 }

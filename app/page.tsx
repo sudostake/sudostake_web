@@ -1,7 +1,7 @@
 'use client'
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { WalletStatusType, walletState } from "./state";
+import { WalletStatusType, selectedChainState, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
@@ -25,6 +25,7 @@ export default function Home() {
   const router = useRouter();
   const { mutate: connectWallet } = useConnectWallet();
   const pathname = usePathname();
+  const chainInfo = useRecoilValue(selectedChainState);
 
   // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
   // Set it back to the title for this page, when pathname === /
@@ -40,7 +41,7 @@ export default function Home() {
   // Subscribe to owner's vaults
   useEffect(() => {
     if (status === WalletStatusType.connected) {
-      return onSnapshot(query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
+      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
         const vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
         setOwnerVaults(vaults);
@@ -53,7 +54,7 @@ export default function Home() {
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
     if (status === WalletStatusType.connected) {
-      return onSnapshot(query(collection(db, "vaults"), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
+      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
         const lending_vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
         setActiveLendingVaults(lending_vaults);

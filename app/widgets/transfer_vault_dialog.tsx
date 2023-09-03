@@ -86,12 +86,12 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                             {
                                                 isLoading && <>
                                                     <FaSpinner className="w-5 h-5 mr-3 spinner" />
-                                                    <span>transferring ...</span>
+                                                    <span>Transferring ...</span>
                                                 </>
                                             }
                                             {
                                                 !isLoading && <>
-                                                    <span>transfer</span>
+                                                    <span>Transfer</span>
                                                 </>
                                             }
                                         </button>

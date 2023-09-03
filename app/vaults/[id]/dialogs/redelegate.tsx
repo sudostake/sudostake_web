@@ -116,7 +116,7 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
                                         {
                                             selected_from_has_pending_redelegations &&
                                             <div className="mt-4 flex items-center mb-2 w-full text-rose-500 text-xs lg:text-sm">
-                                                This validator still has pending redelegations.
+                                                This validator still has incoming redelegations.
                                                 Please select another validator to redelegate from
                                             </div>
                                         }

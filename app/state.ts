@@ -1,5 +1,7 @@
+'use client'
+
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
-import { ChainInfo, supportedChains } from './utils/supported_chains';
+import { SudoStakeChainInfoSchema } from './utils/supported_chains';
 import { atom } from 'recoil'
 
 export enum WalletStatusType {
@@ -47,9 +49,9 @@ export const toolBarState = atom<{
     },
 });
 
-export const selectedChainState = atom<ChainInfo>({
+export const selectedChainState = atom<SudoStakeChainInfoSchema>({
     key: 'selectedChainState',
-    default: supportedChains[0],
+    default: null,
 });
 
 export type ValidatorInfo = {

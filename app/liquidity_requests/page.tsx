@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { toolBarState } from '../state';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { selectedChainState, toolBarState } from '../state';
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from '../services/firebase_client';
 import PendingLiquidityRequestInfo from '../widgets/pending_request_info';
@@ -14,6 +14,7 @@ export default function LiquidityRequests() {
   const setToolBarState = useSetRecoilState(toolBarState);
   const router = useRouter();
   const pathname = usePathname();
+  const chainInfo = useRecoilValue(selectedChainState);
 
   // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
   // Set it back to the title for this page, when pathname === /liquidity_requests
@@ -28,7 +29,7 @@ export default function LiquidityRequests() {
 
   // Subscribe to pending liquidity requests
   useEffect(() => {
-    return onSnapshot(query(collection(db, "vaults"), where("liquidity_request_status", "==", "pending"), orderBy("index_number", "desc")), (res) => {
+    return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("liquidity_request_status", "==", "pending"), orderBy("index_number", "desc")), (res) => {
       const vaults = res.docs
         .map((doc) => ({ ...doc.data(), id: doc.id } as VaultIndex));
       setVaults(vaults);
