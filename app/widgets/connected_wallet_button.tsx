@@ -1,6 +1,6 @@
 'use client'
 
-import { FaSignOutAlt } from "react-icons/fa"
+import { FaSignOutAlt, FaUserCircle } from "react-icons/fa"
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { WalletStatusType, selectedChainState, sideBarToggleState, walletState } from "../state";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
@@ -26,7 +26,7 @@ export default function ConnectedWalletButton() {
         }
 
         if (!selected_chain_id) {
-            const default_chain = supportedChains[0];
+            const default_chain = supportedChains[1];
             localStorage.setItem('selected_chain_id', default_chain.src.chainId);
             setSelectedChainState(default_chain);
         }
@@ -70,6 +70,7 @@ export default function ConnectedWalletButton() {
                     <SelectNetworkDialog selected_chain={chainInfo} />
 
                     <span className="flex items-center px-4 w-full h-16 border-t border-current">
+                        <FaUserCircle className="w-6 h-6" />
                         <span className="ml-2 text-sm lg:text-base font-medium">{name.toUpperCase()}</span>
                         <span className="ml-auto mr-4">
                             <ClipBoardButton address={address} />

@@ -20,10 +20,10 @@ export default function VaultIndexHandler({ }: ComponentProps) {
         const failed_to_index = localStorage.getItem('failed_vault_index');
         if (Boolean(failed_to_index) && status === WalletStatusType.connected) {
             setVaultWithIndexError(failed_to_index);
-            return setIsOpen(true);
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
         }
-
-        setIsOpen(false);
     }, [status, instant_index_error, isSuccess, isError, setVaultWithIndexError, setIsOpen]);
 
     return (

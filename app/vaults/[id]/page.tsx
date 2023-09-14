@@ -25,11 +25,11 @@ export default function Vault({ params }: { params: { id: string } }) {
     const chainInfo = useRecoilValue(selectedChainState);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
     const { validator_list } = useQueryValidatorList();
-    const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+    const usd_currency = chainInfo && chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
 
     // Here we index the vault_info from the vault metadata to also include state from
     // active liquidity request option
-    const vault_info = (vault_metadata && index_vault_data({
+    const vault_info = (vault_metadata && chainInfo && index_vault_data({
         vault_info: vault_metadata.vault_info,
         rpc: chainInfo.src.rpc,
         include_request_state: true
@@ -147,6 +147,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         });
 
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
+
 
     return (
         <div className={classNames({
@@ -373,5 +374,5 @@ export default function Vault({ params }: { params: { id: string } }) {
                 </div>
             }
         </div>
-    )
+    );
 }

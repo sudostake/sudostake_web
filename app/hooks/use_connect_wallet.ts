@@ -9,8 +9,6 @@ import { GAS_PRICE } from '../utils/constants'
 import { useEffect } from 'react'
 import { WalletType } from '../utils/supported_wallets'
 
-
-// TODO refactor such that keplr wallet supports ledger connection
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
@@ -205,9 +203,6 @@ export const useConnectWallet = () => {
         // eslint-disable-next-line
         [status]
     )
-
-    // TODO
-    // When the selectedChainState changes, we refresh the wallet connection
 
     return mutation;
 }

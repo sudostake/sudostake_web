@@ -95,7 +95,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
 export const useQueryValidatorList = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { status } = useRecoilValue(walletState);
-    const api = `/api/validators?chain_id=${chainInfo.src.chainId}`;
+    const api = chainInfo && `/api/validators?chain_id=${chainInfo.src.chainId}`;
 
     const { data: validator_list = [], isLoading } = useQuery<any[]>(
         ['validator_list'],
