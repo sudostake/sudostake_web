@@ -34,11 +34,12 @@ export default function ToolBar() {
 
             {
                 !toolbarInfo.show_back_nav &&
-                <button
-                    onClick={() => setSideBarState(true)}
-                    className="rounded-full ml-auto mr-2 lg:hidden">
-                    <FaBars className="w-5 h-5" />
-                </button>
+                <span className="flex grow" onClick={() => setSideBarState(true)}>
+                    <button
+                        className="rounded-full ml-auto lg:hidden">
+                        <FaBars className="w-5 h-5" />
+                    </button>
+                </span>
             }
         </div>
     )

@@ -71,11 +71,11 @@ export default function ConnectedWalletButton() {
 
                     <span className="flex items-center px-4 w-full h-16 border-t border-current">
                         <FaUserCircle className="w-6 h-6" />
-                        <span className="ml-2 text-sm lg:text-base font-medium">{name.toUpperCase()}</span>
+                        <span className="ml-6 text-sm lg:text-base font-medium">{name.toUpperCase()}</span>
                         <span className="ml-auto mr-4">
                             <ClipBoardButton address={address} />
                         </span>
-                        <span className="flex justify-center w-9 h-9 rounded-full border border-transparent hover:border-current mr-2">
+                        <span className="flex justify-center rounded-full">
                             <button onClick={() => resetWalletConnection()}> <FaSignOutAlt className="w-5 h-5" /></button>
                         </span>
                     </span>

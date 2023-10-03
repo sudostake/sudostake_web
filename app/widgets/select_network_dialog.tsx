@@ -37,8 +37,8 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                     priority
                 />
 
-                <span className="ml-2 text-sm lg:text-base font-medium">{chainInfo.src.chainName}</span>
-                <span className="ml-auto"><FaChevronRight className="w-4 h-4 mr-3" /></span>
+                <span className="ml-6 text-sm lg:text-base font-medium">{chainInfo.src.chainName}</span>
+                <span className="ml-auto"><FaChevronRight className="w-4 h-4" /></span>
             </span>
 
             <Transition appear show={isOpen} as={Fragment}>

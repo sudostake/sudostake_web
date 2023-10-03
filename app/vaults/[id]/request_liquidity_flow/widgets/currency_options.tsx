@@ -44,7 +44,7 @@ export default function CurrencyOptions({ onOptionSelected }: ComponentProps) {
                 "hidden": !isOpen
             })}>
 
-                {chainInfo.request_denoms.map((currency, index) => {
+                {[chainInfo.request_denoms[0]].map((currency, index) => {
                     return (
                         <div key={index} className="px-1 py-1">
                             <button onClick={() => { handle_click(currency) }} className='group flex w-full items-center p-2 text-xs lg:text-sm'>

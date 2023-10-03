@@ -1,4 +1,4 @@
-import { FaSpinner } from "react-icons/fa";
+import { FaHistory, FaSpinner } from "react-icons/fa";
 import { useQueryVaultMetaData } from "../hooks/use_query";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
@@ -7,6 +7,7 @@ import { selectedChainState } from "../state";
 import { VaultIndex } from "../utils/interface";
 import classNames from "classnames";
 import ClipBoardButton from "./clipboard_button";
+import Link from "next/link";
 
 type ComponentProps = {
     vault_info: VaultIndex
@@ -73,6 +74,13 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <span className="flex items-center justify-center ">
                     <ClipBoardButton address={vault_info.id} />
                 </span>
+
+                <Link href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
+                    target="_blank"
+                    className="flex items-center justify-center w-9 h-9 rounded-full">
+                    <FaHistory className="w-6 h-6" />
+                </Link>
+
                 <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>

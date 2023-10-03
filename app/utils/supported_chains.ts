@@ -200,13 +200,19 @@ export const supportedChains: SudoStakeChainInfoSchema[] = [
         vault_code_ids: [156],
         request_denoms: [
             {
+                coinDenom: 'USDC',
+                coinMinimalDenom: 'ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D',
+                coinDecimals: 18,
+                coinGeckoId: "",
+            },
+            {
                 coinDenom: 'ARCH',
                 coinMinimalDenom: 'aarch',
                 coinDecimals: 18,
                 coinGeckoId: "archway",
             },
             {
-                coinDenom: 'USDC',
+                coinDenom: 'USDC(DEPRECATED)',
                 coinMinimalDenom: 'ibc/usdc',
                 coinDecimals: 18,
                 coinGeckoId: "",
