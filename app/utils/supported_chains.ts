@@ -202,7 +202,7 @@ export const supportedChains: SudoStakeChainInfoSchema[] = [
             {
                 coinDenom: 'USDC',
                 coinMinimalDenom: 'ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D',
-                coinDecimals: 18,
+                coinDecimals: 6,
                 coinGeckoId: "",
             },
             {
