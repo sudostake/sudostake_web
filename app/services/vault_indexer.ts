@@ -107,5 +107,7 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
         }
     }
 
+    //
+    index.indexed_at = new Date();
     return index;
 }

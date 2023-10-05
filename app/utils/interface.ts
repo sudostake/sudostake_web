@@ -22,6 +22,9 @@ export type VaultIndex = {
     // This is the address of the vault
     id?: string,
 
+    // This keeps track of when this vault was last indexed
+    indexed_at?: Date,
+
     // This is the code id this vault was instantiated from
     from_code_id?: number,
 
