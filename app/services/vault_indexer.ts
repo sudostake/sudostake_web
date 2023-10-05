@@ -26,7 +26,9 @@ export async function get_connection(rpc: string): Promise<CosmWasmClient> {
 }
 
 export function index_vault_data({ vault_info, rpc, include_request_state }: { vault_info: JsonObject, rpc: string, include_request_state?: boolean }) {
-    const coinDecimals = get_chain_info_from_rpc(rpc).src.stakeCurrency.coinDecimals;
+    const chain_info = get_chain_info_from_rpc(rpc);
+    const stakingDenomDecimal = chain_info.src.stakeCurrency.coinDecimals;
+
     const index: VaultIndex = {
         from_code_id: vault_info['config']['from_code_id'],
         index_number: vault_info['config']['index_number'],
@@ -40,21 +42,27 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
 
         // Index fixed_interest_rental
         if (Boolean(msg['fixed_interest_rental'])) {
+            const request_denom = msg['fixed_interest_rental']['requested_amount']['denom'];
+            const request_currency = chain_info.request_denoms.find(currency => currency.coinMinimalDenom === request_denom);
+
             index.request_type = LiquidityRequestTypes.fixed_interest_rental;
             index.requested_amount = {
-                denom: msg['fixed_interest_rental']['requested_amount']['denom'],
-                amount: convertMicroDenomToDenom(msg['fixed_interest_rental']['requested_amount']['amount'], coinDecimals)
+                denom: request_denom,
+                amount: convertMicroDenomToDenom(msg['fixed_interest_rental']['requested_amount']['amount'], request_currency.coinDecimals)
             };
             index.can_cast_vote = msg['fixed_interest_rental']['can_cast_vote'];
-            index.claimable_tokens = convertMicroDenomToDenom(msg['fixed_interest_rental']['claimable_tokens'], coinDecimals);
+            index.claimable_tokens = convertMicroDenomToDenom(msg['fixed_interest_rental']['claimable_tokens'], stakingDenomDecimal);
         }
 
         // Index fixed_term_rental
         if (Boolean(msg['fixed_term_rental'])) {
+            const request_denom = msg['fixed_term_rental']['requested_amount']['denom'];
+            const request_currency = chain_info.request_denoms.find(currency => currency.coinMinimalDenom === request_denom);
+
             index.request_type = LiquidityRequestTypes.fixed_term_rental;
             index.requested_amount = {
-                denom: msg['fixed_term_rental']['requested_amount']['denom'],
-                amount: convertMicroDenomToDenom(msg['fixed_term_rental']['requested_amount']['amount'], coinDecimals)
+                denom: request_denom,
+                amount: convertMicroDenomToDenom(msg['fixed_term_rental']['requested_amount']['amount'], request_currency.coinDecimals)
             };
             index.can_cast_vote = msg['fixed_term_rental']['can_cast_vote'];
             index.duration_in_seconds = msg['fixed_term_rental']['duration_in_seconds'];
@@ -62,14 +70,17 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
 
         // Index fixed_term_loan
         if (Boolean(msg['fixed_term_loan'])) {
+            const request_denom = msg['fixed_term_loan']['requested_amount']['denom'];
+            const request_currency = chain_info.request_denoms.find(currency => currency.coinMinimalDenom === request_denom);
+
             index.request_type = LiquidityRequestTypes.fixed_term_loan;
             index.requested_amount = {
-                denom: msg['fixed_term_loan']['requested_amount']['denom'],
-                amount: convertMicroDenomToDenom(msg['fixed_term_loan']['requested_amount']['amount'], coinDecimals)
+                denom: request_denom,
+                amount: convertMicroDenomToDenom(msg['fixed_term_loan']['requested_amount']['amount'], request_currency.coinDecimals)
             };
             index.duration_in_seconds = msg['fixed_term_loan']['duration_in_seconds'];
-            index.interest_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['interest_amount'], coinDecimals);
-            index.collateral_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['collateral_amount'], coinDecimals);
+            index.interest_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['interest_amount'], request_currency.coinDecimals);
+            index.collateral_amount = convertMicroDenomToDenom(msg['fixed_term_loan']['collateral_amount'], stakingDenomDecimal);
         }
 
         // Index state data for active liquidity requests
@@ -80,7 +91,7 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
                 const state = vault_info['liquidity_request']['state'];
 
                 if (Boolean(state['FixedInterestRental'])) {
-                    index.already_claimed = convertMicroDenomToDenom(state['FixedInterestRental']['already_claimed'], coinDecimals);
+                    index.already_claimed = convertMicroDenomToDenom(state['FixedInterestRental']['already_claimed'], stakingDenomDecimal);
                 }
 
                 if (Boolean(state['FixedTermRental'])) {
@@ -90,7 +101,7 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
                 if (Boolean(state['FixedTermLoan'])) {
                     index.end_time = secondsToDhms(new Date(Number(state['FixedTermLoan']['end_time']) / 1000000));
                     index.processing_liquidation = state['FixedTermLoan']['processing_liquidation'];
-                    index.already_claimed = convertMicroDenomToDenom(state['FixedTermLoan']['already_claimed'], coinDecimals);
+                    index.already_claimed = convertMicroDenomToDenom(state['FixedTermLoan']['already_claimed'], stakingDenomDecimal);
                 }
             }
         }
