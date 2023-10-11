@@ -78,7 +78,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <Link href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
                     target="_blank"
                     className="flex items-center justify-center w-9 h-9 rounded-full">
-                    <FaHistory className="w-6 h-6" />
+                    <FaHistory className="w-5 h-5" />
                 </Link>
 
                 <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
