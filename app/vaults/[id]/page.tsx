@@ -65,8 +65,6 @@ export default function Vault({ params }: { params: { id: string } }) {
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
     const native_balance = vault_metadata && vault_metadata.native_balance;
     const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
-    const total_available_native_balance = native_balance + accumulated_rewards;
-    const outstanding_fixed_term_loan_debt = has_expired_fixed_term_loan && (vault_info.collateral_amount - vault_info.already_claimed);
 
     // Set toolbar state
     useEffect(() => {
@@ -81,7 +79,6 @@ export default function Vault({ params }: { params: { id: string } }) {
     // Update validatorListState
     useEffect(() => {
         const validators_without_delegations_list: ValidatorInfo[] = [];
-        const jailed_validator_list: ValidatorInfo[] = [];
         const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {};
         const validators_with_unbondings_map: IObjectMap<ValidatorUnbondingInfo> = {};
 
@@ -103,7 +100,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             })
         }
 
-        // Update validators_without_delegations_list, 
+        // Update validators_without_delegations_list,
         // jailed_validator_list and validators_with_delegations
         validator_list.forEach((info) => {
             const address = info['operator_address'];
@@ -123,12 +120,6 @@ export default function Vault({ params }: { params: { id: string } }) {
                         address,
                         delegated_amount: 0
                     });
-                } else {
-                    jailed_validator_list.push({
-                        name,
-                        address,
-                        delegated_amount: 0
-                    });
                 }
             } else {
                 // Update the names on validators_with_delegations_map
@@ -142,7 +133,6 @@ export default function Vault({ params }: { params: { id: string } }) {
             validator_list: [
                 ...Object.values(validators_with_delegations_map).sort((a, b) => Number(b.delegated_amount) - Number(a.delegated_amount)),
                 ...validators_without_delegations_list,
-                ...jailed_validator_list
             ],
         });
 
