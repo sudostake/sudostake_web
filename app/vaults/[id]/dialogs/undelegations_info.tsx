@@ -44,7 +44,7 @@ export default function UnbondingInfoDialog() {
                                 leaveTo="opacity-0 scale-95">
 
                                 <Dialog.Panel className={classNames({
-                                    "bg-slate-800 fixed w-full max-w-lg": true,
+                                    "bg-slate-800 fixed w-full max-w-xl": true,
                                     "lg:rounded-lg text-left align-middle shadow-lg": true,
                                     "transform transition-all": true,
                                     "h-full lg:h-max": true

@@ -67,7 +67,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-lg overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
