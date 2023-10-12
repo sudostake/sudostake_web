@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     try {
         let validators = [];
         let has_next_page = true;
-        let next_key;
+        let next_key: string;
 
         while (has_next_page) {
             const api = [

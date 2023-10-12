@@ -105,6 +105,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         validator_list.forEach((info) => {
             const address = info['operator_address'];
             const is_jailed = info['jailed'];
+            const bonded_status = info['status'];
             const name = info['description']['moniker'];
 
             // Update the names on validators_with_unbondings_map
@@ -114,7 +115,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
             // Update validator list groups
             if (!Boolean(validators_with_delegations_map[address])) {
-                if (!is_jailed) {
+                if (!is_jailed && bonded_status === "BOND_STATUS_BONDED") {
                     validators_without_delegations_list.push({
                         name,
                         address,
