@@ -75,7 +75,7 @@ export default function SideBar() {
                 <span role='button' onClick={() => setSideBarState(!isOpen)}
                     className="py-4 px-4 flex items-center h-20 lg:h-24 w-full border-b border-current">
                     <Image
-                        src="/l1.png"
+                        src="/logo_light.png"
                         alt="sudostake Logo"
                         className="invert dark:invert-0"
                         width={25}
