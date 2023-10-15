@@ -2,8 +2,6 @@
 
 import { FaClipboard, FaClipboardCheck } from "react-icons/fa"
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { walletState } from "../state";
 import { toast } from "react-toastify";
 
 type ComponentProps = {

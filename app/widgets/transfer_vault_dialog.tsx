@@ -39,7 +39,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-80" />
+                        <div className="fixed inset-0 bg-opacity-80 backdrop-blur-xs" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
@@ -60,7 +60,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                     <Dialog.Title
                                         as="h1"
                                         className="text-lg font-bold leading-6 text-gray-300">
-                                        Transfer vault ownership: ID #{vault_info.index_number}
+                                        Transfer Vault #{vault_info.index_number}
                                     </Dialog.Title>
 
                                     <div className="mt-8 mb-2">

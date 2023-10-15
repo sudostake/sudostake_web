@@ -52,7 +52,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                         leaveFrom="opacity-100"
                         leaveTo="opacity-0"
                     >
-                        <div className="fixed inset-0 bg-black bg-opacity-80" />
+                        <div className="fixed inset-0 bg-opacity-80 backdrop-blur-xs" />
                     </Transition.Child>
 
                     <div className="fixed inset-0 overflow-y-auto">
