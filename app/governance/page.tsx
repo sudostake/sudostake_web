@@ -16,8 +16,8 @@ export default function Governance() {
   return (
     <div className="flex w-full h-full items-center justify-center">
       <h2 className="flex items-center">
-        <FaSpinner className="w-6 h-6 mr-3 spinner" />
-        Proposals with executable actions will appear here</h2>
+        Vote...
+      </h2>
     </div>
   )
 }
