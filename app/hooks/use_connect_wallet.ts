@@ -5,7 +5,6 @@ import {
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
-import { GAS_PRICE } from '../utils/constants'
 import { useEffect } from 'react'
 import { WalletType } from '../utils/supported_wallets'
 
@@ -69,7 +68,7 @@ export const useConnectWallet = () => {
                 chainInfo.src.rpc,
                 offlineSigner,
                 {
-                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                    gasPrice: GasPrice.fromString(chainInfo.gas_price),
                 }
             )
             const [{ address }] = await offlineSigner.getAccounts()
@@ -96,7 +95,7 @@ export const useConnectWallet = () => {
                 chainInfo.src.rpc,
                 offlineSigner,
                 {
-                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                    gasPrice: GasPrice.fromString(chainInfo.gas_price),
                 }
             )
             const [{ address }] = await offlineSigner.getAccounts()
@@ -121,7 +120,7 @@ export const useConnectWallet = () => {
                 chainInfo.src.rpc,
                 offlineSigner,
                 {
-                    gasPrice: GasPrice.fromString(GAS_PRICE),
+                    gasPrice: GasPrice.fromString(chainInfo.gas_price),
                 }
             )
             const [{ address }] = await offlineSigner.getAccounts();

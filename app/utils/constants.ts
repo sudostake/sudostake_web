@@ -1,4 +1,3 @@
 export const DEFAULT_TOKEN_BALANCE_REFETCH_INTERVAL = 15000
 export const DEFAULT_REFETCH_ON_WINDOW_FOCUS_STALE_TIME = 60000 // 1 minute
-export const GAS_PRICE = process.env.NEXT_PUBLIC_GAS_PRICE
 export const SECONDS_IN_A_DAY = 24 * 60 * 60;
