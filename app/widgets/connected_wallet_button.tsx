@@ -43,9 +43,6 @@ export default function ConnectedWalletButton() {
     }, [chainInfo, status, connectWallet]);
 
     const resetWalletConnection = () => {
-        // Go back to home route
-        router.replace('/');
-
         // Reset wallet connection state
         setWalletState({
             status: WalletStatusType.idle,

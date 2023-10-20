@@ -1,7 +1,7 @@
 'use client'
 
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
-import { ValidatorInfo, ValidatorUnbondingInfo, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
+import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { useEffect } from "react"
 import { FaSpinner } from "react-icons/fa";
@@ -17,10 +17,11 @@ import ActiveLiquidityRequestInfo from "@/app/widgets/active_request_info";
 import { index_vault_data } from "@/app/services/vault_indexer";
 import DepositDialogButton from "./dialogs/deposit";
 import WithdrawDialogButton from "./dialogs/withdraw";
+import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const setToolBarState = useSetRecoilState(toolBarState);
-    const { address: current_user } = useRecoilValue(walletState);
+    const { address: current_user, status } = useRecoilValue(walletState);
     const setValidatorListState = useSetRecoilState(validatorListState);
     const chainInfo = useRecoilValue(selectedChainState);
     const { vault_metadata } = useQueryVaultMetaData(params.id);
@@ -147,7 +148,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             "w-full xl:w-3/4 xl:border-r xl:border-current": true,
         })}>
             {
-                vault_metadata &&
+                vault_metadata && status === WalletStatusType.connected &&
                 <>
                     <span className="flex flex-row justify-between w-full pb-4">
                         <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
@@ -359,10 +360,8 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                !vault_metadata &&
-                <div className="flex w-full h-full items-center justify-center">
-                    <h2 className="flex items-center"><span>Connect wallet to view vault details</span></h2>
-                </div>
+                status !== WalletStatusType.connected &&
+                <ConnectWalletOptions title="connect to view vault details." />
             }
         </div>
     );
