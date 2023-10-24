@@ -75,7 +75,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                     <ClipBoardButton address={vault_info.id} />
                 </span>
 
-                <Link href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
+                <Link passHref href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
                     target="_blank"
                     className="flex items-center justify-center w-9 h-9 rounded-full">
                     <FaHistory className="w-5 h-5" />

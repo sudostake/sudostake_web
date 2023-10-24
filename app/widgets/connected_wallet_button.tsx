@@ -30,7 +30,7 @@ export default function ConnectedWalletButton() {
             localStorage.setItem('selected_chain_id', default_chain.src.chainId);
             setSelectedChainState(default_chain);
         }
-    }, [chainInfo]);
+    }, [chainInfo, setSelectedChainState]);
 
     // Try auto-connect wallet
     useEffect(() => {

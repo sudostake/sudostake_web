@@ -14,7 +14,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata = {
   title: 'Welcome to SudoStake',
   description: 'Non-Custodial | Smart Contract Staking | Peer-to-Peer Options Trading Platform',
-  icons: {
+  /*icons: {
     icon: [
       {
         rel: 'icon',
@@ -29,7 +29,7 @@ export const metadata = {
         media: '(prefers-color-scheme: light)',
       },
     ],
-  },
+  },*/
 }
 
 export default function RootLayout({

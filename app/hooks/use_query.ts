@@ -3,8 +3,7 @@ import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainS
 import { useRecoilValue } from "recoil";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
-import BigNumber from "bignumber.js";
-import { Currency, SudoStakeChainInfoSchema } from "../utils/supported_chains";
+import { Currency } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 
@@ -21,7 +20,7 @@ async function fetchTokenBalance({
     }
 }) {
     const coin = await client.getBalance(address, denom);
-    const amount = coin ? Number(coin.amount) : 0;
+    const amount = coin ? coin.amount : '0';
     return convertMicroDenomToDenom(amount, decimals)
 }
 
@@ -45,8 +44,7 @@ async function fetchUnbondingInfo({
     });
 
     // Calculate total unbonding amount
-    // Note! this API may change as it is controlled by a third party
-    let total = BigNumber(0);
+    let total = 0;
     let unbonding_responses: any[] = (await response.json())['unbonding_responses'];
     let unbonding_list = unbonding_responses.map((res) => {
         let unbonding_info: ValidatorUnbondingInfo = {
@@ -55,11 +53,12 @@ async function fetchUnbondingInfo({
             entries: []
         };
 
-        // Update unbonding_info.entries and total
+        // Update unbonding_info.entries and total_unbonding_amount
         Array.from<any[]>(res['entries']).forEach((entry) => {
-            total = total.plus(BigNumber(entry['balance']));
+            let amount = convertMicroDenomToDenom(entry['balance'], decimals);
+            total += amount;
             unbonding_info.entries.push({
-                amount: convertMicroDenomToDenom(entry['balance'], decimals),
+                amount,
                 completion_time: secondsToDhms(new Date(entry['completion_time']))
             });
         })
@@ -68,7 +67,7 @@ async function fetchUnbondingInfo({
     });
 
     return {
-        total_unbonding_amount: convertMicroDenomToDenom(total.toString(), decimals),
+        total_unbonding_amount: total,
         unbonding_list
     }
 }
@@ -146,7 +145,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 fetchUnbondingInfo({
                     vault_address,
                     token: {
-                        decimals: 18,
+                        decimals: chainInfo.src.stakeCurrency.coinDecimals,
                     },
                     chain_id: chainInfo.src.chainId
                 }),

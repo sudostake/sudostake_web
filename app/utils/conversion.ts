@@ -1,11 +1,31 @@
+import { MAX_DECIMALS_PRECISION } from "./constants";
+
 export const protectAgainstNaN = (value: number) => (isNaN(value) ? 0 : value)
 
-// TODO Still not accurate enough for really small numbers where EPSILON > 2^-52
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON
+/**
+ * 
+ * @param value 
+ * @param decimals 
+ * @returns string
+ * 
+ * If decimals > MAX_DECIMALS_PRECISION, 
+ *    replace the number string from the end with 0s by the precision difference
+ */
+function normalize_number_string(value: string,
+  decimals: number): string {
+  let precision_diff = decimals - MAX_DECIMALS_PRECISION;
+  if (precision_diff > 0) {
+    value = value.substring(0, value.length - precision_diff) + '0'.repeat(precision_diff);
+  }
+
+  return value;
+}
+
 export function convertMicroDenomToDenom(
-  value: number | string,
+  value: string,
   decimals: number
 ): number {
+  value = normalize_number_string(value, decimals);
   if (decimals === 0) return Number(value)
   return protectAgainstNaN(Number(value) / Math.pow(10, decimals))
 }

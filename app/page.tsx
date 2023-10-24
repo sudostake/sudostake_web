@@ -37,7 +37,7 @@ export default function Home() {
 
   // Subscribe to owner's vaults
   useEffect(() => {
-    if (status === WalletStatusType.connected) {
+    if (status === WalletStatusType.connected && chainInfo) {
       return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
         const vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -46,11 +46,11 @@ export default function Home() {
     } else {
       setOwnerVaults([]);
     }
-  }, [address, status, setOwnerVaults]);
+  }, [address, status, setOwnerVaults, chainInfo]);
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
-    if (status === WalletStatusType.connected) {
+    if (status === WalletStatusType.connected && chainInfo) {
       return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
         const lending_vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -59,7 +59,7 @@ export default function Home() {
     } else {
       setActiveLendingVaults([]);
     }
-  }, [address, status, setActiveLendingVaults]);
+  }, [address, status, setActiveLendingVaults, chainInfo]);
 
 
   return (

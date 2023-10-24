@@ -30,12 +30,14 @@ export default function LiquidityRequests() {
 
   // Subscribe to pending liquidity requests
   useEffect(() => {
-    return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("liquidity_request_status", "==", "pending"), orderBy("indexed_at", "desc")), (res) => {
-      const vaults = res.docs
-        .map((doc) => ({ ...doc.data(), id: doc.id } as VaultIndex));
-      setVaults(vaults);
-    });
-  }, []);
+    if (chainInfo) {
+      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("liquidity_request_status", "==", "pending"), orderBy("indexed_at", "desc")), (res) => {
+        const vaults = res.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id } as VaultIndex));
+        setVaults(vaults);
+      });
+    }
+  }, [chainInfo]);
 
   return (
     <div className='flex flex-col h-full'>
