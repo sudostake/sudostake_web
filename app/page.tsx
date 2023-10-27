@@ -125,7 +125,7 @@ export default function Home() {
 
       {
         status !== WalletStatusType.connected &&
-        <ConnectWalletOptions title="connect to manage your vaults." />
+        <ConnectWalletOptions title="Connect to manage your vaults." />
       }
     </div>
   )

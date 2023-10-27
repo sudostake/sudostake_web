@@ -361,7 +361,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
             {
                 status !== WalletStatusType.connected &&
-                <ConnectWalletOptions title="connect to view vault details." />
+                <ConnectWalletOptions title="Connect to see vault details." />
             }
         </div>
     );

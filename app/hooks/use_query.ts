@@ -6,13 +6,15 @@ import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { Currency } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
+import { get_connection } from "../services/vault_indexer";
+import { CosmWasmClient } from "cosmwasm";
 
 async function fetchTokenBalance({
     client,
     address,
     token: { denom, decimals },
 }: {
-    client: SigningCosmWasmClient,
+    client: CosmWasmClient,
     address: string,
     token: {
         denom: string,
@@ -113,12 +115,13 @@ export const useQueryValidatorList = () => {
 
 
 export const useQueryVaultMetaData = (vault_address: string) => {
-    const { status, client } = useRecoilValue(walletState);
     const chainInfo = useRecoilValue(selectedChainState);
 
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
+            const client = await get_connection(chainInfo.src.rpc);
+
             const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
             const [native_balance, usdc_balance, unbonding_details, vault_info, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
@@ -170,18 +173,20 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 vault_info
             };
         },
-        { enabled: status === WalletStatusType.connected, }
+        {}
     )
 
     return { vault_metadata, isLoading }
 }
 
 export const useQueryBalance = (address: string, currency: Currency) => {
-    const { status, client } = useRecoilValue(walletState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
     const { data: balance = 0, isLoading } = useQuery(
         ['address_balance', address, currency.coinMinimalDenom],
         async () => {
+            const client = await get_connection(chainInfo.src.rpc);
+
             return await fetchTokenBalance({
                 client,
                 address,
@@ -191,7 +196,7 @@ export const useQueryBalance = (address: string, currency: Currency) => {
                 },
             });
         },
-        { enabled: status === WalletStatusType.connected, }
+        {}
     )
 
     return { balance, isLoading }

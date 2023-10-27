@@ -3,7 +3,6 @@ import { IObjectMap, LiquidityRequestTypes, VaultIndex } from "../utils/interfac
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { get_chain_info_from_rpc } from "../utils/supported_chains";
-import BigNumber from "bignumber.js";
 
 // All chains connection instances
 const connections: IObjectMap<CosmWasmClient> = {};

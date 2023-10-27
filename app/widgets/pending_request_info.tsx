@@ -47,7 +47,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
 
                 <tr className="border-b border-current border-dashed">
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                        <span>Requested Amount</span>
+                        <span>Option Cost</span>
                     </th>
                     <td className="py-4 text-right">
                         <span>{vault_info.requested_amount.amount.toLocaleString('en-us')} {request_currency.coinDenom}</span>
@@ -56,7 +56,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
 
                 <tr className="border-b border-current border-dashed">
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                        <span>Liquidity Comission</span>
+                        <span>Comission</span>
                     </th>
                     <td className="py-4 text-right">
                         <span>{(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom}</span>
@@ -67,7 +67,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
                     <tr className="border-b border-current border-dashed">
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                            <span>Claimable Tokens</span>
+                            <span>Claimable Staking Rewards</span>
                         </th>
                         <td className="py-4 text-right">
                             <span>{vault_info.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom}</span>
