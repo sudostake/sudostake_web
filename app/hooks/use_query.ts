@@ -1,26 +1,24 @@
 import { useQuery } from "@tanstack/react-query"
 import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
-import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
-import { Currency } from "../utils/supported_chains";
+import { Currency, SudoStakeChainInfoSchema } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 import { get_connection } from "../services/vault_indexer";
-import { CosmWasmClient } from "cosmwasm";
 
 async function fetchTokenBalance({
-    client,
+    chain_info,
     address,
-    token: { denom, decimals },
+    denom,
+    decimals
 }: {
-    client: CosmWasmClient,
+    chain_info: SudoStakeChainInfoSchema,
     address: string,
-    token: {
-        denom: string,
-        decimals: number
-    }
+    denom: string,
+    decimals: number
 }) {
+    const client = await get_connection(chain_info.src.rpc);
     const coin = await client.getBalance(address, denom);
     const amount = coin ? coin.amount : '0';
     return convertMicroDenomToDenom(amount, decimals)
@@ -126,22 +124,18 @@ export const useQueryVaultMetaData = (vault_address: string) => {
             const [native_balance, usdc_balance, unbonding_details, vault_info, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
-                    client,
+                    decimals: chainInfo.src.stakeCurrency.coinDecimals,
+                    denom: chainInfo.src.stakeCurrency.coinMinimalDenom,
                     address: vault_address,
-                    token: {
-                        decimals: chainInfo.src.stakeCurrency.coinDecimals,
-                        denom: chainInfo.src.stakeCurrency.coinMinimalDenom
-                    },
+                    chain_info: chainInfo
                 }),
 
                 // Fetch USDC balance
                 fetchTokenBalance({
-                    client,
+                    decimals: usd_currency.coinDecimals,
+                    denom: usd_currency.coinMinimalDenom,
                     address: vault_address,
-                    token: {
-                        decimals: usd_currency.coinDecimals,
-                        denom: usd_currency.coinMinimalDenom
-                    },
+                    chain_info: chainInfo
                 }),
 
                 // Fetch unbonding amount
@@ -185,15 +179,11 @@ export const useQueryBalance = (address: string, currency: Currency) => {
     const { data: balance = 0, isLoading } = useQuery(
         ['address_balance', address, currency.coinMinimalDenom],
         async () => {
-            const client = await get_connection(chainInfo.src.rpc);
-
             return await fetchTokenBalance({
-                client,
+                decimals: currency.coinDecimals,
+                denom: currency.coinMinimalDenom,
                 address,
-                token: {
-                    decimals: currency.coinDecimals,
-                    denom: currency.coinMinimalDenom
-                },
+                chain_info: chainInfo
             });
         },
         {}
