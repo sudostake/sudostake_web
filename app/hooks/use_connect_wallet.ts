@@ -80,6 +80,7 @@ export const useConnectWallet = () => {
                 address,
                 client: wasmChainClient,
                 status: WalletStatusType.connected,
+                wallet_logo_url: '/keplr_logo.svg',
             };
         }
 
@@ -107,6 +108,7 @@ export const useConnectWallet = () => {
                 address,
                 client: wasmChainClient,
                 status: WalletStatusType.connected,
+                wallet_logo_url: '/leap_wallet_logo.svg',
             };
         }
 
@@ -132,6 +134,7 @@ export const useConnectWallet = () => {
                 address,
                 client: wasmChainClient,
                 status: WalletStatusType.connected,
+                wallet_logo_url: '/ibc_wallet.png',
             };
         }
     }, {
@@ -147,6 +150,7 @@ export const useConnectWallet = () => {
                 address: '',
                 client: null,
                 status: WalletStatusType.error,
+                wallet_logo_url: '',
             })
         }
     });

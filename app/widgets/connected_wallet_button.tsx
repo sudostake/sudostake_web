@@ -1,21 +1,20 @@
 'use client'
 
-import { FaSignOutAlt, FaUserCircle } from "react-icons/fa"
+import { FaSignOutAlt } from "react-icons/fa"
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { WalletStatusType, selectedChainState, sideBarToggleState, walletState } from "../state";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import ClipBoardButton from "./clipboard_button";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { get_chain_info_from_id, supportedChains } from "../utils/supported_chains";
 import SelectNetworkDialog from "./select_network_dialog";
+import Image from "next/image";
 
 export default function ConnectedWalletButton() {
     const { mutate: connectWallet } = useConnectWallet();
-    const [{ name, status, address }, setWalletState] = useRecoilState(walletState);
+    const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
     const [chainInfo, setSelectedChainState] = useRecoilState(selectedChainState);
     const setSideBarState = useSetRecoilState(sideBarToggleState);
-    const router = useRouter();
 
     // Auto select chain
     useEffect(() => {
@@ -49,6 +48,7 @@ export default function ConnectedWalletButton() {
             address: '',
             name: '',
             client: null,
+            wallet_logo_url: '',
         })
 
         // Update local storage
@@ -67,7 +67,14 @@ export default function ConnectedWalletButton() {
                     <SelectNetworkDialog selected_chain={chainInfo} />
 
                     <span className="flex items-center px-4 w-full h-16 border-t border-current">
-                        <FaUserCircle className="w-6 h-6" />
+                        <Image
+                            src={wallet_logo_url}
+                            alt="wallet logo"
+                            width={24}
+                            height={24}
+                            priority
+                            className="rounded-full"
+                        />
                         <span className="ml-6 text-sm lg:text-base font-medium">{name.toUpperCase()}</span>
                         <span className="ml-auto mr-4">
                             <ClipBoardButton address={address} />

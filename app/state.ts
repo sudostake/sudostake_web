@@ -20,6 +20,7 @@ export type WalletState = {
     status: WalletStatusType,
     name: string,
     address: string,
+    wallet_logo_url: string,
 };
 
 export const walletState = atom<WalletState>({
@@ -29,6 +30,7 @@ export const walletState = atom<WalletState>({
         status: WalletStatusType.idle,
         name: '',
         address: '',
+        wallet_logo_url: '',
     },
     dangerouslyAllowMutability: true,
 });

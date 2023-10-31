@@ -115,6 +115,7 @@ export const useDeposit = (to_address: string) => {
             return await queryClient.refetchQueries({ queryKey: ['vault_metadata', to_address] });
         },
         onError(e) {
+            console.log(e);
             toast("Error depositing funds", { type: 'error' })
         }
     });
