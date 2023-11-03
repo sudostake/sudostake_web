@@ -1,3 +1,5 @@
+'use client'
+
 import { useQuery } from "@tanstack/react-query"
 import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
