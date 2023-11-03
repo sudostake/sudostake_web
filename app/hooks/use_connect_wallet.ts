@@ -26,8 +26,6 @@ export const useConnectWallet = () => {
                 if (!window?.keplr) {
                     alert('Please install Keplr extension and refresh the page');
                     throw new Error('Error connecting wallet');
-                } else {
-                    window.wallet = window.keplr;
                 }
 
                 break;
@@ -37,8 +35,6 @@ export const useConnectWallet = () => {
                 if (!window?.leap) {
                     alert('Please install leap extension or use the in-app browser in the mobile app');
                     throw new Error('Error connecting wallet');
-                } else {
-                    window.wallet = window.leap;
                 }
 
                 break;
@@ -48,8 +44,6 @@ export const useConnectWallet = () => {
                 if (!window?.cosmostation) {
                     alert('Please install cosmostation extension or use the in-app browser in the mobile app');
                     throw new Error('Error connecting wallet');
-                } else {
-                    window.wallet = window.cosmostation.providers.keplr;
                 }
 
                 break;
@@ -114,6 +108,8 @@ export const useConnectWallet = () => {
 
         // Try connect cosmostation
         if (selected_wallet === WalletType.cosmostation) {
+            window.wallet = window.cosmostation.providers.keplr;
+
             await window.wallet.experimentalSuggestChain(chainInfo.src);
             await window.wallet.enable(chainInfo.src.chainId);
 
@@ -169,7 +165,6 @@ export const useConnectWallet = () => {
                 window.removeEventListener('keplr_keystorechange', reconnectWallet)
             }
         },
-        // eslint-disable-next-line
         [status]
     )
 
@@ -187,7 +182,6 @@ export const useConnectWallet = () => {
                 window.removeEventListener('leap_keystorechange', reconnectWallet)
             }
         },
-        // eslint-disable-next-line
         [status]
     )
 
@@ -199,11 +193,12 @@ export const useConnectWallet = () => {
                     mutation.mutate(null)
                 }
             }
+            window.addEventListener('cosmostation_keystorechange', reconnectWallet)
 
-            window?.cosmostation?.cosmos.on('accountChanged', () => reconnectWallet)
-            return () => { }
+            return () => {
+                window.removeEventListener('cosmostation_keystorechange', reconnectWallet)
+            }
         },
-        // eslint-disable-next-line
         [status]
     )
 
