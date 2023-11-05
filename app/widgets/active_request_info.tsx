@@ -50,7 +50,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                         <span>Comission</span>
                     </th>
                     <td className="py-4 text-right">
-                        <span>{0.003 * vault_info.requested_amount.amount} {request_currency.coinDenom}</span>
+                        0.3% <span>({0.003 * vault_info.requested_amount.amount} {request_currency.coinDenom})</span>
                     </td>
                 </tr>
 

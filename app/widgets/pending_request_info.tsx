@@ -5,10 +5,11 @@ import { selectedChainState } from "../state";
 import { SECONDS_IN_A_DAY } from "../utils/constants";
 
 type ComponentProps = {
-    vault_info: VaultIndex
+    vault_info: VaultIndex,
+    show_tvl: boolean
 }
 
-export default function PendingLiquidityRequestInfo({ vault_info }: ComponentProps) {
+export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: ComponentProps) {
     const chainInfo = useRecoilValue(selectedChainState);
     const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
 
@@ -24,17 +25,32 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
     return (
         <table className="table-fixed caption-top text-sm text-left">
             <tbody>
-                <tr className="border-b border-current border-dashed">
-                    <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                        <span className="font-medium">Status</span>
-                    </th>
-                    <td className="py-4">
-                        <span className="flex flex-row-reverse items-center">
-                            <span>{vault_info.liquidity_request_status.toUpperCase()}</span>
-                            <FaCircle className="w-4 h-4 mr-3 text-orange-500" />
-                        </span>
-                    </td>
-                </tr>
+                {
+                    !show_tvl &&
+                    <tr className="border-b border-current border-dashed">
+                        <th scope="row" className="py-4 font-medium whitespace-nowrap">
+                            <span className="font-medium">Status</span>
+                        </th>
+                        <td className="py-4">
+                            <span className="flex flex-row-reverse items-center">
+                                <span>{vault_info.liquidity_request_status.toUpperCase()}</span>
+                                <FaCircle className="w-4 h-4 mr-3 text-orange-500" />
+                            </span>
+                        </td>
+                    </tr>
+                }
+
+                {
+                    show_tvl &&
+                    <tr className="border-b border-current border-dashed">
+                        <th scope="row" className="py-4 font-medium whitespace-nowrap">
+                            <span className="font-medium">Total Value Staked</span>
+                        </th>
+                        <td className="py-4 text-right">
+                            <span>{vault_info.tvl.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                        </td>
+                    </tr>
+                }
 
                 <tr className="border-b border-current border-dashed">
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
@@ -59,7 +75,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                         <span>Comission</span>
                     </th>
                     <td className="py-4 text-right">
-                        <span>{(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom}</span>
+                        0.3% <span>({(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom})</span>
                     </td>
                 </tr>
 

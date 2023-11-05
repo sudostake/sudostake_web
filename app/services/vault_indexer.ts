@@ -24,7 +24,8 @@ export async function get_connection(rpc: string): Promise<CosmWasmClient> {
     return client;
 }
 
-export function index_vault_data({ vault_info, rpc, include_request_state }: { vault_info: JsonObject, rpc: string, include_request_state?: boolean }) {
+export function index_vault_data({ vault_info, staking_info, rpc, include_request_state }:
+    { vault_info: JsonObject, staking_info: JsonObject, rpc: string, include_request_state?: boolean }) {
     const chain_info = get_chain_info_from_rpc(rpc);
     const stakingDenomDecimal = chain_info.src.stakeCurrency.coinDecimals;
 
@@ -32,7 +33,8 @@ export function index_vault_data({ vault_info, rpc, include_request_state }: { v
         from_code_id: vault_info['config']['from_code_id'],
         index_number: vault_info['config']['index_number'],
         owner: vault_info['config']['owner'],
-        liquidity_request_status: 'idle'
+        liquidity_request_status: 'idle',
+        tvl: convertMicroDenomToDenom(staking_info.total_staked, stakingDenomDecimal)
     };
 
     if (Boolean(vault_info['liquidity_request'])) {

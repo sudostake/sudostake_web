@@ -9,12 +9,31 @@ import { useEffect } from "react";
 import { get_chain_info_from_id, supportedChains } from "../utils/supported_chains";
 import SelectNetworkDialog from "./select_network_dialog";
 import Image from "next/image";
+import { WalletType } from "../utils/supported_wallets";
 
 export default function ConnectedWalletButton() {
     const { mutate: connectWallet } = useConnectWallet();
     const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
     const [chainInfo, setSelectedChainState] = useRecoilState(selectedChainState);
     const setSideBarState = useSetRecoilState(sideBarToggleState);
+
+    const resetWalletConnection = () => {
+        // Reset wallet connection state
+        setWalletState({
+            status: WalletStatusType.idle,
+            address: '',
+            name: '',
+            client: null,
+            wallet_logo_url: '',
+        })
+
+        // Update local storage
+        localStorage.setItem('connection_status', WalletStatusType.idle);
+        localStorage.removeItem('selected_wallet');
+
+        // Close nav bar
+        setSideBarState(false);
+    }
 
     // Auto select chain
     useEffect(() => {
@@ -41,23 +60,14 @@ export default function ConnectedWalletButton() {
         }, 100)
     }, [chainInfo, status, connectWallet]);
 
-    const resetWalletConnection = () => {
-        // Reset wallet connection state
-        setWalletState({
-            status: WalletStatusType.idle,
-            address: '',
-            name: '',
-            client: null,
-            wallet_logo_url: '',
-        })
-
-        // Update local storage
-        localStorage.setItem('connection_status', WalletStatusType.idle);
-        localStorage.removeItem('selected_wallet');
-
-        // Close nav bar
-        setSideBarState(false);
-    }
+    // Reset wallet connection if cosmostation was connected by a client
+    // because we have deprecated it for now.
+    useEffect(() => {
+        // Disconnect any user that is already connected to cosmostation
+        // because we have deprecated support for it
+        const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
+        if (selected_wallet === WalletType.cosmostation) { resetWalletConnection(); }
+    }, []);
 
     return (
         <>

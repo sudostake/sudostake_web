@@ -20,9 +20,13 @@ export async function POST(req: NextRequest) {
         }
 
         // Query the vault info and set the data to firestore
-        const contract_info = await client.queryContractSmart(req_data.vault_address, { info: {} });
+        const [contract_info, staking_info] = await Promise.all([
+            client.queryContractSmart(req_data.vault_address, { info: {} }),
+            client.queryContractSmart(req_data.vault_address, { staking_info: {} })
+        ]);
         await set(`/${chain_info.vault_collection_path}/${req_data.vault_address}`, index_vault_data({
             vault_info: contract_info,
+            staking_info,
             rpc: req_data.rpc
         }));
 

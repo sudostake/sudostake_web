@@ -26,16 +26,6 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                 return (
                     <div className="flex flex-col gap-8">
                         <span className="px-4 text-lg text-center">{title}</span>
-                        <button onClick={() => handle_select_wallet(WalletType.cosmostation)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
-                            <Image
-                                src="/ibc_wallet.png"
-                                alt="Cosmostation Wallet Logo"
-                                width={30}
-                                height={30}
-                                priority
-                            />
-                            <span className="ml-2 text-sm lg:text-base font-medium">COSMOSTATION</span>
-                        </button>
                         <button onClick={() => handle_select_wallet(WalletType.keplr)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
                             <Image
                                 src="/keplr_logo.svg"

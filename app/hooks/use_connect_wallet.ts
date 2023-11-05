@@ -39,15 +39,6 @@ export const useConnectWallet = () => {
 
                 break;
             }
-
-            case WalletType.cosmostation: {
-                if (!window?.cosmostation) {
-                    alert('Please install cosmostation extension or use the in-app browser in the mobile app');
-                    throw new Error('Error connecting wallet');
-                }
-
-                break;
-            }
         }
 
         // Try connect keplr
@@ -103,34 +94,6 @@ export const useConnectWallet = () => {
                 client: wasmChainClient,
                 status: WalletStatusType.connected,
                 wallet_logo_url: '/leap_wallet_logo.svg',
-            };
-        }
-
-        // Try connect cosmostation
-        if (selected_wallet === WalletType.cosmostation) {
-            window.wallet = window.cosmostation.providers.keplr;
-
-            await window.wallet.experimentalSuggestChain(chainInfo.src);
-            await window.wallet.enable(chainInfo.src.chainId);
-
-            const offlineSigner = window.wallet.getOfflineSigner(chainInfo.src.chainId);
-            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                chainInfo.src.rpc,
-                offlineSigner,
-                {
-                    gasPrice: GasPrice.fromString(chainInfo.gas_price),
-                }
-            )
-            const [{ address }] = await offlineSigner.getAccounts();
-            const key = await window.wallet.getKey(chainInfo.src.chainId);
-
-            // Return response
-            return {
-                name: key.name,
-                address,
-                client: wasmChainClient,
-                status: WalletStatusType.connected,
-                wallet_logo_url: '/ibc_wallet.png',
             };
         }
     }, {

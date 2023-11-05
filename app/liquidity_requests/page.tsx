@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { selectedChainState, toolBarState } from '../state';
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
@@ -8,7 +8,8 @@ import { db } from '../services/firebase_client';
 import PendingLiquidityRequestInfo from '../widgets/pending_request_info';
 import { usePathname, useRouter } from 'next/navigation';
 import { VaultIndex } from '../utils/interface';
-import { FaFilter, FaChevronLeft, FaChevronRight, FaCaretDown } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import SortOptions, { SortOptionTypes } from './widgets/sort_options';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
@@ -16,6 +17,8 @@ export default function LiquidityRequests() {
   const router = useRouter();
   const pathname = usePathname();
   const chainInfo = useRecoilValue(selectedChainState);
+  const [selected_sort_option, setSelectedSortOption] = useState<SortOptionTypes>();
+  const vault_deals_list_ref = useRef(null);
 
   // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
   // Set it back to the title for this page, when pathname === /liquidity_requests
@@ -30,24 +33,42 @@ export default function LiquidityRequests() {
 
   // Subscribe to pending liquidity requests
   useEffect(() => {
-    if (chainInfo) {
-      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("liquidity_request_status", "==", "pending"), orderBy("indexed_at", "desc")), (res) => {
+    if (chainInfo && selected_sort_option) {
+      // Filter
+      let constraints: any[] = [
+        where("liquidity_request_status", "==", "pending"),
+      ];
+
+      // Order by
+      if (selected_sort_option === SortOptionTypes.latest) {
+        constraints.push(orderBy("indexed_at", "desc"));
+      } else
+        if (selected_sort_option === SortOptionTypes.highest_value_locked) {
+          constraints.push(orderBy("tvl", "desc"));
+        }
+
+      // TODO add pagination constraints
+
+      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), ...constraints), (res) => {
         const vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id } as VaultIndex));
         setVaults(vaults);
       });
     }
-  }, [chainInfo]);
+  }, [chainInfo, selected_sort_option]);
+
+  function handle_select_sort_option(option: SortOptionTypes) {
+    // Scroll to top of element
+    vault_deals_list_ref.current.scrollTop = 0;
+
+    setSelectedSortOption(option);
+  }
 
   return (
     <div className='flex flex-col h-full'>
 
       <div className='flex flex-row px-4 lg:px-8 py-4 border-b border-current'>
-        <span className='flex items-center flex-row gap-4 border border-current rounded p-2' role='button'>
-          <FaFilter className="w-5 h-5" />
-          <span className='text-sm lg:text-base font-medium'>Filter List</span>
-          <FaCaretDown className="w-4 h-4" />
-        </span>
+        <SortOptions on_select={handle_select_sort_option} />
 
         <span className='flex items-center flex-row gap-8 ml-auto'>
           <FaChevronLeft className="w-4 h-4" role='button' />
@@ -56,7 +77,7 @@ export default function LiquidityRequests() {
         </span>
       </div>
 
-      <div className="flex-grow text-sm lg:text-base py-8 px-2 lg:px-8 overflow-y-scroll">
+      <div ref={vault_deals_list_ref} className="flex-grow text-sm lg:text-base py-8 px-2 lg:px-8 overflow-y-scroll">
         {
           vaults.length > 0 &&
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -69,7 +90,7 @@ export default function LiquidityRequests() {
                       #{vault.index_number}
                     </span>
                   </span>
-                  <PendingLiquidityRequestInfo vault_info={vault} />
+                  <PendingLiquidityRequestInfo vault_info={vault} show_tvl={true} />
                   <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="flex items-center justify-center h-9 mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                   </button>

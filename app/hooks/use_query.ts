@@ -162,11 +162,12 @@ export const useQueryVaultMetaData = (vault_address: string) => {
             return {
                 native_balance,
                 usdc_balance: usdc_balance,
-                total_staked: convertMicroDenomToDenom(staking_info['total_staked'], 18),
-                acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], 18),
+                total_staked: convertMicroDenomToDenom(staking_info['total_staked'], chainInfo.src.stakeCurrency.coinDecimals),
+                acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], chainInfo.src.stakeCurrency.coinDecimals),
                 unbonding_details,
                 all_delegations: Array.from<any>(all_delegations.data),
-                vault_info
+                vault_info,
+                staking_info,
             };
         },
         {}

@@ -75,4 +75,7 @@ export type VaultIndex = {
 
     // This indicates if an expired fixed term loan is currently undergoing liquidation by the lender
     processing_liquidation?: boolean,
+
+    // This is the amount staked in the vault
+    tvl?: number,
 };

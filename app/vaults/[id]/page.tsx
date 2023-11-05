@@ -32,6 +32,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     // active liquidity request option
     const vault_info = (vault_metadata && chainInfo && index_vault_data({
         vault_info: vault_metadata.vault_info,
+        staking_info: vault_metadata.staking_info,
         rpc: chainInfo.src.rpc,
         include_request_state: true
     }));
@@ -294,7 +295,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 }
                             </h2>
 
-                            <PendingLiquidityRequestInfo vault_info={vault_info} />
+                            <PendingLiquidityRequestInfo vault_info={vault_info} show_tvl={false} />
                         </div>
                     }
 
