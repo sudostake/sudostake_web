@@ -32,8 +32,7 @@ export default function RootLayout({
             <SideBar />
             <FailedVaultIndexHandler />
             <ToastContainer position="top-right" />
-            {/* main content is displayed in this section */}
-            <div className="flex-1 lg:ml-80 mt-20 lg:mt-24 bg-gray-200 dark:bg-black">
+            <div className="flex-1 lg:ml-80 mt-20 bg-gray-200 dark:bg-black">
               <Suspense fallback={<Loading />}>
                 <>
                   {children}

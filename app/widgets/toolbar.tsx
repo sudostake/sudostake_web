@@ -15,8 +15,8 @@ export default function ToolBar() {
         <div className={
             classNames({
                 "fixed flex items-center": true,
-                "w-full h-20 lg:h-24": true,
-                "py-4 px-4 lg:px-8 lg:ml-80": true,
+                "w-full h-20": true,
+                "px-4 lg:px-8 lg:ml-80": true,
                 "border-b border-current": true,
                 "bg-gray-200 dark:bg-black": true,
             })

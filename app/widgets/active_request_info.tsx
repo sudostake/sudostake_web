@@ -15,7 +15,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
     return (
         <table className="table-fixed caption-top text-sm text-left">
             <tbody>
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span className="font-medium">Option Type</span>
                     </th>
@@ -24,7 +24,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </td>
                 </tr>
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span className="font-medium">Status</span>
                     </th>
@@ -36,7 +36,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </td>
                 </tr>
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span>Option Cost</span>
                     </th>
@@ -45,7 +45,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </td>
                 </tr>
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span>Comission</span>
                     </th>
@@ -56,7 +56,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
 
                 {
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Staking Rewards</span>
                         </th>
@@ -67,7 +67,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 }
 
                 {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
                         </th>
@@ -78,7 +78,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 }
 
                 {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Collateral Amount</span>
                         </th>
@@ -90,7 +90,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
 
                 {
                     vault_info.request_type !== LiquidityRequestTypes.fixed_term_rental && !hide_state_info &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="flex flex-col py-4 font-medium whitespace-nowrap">
                             <span>Already Claimed</span>
 
@@ -102,7 +102,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 }
 
                 {vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Includes Voting Rights</span>
                         </th>
@@ -113,7 +113,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 }
 
                 {vault_info.request_type !== LiquidityRequestTypes.fixed_interest_rental && !hide_state_info &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Expires In</span>
                         </th>

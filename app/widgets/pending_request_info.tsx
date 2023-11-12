@@ -27,7 +27,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
             <tbody>
                 {
                     !show_tvl &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span className="font-medium">Status</span>
                         </th>
@@ -42,7 +42,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
 
                 {
                     show_tvl &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span className="font-medium">Total Value Staked</span>
                         </th>
@@ -52,7 +52,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                     </tr>
                 }
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span className="font-medium">Option Type</span>
                     </th>
@@ -61,7 +61,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                     </td>
                 </tr>
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span>Option Cost</span>
                     </th>
@@ -70,7 +70,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                     </td>
                 </tr>
 
-                <tr className="border-b border-current border-dashed">
+                <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
                         <span>Comission</span>
                     </th>
@@ -81,7 +81,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
 
                 {
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Staking Rewards</span>
                         </th>
@@ -92,7 +92,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                 }
 
                 {vault_info.request_type !== LiquidityRequestTypes.fixed_interest_rental &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Duration</span>
                         </th>
@@ -103,7 +103,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                 }
 
                 {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
-                    <tr className="border-b border-current border-dashed">
+                    <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
                         </th>

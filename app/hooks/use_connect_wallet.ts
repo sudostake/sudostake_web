@@ -7,6 +7,7 @@ import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
 import { useEffect } from 'react'
 import { WalletType } from '../utils/supported_wallets'
+import { getOfflineSigner } from "@cosmostation/cosmos-client";
 
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
@@ -34,6 +35,15 @@ export const useConnectWallet = () => {
             case WalletType.leap: {
                 if (!window?.leap) {
                     alert('Please install leap extension or use the in-app browser in the mobile app');
+                    throw new Error('Error connecting wallet');
+                }
+
+                break;
+            }
+
+            case WalletType.cosmostation: {
+                if (!window?.cosmostation) {
+                    alert('Please install cosmostaion extension or use the in-app browser in the mobile app');
                     throw new Error('Error connecting wallet');
                 }
 
@@ -94,6 +104,35 @@ export const useConnectWallet = () => {
                 client: wasmChainClient,
                 status: WalletStatusType.connected,
                 wallet_logo_url: '/leap_wallet_logo.svg',
+            };
+        }
+
+        // Try connect cosmostaion
+        if (selected_wallet === WalletType.cosmostation) {
+            await window.cosmostation.providers.keplr.experimentalSuggestChain(chainInfo.src)
+            await window.cosmostation.providers.keplr.enable(chainInfo.src.chainId)
+
+            const offlineSigner = await window.cosmostation.providers.keplr.getOfflineSigner(
+                chainInfo.src.chainId
+            )
+
+            const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
+                chainInfo.src.rpc,
+                offlineSigner,
+                {
+                    gasPrice: GasPrice.fromString(chainInfo.gas_price),
+                }
+            )
+            const [{ address }] = await offlineSigner.getAccounts()
+            const key = await window.cosmostation.providers.keplr.getKey(chainInfo.src.chainId)
+
+            // Return response
+            return {
+                name: key.name,
+                address,
+                client: wasmChainClient,
+                status: WalletStatusType.connected,
+                wallet_logo_url: '/ibc_wallet.png',
             };
         }
     }, {

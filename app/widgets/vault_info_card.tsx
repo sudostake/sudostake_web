@@ -84,6 +84,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>
+                
                 <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />
             </span>
         </div>

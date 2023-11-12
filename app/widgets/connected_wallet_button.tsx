@@ -65,8 +65,8 @@ export default function ConnectedWalletButton() {
     useEffect(() => {
         // Disconnect any user that is already connected to cosmostation
         // because we have deprecated support for it
-        const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
-        if (selected_wallet === WalletType.cosmostation) { resetWalletConnection(); }
+        // const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
+        // if (selected_wallet === WalletType.cosmostation) { resetWalletConnection(); }
     }, []);
 
     return (

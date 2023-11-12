@@ -175,19 +175,24 @@ export const useClaimRewards = (vault_address: string) => {
     });
 }
 
+
+// TODO when a user delegates, 
 export const useDelegate = (vault_address: string) => {
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
-        return await client.execute(
+        await client.execute(
             address,
             vault_address,
             { delegate: { validator: validator.address, amount: microAmount } },
             'auto',
             ''
         );
+
+        return await indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Delegate successful`, { type: 'success' })

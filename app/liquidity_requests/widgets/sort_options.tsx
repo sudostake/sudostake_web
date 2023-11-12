@@ -7,24 +7,30 @@ export enum SortOptionTypes {
     highest_value_locked = 'highest_value_locked',
 }
 
-type SortOption = {
+export type SortOption = {
     type: SortOptionTypes,
-    label: string
+    label: string,
+    prev_label: string,
+    next_label: string,
 }
 
 const sort_options: SortOption[] = [
     {
         type: SortOptionTypes.latest,
-        label: 'Latest'
+        label: 'Date',
+        prev_label: 'Newer',
+        next_label: 'Older'
     },
     {
         type: SortOptionTypes.highest_value_locked,
-        label: 'Highest TVL'
+        label: 'TVL',
+        prev_label: 'Higher',
+        next_label: 'Lower'
     },
 ];
 
 type ComponentProps = {
-    on_select: (type: SortOptionTypes) => void,
+    on_select: (option: SortOption) => void,
 }
 
 export default function SortOptions({ on_select }: ComponentProps) {
@@ -40,7 +46,7 @@ export default function SortOptions({ on_select }: ComponentProps) {
         setIsOpen(false);
 
         // Emit the selection event to the parent component
-        on_select(option.type);
+        on_select(option);
     }
 
     // Set a default sort option
@@ -53,7 +59,7 @@ export default function SortOptions({ on_select }: ComponentProps) {
 
     return (
         <div className="relative inline-block text-left py-2">
-            <span onClick={() => setIsOpen(!isOpen)} className='flex items-center flex-row gap-4 border border-current rounded p-2' role='button'>
+            <span onClick={() => setIsOpen(!isOpen)} className='flex items-center flex-row gap-4 border border-current rounded-lg p-2' role='button'>
                 <FaSortAmountDown className="w-5 h-5" />
                 <span className='text-sm lg:text-base font-medium'>
                     {selected_option && selected_option.label}
@@ -64,7 +70,7 @@ export default function SortOptions({ on_select }: ComponentProps) {
             <span role="button" onClick={() => setIsOpen(!isOpen)} className={`fixed inset-0 ${isOpen ? '' : 'hidden'}`} />
 
             <div className={classNames({
-                "absolute left-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-md shadow-lg": true,
+                "absolute left-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-lg shadow-lg": true,
                 "bg-gray-200 dark:bg-gray-900": true,
                 "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
                 "hidden": !isOpen

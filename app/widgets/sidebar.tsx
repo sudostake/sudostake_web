@@ -73,7 +73,7 @@ export default function SideBar() {
         }>
             <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
                 <span role='button' onClick={() => setSideBarState(!isOpen)}
-                    className="py-4 px-4 flex items-center h-20 lg:h-24 w-full border-b border-current">
+                    className="px-4 h-20 flex items-center w-full border-b border-current">
                     <Image
                         src="/logo_light.png"
                         alt="sudostake Logo"
@@ -94,12 +94,11 @@ export default function SideBar() {
                             }} passHref>
                                 <li className={classNames({
                                     "flex items-center w-full h-16 px-2 mb-2 rounded-lg": true,
-                                    "hover:border hover:border-current": true,
-                                    "border border-current": nav_item.href === pathname,
-                                    "border border-transparent": nav_item.href !== pathname
+                                    "hover:font-bold": true,
+                                    "font-bold": nav_item.href === pathname,
                                 })}>
                                     {nav_item.icon}
-                                    <span className="ml-4 text-sm lg:text-base font-medium">{nav_item.label}</span>
+                                    <span className="ml-4 text-sm lg:text-base">{nav_item.label}</span>
                                     {nav_item.target && <span className="ml-auto"><FaLink className="w-4 h-4" /></span>}
                                 </li>
                             </Link>
