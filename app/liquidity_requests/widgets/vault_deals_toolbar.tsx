@@ -144,7 +144,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
     }
 
     return (
-        <div className='flex flex-row px-2 lg:px-8 py-2 border-b border-current'>
+        <div className='flex flex-row px-2 lg:px-8 py-2 border-b border-current dark:border-gray-500'>
             <SortOptions on_select={handle_select_sort_option} />
 
             <span className='flex items-center flex-row ml-auto'>

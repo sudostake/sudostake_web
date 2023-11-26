@@ -2,16 +2,22 @@ export interface IObjectMap<T> {
     [key: string]: T;
 }
 
+export enum LiquidityRequestTypes {
+    fixed_interest_rental = 'fixed_interest_rental',
+    fixed_term_rental = 'fixed_term_rental',
+    fixed_term_loan = 'fixed_term_loan',
+}
+
 export type RequestOption = {
     id: LiquidityRequestTypes,
     title: string,
     description: string
 };
 
-export enum LiquidityRequestTypes {
-    fixed_interest_rental = 'fixed_interest_rental',
-    fixed_term_rental = 'fixed_term_rental',
-    fixed_term_loan = 'fixed_term_loan',
+export enum WalletTypes {
+    keplr = 'keplr',
+    leap = 'leap',
+    cosmostation = 'cosmostation',
 }
 
 /**

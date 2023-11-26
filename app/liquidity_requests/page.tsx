@@ -36,7 +36,12 @@ export default function LiquidityRequests() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {vaults.map((vault, index) => {
               return (
-                <div key={index} className="flex flex-col gap-2 w-full p-4 border-b border-current lg:border lg:rounded-lg">
+                <div key={index} className="
+                      flex flex-col gap-2 
+                      w-full p-4 
+                      border-b border-gray-300 dark:border-gray-800 
+                      lg:border lg:rounded-lg lg:border-current dark:lg:border-gray-500 
+                ">
                   <span className="flex items-center">
                     <span>Vault ID</span>
                     <span className="ml-auto">
@@ -44,7 +49,7 @@ export default function LiquidityRequests() {
                     </span>
                   </span>
                   <PendingLiquidityRequestInfo vault_info={vault} show_tvl={true} />
-                  <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="flex items-center justify-center h-9 mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                  <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="flex items-center justify-center h-9 mt-auto border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
                     View
                   </button>
                 </div>

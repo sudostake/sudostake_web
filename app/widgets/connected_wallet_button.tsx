@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { get_chain_info_from_id, supportedChains } from "../utils/supported_chains";
 import SelectNetworkDialog from "./select_network_dialog";
 import Image from "next/image";
-import { WalletType } from "../utils/supported_wallets";
+import { WalletTypes } from "../utils/interface";
 
 export default function ConnectedWalletButton() {
     const { mutate: connectWallet } = useConnectWallet();
@@ -25,6 +25,7 @@ export default function ConnectedWalletButton() {
             name: '',
             client: null,
             wallet_logo_url: '',
+            selected_wallet: null
         })
 
         // Update local storage
@@ -50,25 +51,6 @@ export default function ConnectedWalletButton() {
         }
     }, [chainInfo, setSelectedChainState]);
 
-    // Try auto-connect wallet
-    useEffect(() => {
-        setTimeout(() => {
-            if (localStorage.getItem('connection_status') === WalletStatusType.connected &&
-                status !== WalletStatusType.connected && chainInfo) {
-                connectWallet();
-            }
-        }, 100)
-    }, [chainInfo, status, connectWallet]);
-
-    // Reset wallet connection if cosmostation was connected by a client
-    // because we have deprecated it for now.
-    useEffect(() => {
-        // Disconnect any user that is already connected to cosmostation
-        // because we have deprecated support for it
-        // const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
-        // if (selected_wallet === WalletType.cosmostation) { resetWalletConnection(); }
-    }, []);
-
     return (
         <>
             {
@@ -76,7 +58,7 @@ export default function ConnectedWalletButton() {
                 <span className="flex flex-col w-full">
                     <SelectNetworkDialog selected_chain={chainInfo} />
 
-                    <span className="flex items-center px-4 w-full h-16 border-t border-current">
+                    <span className="flex items-center px-4 w-full h-16 border-t border-current dark:border-gray-600">
                         <Image
                             src={wallet_logo_url}
                             alt="wallet logo"

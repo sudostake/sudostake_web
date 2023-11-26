@@ -71,9 +71,9 @@ export default function SideBar() {
                 "transition ease-in-out duration-300 transform": true,
             })
         }>
-            <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current">
+            <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current dark:lg:border-gray-600">
                 <span role='button' onClick={() => setSideBarState(!isOpen)}
-                    className="px-4 h-20 flex items-center w-full border-b border-current">
+                    className="px-4 h-20 flex items-center w-full border-b border-current dark:border-gray-600">
                     <Image
                         src="/logo_light.png"
                         alt="sudostake Logo"

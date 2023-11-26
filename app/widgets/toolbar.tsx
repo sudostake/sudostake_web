@@ -17,7 +17,7 @@ export default function ToolBar() {
                 "fixed flex items-center": true,
                 "w-full h-20": true,
                 "px-4 lg:px-8 lg:ml-80": true,
-                "border-b border-current": true,
+                "border-b border-current dark:border-gray-600": true,
                 "bg-gray-200 dark:bg-black": true,
             })
         }>

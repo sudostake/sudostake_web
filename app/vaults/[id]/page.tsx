@@ -141,119 +141,123 @@ export default function Vault({ params }: { params: { id: string } }) {
 
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
+    const vault_details_view = () =>
+        <div className="flex flex-col px-4 lg:px-8">
+            <span className="flex flex-row justify-between w-full pb-4">
+                <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                    <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
+                    <span>
+                        {native_balance.toLocaleString('en-us')}
+                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    </span>
+                </span>
+                {
+                    is_owner &&
+                    <span className="flex flex-row gap-2 py-2">
+                        <DepositDialogButton to_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                        <WithdrawDialogButton from_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                    </span>
+                }
+            </span>
+
+            <span className="flex flex-row justify-between w-full py-4">
+                <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                    <span>{usd_currency.coinDenom}</span>
+                    <span>
+                        {vault_metadata && vault_metadata.usdc_balance.toLocaleString('en-us')}
+                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    </span>
+                </span>
+                {
+                    is_owner &&
+                    <span className="flex flex-row gap-2 py-2">
+                        <DepositDialogButton to_address={params.id} currency={usd_currency} />
+                        <WithdrawDialogButton from_address={params.id} currency={usd_currency} />
+                    </span>
+                }
+            </span>
+
+            <span className="flex flex-row justify-between w-full py-4">
+                <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                    <span>Delegated</span>
+                    <span>
+                        {vault_metadata && vault_metadata.total_staked.toLocaleString('en-us')}
+                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    </span>
+                </span>
+                {is_owner && <ManageStakeActionsMenu vault_address={params.id} />}
+            </span>
+
+            <span className="flex flex-row justify-between w-full py-4">
+                <span className={can_claim_rewards ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                    <span>Rewards</span>
+                    <span>
+                        {accumulated_rewards.toLocaleString('en-us')}
+                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    </span>
+                </span>
+                {
+                    can_claim_rewards &&
+                    <span className="flex flex-row py-2">
+                        <button
+                            type="button"
+                            disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
+                            onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
+                                "px-2 inline-flex justify-center items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
+                                "w-24": !isClaimRewardsLoading
+                            })}>
+                            {
+                                isClaimRewardsLoading && <>
+                                    <FaSpinner className="w-4 h-4 mr-3 spinner" />
+                                    <span>Claiming</span>
+                                </>
+                            }
+                            {
+                                !isClaimRewardsLoading && <>
+                                    <span>Claim</span>
+                                </>
+                            }
+                        </button>
+                    </span>
+                }
+            </span>
+
+            <span className="flex flex-row justify-between w-full py-4">
+                <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                    <span>Unbonding Info</span>
+                    <span>
+                        {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
+                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                    </span>
+                </span>
+                {
+                    can_view_unbonding_info &&
+                    <UnbondingInfoDialog />
+                }
+            </span>
+        </div>;
 
     return (
         <div className={classNames({
-            "h-full overflow-y-scroll text-sm lg:text-base px-4 py-8 lg:px-8": true,
+            "h-full overflow-y-scroll text-sm lg:text-base py-8": true,
             "flex flex-col": true,
-            "w-full xl:w-3/4 xl:border-r xl:border-current": true,
+            "w-full xl:w-3/4 xl:border-r xl:border-current dark:xl:border-gray-600": true,
         })}>
             {
                 vault_metadata && status === WalletStatusType.connected &&
                 <>
-                    <span className="flex flex-row justify-between w-full pb-4">
-                        <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                            <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
-                            <span>
-                                {native_balance.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
-                            </span>
-                        </span>
-                        {
-                            is_owner &&
-                            <span className="flex flex-row gap-2 py-2">
-                                <DepositDialogButton to_address={params.id} currency={chainInfo.src.stakeCurrency} />
-                                <WithdrawDialogButton from_address={params.id} currency={chainInfo.src.stakeCurrency} />
-                            </span>
-                        }
-                    </span>
-
-                    <span className="flex flex-row justify-between w-full py-4">
-                        <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                            <span>{usd_currency.coinDenom}</span>
-                            <span>
-                                {vault_metadata && vault_metadata.usdc_balance.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
-                            </span>
-                        </span>
-                        {
-                            is_owner &&
-                            <span className="flex flex-row gap-2 py-2">
-                                <DepositDialogButton to_address={params.id} currency={usd_currency} />
-                                <WithdrawDialogButton from_address={params.id} currency={usd_currency} />
-                            </span>
-                        }
-                    </span>
-
-                    <span className="flex flex-row justify-between w-full py-4">
-                        <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                            <span>Delegated</span>
-                            <span>
-                                {vault_metadata && vault_metadata.total_staked.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
-                            </span>
-                        </span>
-                        {is_owner && <ManageStakeActionsMenu vault_address={params.id} />}
-                    </span>
-
-                    <span className="flex flex-row justify-between w-full py-4">
-                        <span className={can_claim_rewards ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                            <span>Rewards</span>
-                            <span>
-                                {accumulated_rewards.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
-                            </span>
-                        </span>
-                        {
-                            can_claim_rewards &&
-                            <span className="flex flex-row py-2">
-                                <button
-                                    type="button"
-                                    disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
-                                    onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
-                                        "px-2 inline-flex justify-center items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
-                                        "w-24": !isClaimRewardsLoading
-                                    })}>
-                                    {
-                                        isClaimRewardsLoading && <>
-                                            <FaSpinner className="w-4 h-4 mr-3 spinner" />
-                                            <span>Claiming</span>
-                                        </>
-                                    }
-                                    {
-                                        !isClaimRewardsLoading && <>
-                                            <span>Claim</span>
-                                        </>
-                                    }
-                                </button>
-                            </span>
-                        }
-                    </span>
-
-                    <span className="flex flex-row justify-between w-full py-4">
-                        <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                            <span>Unbonding Info</span>
-                            <span>
-                                {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
-                                {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
-                            </span>
-                        </span>
-                        {
-                            can_view_unbonding_info &&
-                            <UnbondingInfoDialog />
-                        }
-                    </span>
+                    {vault_details_view()}
 
                     {is_owner && vault_info && vault_info.liquidity_request_status === 'idle' &&
-                        <span className="py-20">
+                        <span className="py-20 px-4 lg:px-8">
                             <RequestLiquidityFlow vault_address={params.id} />
                         </span>
                     }
 
                     {vault_info && vault_info.liquidity_request_status === 'pending' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-current font-medium py-4">
-                                <span>Request Details</span>
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-current dark:border-gray-600 px-4 lg:px-8 font-medium py-4">
+                                <span>Option Details</span>
                                 {
                                     is_owner &&
                                     <button onClick={() => { close_request() }} className={classNames({
@@ -295,14 +299,16 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 }
                             </h2>
 
-                            <PendingLiquidityRequestInfo vault_info={vault_info} show_tvl={false} />
+                            <div className="flex flex-col w-full px-4 lg:px-8 mt-4">
+                                <PendingLiquidityRequestInfo vault_info={vault_info} show_tvl={false} />
+                            </div>
                         </div>
                     }
 
                     {vault_info && vault_info.liquidity_request_status === 'active' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-current font-medium py-4">
-                                <span>Request Details</span>
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-current dark:border-gray-600 px-4 lg:px-8 font-medium py-4">
+                                <span>Option Details</span>
                                 {
                                     can_repay_loan &&
                                     <button onClick={() => { repay_loan() }} className={classNames({
@@ -323,13 +329,15 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 }
                             </h2>
 
-                            <ActiveLiquidityRequestInfo vault_info={vault_info} />
+                            <div className="flex flex-col w-full px-4 lg:px-8 mt-4">
+                                <ActiveLiquidityRequestInfo vault_info={vault_info} />
+                            </div>
 
                             {
                                 has_expired_fixed_term_loan &&
                                 <div className={classNames({
                                     "flex flex-col": true,
-                                    "mt-8": true,
+                                    "mt-8 px-4 lg:px-8": true,
                                 })}>
                                     <div className="text-red-500">
                                         {`Your option has expired and ${is_owner ? 'you' : 'the vault owner'} did not repay the principal + interest to ${is_owner ? 'the lender' : 'you'}.`}

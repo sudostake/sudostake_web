@@ -27,7 +27,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
 
     return (
         <>
-            <span role="button" onClick={openModal} className="flex flex-row items-center px-4 py-2 border-t border-current">
+            <span role="button" onClick={openModal} className="flex flex-row items-center px-4 py-2 border-t border-current dark:border-gray-600">
                 <Image
                     src={chainInfo.src.chainSymbolImageUrl}
                     alt="logo"

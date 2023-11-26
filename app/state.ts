@@ -3,6 +3,7 @@
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { SudoStakeChainInfoSchema } from './utils/supported_chains';
 import { atom } from 'recoil'
+import { WalletTypes } from './utils/interface';
 
 export enum WalletStatusType {
     /* nothing happens to the wallet */
@@ -21,6 +22,7 @@ export type WalletState = {
     name: string,
     address: string,
     wallet_logo_url: string,
+    selected_wallet: WalletTypes | null
 };
 
 export const walletState = atom<WalletState>({
@@ -31,6 +33,7 @@ export const walletState = atom<WalletState>({
         name: '',
         address: '',
         wallet_logo_url: '',
+        selected_wallet: null
     },
     dangerouslyAllowMutability: true,
 });

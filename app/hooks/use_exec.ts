@@ -175,8 +175,6 @@ export const useClaimRewards = (vault_address: string) => {
     });
 }
 
-
-// TODO when a user delegates, 
 export const useDelegate = (vault_address: string) => {
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();

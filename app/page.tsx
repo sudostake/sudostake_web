@@ -70,62 +70,59 @@ export default function Home() {
     <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
       {status === WalletStatusType.connected &&
         <>
-          <button onClick={() => { !isLoading && createVault() }} className="flex items-center mb-8 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 px-3 py-3 text-sm lg:text-base font-medium lg:font-medium">
-            {
-              isLoading && <>
-                <FaSpinner className="w-6 h-6 mr-4 spinner" />
-                <span>Creating ...</span>
-              </>
-            }
-
-            {
-              !isLoading && <>
-                <FaPlusSquare className="w-6 h-6 mr-4" />
-                <span>Create Vault</span>
-              </>
-            }
-          </button>
-
           <Tab.Group>
-            {
-              (owner_vaults.length > 0 || active_lending_vaults.length > 0) &&
-              <Tab.List className="p-1 flex flex-row max-w-md mb-8 border border-current rounded-lg">
-                <Tab className={({ selected }) =>
-                  classNames(
-                    'w-full rounded-lg text-sm py-2',
-                    selected
-                      ? 'border border-current font-bold'
-                      : ''
-                  )
-                }>
-                  <h2>My Vaults</h2>
-                </Tab>
+            <Tab.List className="flex flex-row max-w-md mb-8 border border-current dark:border-gray-600 rounded-lg">
+              <Tab className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg text-sm py-2',
+                  selected
+                    ? 'border border-current font-bold'
+                    : ''
+                )
+              }>
+                <h2>My Vaults</h2>
+              </Tab>
 
-                <Tab className={({ selected }) =>
-                  classNames(
-                    'w-full rounded-lg text-sm py-2',
-                    selected
-                      ? 'border border-current font-bold'
-                      : ''
-                  )
-                }>
-                  <h2>Accepted Deals</h2>
-                </Tab>
-              </Tab.List>
-            }
+              <Tab className={({ selected }) =>
+                classNames(
+                  'w-full rounded-lg text-sm py-2',
+                  selected
+                    ? 'border border-current font-bold'
+                    : ''
+                )
+              }>
+                <h2>Accepted Deals</h2>
+              </Tab>
+            </Tab.List>
 
             <Tab.Panels>
               <Tab.Panel>
-                {
-                  owner_vaults.length > 0 &&
-                  <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                    {owner_vaults.map((vault, index) => {
-                      return (
-                        <VaultInfoCard key={index} vault_info={vault} />
-                      );
-                    })}
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+
+                  {owner_vaults.map((vault, index) => {
+                    return (
+                      <VaultInfoCard key={index} vault_info={vault} />
+                    );
+                  })}
+
+                  <div role="button" onClick={() => { !isLoading && createVault() }} className="w-full p-4 border border-current border-dashed rounded-lg grid grid-cols-1 gap-2 items-center">
+                    <span className="flex items-center text-sm lg:text-base font-medium justify-center">
+                      {
+                        isLoading && <>
+                          <FaSpinner className="w-6 h-6 mr-4 spinner" />
+                          <span>Creating ...</span>
+                        </>
+                      }
+
+                      {
+                        !isLoading && <>
+                          <FaPlusSquare className="w-6 h-6 mr-4" />
+                          <span>Create Vault</span>
+                        </>
+                      }
+                    </span>
                   </div>
-                }
+                </div>
               </Tab.Panel>
 
               <Tab.Panel>
@@ -184,7 +181,7 @@ export default function Home() {
 
       {
         status !== WalletStatusType.connected &&
-        <ConnectWalletOptions title="Connect to manage your vaults." />
+        <ConnectWalletOptions title="Connect to manage vaults." />
       }
     </div>
   )
