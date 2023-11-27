@@ -4,6 +4,7 @@ import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { SudoStakeChainInfoSchema } from './utils/supported_chains';
 import { atom } from 'recoil'
 import { WalletTypes } from './utils/interface';
+import { SigningNomosClient } from 'nomosjs';
 
 export enum WalletStatusType {
     /* nothing happens to the wallet */
@@ -17,7 +18,7 @@ export enum WalletStatusType {
 }
 
 export type WalletState = {
-    client: SigningCosmWasmClient | null,
+    client: SigningCosmWasmClient | SigningNomosClient | null,
     status: WalletStatusType,
     name: string,
     address: string,

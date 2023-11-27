@@ -1,12 +1,13 @@
-import { WalletStatusType, selectedChainState, walletState } from '../state'
+import { WalletStatusType, selectedChainState, walletState } from '../state';
 import {
     useMutation,
-} from '@tanstack/react-query'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
-import { GasPrice } from '@cosmjs/stargate'
-import { useEffect } from 'react'
-import { WalletTypes } from '../utils/interface'
+} from '@tanstack/react-query';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate';
+import { GasPrice } from '@cosmjs/stargate';
+import { useEffect } from 'react';
+import { WalletTypes } from '../utils/interface';
+import { SigningNomosClient } from 'nomosjs';
 
 export const useConnectWallet = () => {
     const [{ status }, setWalletState] = useRecoilState(walletState)
@@ -122,6 +123,21 @@ export const useConnectWallet = () => {
                     client: wasmChainClient,
                     status: WalletStatusType.connected,
                     wallet_logo_url: '/ibc_wallet.png',
+                    selected_wallet
+                };
+            }
+
+            if (selected_wallet === WalletTypes.nomos) {
+                const wasmChainClient = await SigningNomosClient.connectWithSigner(chainInfo.src.rpc, null);
+                const { address } = await wasmChainClient.getAccount();
+
+                // Return response
+                return {
+                    name: 'Nomos',
+                    address,
+                    client: wasmChainClient,
+                    status: WalletStatusType.connected,
+                    wallet_logo_url: '/Nomos.png',
                     selected_wallet
                 };
             }

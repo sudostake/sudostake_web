@@ -18,6 +18,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
     const [show_keplr, setShowKeplr] = useState(false);
     const [show_leap, setShowLeap] = useState(false);
     const [show_cosmostation, setShowCosmostation] = useState(false);
+    const [show_nomos, setShowNomos] = useState(false);
     const { mutate: connectWallet } = useConnectWallet();
     const { status, selected_wallet } = useRecoilValue(walletState);
 
@@ -42,6 +43,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
         setShowKeplr((!is_webview && wallets.keplr) || (is_webview && only_keplr_signer));
         setShowLeap(wallets.leap);
         setShowCosmostation(!is_webview && wallets.cosmostation);
+        setShowNomos(window !== window.parent);
     }, [setNoSigner, setShowKeplr, setShowLeap, setShowCosmostation]);
 
     const connect_wallet_home = () => {
@@ -62,6 +64,13 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
         const cosmostation_image = <Image
             src="/ibc_wallet.png"
             alt="Cosmostaion Wallet Logo"
+            width={30}
+            height={30}
+            priority
+        />;
+        const nomos_image = <Image
+            src="/Nomos.png"
+            alt="Nomos Multi-Sig"
             width={30}
             height={30}
             priority
@@ -124,6 +133,18 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
+                            </button>
+                        }
+
+                        {
+                            show_nomos &&
+                            <button onClick={() => handle_select_wallet(WalletTypes.nomos)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium">
+                                {nomos_image}
+                                <span className="ml-2 text-sm lg:text-base font-medium">NOMOS</span>
+                                {
+                                    status === WalletStatusType.connecting && selected_wallet === WalletTypes.nomos &&
+                                    <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
+                                }
                             </button>
                         }
                     </div>

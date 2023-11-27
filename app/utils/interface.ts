@@ -18,6 +18,7 @@ export enum WalletTypes {
     keplr = 'keplr',
     leap = 'leap',
     cosmostation = 'cosmostation',
+    nomos = 'nomos'
 }
 
 /**
