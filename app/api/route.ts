@@ -9,14 +9,15 @@ export async function POST(req: NextRequest) {
 
     try {
         const client = await get_connection(req_data.rpc);
-
-        // Get contract_data for the vault_address,
-        // then check if the contract matches any of the code_ids whitelisted
-        // For the network
         const contract_data = await client.getContract(req_data.vault_address);
-        const chain_info = get_chain_info_from_rpc(req_data.rpc)
+        const chain_info = get_chain_info_from_rpc(req_data.rpc);
+
+        if (!chain_info) {
+            throw new Error('Chain not supported');
+        }
+
         if (chain_info && !chain_info.vault_code_ids.includes(contract_data.codeId)) {
-            throw new Error('contract code not white_listed for the selected network');
+            throw new Error('Invalid contract type');
         }
 
         // Query the vault info and set the data to firestore
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
             rpc: req_data.rpc
         }));
 
-        return NextResponse.json({ msg: "data indexed" })
+        return NextResponse.json({ msg: "data indexed" });
     } catch (e) {
         return new Response(e, {
             status: 400,
