@@ -18,7 +18,7 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 w-24 h-9 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium">
                 Withdraw
             </button>
 
@@ -138,7 +138,7 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
                                         disabled={!Boolean(amount) || isLoading}
                                         type="button"
                                         onClick={() => { withdraw({ amount: Number(amount), currency, to_address: Boolean(to_address) ? to_address : null }) }}
-                                        className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
+                                        className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                         {
                                             isLoading && <>
                                                 <FaSpinner className="w-5 h-5 mr-3 spinner" />

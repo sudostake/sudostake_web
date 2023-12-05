@@ -17,7 +17,7 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
 
     return (
         <div className="relative inline-block text-left py-2">
-            <button onClick={() => setIsOpen(!isOpen)} className="w-24 h-9 inline-flex px-2 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(!isOpen)} className="w-24 h-9 inline-flex px-2 items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium">
                 <span>Manage</span>
                 <FaChevronDown className="ml-auto mt-1 h-4 w-4" aria-hidden="true" />
             </button>
@@ -25,21 +25,30 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
             <span role="button" onClick={() => setIsOpen(!isOpen)} className={`fixed inset-0 ${isOpen ? '' : 'hidden'}`} />
 
             <div className={classNames({
-                "absolute right-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-md shadow-lg": true,
-                "bg-gray-200 dark:bg-gray-900": true,
-                "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
+                "absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-lg overflow-hidden": true,
+                "divide-y divide-zinc-400 dark:divide-zinc-700": true,
+                "bg-white dark:bg-zinc-900": true,
                 "hidden": !isOpen
             })}>
 
-                <div className="px-1 py-1">
+                <div className={classNames({
+                    "p-1": true,
+                    "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
+                })}>
                     <DelegateDialogButton vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
                 </div>
 
-                <div className="px-1 py-1">
+                <div className={classNames({
+                    "p-1": true,
+                    "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
+                })}>
                     <RedelegateDialog vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
                 </div>
 
-                <div className="px-1 py-1">
+                <div className={classNames({
+                    "p-1": true,
+                    "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
+                })}>
                     <UndelegateDialogButton vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
                 </div>
             </div>

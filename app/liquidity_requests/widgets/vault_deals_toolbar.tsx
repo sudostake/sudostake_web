@@ -111,6 +111,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
         }
     }, [chainInfo, selected_sort_option, current_docs]);
 
+    // TODO disable function when isLoadingPrev
     const onPrev = debounce(() => {
         // Scroll to top of list
         list_ref.current.scrollTop = 0;
@@ -125,6 +126,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
         }
     }, 300);
 
+    // TODO disable function when isLoadingNext
     const onNext = debounce(() => {
         // Scroll to top of list
         list_ref.current.scrollTop = 0;
@@ -144,14 +146,14 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
     }
 
     return (
-        <div className='flex flex-row px-2 lg:px-8 py-2 border-b border-current dark:border-gray-500'>
+        <div className='flex flex-row px-2 lg:px-8 py-2 border-b border-zinc-400 dark:border-zinc-700'>
             <SortOptions on_select={handle_select_sort_option} />
 
             <span className='flex items-center flex-row ml-auto'>
                 <button disabled={newer_docs.length === 0}
                     onClick={onPrev}
                     className={classNames({
-                        'flex items-center flex-row gap-2 border border-current rounded-l-lg p-2': true,
+                        'flex items-center flex-row gap-2 border border-zinc-400 dark:border-zinc-600 rounded-l-lg p-2': true,
                         'hover:ring-1 hover:ring-offset-1': newer_docs.length > 0,
                         'cursor-not-allowed': newer_docs.length === 0,
                         'opacity-40': newer_docs.length === 0
@@ -166,7 +168,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
                 <button disabled={older_docs.length === 0}
                     onClick={onNext}
                     className={classNames({
-                        'flex items-center flex-row gap-2 border border-current rounded-r-lg p-2': true,
+                        'flex items-center flex-row gap-2 border border-zinc-400 dark:border-zinc-600 rounded-r-lg p-2': true,
                         'hover:ring-1 hover:ring-offset-1': older_docs.length > 0,
                         'cursor-not-allowed': older_docs.length === 0,
                         'opacity-40': older_docs.length === 0

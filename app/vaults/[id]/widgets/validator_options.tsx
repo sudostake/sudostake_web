@@ -32,7 +32,7 @@ export default function ValidatorOptions({ onValidatorSelected, hide_zero_balanc
                 <div className="relative w-full cursor-default overflow-hidden rounded-lg text-left">
                     <Combobox.Input
                         className={classNames({
-                            "py-3 pl-10 pr-4 w-full  border-2 border-current rounded-lg ": true,
+                            "py-3 pl-10 pr-4 w-full  border-2 border-zinc-400 rounded-lg ": true,
                             " text-xs lg:text-sm": true,
                             "outline-none focus:outline-none focus:ring": true,
                             "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,

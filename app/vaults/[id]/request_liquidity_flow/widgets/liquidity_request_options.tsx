@@ -19,7 +19,7 @@ export default function LiquidityRequestOptions({ onOptionSelected, default_valu
                             key={request_option.id}
                             value={request_option}
                             className={({ active, checked }) =>
-                                `hover:ring-2 hover:ring-offset-2 border border-slate-500 relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
+                                `hover:ring-1 hover:ring-offset-1 border border-slate-500 relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                             }>
                             {({ active, checked }) => (
                                 <div className="flex w-full items-center justify-between">

@@ -59,7 +59,7 @@ export default function SortOptions({ on_select }: ComponentProps) {
 
     return (
         <div className="relative inline-block text-left py-2">
-            <span onClick={() => setIsOpen(!isOpen)} className='flex items-center flex-row gap-4 border border-current rounded-lg p-2' role='button'>
+            <span onClick={() => setIsOpen(!isOpen)} className='flex items-center flex-row gap-4 border border-zinc-400 dark:border-zinc-600 rounded-lg p-2' role='button'>
                 <FaSortAmountDown className="w-5 h-5" />
                 <span className='text-sm lg:text-base font-medium'>
                     {selected_option && selected_option.label}
@@ -70,15 +70,19 @@ export default function SortOptions({ on_select }: ComponentProps) {
             <span role="button" onClick={() => setIsOpen(!isOpen)} className={`fixed inset-0 ${isOpen ? '' : 'hidden'}`} />
 
             <div className={classNames({
-                "absolute left-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-lg shadow-lg": true,
-                "bg-gray-200 dark:bg-gray-900": true,
-                "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
+                "absolute left-0 mt-2 w-56 origin-top-right rounded-lg shadow-lg overflow-hidden": true,
+                "divide-y divide-zinc-400 dark:divide-zinc-700": true,
+                "bg-white dark:bg-zinc-900": true,
                 "hidden": !isOpen
             })}>
                 {
                     sort_options.map((option, index) => {
                         return (
-                            <div key={index} className="px-1 py-1">
+                            <div key={index}
+                            className={classNames({
+                                "p-1":true,
+                                "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
+                            })}>
                                 <button onClick={() => { handle_select(option) }} className='group flex w-full items-center p-2 text-xs lg:text-sm'>
                                     <span>{option.label}</span>
 

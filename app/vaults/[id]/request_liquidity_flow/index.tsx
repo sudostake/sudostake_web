@@ -130,7 +130,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
 
     return (
         <>
-            <div role="button" onClick={() => setIsOpen(true)} className="p-8 rounded-lg text-sm lg:text-base lg:font-medium border border-current text-center hover:ring-2 hover:ring-offset-2">
+            <div role="button" onClick={() => setIsOpen(true)} className="p-8 rounded-lg text-sm lg:text-base lg:font-medium border border-zinc-400 text-center hover:ring-1 hover:ring-offset-1">
                 Borrow $USDC
             </div>
 
@@ -180,7 +180,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                         <div className="flex w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8">
                                             <button
                                                 onClick={() => { setStepHistory(1) }}
-                                                className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-2 hover:ring-offset-2 w-24">
+                                                className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-1 hover:ring-offset-1 w-24">
                                                 <span>Next</span>
                                             </button>
                                         </div>
@@ -322,7 +322,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                         <div className="flex w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8">
                                             <button
                                                 onClick={() => { setStepHistory(0) }}
-                                                className="mr-4 inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-2 hover:ring-offset-2 w-24">
+                                                className="mr-4 inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-1 hover:ring-offset-1 w-24">
                                                 <span>Prev</span>
                                             </button>
 
@@ -330,8 +330,8 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                                 disabled={!can_continue}
                                                 onClick={handle_request_liquidity}
                                                 className={classNames({
-                                                    "inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300": true,
-                                                    "hover:ring-2 hover:ring-offset-2": can_continue
+                                                    "inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300": true,
+                                                    "hover:ring-1 hover:ring-offset-1": can_continue
                                                 })}>
                                                 {
                                                     isLoading && <>

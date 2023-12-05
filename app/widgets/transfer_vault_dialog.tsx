@@ -24,7 +24,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
 
     return (
         <>
-            <button type="button" onClick={openModal} className="flex items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium py-2 px-8">
+            <button type="button" onClick={openModal} className="flex items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium py-2 px-8">
                 Transfer
             </button>
 
@@ -82,7 +82,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                             disabled={!Boolean(address)}
                                             type="button"
                                             onClick={() => { !isLoading && transferVault(address) }}
-                                            className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
+                                            className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                             {
                                                 isLoading && <>
                                                     <FaSpinner className="w-5 h-5 mr-3 spinner" />

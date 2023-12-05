@@ -30,18 +30,20 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
     // Logic to connect correct wallet options(s)
     useEffect(() => {
-        const is_webview = isWebview(window.navigator.userAgent);
-        const wallets = {
-            keplr: Boolean(window?.keplr),
-            leap: Boolean(window?.leap),
-            cosmostation: Boolean(window?.cosmostation),
-        };
-        const only_keplr_signer = wallets.keplr && !wallets.leap && !wallets.cosmostation;
+        setTimeout(() => {
+            const is_webview = isWebview(window.navigator.userAgent);
+            const wallets = {
+                keplr: Boolean(window?.keplr),
+                leap: Boolean(window?.leap),
+                cosmostation: Boolean(window?.cosmostation),
+            };
+            const only_keplr_signer = wallets.keplr && !wallets.leap && !wallets.cosmostation;
 
-        setNoSigner(!wallets.keplr && !wallets.leap && !wallets.cosmostation);
-        setShowKeplr((!is_webview && wallets.keplr) || (is_webview && only_keplr_signer));
-        setShowLeap(wallets.leap);
-        setShowCosmostation(!is_webview && wallets.cosmostation);
+            setNoSigner(!wallets.keplr && !wallets.leap && !wallets.cosmostation);
+            setShowKeplr((!is_webview && wallets.keplr) || (is_webview && only_keplr_signer));
+            setShowLeap(wallets.leap);
+            setShowCosmostation(!is_webview && wallets.cosmostation);
+        }, 300);
     }, [setNoSigner, setShowKeplr, setShowLeap, setShowCosmostation]);
 
     const connect_wallet_home = () => {
@@ -87,7 +89,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                         <span className="px-4 text-lg text-center">{title}</span>
                         {
                             show_keplr &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.keplr)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletTypes.keplr)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {keplr_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Keplr</span>
@@ -101,7 +103,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                         {
                             show_leap &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.leap)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletTypes.leap)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {leap_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
@@ -115,7 +117,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                         {
                             show_cosmostation &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.cosmostation)} className="flex items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletTypes.cosmostation)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {cosmostation_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>

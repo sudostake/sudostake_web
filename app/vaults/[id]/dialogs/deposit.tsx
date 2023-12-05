@@ -18,7 +18,7 @@ export default function DepositDialogButton({ to_address, currency }: DepositDia
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 w-24 h-9 text-xs lg:text-sm lg:font-medium">
+            <button onClick={() => setIsOpen(true)} className="items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium">
                 Deposit
             </button>
 
@@ -120,7 +120,7 @@ function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDia
                                         disabled={!Boolean(amount) && isLoading}
                                         type="button"
                                         onClick={() => { deposit({ amount: Number(amount), currency }) }}
-                                        className="inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
+                                        className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                         {
                                             isLoading && <>
                                                 <FaSpinner className="w-5 h-5 mr-3 spinner" />

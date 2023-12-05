@@ -27,7 +27,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
 
     return (
         <>
-            <span role="button" onClick={openModal} className="flex flex-row items-center px-4 py-2 border-t border-current dark:border-gray-600">
+            <span role="button" onClick={openModal} className="flex flex-row items-center px-4 py-2 border-t border-zinc-400 dark:border-zinc-700">
                 <Image
                     src={chainInfo.src.chainSymbolImageUrl}
                     alt="logo"
@@ -81,7 +81,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                             return (
                                                 <div key={index} className="w-full rounded-lg grid grid-cols-1 gap-4">
                                                     <span role='button' onClick={() => handle_network_select(chain)}
-                                                        className="flex flex-row gap-4 items-center justify-center mt-4 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2 text-gray-300">
+                                                        className="flex flex-row gap-4 items-center justify-center mt-4 border border-zinc-400 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2 text-gray-300">
                                                         <Image
                                                             src={chainInfo.src.chainSymbolImageUrl}
                                                             alt="logo"

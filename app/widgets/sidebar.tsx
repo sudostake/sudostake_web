@@ -66,14 +66,28 @@ export default function SideBar() {
             classNames({
                 "fixed w-full h-full lg:w-80 z-20 lg:z-0": true,
                 "lg:translate-x-0": true,
-                "bg-gray-300 dark:bg-black": true,
+                "bg-white dark:bg-zinc-950": true,
                 "-translate-x-full": !isOpen,
                 "transition ease-in-out duration-300 transform": true,
             })
         }>
-            <div className="flex flex-col w-full h-full overflow-hidden z-10 lg:border-r lg:border-current dark:lg:border-gray-600">
+            <div
+
+                className={
+                    classNames({
+                        "flex flex-col w-full h-full overflow-hidden z-10 ": true,
+                        "lg:border-r lg:border-zinc-400 dark:lg:border-zinc-700": true
+                    })
+                }
+            >
                 <span role='button' onClick={() => setSideBarState(!isOpen)}
-                    className="px-4 h-20 flex items-center w-full border-b border-current dark:border-gray-600">
+
+                    className={
+                        classNames({
+                            "px-4 h-20 flex items-center w-full": true,
+                            "border-b border-zinc-400 dark:border-zinc-700": true
+                        })
+                    }>
                     <Image
                         src="/logo_light.png"
                         alt="sudostake Logo"

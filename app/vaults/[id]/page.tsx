@@ -203,7 +203,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                             type="button"
                             disabled={vault_metadata && Number(vault_metadata.acc_rewards) <= 0}
                             onClick={() => { claimRewards(has_active_rental_option) }} className={classNames({
-                                "px-2 inline-flex justify-center items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 h-9 text-xs lg:text-sm lg:font-medium": true,
+                                "px-2 inline-flex justify-center items-center border border-zinc-400 dark:border-zinc-700": true,
+                                "rounded-lg hover:ring-1 hover:ring-offset-1 h-9 text-xs lg:text-sm lg:font-medium": true,
                                 "w-24": !isClaimRewardsLoading
                             })}>
                             {
@@ -224,7 +225,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
             <span className="flex flex-row justify-between w-full py-4">
                 <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                    <span>Unbonding Info</span>
+                    <span>Unbonding</span>
                     <span>
                         {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
                         {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
@@ -241,7 +242,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         <div className={classNames({
             "h-full overflow-y-scroll text-sm lg:text-base py-8": true,
             "flex flex-col": true,
-            "w-full xl:w-3/4 xl:border-r xl:border-current dark:xl:border-gray-600": true,
+            "w-full xl:w-3/4 xl:border-r xl:border-zinc-400 dark:xl:border-zinc-700": true,
         })}>
             {
                 vault_metadata && status === WalletStatusType.connected &&
@@ -256,12 +257,12 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                     {vault_info && vault_info.liquidity_request_status === 'pending' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-t border-current dark:border-gray-600 px-4 lg:px-8 font-medium py-4">
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 px-4 lg:px-8 font-medium py-4">
                                 <span>Option Details</span>
                                 {
                                     is_owner &&
                                     <button onClick={() => { close_request() }} className={classNames({
-                                        "h-9 inline-flex px-4 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                        "h-9 inline-flex px-4 items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium": true,
                                     })}>
                                         {
                                             isCloseRequestLoading && <>
@@ -282,7 +283,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                     <button onClick={() => { accept_request(vault_info.requested_amount) }}
                                         className={classNames({
                                             "h-9 inline-flex px-4 items-center text-xs lg:text-sm lg:font-medium": true,
-                                            "border border-current rounded-lg hover:ring-2 hover:ring-offset-2 ": true
+                                            "border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 ": true
                                         })}>
                                         {
                                             isAcceptLoading && <>
@@ -307,12 +308,12 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                     {vault_info && vault_info.liquidity_request_status === 'active' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-t border-current dark:border-gray-600 px-4 lg:px-8 font-medium py-4">
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 px-4 lg:px-8 font-medium py-4">
                                 <span>Option Details</span>
                                 {
                                     can_repay_loan &&
                                     <button onClick={() => { repay_loan() }} className={classNames({
-                                        "h-9 inline-flex px-4 items-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium": true,
+                                        "h-9 inline-flex px-4 items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium": true,
                                     })}>
                                         {
                                             isRepayLoanLoading && <>
@@ -346,7 +347,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                         <button onClick={() => { liquidate_collateral() }} className={classNames({
                                             "inline-flex items-center text-xs text-red-500 lg:text-sm lg:font-medium": true,
                                             "h-9 px-4": true,
-                                            "border border-current rounded-lg hover:ring-2 hover:ring-offset-2": true,
+                                            "border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1": true,
                                         })}>
                                             {
                                                 isLiquidatingCollateralLoading && <>

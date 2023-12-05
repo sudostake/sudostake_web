@@ -75,7 +75,7 @@ export default function VaultIndexHandler({ }: ComponentProps) {
                                         <button
                                             type="button"
                                             onClick={() => { !isLoading && indexVault(vault_with_index_error) }}
-                                            className="hover:ring-2 hover:ring-offset-2 inline-flex justify-center rounded-md border border-current px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
+                                            className="hover:ring-1 hover:ring-offset-1 inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                             {
                                                 isLoading && <>
                                                     <FaSpinner className="w-5 h-5 mr-3 spinner" />

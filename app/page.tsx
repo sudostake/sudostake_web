@@ -71,12 +71,15 @@ export default function Home() {
       {status === WalletStatusType.connected &&
         <>
           <Tab.Group>
-            <Tab.List className="flex flex-row max-w-md mb-8 border border-current dark:border-gray-600 rounded-lg">
+            <Tab.List className={classNames({
+              "flex flex-row max-w-md mb-8 rounded-lg p-1": true,
+              "bg-zinc-300 dark:bg-zinc-800":true
+            })}>
               <Tab className={({ selected }) =>
                 classNames(
                   'w-full rounded-lg text-sm py-2',
                   selected
-                    ? 'border border-current font-bold'
+                    ? 'font-bold bg-white dark:bg-zinc-950'
                     : ''
                 )
               }>
@@ -87,7 +90,7 @@ export default function Home() {
                 classNames(
                   'w-full rounded-lg text-sm py-2',
                   selected
-                    ? 'border border-current font-bold'
+                    ? 'font-bold bg-white dark:bg-zinc-950'
                     : ''
                 )
               }>
@@ -105,7 +108,7 @@ export default function Home() {
                     );
                   })}
 
-                  <div role="button" onClick={() => { !isLoading && createVault() }} className="w-full p-4 border border-current border-dashed rounded-lg grid grid-cols-1 gap-2 items-center">
+                  <div role="button" onClick={() => { !isLoading && createVault() }} className="w-full p-4 border border-zinc-400 border-dashed dark:border-zinc-700 rounded-lg grid grid-cols-1 gap-2 items-center">
                     <span className="flex items-center text-sm lg:text-base font-medium justify-center">
                       {
                         isLoading && <>
@@ -131,7 +134,7 @@ export default function Home() {
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
                     {active_lending_vaults.map((vault, index) => {
                       return (
-                        <div key={index} className="w-full p-4 border border-current rounded-lg grid grid-cols-1 gap-2">
+                        <div key={index} className="w-full p-4 border border-zinc-400 dark:border-zinc-600 rounded-lg grid grid-cols-1 gap-2">
                           <span className="flex items-center">
                             <span>Vault ID</span>
                             <span className="ml-auto">
@@ -151,7 +154,7 @@ export default function Home() {
                               <FaHistory className="w-5 h-5" />
                             </Link>
 
-                            <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="w-full flex items-center justify-center h-9 border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                            <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="w-full flex items-center justify-center h-9 border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2">
                               View
                             </button>
                           </span>

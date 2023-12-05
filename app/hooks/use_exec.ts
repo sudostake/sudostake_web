@@ -48,7 +48,7 @@ export const useCreateVault = () => {
             address,
             chainInfo.sudomod_address,
             { mint_vault: {} },
-            'auto',
+            1.4,
             '',
             [
                 chainInfo.vault_creation_fee,
@@ -80,7 +80,7 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
             address,
             vault.id,
             { transfer_ownership: { to_address } },
-            'auto',
+            1.4,
             ''
         );
 
@@ -105,7 +105,7 @@ export const useDeposit = (to_address: string) => {
             address,
             to_address,
             [coin(microAmount, currency.coinMinimalDenom)],
-            "auto",
+            1.4,
             '',
         )
     }, {
@@ -131,7 +131,7 @@ export const useWithdraw = (from_address: string) => {
             address,
             from_address,
             { withdraw_balance: { to_address, funds: coin(microAmount, currency.coinMinimalDenom) } },
-            'auto',
+            1.4,
             ''
         );
     }, {
@@ -156,7 +156,7 @@ export const useClaimRewards = (vault_address: string) => {
             address,
             vault_address,
             { claim_delegator_rewards: {} },
-            'auto',
+            1.4,
             ''
         );
 
@@ -186,7 +186,7 @@ export const useDelegate = (vault_address: string) => {
             address,
             vault_address,
             { delegate: { validator: validator.address, amount: microAmount } },
-            'auto',
+            1.4,
             ''
         );
 
@@ -214,7 +214,7 @@ export const useUndelegate = (vault_address: string) => {
             address,
             vault_address,
             { undelegate: { validator: validator.address, amount: microAmount } },
-            'auto',
+            1.4,
             ''
         );
     }, {
@@ -241,7 +241,7 @@ export const useRedelegate = (vault_address: string) => {
             address,
             vault_address,
             { redelegate: { src_validator: from_validator.address, dst_validator: to_validator.address, amount: microAmount } },
-            'auto',
+            1.4,
             ''
         );
     }, {
@@ -267,7 +267,7 @@ export const useRequestLiquidity = (vault_address: string) => {
             address,
             vault_address,
             payload,
-            'auto',
+            1.4,
             ''
         );
 
@@ -295,7 +295,7 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
             address,
             vault_address,
             { close_pending_liquidity_request: {} },
-            'auto',
+            1.4,
             ''
         );
 
@@ -331,7 +331,7 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
             address,
             vault_address,
             { accept_liquidity_request: {} },
-            'auto',
+            1.4,
             '',
             [
                 requested_amount,
@@ -362,7 +362,7 @@ export const useRepayLoan = (vault_address: string) => {
             address,
             vault_address,
             { repay_loan: {} },
-            'auto',
+            1.4,
             '',
         );
 
@@ -390,7 +390,7 @@ export const useLiquidateCollateral = (vault_address: string) => {
             address,
             vault_address,
             { liquidate_collateral: {} },
-            'auto',
+            1.4,
             '',
         );
 

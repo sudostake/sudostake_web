@@ -58,7 +58,7 @@ export default function ConnectedWalletButton() {
                 <span className="flex flex-col w-full">
                     <SelectNetworkDialog selected_chain={chainInfo} />
 
-                    <span className="flex items-center px-4 w-full h-16 border-t border-current dark:border-gray-600">
+                    <span className="flex items-center px-4 w-full h-16 border-t border-zinc-400 dark:border-zinc-700">
                         <Image
                             src={wallet_logo_url}
                             alt="wallet logo"

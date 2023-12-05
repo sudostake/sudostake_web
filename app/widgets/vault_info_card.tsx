@@ -23,9 +23,9 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
         <div className={
             classNames({
                 "w-full p-4 rounded-lg grid grid-cols-1 gap-2": true,
-                "border border-current": vault_info.liquidity_request_status === 'idle',
-                "border-orange-500 border-2": vault_info.liquidity_request_status === 'pending',
-                "border-green-500 border-2": vault_info.liquidity_request_status === 'active',
+                "border border-zinc-400 dark:border-zinc-600": vault_info.liquidity_request_status === 'idle',
+                "border-2 border-orange-500": vault_info.liquidity_request_status === 'pending',
+                "border-2 border-green-500": vault_info.liquidity_request_status === 'active',
             })
         }>
             <span className="flex items-center">
@@ -81,7 +81,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                     <FaHistory className="w-5 h-5" />
                 </Link>
 
-                <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-current rounded-lg hover:ring-2 hover:ring-offset-2 text-xs lg:text-sm lg:font-medium p-2">
+                <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>
                 

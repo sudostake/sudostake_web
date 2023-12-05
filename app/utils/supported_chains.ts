@@ -165,7 +165,7 @@ export type SudoStakeChainInfoSchema = {
 export const supportedChains: SudoStakeChainInfoSchema[] = [
     {
         src: ArchwayTestNet,
-        gas_price: '0.1aconst',
+        gas_price: '900000000000.000000000000000000aconst',
         sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
         vault_creation_fee: coin('10000000000000000000', 'aconst'),
         explorer_url: 'https://testnet.mintscan.io/archway-testnet',
@@ -196,7 +196,7 @@ export const supportedChains: SudoStakeChainInfoSchema[] = [
 
     {
         src: ArchwayMainnet,
-        gas_price: '1aarch',
+        gas_price: '900000000000.000000000000000000aarch',
         sudomod_address: 'archway1wyq63wtaktujyp7zrd58ytzc76g9vtamlgwrq9qhhf0j32usvfesn9s38g',
         vault_creation_fee: coin('10000000000000000000', 'aarch'),
         explorer_url: 'https://mintscan.io/archway',

@@ -29,7 +29,7 @@ export default function CurrencyOptions({ onOptionSelected }: ComponentProps) {
             <span role='button' onClick={() => setIsOpen(!isOpen)} className={classNames({
                 "font-normal text-left text-xs lg:text-sm text-slate-100 bg-transparent w-12": true,
                 "flex h-full w-28 px-4 leading-snug items-center justify-center": true,
-                "p-3 border rounded-r-lg border-slate-500 hover:border-current": true
+                "p-3 border rounded-r-lg border-slate-500 hover:border-zinc-400": true
             })}>
                 {selected.coinDenom}
                 <FaChevronDown className="ml-auto h-4 w-4" aria-hidden="true" />
@@ -39,7 +39,7 @@ export default function CurrencyOptions({ onOptionSelected }: ComponentProps) {
 
             <div className={classNames({
                 "z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-md shadow-lg": true,
-                "bg-gray-200 dark:bg-gray-900": true,
+                "bg-white dark:bg-gray-900": true,
                 "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
                 "hidden": !isOpen
             })}>
