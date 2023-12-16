@@ -1,15 +1,14 @@
-import { WalletStatusType, selectedChainState, walletState } from '../state'
+import { WalletStatusTypes, selectedChainState, walletState } from '../state'
 import {
     useMutation,
 } from '@tanstack/react-query'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
-import { useEffect } from 'react'
 import { WalletTypes } from '../utils/interface'
 
 export const useConnectWallet = () => {
-    const [{ status }, setWalletState] = useRecoilState(walletState)
+    const setWalletState = useSetRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
     const mutation = useMutation(
         async () => {
@@ -20,7 +19,7 @@ export const useConnectWallet = () => {
             setWalletState((value) => ({
                 ...value,
                 client: null,
-                status: WalletStatusType.connecting,
+                status: WalletStatusTypes.connecting,
                 selected_wallet
             }));
 
@@ -52,7 +51,7 @@ export const useConnectWallet = () => {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatusTypes.connected,
                     wallet_logo_url: '/keplr_logo.svg',
                     selected_wallet
                 };
@@ -85,7 +84,7 @@ export const useConnectWallet = () => {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatusTypes.connected,
                     wallet_logo_url: '/leap_wallet_logo.svg',
                     selected_wallet
                 };
@@ -115,12 +114,12 @@ export const useConnectWallet = () => {
                 const [{ address }] = await offlineSigner.getAccounts()
                 const key = await window.cosmostation.providers.keplr.getKey(chainInfo.src.chainId)
 
-                // Return response
+                // return
                 return {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatusTypes.connected,
                     wallet_logo_url: '/ibc_wallet.png',
                     selected_wallet
                 };
@@ -128,43 +127,18 @@ export const useConnectWallet = () => {
         }, {
         onSuccess(res) {
             setWalletState(res);
-
-            // Update local storage
-            localStorage.setItem('connection_status', WalletStatusType.connected);
         },
         onError(_) {
             setWalletState({
                 name: '',
                 address: '',
                 client: null,
-                status: WalletStatusType.error,
+                status: WalletStatusTypes.error,
                 wallet_logo_url: '',
                 selected_wallet: null
             })
         }
     });
-
-    // Listen to wallet keystore change
-    useEffect(
-        () => {
-            function reconnectWallet() {
-                if (status === WalletStatusType.connected) {
-                    mutation.mutate(null)
-                }
-            }
-
-            window.addEventListener('keplr_keystorechange', reconnectWallet);
-            window.addEventListener('leap_keystorechange', reconnectWallet);
-            window.addEventListener('cosmostation_keystorechange', reconnectWallet);
-
-            return () => {
-                window.removeEventListener('keplr_keystorechange', reconnectWallet);
-                window.removeEventListener('leap_keystorechange', reconnectWallet);
-                window.removeEventListener('cosmostation_keystorechange', reconnectWallet);
-            }
-        },
-        [status, mutation]
-    )
 
     return mutation;
 }

@@ -1,26 +1,44 @@
 'use client'
 
 import { FaSignOutAlt } from "react-icons/fa"
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { WalletStatusType, selectedChainState, sideBarToggleState, walletState } from "../state";
-import { useConnectWallet } from "../hooks/use_connect_wallet";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { WalletStatusTypes, selectedChainState, sideBarToggleState, walletState } from "../state";
 import ClipBoardButton from "./clipboard_button";
-import { useEffect } from "react";
-import { get_chain_info_from_id, supportedChains } from "../utils/supported_chains";
 import SelectNetworkDialog from "./select_network_dialog";
 import Image from "next/image";
-import { WalletTypes } from "../utils/interface";
+import { useConnectWallet } from "../hooks/use_connect_wallet";
+import { useEffect } from "react";
 
 export default function ConnectedWalletButton() {
-    const { mutate: connectWallet } = useConnectWallet();
     const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
-    const [chainInfo, setSelectedChainState] = useRecoilState(selectedChainState);
+    const chainInfo = useRecoilValue(selectedChainState);
     const setSideBarState = useSetRecoilState(sideBarToggleState);
+    const { mutate: connectWallet } = useConnectWallet();
 
-    const resetWalletConnection = () => {
+    // Listen to wallet keystore change
+    useEffect(() => {
+        if (status === WalletStatusTypes.connected) {
+            const reconnectWallet = () => {
+                connectWallet();
+            }
+
+            window.addEventListener("keplr_keystorechange", reconnectWallet);
+            window.addEventListener("leap_keystorechange", reconnectWallet);
+            //window.addEventListener('cosmostation_keystorechange', reconnectWallet);
+
+            return () => {
+                window.removeEventListener("keplr_keystorechange", reconnectWallet);
+                window.removeEventListener("leap_keystorechange", reconnectWallet);
+                // window.removeEventListener('cosmostation_keystorechange', reconnectWallet);
+            }
+        }
+
+    }, [status]);
+
+    function resetWalletConnection() {
         // Reset wallet connection state
         setWalletState({
-            status: WalletStatusType.idle,
+            status: WalletStatusTypes.idle,
             address: '',
             name: '',
             client: null,
@@ -29,32 +47,16 @@ export default function ConnectedWalletButton() {
         })
 
         // Update local storage
-        localStorage.setItem('connection_status', WalletStatusType.idle);
         localStorage.removeItem('selected_wallet');
 
         // Close nav bar
         setSideBarState(false);
     }
 
-    // Auto select chain
-    useEffect(() => {
-        const selected_chain_id = localStorage.getItem('selected_chain_id');
-
-        if (selected_chain_id && !chainInfo) {
-            setSelectedChainState(get_chain_info_from_id(selected_chain_id));
-        }
-
-        if (!selected_chain_id) {
-            const default_chain = supportedChains[1];
-            localStorage.setItem('selected_chain_id', default_chain.src.chainId);
-            setSelectedChainState(default_chain);
-        }
-    }, [chainInfo, setSelectedChainState]);
-
     return (
         <>
             {
-                status === WalletStatusType.connected && chainInfo &&
+                status === WalletStatusTypes.connected && chainInfo &&
                 <span className="flex flex-col w-full">
                     <SelectNetworkDialog selected_chain={chainInfo} />
 

@@ -83,7 +83,7 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                            <span>Claimable Staking Rewards</span>
+                            <span>Claimable Rewards</span>
                         </th>
                         <td className="py-4 text-right">
                             <span>{vault_info.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom}</span>

@@ -29,7 +29,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
             })
         }>
             <span className="flex items-center">
-                <span>ID</span>
+                <span>Vault ID</span>
                 <span className="ml-auto">
                     #{vault_info.index_number}
                 </span>
@@ -56,7 +56,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 </span>
             </span>
             <span className="flex items-center">
-                <span>Staking Rewards</span>
+                <span>Rewards</span>
                 <span className="ml-auto">
                     {vault_metadata && Number(vault_metadata.acc_rewards).toLocaleString('en-us')}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}

@@ -1,7 +1,7 @@
 'use client'
 
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
-import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
+import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { useEffect } from "react"
 import { FaSpinner } from "react-icons/fa";
@@ -245,7 +245,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             "w-full xl:w-3/4 xl:border-r xl:border-zinc-400 dark:xl:border-zinc-700": true,
         })}>
             {
-                vault_metadata && status === WalletStatusType.connected &&
+                vault_metadata && status === WalletStatusTypes.connected &&
                 <>
                     {vault_details_view()}
 
@@ -370,7 +370,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                status !== WalletStatusType.connected &&
+                status !== WalletStatusTypes.connected &&
                 <ConnectWalletOptions title="Connect to see vault details." />
             }
         </div>

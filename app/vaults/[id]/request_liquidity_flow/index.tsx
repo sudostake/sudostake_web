@@ -165,7 +165,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                     "h-full lg:h-max": true
                                 })}>
                                     <span className={`${step_history !== 0 && 'hidden'} flex flex-col w-full h-full`} >
-                                        <h2 className="flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
+                                        <h2 className="h-20 flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
                                             Select Collateral Offer
                                             <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
                                         </h2>
@@ -177,26 +177,26 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                                 onOptionSelected={setSelectedRequestType} />
                                         </span>
 
-                                        <div className="flex w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8">
+                                        <div className="flex w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8 h-20 text-gray-300">
                                             <button
-                                                onClick={() => { setStepHistory(1) }}
-                                                className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-1 hover:ring-offset-1 w-24">
+                                                onClick={() => { setStepHistory(1) }}>
                                                 <span>Next</span>
                                             </button>
                                         </div>
                                     </span>
 
                                     <span className={`${step_history !== 1 && 'hidden'} flex flex-col w-full h-full`} >
-                                        <span className='flex flex-col border-b border-slate-500 p-4 lg:p-8'>
-                                            <h2 className="flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 ">
-                                                {selected_request_type.title}
-                                                <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
-                                            </h2>
-                                            <p className='text-gray-300'>{selected_request_type.description}</p>
-                                        </span>
+                                        <h2 className="h-20 flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 px-4 lg:p-8 border-b border-slate-500">
+                                            {selected_request_type.title}
+                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden">
+                                                <FaTimes className="w-5 h-5" />
+                                            </button>
+                                        </h2>
 
                                         <span className='flex flex-col py-16 overflow-y-auto p-4 lg:p-8'>
                                             <span className='flex flex-col w-full mb-2'>
+                                                <p className='flex text-gray-300 mb-8'>{selected_request_type.description}</p>
+
                                                 <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                                     Enter requested amount
                                                 </div>
@@ -319,29 +319,25 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                             }
                                         </span>
 
-                                        <div className="flex w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8">
+                                        <div className="flex flex-row gap-8 w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8 h-20 text-gray-300">
                                             <button
-                                                onClick={() => { setStepHistory(0) }}
-                                                className="mr-4 inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300 hover:ring-1 hover:ring-offset-1 w-24">
-                                                <span>Prev</span>
+                                                onClick={() => { setStepHistory(0) }}>
+                                                <span>Back</span>
                                             </button>
 
                                             <button
                                                 disabled={!can_continue}
                                                 onClick={handle_request_liquidity}
-                                                className={classNames({
-                                                    "inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300": true,
-                                                    "hover:ring-1 hover:ring-offset-1": can_continue
-                                                })}>
+                                                >
                                                 {
                                                     isLoading && <>
                                                         <FaSpinner className="w-5 h-5 mr-3 spinner" />
-                                                        <span>Posting Request...</span>
+                                                        <span>Posting offer...</span>
                                                     </>
                                                 }
                                                 {
                                                     !isLoading && <>
-                                                        <span>Post Request</span>
+                                                        <span>Post offer</span>
                                                     </>
                                                 }
                                             </button>

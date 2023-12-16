@@ -5,7 +5,7 @@ import { SudoStakeChainInfoSchema } from './utils/supported_chains';
 import { atom } from 'recoil'
 import { WalletTypes } from './utils/interface';
 
-export enum WalletStatusType {
+export enum WalletStatusTypes {
     /* nothing happens to the wallet */
     idle = '@wallet-state/idle',
     /* connecting to the wallet */
@@ -18,7 +18,7 @@ export enum WalletStatusType {
 
 export type WalletState = {
     client: SigningCosmWasmClient | null,
-    status: WalletStatusType,
+    status: WalletStatusTypes,
     name: string,
     address: string,
     wallet_logo_url: string,
@@ -29,7 +29,7 @@ export const walletState = atom<WalletState>({
     key: 'walletState',
     default: {
         client: null,
-        status: WalletStatusType.idle,
+        status: WalletStatusTypes.idle,
         name: '',
         address: '',
         wallet_logo_url: '',

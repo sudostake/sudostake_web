@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import { useRecoilValue } from "recoil";
-import { WalletStatusType, walletState } from "../state";
+import { WalletStatusTypes, walletState } from "../state";
 import { WalletTypes } from "../utils/interface";
 import { FaSpinner } from "react-icons/fa";
 import { useEffect, useState } from "react";
@@ -22,12 +22,12 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
     const { status, selected_wallet } = useRecoilValue(walletState);
 
     function handle_select_wallet(type: WalletTypes) {
-        if (status !== WalletStatusType.connecting) {
+        if (status !== WalletStatusTypes.connecting) {
             localStorage.setItem('selected_wallet', type);
             connectWallet();
         }
     };
-
+    
     // Logic to connect correct wallet options(s)
     useEffect(() => {
         setTimeout(() => {
@@ -94,7 +94,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     {keplr_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Keplr</span>
                                     {
-                                        status === WalletStatusType.connecting && selected_wallet === WalletTypes.keplr &&
+                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.keplr &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
@@ -108,7 +108,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     {leap_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
                                     {
-                                        status === WalletStatusType.connecting && selected_wallet === WalletTypes.leap &&
+                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.leap &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
@@ -122,7 +122,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     {cosmostation_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
                                     {
-                                        status === WalletStatusType.connecting && selected_wallet === WalletTypes.cosmostation &&
+                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.cosmostation &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>

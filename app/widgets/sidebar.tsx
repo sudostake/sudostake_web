@@ -8,8 +8,10 @@ import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { selectedChainState, sideBarToggleState, walletState } from '../state';
+import { WalletStatusTypes, selectedChainState, sideBarToggleState, walletState } from '../state';
 import ConnectedWalletButton from './connected_wallet_button';
+import { get_chain_info_from_id, supportedChains } from '../utils/supported_chains';
+import { useConnectWallet } from '../hooks/use_connect_wallet';
 
 type nav_itemItem = {
     label: string;
@@ -20,11 +22,9 @@ type nav_itemItem = {
 
 export default function SideBar() {
     const pathname = usePathname();
-    const user_in_vault_page = pathname.startsWith('/vaults/');
     const [isOpen, setSideBarState] = useRecoilState(sideBarToggleState);
+    const [chainInfo, setSelectedChainState] = useRecoilState(selectedChainState);
     const { address } = useRecoilValue(walletState);
-    const chainInfo = useRecoilValue(selectedChainState);
-
     const nav_itemLinks: nav_itemItem[] = [
         {
             label: "My Vaults",
@@ -61,6 +61,21 @@ export default function SideBar() {
 
     useEffect(() => setSideBarState(!isMobile), [setSideBarState]);
 
+    // Auto select chain
+    useEffect(() => {
+        const selected_chain_id = localStorage.getItem('selected_chain_id');
+
+        if (selected_chain_id && !chainInfo) {
+            setSelectedChainState(get_chain_info_from_id(selected_chain_id));
+        }
+
+        if (!selected_chain_id) {
+            const default_chain = supportedChains[1];
+            localStorage.setItem('selected_chain_id', default_chain.src.chainId);
+            setSelectedChainState(default_chain);
+        }
+    }, [chainInfo, setSelectedChainState]);
+
     return (
         <div className={
             classNames({
@@ -81,7 +96,6 @@ export default function SideBar() {
                 }
             >
                 <span role='button' onClick={() => setSideBarState(!isOpen)}
-
                     className={
                         classNames({
                             "px-4 h-20 flex items-center w-full": true,

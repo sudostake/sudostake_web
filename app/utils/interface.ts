@@ -43,6 +43,9 @@ export type VaultIndex = {
     // This is the  Externally Owned Account that lent the requested amount to the vault owner
     lender?: string,
 
+    // This is the current user that can vote with the vault
+    active_voter?: string,
+
     // This indicates if the vault is currently being leased out in exchange for
     // liquidity
     liquidity_request_status?: 'idle' | 'pending' | 'active',
@@ -85,3 +88,21 @@ export type VaultIndex = {
     // This is the amount staked in the vault
     tvl?: number,
 };
+
+export enum vote_options_type {
+    yes = 'yes',
+    no = 'no',
+    no_with_veto = 'no_with_veto',
+    abstain = 'abstain'
+}
+
+export type Decision = {
+    id: vote_options_type,
+    title: string,
+    description: string,
+}
+
+export type VotingVault = {
+    vault: VaultIndex,
+    has_voted: boolean,
+}

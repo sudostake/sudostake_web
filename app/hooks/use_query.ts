@@ -1,13 +1,14 @@
 'use client'
 
 import { useQuery } from "@tanstack/react-query"
-import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusType, selectedChainState, validatorListState, walletState } from "../state";
+import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { Currency, SudoStakeChainInfoSchema } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 import { get_connection } from "../services/vault_indexer";
+import { VaultIndex, VotingVault, vote_options_type } from "../utils/interface";
 
 async function fetchTokenBalance({
     chain_info,
@@ -87,7 +88,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
             });
             return (await response.json())['redelegation_responses'];
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatusTypes.connected, }
     )
 
     return { redelegation_list, isLoading }
@@ -107,10 +108,29 @@ export const useQueryValidatorList = () => {
             const data = await response.json();
             return data['validators'];
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatusTypes.connected, }
     )
 
     return { validator_list, isLoading }
+}
+
+export const useQueryActiveProposals = () => {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { data: active_proposals = [], isLoading } = useQuery<any[]>(
+        ['active_proposals'],
+        async () => {
+            const api = `/api/active_proposals?chain_id=${chainInfo.src.chainId}`;
+            const response = await fetch(api, {
+                method: "GET"
+            });
+            return await response.json();
+        },
+        {
+            enabled: Boolean(chainInfo)
+        }
+    )
+
+    return { active_proposals, isLoading }
 }
 
 
@@ -207,26 +227,54 @@ export const useFilteredValidators = (hide_zero_balance?: boolean) => {
             }
             return validator_list;
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatusTypes.connected, }
     )
 
     return { filtered_list }
 }
 
-export const useQueryOwnerVaults = () => {
+const get_voting_vault = (vault: VaultIndex, proposal_id: string, chain_id: string): Promise<VotingVault> => {
+    return new Promise(async (resolve) => {
+        const api = [
+            '/api/has_voted_on_proposal?',
+            `proposal_id=${proposal_id}&address=${vault.id}&chain_id=${chain_id}`
+        ].join('');
+        const response = await fetch(api, {
+            method: "GET",
+        });
+        const data = await response.json();
+        const has_voted = Boolean(data.vote);
+
+        resolve({
+            vault,
+            has_voted
+        });
+    });
+}
+
+export const useQueryVotingVaultsForProposal = (proposal_id: string, has_selected_vote_option: boolean) => {
+    const chainInfo = useRecoilValue(selectedChainState);
     const { status, address } = useRecoilValue(walletState);
 
-    const { data: vaults = [], isLoading } = useQuery(['owner_vaults', address],
+    const { data: voting_vaults = [], isLoading } = useQuery<VotingVault[]>(
+        ['voting_vaults_for_proposal', proposal_id],
         async () => {
-            const q = query(collection(db, "vaults"), where("owner", "==", address), orderBy("index_number", "desc"));
+            // Get all vaults current user can vote with
+            const q = query(collection(db, chainInfo.vault_collection_path),
+                where("active_voter", "==", address), orderBy("tvl", "desc")
+            );
             const querySnapshot = await getDocsFromServer(q);
-            const dataset = [];
+            const vaults: VaultIndex[] = [];
             querySnapshot
-                .forEach((doc) => dataset.push({ ...doc.data(), id: doc.id }));
-            return dataset;
+                .forEach((doc) => vaults.push({ ...doc.data(), id: doc.id }));
+
+            // For each vault, check if the user has already voted on proposal_id
+            return await Promise.all(vaults.map(async (vault) => {
+                return await get_voting_vault(vault, proposal_id, chainInfo.src.chainId);
+            }))
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatusTypes.connected && has_selected_vote_option, }
     )
 
-    return { vaults, isLoading }
+    return { voting_vaults, isLoading }
 }

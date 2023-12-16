@@ -28,7 +28,6 @@ export function index_vault_data({ vault_info, staking_info, rpc, include_reques
     { vault_info: JsonObject, staking_info: JsonObject, rpc: string, include_request_state?: boolean }) {
     const chain_info = get_chain_info_from_rpc(rpc);
     const stakingDenomDecimal = chain_info.src.stakeCurrency.coinDecimals;
-
     const index: VaultIndex = {
         from_code_id: vault_info['config']['from_code_id'],
         index_number: vault_info['config']['index_number'],
@@ -108,7 +107,11 @@ export function index_vault_data({ vault_info, staking_info, rpc, include_reques
         }
     }
 
-    //
+    // Add voter property to the indexed vault data
+    const lender_can_vote = index.can_cast_vote && Boolean(index.lender);
+    index.active_voter = lender_can_vote ? index.lender : index.owner;
+
+    // Add timestamp when this vault was indexed
     index.indexed_at = new Date();
     return index;
 }

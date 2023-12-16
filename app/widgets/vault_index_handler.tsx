@@ -4,7 +4,7 @@ import { Dialog, Transition } from "@headlessui/react"
 import classNames from "classnames";
 import { Fragment, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { VaultIndexErrorState, WalletStatusType, walletState } from "../state";
+import { VaultIndexErrorState, WalletStatusTypes, walletState } from "../state";
 import { useIndexVault } from "../hooks/use_exec";
 import { FaSpinner } from "react-icons/fa";
 
@@ -18,7 +18,7 @@ export default function VaultIndexHandler({ }: ComponentProps) {
 
     useEffect(() => {
         const failed_to_index = localStorage.getItem('failed_vault_index');
-        if (Boolean(failed_to_index) && status === WalletStatusType.connected) {
+        if (Boolean(failed_to_index) && status === WalletStatusTypes.connected) {
             setVaultWithIndexError(failed_to_index);
             setIsOpen(true);
         } else {

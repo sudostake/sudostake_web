@@ -1,7 +1,7 @@
 'use client'
 
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { WalletStatusType, selectedChainState, walletState } from "./state";
+import { WalletStatusTypes, selectedChainState, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
@@ -41,7 +41,7 @@ export default function Home() {
 
   // Subscribe to owner's vaults
   useEffect(() => {
-    if (status === WalletStatusType.connected && chainInfo) {
+    if (status === WalletStatusTypes.connected && chainInfo) {
       return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
         const vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -54,7 +54,7 @@ export default function Home() {
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
-    if (status === WalletStatusType.connected && chainInfo) {
+    if (status === WalletStatusTypes.connected && chainInfo) {
       return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
         const lending_vaults = res.docs
           .map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
-      {status === WalletStatusType.connected &&
+      {status === WalletStatusTypes.connected &&
         <>
           <Tab.Group>
             <Tab.List className={classNames({
@@ -183,7 +183,7 @@ export default function Home() {
       }
 
       {
-        status !== WalletStatusType.connected &&
+        status !== WalletStatusTypes.connected &&
         <ConnectWalletOptions title="Connect to manage vaults." />
       }
     </div>

@@ -6,8 +6,8 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
 import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
-import { JsonObject } from "@cosmjs/cosmwasm-stargate";
-import { VaultIndex } from "../utils/interface";
+import { ExecuteInstruction, JsonObject } from "@cosmjs/cosmwasm-stargate";
+import { Decision, VaultIndex, VotingVault } from "../utils/interface";
 
 export const useIndexVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
@@ -91,6 +91,35 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
         },
         onError(e) {
             toast("Error transferring vault", { type: 'error' })
+        }
+    });
+}
+
+export const useVoteOnProposal = (proposal_id: string) => {
+    const { address, client } = useRecoilValue(walletState);
+
+    return useMutation(async ({ vaults, decision }: { vaults: VotingVault[], decision: Decision }) => {
+        const instructions: ExecuteInstruction[] = vaults.map(vault => {
+            return {
+                contractAddress: vault.vault.id,
+                msg: { vote: { proposal_id: Number(proposal_id), vote: decision.id } }
+            } as ExecuteInstruction;
+        });
+
+        console.log(instructions);
+
+        await client.executeMultiple(
+            address,
+            instructions,
+            1.4,
+            ''
+        );
+    }, {
+        async onSuccess(res) {
+            toast(`Voted successfully`, { type: 'success' });
+        },
+        onError(e) {
+            toast("Error voting", { type: 'error' })
         }
     });
 }
