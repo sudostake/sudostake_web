@@ -6,6 +6,7 @@ import { toolBarState } from '../state';
 import { useQueryActiveProposals } from '../hooks/use_query';
 import classNames from 'classnames';
 import VoteOnProposalFlow from './widgets/vote_on_proposal_flow';
+import { FaGlobe } from 'react-icons/fa';
 
 export default function Governance() {
   const setToolBarState = useSetRecoilState(toolBarState);
@@ -43,6 +44,16 @@ export default function Governance() {
           );
         })}
       </div>
+
+      {
+        active_proposals.length === 0 &&
+        <div className="flex w-full h-full items-center justify-center">
+          <h2 className="flex flex-row gap-2 items-center">
+            <FaGlobe className="w-6 h-6 mr-2" />
+            <span>No active proposal(s).</span>
+          </h2>
+        </div>
+      }
     </div>
   )
 }
