@@ -1,6 +1,5 @@
 import { Decision, vote_options_type } from '@/app/utils/interface';
-import { RadioGroup } from '@headlessui/react'
-import { useState } from 'react';
+import { RadioGroup } from '@headlessui/react';
 import { FaCheckCircle } from "react-icons/fa";
 
 const vote_decisions: Decision[] = [

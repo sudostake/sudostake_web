@@ -60,7 +60,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
         (is_fixed_term_rental && Number(requested_amount) > 0 && Number(duration_in_days) > 0) ||
         (is_fixed_term_loan &&
             Number(requested_amount) > 0 && Number(duration_in_days) > 0 &&
-            Number(interest_amount) > 0 && Number(collateral_amount) > 0);
+            Number(collateral_amount) > 0);
 
     // Close modal when the withdrawal is done
     useEffect(() => {
@@ -328,12 +328,13 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                             <button
                                                 disabled={!can_continue}
                                                 onClick={handle_request_liquidity}
-                                                >
+                                            >
                                                 {
-                                                    isLoading && <>
-                                                        <FaSpinner className="w-5 h-5 mr-3 spinner" />
-                                                        <span>Posting offer...</span>
-                                                    </>
+                                                    isLoading && 
+                                                    <span className='flex flex-row items-center'>
+                                                        <FaSpinner className="w-4 h-4 mr-3 spinner" />
+                                                        <span>Posting</span>
+                                                    </span>
                                                 }
                                                 {
                                                     !isLoading && <>

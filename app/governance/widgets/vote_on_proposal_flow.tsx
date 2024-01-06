@@ -1,6 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react'
+import { Transition } from '@headlessui/react'
 import classNames from 'classnames';
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { Decision, IObjectMap, VotingVault } from '@/app/utils/interface';
 import Markdown from 'react-markdown';
 import { useQueryVotingVaultsForProposal } from '@/app/hooks/use_query';
@@ -8,7 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { WalletStatusTypes, walletState } from '@/app/state';
 import ConnectWalletOptions from '@/app/widgets/connect_wallet_options';
 import VoteOptions from './vote_options';
-import { FaCheckSquare, FaSpinner, FaSquare } from "react-icons/fa"
+import { FaCheckSquare, FaSpinner } from "react-icons/fa"
 import { useVoteOnProposal } from '@/app/hooks/use_exec';
 
 type ComponentProps = {

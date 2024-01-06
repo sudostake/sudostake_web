@@ -10,7 +10,7 @@ import { FaGlobe } from 'react-icons/fa';
 
 export default function Governance() {
   const setToolBarState = useSetRecoilState(toolBarState);
-  const { active_proposals, isLoading } = useQueryActiveProposals();
+  const { active_proposals } = useQueryActiveProposals();
 
   useEffect(() => setToolBarState({
     title: 'Active Proposals',

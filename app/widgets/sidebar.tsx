@@ -8,10 +8,9 @@ import classNames from 'classnames';
 import { isMobile } from 'react-device-detect';
 import { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { WalletStatusTypes, selectedChainState, sideBarToggleState, walletState } from '../state';
+import { selectedChainState, sideBarToggleState, walletState } from '../state';
 import ConnectedWalletButton from './connected_wallet_button';
 import { get_chain_info_from_id, supportedChains } from '../utils/supported_chains';
-import { useConnectWallet } from '../hooks/use_connect_wallet';
 
 type nav_itemItem = {
     label: string;
