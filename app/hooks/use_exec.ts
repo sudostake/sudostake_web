@@ -37,7 +37,7 @@ export const useIndexVault = () => {
     });
 }
 
-export const useCreateVault = () => {
+export const useMintVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
@@ -61,12 +61,12 @@ export const useCreateVault = () => {
         return await indexVault(vault_address_attr.value);
     }, {
         async onSuccess(res) {
-            toast("New vault created!", { type: 'success' });
+            toast("New vault minted!", { type: 'success' });
             await queryClient.invalidateQueries({ queryKey: ['owner_vaults', address] });
             return await queryClient.refetchQueries({ queryKey: ['owner_vaults', address] });
         },
         onError(e) {
-            toast("Error creating vault", { type: 'error' })
+            toast("Error minting vault", { type: 'error' })
         }
     });
 }

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
 import { FaHistory, FaPlusSquare, FaSpinner } from "react-icons/fa";
-import { useCreateVault } from "./hooks/use_exec";
+import { useMintVault } from "./hooks/use_exec";
 import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
 import { VaultIndex } from "./utils/interface";
@@ -23,7 +23,7 @@ export default function Home() {
   const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
   const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
-  const { mutate: createVault, isLoading } = useCreateVault();
+  const { mutate: mintVault, isLoading } = useMintVault();
   const router = useRouter();
   const pathname = usePathname();
   const chainInfo = useRecoilValue(selectedChainState);
@@ -73,7 +73,7 @@ export default function Home() {
           <Tab.Group>
             <Tab.List className={classNames({
               "flex flex-row max-w-md mb-8 rounded-lg p-1": true,
-              "bg-zinc-300 dark:bg-zinc-800":true
+              "bg-zinc-300 dark:bg-zinc-800": true
             })}>
               <Tab className={({ selected }) =>
                 classNames(
@@ -108,19 +108,19 @@ export default function Home() {
                     );
                   })}
 
-                  <div role="button" onClick={() => { !isLoading && createVault() }} className="w-full p-4 border border-zinc-400 border-dashed dark:border-zinc-700 rounded-lg grid grid-cols-1 gap-2 items-center">
+                  <div role="button" onClick={() => { !isLoading && mintVault() }} className="w-full p-4 border border-zinc-400 border-dashed dark:border-zinc-700 rounded-lg grid grid-cols-1 gap-2 items-center">
                     <span className="flex items-center text-sm lg:text-base font-medium justify-center">
                       {
                         isLoading && <>
                           <FaSpinner className="w-6 h-6 mr-4 spinner" />
-                          <span>Creating ...</span>
+                          <span>Minting...</span>
                         </>
                       }
 
                       {
                         !isLoading && <>
                           <FaPlusSquare className="w-6 h-6 mr-4" />
-                          <span>Create Vault</span>
+                          <span>Mint Vault</span>
                         </>
                       }
                     </span>
