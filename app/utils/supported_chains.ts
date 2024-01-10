@@ -79,8 +79,8 @@ const ArchwayTestNet: KeplrChainInfoSchema = {
             }
         }
     ],
-    "rest": "https://api.constantine.archway.tech",
-    "rpc": "https://rpc.constantine.archway.tech",
+    "rest": "https://api.constantine.archway.io",
+    "rpc": "https://rpc.constantine.archway.io",
     "stakeCurrency": {
         "coinDecimals": 18,
         "coinDenom": "CONST",
