@@ -24,12 +24,12 @@ export default function ConnectedWalletButton() {
 
             window.addEventListener("keplr_keystorechange", reconnectWallet);
             window.addEventListener("leap_keystorechange", reconnectWallet);
-            //window.addEventListener('cosmostation_keystorechange', reconnectWallet);
+            window.addEventListener('cosmostation_keystorechange', reconnectWallet);
 
             return () => {
                 window.removeEventListener("keplr_keystorechange", reconnectWallet);
                 window.removeEventListener("leap_keystorechange", reconnectWallet);
-                // window.removeEventListener('cosmostation_keystorechange', reconnectWallet);
+                window.removeEventListener('cosmostation_keystorechange', reconnectWallet);
             }
         }
 
