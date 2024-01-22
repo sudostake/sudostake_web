@@ -236,16 +236,19 @@ export const useDelegate = (vault_address: string) => {
 export const useUndelegate = (vault_address: string) => {
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
+    const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async ({ amount, currency, validator }: { amount: number, currency: Currency, validator: ValidatorInfo }) => {
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
-        return await client.execute(
+        await client.execute(
             address,
             vault_address,
             { undelegate: { validator: validator.address, amount: microAmount } },
             1.4,
             ''
         );
+
+        return indexVault(vault_address);
     }, {
         async onSuccess(res) {
             toast(`Undelegate successful`, { type: 'success' })
