@@ -4,11 +4,10 @@ import { useQuery } from "@tanstack/react-query"
 import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes, selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
-import { Currency, SudoStakeChainInfoSchema } from "../utils/supported_chains";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 import { get_connection } from "../services/vault_indexer";
-import { VaultIndex, VotingVault, vote_options_type } from "../utils/interface";
+import { Currency, SudoStakeChainInfoSchema, VaultIndex, VotingVault } from "../utils/interface";
 
 async function fetchTokenBalance({
     chain_info,

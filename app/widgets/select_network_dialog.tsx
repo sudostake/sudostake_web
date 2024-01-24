@@ -2,8 +2,9 @@ import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import Image from 'next/image';
 import { Fragment, useState } from 'react'
-import { SudoStakeChainInfoSchema, supportedChains } from '../utils/supported_chains';
+import { supportedChains } from '../utils/supported_chains';
 import { FaChevronRight } from 'react-icons/fa';
+import { SudoStakeChainInfoSchema } from '../utils/interface';
 
 type ComponentProps = {
     selected_chain: SudoStakeChainInfoSchema

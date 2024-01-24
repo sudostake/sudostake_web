@@ -1,9 +1,8 @@
 'use client'
 
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
-import { SudoStakeChainInfoSchema } from './utils/supported_chains';
 import { atom } from 'recoil'
-import { WalletTypes } from './utils/interface';
+import { SudoStakeChainInfoSchema, WalletTypes } from './utils/interface';
 
 export enum WalletStatusTypes {
     /* nothing happens to the wallet */

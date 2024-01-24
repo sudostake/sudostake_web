@@ -3,7 +3,7 @@ import { FaChevronDown } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
-import { Currency } from '@/app/utils/supported_chains';
+import { Currency } from '@/app/utils/interface';
 
 type ComponentProps = {
     onOptionSelected: (option: Currency) => void,

@@ -1,3 +1,5 @@
+import { Coin } from "@cosmjs/stargate";
+
 export interface IObjectMap<T> {
     [key: string]: T;
 }
@@ -12,6 +14,62 @@ export type RequestOption = {
     id: LiquidityRequestTypes,
     title: string,
     description: string
+};
+
+export type VaultVersion = {
+    code_id: number,
+    collateral_options: LiquidityRequestTypes[]
+}
+export type Currency = {
+    coinDecimals: number,
+    coinDenom: string,
+    coinGeckoId: string,
+    coinMinimalDenom: string,
+    gasPriceStep?: {
+        low: number,
+        average: number,
+        high: number
+    },
+    coinImageUrl?: string,
+};
+
+export type KeplrChainInfoSchema = {
+    bech32Config: {
+        bech32PrefixAccAddr: string,
+        bech32PrefixAccPub: string,
+        bech32PrefixConsAddr: string,
+        bech32PrefixConsPub: string,
+        bech32PrefixValAddr: string,
+        bech32PrefixValPub: string,
+    },
+    bip44: {
+        coinType: 118
+    },
+    chainId: string,
+    chainName: string,
+    chainSymbolImageUrl: string,
+    currencies: Currency[],
+    features: ["cosmwasm"],
+    feeCurrencies: Currency[],
+    rest: string,
+    rpc: string,
+    stakeCurrency: Currency,
+    nodeProvider: {
+        name: string,
+        email: string,
+        website: string,
+    }
+};
+
+export type SudoStakeChainInfoSchema = {
+    src: KeplrChainInfoSchema,
+    explorer_url: string,
+    vault_creation_fee: Coin,
+    request_denoms: Currency[],
+    sudomod_address: string,
+    vault_versions: VaultVersion[],
+    vault_collection_path: string,
+    gas_price: string,
 };
 
 export enum WalletTypes {

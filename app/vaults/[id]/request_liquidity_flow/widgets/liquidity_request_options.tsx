@@ -1,17 +1,17 @@
 import { RadioGroup } from '@headlessui/react'
 import { FaCheckCircle } from "react-icons/fa";
-import { IObjectMap, RequestOption } from '@/app/utils/interface';
+import { RequestOption } from '@/app/utils/interface';
 
 type ComponentProps = {
     onOptionSelected: (option: RequestOption) => void,
     default_value: RequestOption,
-    options: IObjectMap<RequestOption>
+    options: RequestOption[]
 }
 
 export default function LiquidityRequestOptions({ onOptionSelected, default_value, options }: ComponentProps) {
     return (
         <div className="w-full text-gray-300">
-            <RadioGroup value={options[default_value.id]} onChange={(selected) => { onOptionSelected(selected) }}>
+            <RadioGroup value={default_value} onChange={(selected) => { onOptionSelected(selected) }}>
                 <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                 <div className="space-y-4">
                     {Object.values(options).map((request_option) => (

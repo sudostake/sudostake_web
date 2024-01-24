@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import LiquidityRequestOptions from './widgets/liquidity_request_options';
 import { FaSpinner, FaTimes } from 'react-icons/fa';
-import { IObjectMap, LiquidityRequestTypes, RequestOption } from '@/app/utils/interface';
+import { Currency, LiquidityRequestTypes, RequestOption, VaultVersion } from '@/app/utils/interface';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
 import { useQueryVaultMetaData } from '@/app/hooks/use_query';
@@ -11,30 +11,30 @@ import { useRequestLiquidity } from '@/app/hooks/use_exec';
 import { convertDenomToMicroDenom } from '@/app/utils/conversion';
 import { SECONDS_IN_A_DAY } from '@/app/utils/constants';
 import CurrencyOptions from './widgets/currency_options';
-import { Currency } from '@/app/utils/supported_chains';
 
-const liquidityRequestOptions: IObjectMap<RequestOption> = {
-    [LiquidityRequestTypes.fixed_interest_rental]: {
+const liquidityRequestOptions: RequestOption[] = [
+    {
         id: LiquidityRequestTypes.fixed_interest_rental,
         title: 'Fixed Interest Rental',
         description: 'Allow the lender to claim a fixed amount of staking rewards.',
     },
-    [LiquidityRequestTypes.fixed_term_rental]: {
+    {
         id: LiquidityRequestTypes.fixed_term_rental,
         title: 'Fixed Term Rental',
         description: 'Allow the lender to claim staking rewards for a fixed duration of time.',
     },
-    [LiquidityRequestTypes.fixed_term_loan]: {
+    {
         id: LiquidityRequestTypes.fixed_term_loan,
         title: 'Fixed Term Loan',
         description: 'Allow the lender to liquidate a fixed amount of staked tokens when you default on the loan.',
     }
-}
+]
 
 type ComponentProps = {
     vault_address: string,
+    from_code_id: number,
 }
-export default function RequestLiquidityFlow({ vault_address }: ComponentProps) {
+export default function RequestLiquidityFlow({ vault_address, from_code_id }: ComponentProps) {
     const { mutate: request_liquidity, isLoading, isSuccess } = useRequestLiquidity(vault_address);
     const { vault_metadata } = useQueryVaultMetaData(vault_address);
     const chainInfo = useRecoilValue(selectedChainState);
@@ -42,7 +42,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
     const [step_history, setStepHistory] = useState<number>(0);
 
     // Liquidity request details
-    const [selected_request_type, setSelectedRequestType] = useState(liquidityRequestOptions[LiquidityRequestTypes.fixed_interest_rental]);
+    const [selected_request_type, setSelectedRequestType] = useState(liquidityRequestOptions[0]);
     const [allow_lender_to_vote, setAllowLenderToVote] = useState(false);
     const [requested_amount, setRequestedAmount] = useState('');
     const [requested_denom, setRequestedDenom] = useState<Currency>();
@@ -62,11 +62,17 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
             Number(requested_amount) > 0 && Number(duration_in_days) > 0 &&
             Number(collateral_amount) > 0);
 
-    // Close modal when the withdrawal is done
+    // Filter available liquidityRequestOptions for this vault version
+    const vault_version: VaultVersion = chainInfo.vault_versions.find(v => v.code_id === from_code_id);
+    const supported_request_options = vault_version.collateral_options.map(type => {
+        return liquidityRequestOptions.find(option => option.id === type)
+    });
+
     useEffect(() => {
         if (isSuccess) {
             setIsOpen(false);
         }
+
     }, [isSuccess]);
 
     function validate_duration_input(days: number) {
@@ -173,7 +179,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                         <span className='flex py-16 overflow-y-auto p-4 lg:p-8'>
                                             <LiquidityRequestOptions
                                                 default_value={selected_request_type}
-                                                options={liquidityRequestOptions}
+                                                options={supported_request_options}
                                                 onOptionSelected={setSelectedRequestType} />
                                         </span>
 
@@ -330,7 +336,7 @@ export default function RequestLiquidityFlow({ vault_address }: ComponentProps) 
                                                 onClick={handle_request_liquidity}
                                             >
                                                 {
-                                                    isLoading && 
+                                                    isLoading &&
                                                     <span className='flex flex-row items-center'>
                                                         <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                         <span>Posting</span>

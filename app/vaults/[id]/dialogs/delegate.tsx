@@ -1,12 +1,12 @@
 import { useDelegate } from '@/app/hooks/use_exec';
 import { useQueryBalance } from '@/app/hooks/use_query';
-import { Currency } from '@/app/utils/supported_chains';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import ValidatorOptions from '../widgets/validator_options';
 import { ValidatorInfo } from '@/app/state';
+import { Currency } from '@/app/utils/interface';
 
 type DelegateDialogButtonProps = {
     vault_address: string,

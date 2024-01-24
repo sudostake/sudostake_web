@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
             throw new Error('Chain not supported');
         }
 
-        if (chain_info && !chain_info.vault_code_ids.includes(contract_data.codeId)) {
+        if (chain_info && !chain_info.vault_versions.map(v => v.code_id).includes(contract_data.codeId)) {
             throw new Error('Invalid contract type');
         }
 

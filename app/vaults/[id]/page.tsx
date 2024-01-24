@@ -64,6 +64,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         vault_info.liquidity_request_status === 'active' &&
         vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
         vault_info.end_time === 'EXPIRED';
+
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
     const native_balance = vault_metadata && vault_metadata.native_balance;
     const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
@@ -251,7 +252,9 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                     {is_owner && vault_info && vault_info.liquidity_request_status === 'idle' &&
                         <span className="py-20 px-4 lg:px-8">
-                            <RequestLiquidityFlow vault_address={params.id} />
+                            <RequestLiquidityFlow
+                                vault_address={params.id}
+                                from_code_id={vault_info.from_code_id} />
                         </span>
                     }
 

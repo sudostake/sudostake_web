@@ -4,10 +4,9 @@ import { ValidatorInfo, VaultIndexErrorState, selectedChainState, walletState } 
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
-import { Currency } from "../utils/supported_chains";
 import { convertDenomToMicroDenom } from "../utils/conversion";
 import { ExecuteInstruction, JsonObject } from "@cosmjs/cosmwasm-stargate";
-import { Decision, VaultIndex, VotingVault } from "../utils/interface";
+import { Currency, Decision, VaultIndex, VotingVault } from "../utils/interface";
 
 export const useIndexVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
