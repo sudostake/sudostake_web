@@ -1,11 +1,10 @@
 import { useRedelegate } from '@/app/hooks/use_exec';
-import { Currency } from '@/app/utils/interface';
+import { Currency, ValidatorInfo } from '@/app/utils/interface';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import ValidatorOptions from '../widgets/validator_options';
-import { ValidatorInfo } from '@/app/state';
 import { useQueryRedelegationList } from '@/app/hooks/use_query';
 
 type ComponentProps = {
@@ -73,7 +72,7 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={handle_modal_closed}>
+                <Dialog as="div" className="relative z-30" onClose={handle_modal_closed}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -98,7 +97,7 @@ export default function RedelegateDialog({ vault_address, currency }: ComponentP
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title

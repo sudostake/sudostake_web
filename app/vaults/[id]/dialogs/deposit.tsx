@@ -65,7 +65,7 @@ function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDia
 
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={on_close}>
+            <Dialog as="div" className="relative z-30" onClose={on_close}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -90,7 +90,7 @@ function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDia
                             leaveTo="opacity-0 scale-95">
                             <Dialog.Panel className={classNames({
                                 "bg-slate-800": true,
-                                "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                 "transform transition-all": true
                             })}>
                                 <Dialog.Title

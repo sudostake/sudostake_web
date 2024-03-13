@@ -1,57 +1,44 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { toolBarState } from '../state';
+import { useRef, useState } from 'react';
 import PendingLiquidityRequestInfo from '../widgets/pending_request_info';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { VaultIndex } from '../utils/interface';
 import VaultDealsToolbar from './widgets/vault_deals_toolbar';
 import classNames from 'classnames';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
-  const setToolBarState = useSetRecoilState(toolBarState);
   const router = useRouter();
-  const pathname = usePathname();
   const vault_deals_list_ref = useRef(null);
 
-  // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
-  // Set it back to the title for this page, when pathname === /liquidity_requests
-  useEffect(() => {
-    if (pathname === '/liquidity_requests') {
-      setToolBarState({
-        title: 'Vault Deals',
-        show_back_nav: false
-      });
-    }
-  }, [pathname, setToolBarState])
-
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col h-full overflow-y-auto pb-20 pt-40'>
       <VaultDealsToolbar on_data={setVaults} list_ref={vault_deals_list_ref} />
 
-      <div ref={vault_deals_list_ref} className="flex-grow text-sm lg:text-base py-8 lg:px-8 pb-40 overflow-y-scroll overscroll-contain">
+      <div ref={vault_deals_list_ref} className="flex-grow text-sm lg:text-base">
         {
           vaults.length > 0 &&
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {vaults.map((vault, index) => {
               return (
-                <div key={index} className={classNames({
-                  "flex flex-col gap-2  w-full p-4": true,
-                  "border-b border-zinc-400 dark:border-zinc-800": true,
-                  "lg:border lg:rounded-lg lg:border-zinc-400 dark:lg:border-zinc-600": true
-                })}>
-                  <span className="flex items-center">
-                    <span>Vault ID</span>
-                    <span className="ml-auto">
-                      #{vault.index_number}
-                    </span>
+                <div key={vault.id} role="button"
+                  onClick={() => { router.push(`/vaults/${vault.id}`) }}
+                  className={classNames({
+                    "flex flex-col": true,
+                    "w-full py-4 px-4 lg:px-8": true,
+                    "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                    "border-t border-zinc-300 dark:border-zinc-600": true,
+                    "md:max-lg:border-r": index % 2 === 0,
+                    "md:max-lg:border-b": vaults.length <= 2 || index >= vaults.length - 2,
+                    "lg:border-r": (index + 1) % 3 !== 0,
+                    "lg:border-b": vaults.length <= 3 || index >= vaults.length - 3,
+                    "max-sm:border-b": index === vaults.length - 1,
+                  })}>
+                  <span>
+                    #{vault.index_number}
                   </span>
                   <PendingLiquidityRequestInfo vault_info={vault} show_tvl={true} />
-                  <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="flex items-center justify-center h-9 mt-auto border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2">
-                    View
-                  </button>
                 </div>
               );
             })}

@@ -1,4 +1,4 @@
-import { FaHistory, FaSpinner } from "react-icons/fa";
+import { FaCircle, FaHistory, FaSpinner } from "react-icons/fa";
 import { useQueryVaultMetaData } from "../hooks/use_query";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
@@ -18,21 +18,21 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
     const router = useRouter();
     const chainInfo = useRecoilValue(selectedChainState);
     const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+    const vault_status_color = vault_info.liquidity_request_status === 'pending' && 'text-orange-500' ||
+        vault_info.liquidity_request_status === 'active' && 'text-green-500';
 
     return (
         <div className={
             classNames({
-                "w-full p-4 rounded-lg grid grid-cols-1 gap-2": true,
-                "border border-zinc-400 dark:border-zinc-600": vault_info.liquidity_request_status === 'idle',
-                "border-2 border-orange-500": vault_info.liquidity_request_status === 'pending',
-                "border-2 border-green-500": vault_info.liquidity_request_status === 'active',
+                "w-full grid grid-cols-1 gap-2": true,
             })
         }>
-            <span className="flex items-center">
-                <span>Vault ID</span>
-                <span className="ml-auto">
-                    #{vault_info.index_number}
-                </span>
+            <span className="flex flex-row items-center mb-4 gap-4">
+                <span>#{vault_info.index_number}</span>
+                {
+                    vault_info.liquidity_request_status !== 'idle' &&
+                    <FaCircle className={`w-4 h-4 mr-3 ${vault_status_color}`} />
+                }
             </span>
             <span className="flex items-center">
                 <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
@@ -84,7 +84,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <button onClick={() => { router.push(`/vaults/${vault_info.id}`) }} className="flex-grow items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2">
                     View
                 </button>
-                
+
                 <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />
             </span>
         </div>

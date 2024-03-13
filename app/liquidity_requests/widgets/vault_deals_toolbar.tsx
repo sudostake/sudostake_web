@@ -146,10 +146,18 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
     }
 
     return (
-        <div className='flex flex-row px-2 lg:px-8 py-2 border-b border-zinc-400 dark:border-zinc-700'>
+        <div className={
+            classNames(
+                "fixed z-19 left-0 top-20  h-20 w-full",
+                "flex flex-row items-center justify-between",
+                "bg-opacity-80 backdrop-blur-lg",
+                "max-sm:pl-4 sm:pl-60 pr-4",
+                "border-b border-zinc-200 dark:border-zinc-800"
+            )
+        }>
             <SortOptions on_select={handle_select_sort_option} />
 
-            <span className='flex items-center flex-row ml-auto'>
+            <span className='flex items-center flex-row'>
                 <button disabled={newer_docs.length === 0}
                     onClick={onPrev}
                     className={classNames({

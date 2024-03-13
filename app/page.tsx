@@ -1,17 +1,16 @@
 'use client'
 
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { WalletStatusTypes, selectedChainState, walletState } from "./state";
+import { useRecoilValue } from "recoil";
+import { selectedChainState, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
 import { FaHistory, FaPlusSquare, FaSpinner } from "react-icons/fa";
 import { useMintVault } from "./hooks/use_exec";
-import { toolBarState } from "./state";
 import VaultInfoCard from "./widgets/vault_info_card";
-import { VaultIndex } from "./utils/interface";
+import { VaultIndex, WalletStatusTypes } from "./utils/interface";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import ConnectWalletOptions from "./widgets/connect_wallet_options";
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
@@ -21,23 +20,10 @@ import Link from "next/link";
 export default function Home() {
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
-  const setToolBarState = useSetRecoilState(toolBarState);
   const { address, status } = useRecoilValue(walletState);
   const { mutate: mintVault, isLoading } = useMintVault();
   const router = useRouter();
-  const pathname = usePathname();
   const chainInfo = useRecoilValue(selectedChainState);
-
-  // We are using route interceptor to show /vaults[id], which sets the title of the toolbar.
-  // Set it back to the title for this page, when pathname === /
-  useEffect(() => {
-    if (pathname === '/') {
-      setToolBarState({
-        title: 'Manage Vaults',
-        show_back_nav: false
-      });
-    }
-  }, [pathname, setToolBarState])
 
   // Subscribe to owner's vaults
   useEffect(() => {
@@ -65,15 +51,14 @@ export default function Home() {
     }
   }, [address, status, setActiveLendingVaults, chainInfo]);
 
-
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
+    <div className="h-full w-full text-sm lg:text-base overflow-y-auto py-20">
       {status === WalletStatusTypes.connected &&
         <>
           <Tab.Group>
             <Tab.List className={classNames({
-              "flex flex-row max-w-md mb-8 rounded-lg p-1": true,
-              "bg-zinc-300 dark:bg-zinc-800": true
+              "flex flex-row max-w-md rounded-lg h-12 p-1 mx-4 my-8": true,
+              "bg-zinc-300 dark:bg-zinc-800": true,
             })}>
               <Tab className={({ selected }) =>
                 classNames(
@@ -100,15 +85,27 @@ export default function Home() {
 
             <Tab.Panels>
               <Tab.Panel>
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                   {owner_vaults.map((vault, index) => {
                     return (
-                      <VaultInfoCard key={index} vault_info={vault} />
+                      <span key={vault.id} className={
+                        classNames({
+                          "py-4 px-4 lg:px-8": true,
+                          "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                          "border-t border-zinc-300 dark:border-zinc-700": true,
+                          "md:max-lg:border-r": index % 2 === 0,
+                          "md:max-lg:border-b": owner_vaults.length <= 2 || index >= owner_vaults.length - 2,
+                          "lg:border-r": (index + 1) % 3 !== 0,
+                          "lg:border-b": owner_vaults.length <= 3 || index >= owner_vaults.length - 3,
+                          "max-sm:border-b": index === owner_vaults.length - 1,
+                        })
+                      }>
+                        <VaultInfoCard vault_info={vault} />
+                      </span>
                     );
                   })}
 
-                  <div role="button" onClick={() => { !isLoading && mintVault() }} className="w-full p-4 border border-zinc-400 border-dashed dark:border-zinc-700 rounded-lg grid grid-cols-1 gap-2 items-center">
+                  <div role="button" onClick={() => { !isLoading && mintVault() }} className="w-full p-4 border border-zinc-400 border-dashed dark:border-zinc-700 grid grid-cols-1 gap-2 items-center">
                     <span className="flex items-center text-sm lg:text-base font-medium justify-center">
                       {
                         isLoading && <>
@@ -132,9 +129,9 @@ export default function Home() {
                 {
                   active_lending_vaults.length > 0 &&
                   <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                    {active_lending_vaults.map((vault, index) => {
+                    {active_lending_vaults.map((vault) => {
                       return (
-                        <div key={index} className="w-full p-4 border border-zinc-400 dark:border-zinc-600 rounded-lg grid grid-cols-1 gap-2">
+                        <div key={vault.id} className="w-full p-4 border border-zinc-400 dark:border-zinc-600 rounded-lg grid grid-cols-1 gap-2">
                           <span className="flex items-center">
                             <span>Vault ID</span>
                             <span className="ml-auto">
@@ -158,7 +155,6 @@ export default function Home() {
                               View
                             </button>
                           </span>
-
                         </div>
                       );
                     })}
@@ -167,7 +163,7 @@ export default function Home() {
 
                 {
                   active_lending_vaults.length === 0 &&
-                  <div className="mt-8">
+                  <div className="mt-8 px-4 lg:px-8">
                     <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
                       No accepted deals yet. <br />
                       <span className=" text-blue-600">

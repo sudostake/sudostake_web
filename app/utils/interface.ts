@@ -1,8 +1,31 @@
 import { Coin } from "@cosmjs/stargate";
+import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 
 export interface IObjectMap<T> {
     [key: string]: T;
 }
+
+export enum WalletStatusTypes {
+    idle = '@wallet-state/idle',
+    connecting = '@wallet-state/connecting',
+    connected = '@wallet-state/connected',
+    error = '@wallet-state/error',
+}
+
+export enum WalletTypes {
+    keplr = 'keplr',
+    leap = 'leap',
+    cosmostation = 'cosmostation',
+}
+
+export type WalletState = {
+    client: SigningCosmWasmClient | null,
+    status: WalletStatusTypes,
+    name: string,
+    address: string,
+    wallet_logo_url: string,
+    selected_wallet: WalletTypes | null
+};
 
 export enum LiquidityRequestTypes {
     fixed_interest_rental = 'fixed_interest_rental',
@@ -20,6 +43,7 @@ export type VaultVersion = {
     code_id: number,
     collateral_options: LiquidityRequestTypes[]
 }
+
 export type Currency = {
     coinDecimals: number,
     coinDenom: string,
@@ -70,13 +94,8 @@ export type SudoStakeChainInfoSchema = {
     vault_versions: VaultVersion[],
     vault_collection_path: string,
     gas_price: string,
+    validators_img_base_url: string
 };
-
-export enum WalletTypes {
-    keplr = 'keplr',
-    leap = 'leap',
-    cosmostation = 'cosmostation',
-}
 
 /**
  * This type describes a vault object in a read-only firebase database
@@ -164,3 +183,20 @@ export type VotingVault = {
     vault: VaultIndex,
     has_voted: boolean,
 }
+
+export type ValidatorInfo = {
+    name: string,
+    address: string,
+    delegated_amount: number
+};
+
+export type UnbondingEntry = {
+    amount: number,
+    completion_time: string
+}
+
+export type ValidatorUnbondingInfo = {
+    name: string,
+    address: string,
+    entries: UnbondingEntry[]
+};

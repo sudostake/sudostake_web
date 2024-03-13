@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Image from 'next/image';
 import { Fragment, useState } from 'react'
 import { supportedChains } from '../utils/supported_chains';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronDown } from 'react-icons/fa';
 import { SudoStakeChainInfoSchema } from '../utils/interface';
 
 type ComponentProps = {
@@ -28,7 +28,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
 
     return (
         <>
-            <span role="button" onClick={openModal} className="flex flex-row items-center px-4 py-2 border-t border-zinc-400 dark:border-zinc-700">
+            <span role="button" onClick={openModal} className="flex flex-row items-center gap-4 h-full">
                 <Image
                     src={chainInfo.src.chainSymbolImageUrl}
                     alt="logo"
@@ -37,9 +37,8 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                     height={24}
                     priority
                 />
-
-                <span className="ml-6 text-sm lg:text-base font-medium">{chainInfo.src.chainName}</span>
-                <span className="ml-auto"><FaChevronRight className="w-4 h-4" /></span>
+                <span className="text-sm lg:text-base font-medium">{chainInfo.src.chainName}</span>
+                <FaChevronDown className="w-4 h-4" />
             </span>
 
             <Transition appear show={isOpen} as={Fragment}>
@@ -68,7 +67,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title
@@ -78,9 +77,9 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                     </Dialog.Title>
 
                                     <div className="mt-8 mb-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-                                        {supportedChains.map((chain, index) => {
+                                        {supportedChains.map((chain) => {
                                             return (
-                                                <div key={index} className="w-full rounded-lg grid grid-cols-1 gap-4">
+                                                <div key={chain.src.chainId} className="w-full rounded-lg grid grid-cols-1 gap-4">
                                                     <span role='button' onClick={() => handle_network_select(chain)}
                                                         className="flex flex-row gap-4 items-center justify-center mt-4 border border-zinc-400 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2 text-gray-300">
                                                         <Image

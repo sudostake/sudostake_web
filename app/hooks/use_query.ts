@@ -1,13 +1,13 @@
 'use client'
 
 import { useQuery } from "@tanstack/react-query"
-import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes, selectedChainState, validatorListState, walletState } from "../state";
+import { selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 import { get_connection } from "../services/vault_indexer";
-import { Currency, SudoStakeChainInfoSchema, VaultIndex, VotingVault } from "../utils/interface";
+import { Currency, SudoStakeChainInfoSchema, ValidatorInfo, ValidatorUnbondingInfo, VaultIndex, VotingVault, WalletStatusTypes } from "../utils/interface";
 
 async function fetchTokenBalance({
     chain_info,
@@ -113,6 +113,24 @@ export const useQueryValidatorList = () => {
     return { validator_list, isLoading }
 }
 
+export const useFilteredValidators = (hide_zero_balance?: boolean) => {
+    const { status } = useRecoilValue(walletState);
+    const { validator_list } = useRecoilValue(validatorListState);
+
+    const { data: filtered_list = [] } = useQuery<ValidatorInfo[]>(
+        ['filtered_validators', `${Boolean(hide_zero_balance)}`],
+        () => {
+            if (Boolean(hide_zero_balance)) {
+                return validator_list.filter(v => Number(v.delegated_amount) > 0.0099)
+            }
+            return validator_list;
+        },
+        { enabled: status === WalletStatusTypes.connected, }
+    )
+
+    return { filtered_list }
+}
+
 export const useQueryActiveProposals = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { data: active_proposals = [], isLoading } = useQuery<any[]>(
@@ -212,24 +230,6 @@ export const useQueryBalance = (address: string, currency: Currency) => {
     )
 
     return { balance, isLoading }
-}
-
-export const useFilteredValidators = (hide_zero_balance?: boolean) => {
-    const { status } = useRecoilValue(walletState);
-    const { validator_list } = useRecoilValue(validatorListState);
-
-    const { data: filtered_list = [] } = useQuery<ValidatorInfo[]>(
-        ['filtered_validators', `${Boolean(hide_zero_balance)}`],
-        () => {
-            if (Boolean(hide_zero_balance)) {
-                return validator_list.filter(v => Number(v.delegated_amount) > 0.0099)
-            }
-            return validator_list;
-        },
-        { enabled: status === WalletStatusTypes.connected, }
-    )
-
-    return { filtered_list }
 }
 
 const get_voting_vault = (vault: VaultIndex, proposal_id: string, chain_id: string): Promise<VotingVault> => {

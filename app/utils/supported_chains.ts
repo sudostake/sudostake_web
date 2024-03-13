@@ -14,7 +14,7 @@ const ArchwayTestNetKeplrConfig: KeplrChainInfoSchema = {
         "coinType": 118
     },
     "chainId": "constantine-3",
-    "chainName": "Archway (Testnet)",
+    "chainName": "Testnet",
     "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/constantine/chain.png",
     "currencies": [
         {
@@ -66,7 +66,7 @@ const ArchwayMainnetKeplrConfig: KeplrChainInfoSchema = {
         "coinType": 118
     },
     "chainId": "archway-1",
-    "chainName": "Archway",
+    "chainName": "Mainnet",
     "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/chain.png",
     "currencies": [
         {
@@ -113,7 +113,7 @@ const archway_constantine_3 = {
     gas_price: '900000000000.000000000000000000aconst',
     sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
     vault_creation_fee: coin('10000000000000000000', 'aconst'),
-    explorer_url: 'https://testnet.mintscan.io/archway-testnet',
+    explorer_url: 'https://mintscan.io/archway-testnet',
     vault_versions: [
         {
             code_id: 484,
@@ -162,7 +162,8 @@ const archway_constantine_3 = {
             coinGeckoId: "",
         }
     ],
-    vault_collection_path: 'vaults'
+    vault_collection_path: 'vaults',
+    validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
 };
 
 const archway_mainnet = {
@@ -209,12 +210,13 @@ const archway_mainnet = {
             coinGeckoId: "",
         }
     ],
-    vault_collection_path: 'archway_mainnet_vaults'
+    vault_collection_path: 'archway_mainnet_vaults',
+    validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
 };
 
 export const supportedChains: SudoStakeChainInfoSchema[] = [
-    archway_constantine_3,
-    archway_mainnet
+    archway_mainnet,
+    archway_constantine_3
 ];
 
 export function get_chain_info_from_rpc(rpc: string): SudoStakeChainInfoSchema | null {

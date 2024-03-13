@@ -1,14 +1,14 @@
 'use client'
 
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
-import { ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes, selectedChainState, toolBarState, validatorListState, walletState } from "@/app/state";
+import { selectedChainState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { useEffect } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { IObjectMap, LiquidityRequestTypes } from "@/app/utils/interface";
+import { IObjectMap, LiquidityRequestTypes, ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes } from "@/app/utils/interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
 import RequestLiquidityFlow from "./request_liquidity_flow";
@@ -20,7 +20,6 @@ import WithdrawDialogButton from "./dialogs/withdraw";
 import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
 
 export default function Vault({ params }: { params: { id: string } }) {
-    const setToolBarState = useSetRecoilState(toolBarState);
     const { address: current_user, status } = useRecoilValue(walletState);
     const setValidatorListState = useSetRecoilState(validatorListState);
     const chainInfo = useRecoilValue(selectedChainState);
@@ -68,16 +67,6 @@ export default function Vault({ params }: { params: { id: string } }) {
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
     const native_balance = vault_metadata && vault_metadata.native_balance;
     const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
-
-    // Set toolbar state
-    useEffect(() => {
-        if (Boolean(vault_info)) {
-            setToolBarState({
-                title: `Vault #${vault_info.index_number}`,
-                show_back_nav: true
-            })
-        }
-    }, [vault_info, setToolBarState]);
 
     // Update validatorListState
     useEffect(() => {
@@ -143,7 +132,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
     const vault_details_view = () =>
-        <div className="flex flex-col px-4 lg:px-8">
+        <div className="flex flex-col p-4 lg:p-8">
             <span className="flex flex-row justify-between w-full pb-4">
                 <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                     <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
@@ -240,11 +229,13 @@ export default function Vault({ params }: { params: { id: string } }) {
         </div>;
 
     return (
-        <div className={classNames({
-            "h-full overflow-y-scroll text-sm lg:text-base py-8": true,
-            "flex flex-col": true,
-            "w-full xl:w-3/4 xl:border-r xl:border-zinc-400 dark:xl:border-zinc-700": true,
-        })}>
+        <div className={classNames(
+            "bg-white dark:bg-zinc-950"
+            , {
+                "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base py-20": true,
+                "flex flex-col": true
+            }
+        )}>
             {
                 vault_metadata && status === WalletStatusTypes.connected &&
                 <>

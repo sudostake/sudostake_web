@@ -1,13 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
-import { validatorListState } from '@/app/state';
+import { selectedChainState, validatorListState } from '@/app/state';
 import { useRecoilValue } from 'recoil';
 import { FaTimes } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function UnbondingInfoDialog() {
     const [isOpen, setIsOpen] = useState(false);
     const { validator_unbonding_list } = useRecoilValue(validatorListState);
+    const chainInfo = useRecoilValue(selectedChainState);
 
     return (
         <>
@@ -18,8 +20,8 @@ export default function UnbondingInfoDialog() {
                 Info
             </button>
 
-            <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+            <Transition appear show={isOpen && Boolean(chainInfo)} as={Fragment}>
+                <Dialog as="div" className="relative z-30" onClose={() => setIsOpen(false)}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -44,7 +46,7 @@ export default function UnbondingInfoDialog() {
                                 leaveTo="opacity-0 scale-95">
 
                                 <Dialog.Panel className={classNames({
-                                    "bg-slate-800 fixed w-full max-w-xl": true,
+                                    "bg-slate-800 fixed w-full max-w-3xl": true,
                                     "lg:rounded-lg text-left align-middle shadow-lg": true,
                                     "transform transition-all": true,
                                     "h-full lg:h-max": true
@@ -63,7 +65,17 @@ export default function UnbondingInfoDialog() {
                                                         <div key={index} className="relative overflow-x-auto mt-8">
                                                             <table className="table-fixed caption-top w-full text-sm text-left text-slate-400">
                                                                 <caption className="mb-4 text-left">
-                                                                    {list.name}
+                                                                    <span className='flex flex-row gap-4 items-center'>
+                                                                        <Image
+                                                                            src={`${chainInfo.validators_img_base_url}${list.address}.png`}
+                                                                            alt="logo"
+                                                                            className="rounded-full"
+                                                                            width={32}
+                                                                            height={32}
+                                                                            priority
+                                                                        />
+                                                                        <span className='font-bold'>{list.name}</span>
+                                                                    </span>
                                                                 </caption>
                                                                 <thead className="text-xs uppercase  bg-slate-700">
                                                                     <tr>

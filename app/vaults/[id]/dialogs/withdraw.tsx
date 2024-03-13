@@ -46,6 +46,7 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
     const { balance } = useQueryBalance(from_address, currency);
     const { mutate: withdraw, isLoading, isSuccess } = useWithdraw(from_address);
     const [to_address, setToAddress] = useState("");
+    const [send_memo, setSendMemo] = useState("");
     const chainInfo = useRecoilValue(selectedChainState);
 
     // Close modal when the withdrawal is done
@@ -64,9 +65,18 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
         }
     }
 
+    function handle_withdraw() {
+        withdraw({
+            amount: Number(amount),
+            currency,
+            to_address: Boolean(to_address) ? to_address : null,
+            send_memo
+        });
+    }
+
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={on_close}>
+            <Dialog as="div" className="relative z-30" onClose={on_close}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -91,7 +101,7 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
                             leaveTo="opacity-0 scale-95">
                             <Dialog.Panel className={classNames({
                                 "bg-slate-800": true,
-                                "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                 "transform transition-all": true
                             })}>
                                 <Dialog.Title
@@ -133,11 +143,28 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
                                         "placeholder-slate-200 text-slate-100 relative bg-slate-800 border border-slate-500": true,
                                     })} />
 
+                                {
+                                    Boolean(to_address) &&
+                                    <>
+                                        <div className="flex items-center mt-8 mb-2 w-full text-gray-400 text-xs lg:text-sm">
+                                            Optional: Provide memo (when sending to centralized exchanges).
+                                        </div>
+
+                                        <input value={send_memo}
+                                            onChange={(e) => setSendMemo(e.target.value)}
+                                            type="text" placeholder="Memo"
+                                            className={classNames({
+                                                "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
+                                                "placeholder-slate-200 text-slate-100 relative bg-slate-800 border border-slate-500": true,
+                                            })} />
+                                    </>
+                                }
+
                                 <div className="flex mt-20 w-full justify-end">
                                     <button
                                         disabled={!Boolean(amount) || isLoading}
                                         type="button"
-                                        onClick={() => { withdraw({ amount: Number(amount), currency, to_address: Boolean(to_address) ? to_address : null }) }}
+                                        onClick={handle_withdraw}
                                         className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                         {
                                             isLoading && <>

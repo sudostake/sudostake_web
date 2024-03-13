@@ -5,8 +5,7 @@ import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import ValidatorOptions from '../widgets/validator_options';
-import { ValidatorInfo } from '@/app/state';
-import { Currency } from '@/app/utils/interface';
+import { Currency, ValidatorInfo } from '@/app/utils/interface';
 
 type DelegateDialogButtonProps = {
     vault_address: string,
@@ -66,7 +65,7 @@ function DelegateDialog({ vault_address, currency, is_open, on_close }: _Delegat
 
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={on_close}>
+            <Dialog as="div" className="relative z-30" onClose={on_close}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -91,7 +90,7 @@ function DelegateDialog({ vault_address, currency, is_open, on_close }: _Delegat
                             leaveTo="opacity-0 scale-95">
                             <Dialog.Panel className={classNames({
                                 "bg-slate-800": true,
-                                "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                 "transform transition-all": true
                             })}>
                                 <Dialog.Title

@@ -1,11 +1,11 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
-import { Decision, IObjectMap, VotingVault } from '@/app/utils/interface';
+import { Decision, IObjectMap, VotingVault, WalletStatusTypes } from '@/app/utils/interface';
 import Markdown from 'react-markdown';
 import { useQueryVotingVaultsForProposal } from '@/app/hooks/use_query';
 import { useRecoilValue } from 'recoil';
-import { WalletStatusTypes, walletState } from '@/app/state';
+import { walletState } from '@/app/state';
 import ConnectWalletOptions from '@/app/widgets/connect_wallet_options';
 import VoteOptions from './vote_options';
 import { FaCheckSquare, FaSpinner } from "react-icons/fa"
@@ -93,7 +93,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                             "lg:border border-zinc-300 dark:lg:border-zinc-800": true,
                             "w-full max-w-2xl": true,
                             "ml-auto mr-auto": true,
-                            "dark:text-zinc-200": true
+                            "dark:text-zinc-200": true,
                         })
                     }>
                         {
@@ -111,7 +111,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 <div className='flex flex-row items-center p-8 h-20'>
                                     <span role='button' onClick={(() => setIsOpen(false))}>Close</span>
                                     <span role='button' onClick={() => { setStepHistory(1) }}
-                                        className='flex items-center p-8 ml-auto h-20'>Next</span>
+                                        className='flex items-center ml-auto h-20'>Next</span>
                                 </div>
                             </>
                         }
@@ -132,7 +132,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                         <div className='flex flex-row items-center p-8 h-20'>
                                             <span role='button' onClick={() => { setStepHistory(0) }}>Prev</span>
                                             <button disabled={!Boolean(selected_vote_option)} onClick={() => { setStepHistory(2) }}
-                                                className='flex items-center p-8 ml-auto h-20'>Next</button>
+                                                className='flex items-center ml-auto h-20'>Next</button>
                                         </div>
                                     </>
                                 }
@@ -146,7 +146,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                         <div className='flex flex-row items-center p-8 h-20'>
                                             <span role='button' onClick={() => { setStepHistory(0) }}>Prev</span>
                                             <button disabled={!Boolean(selected_vote_option)} onClick={() => { setStepHistory(2) }}
-                                                className='flex items-center p-8 ml-auto h-20'>Close</button>
+                                                className='flex items-center ml-auto h-20'>Close</button>
                                         </div>
                                     </>
                                 }
@@ -172,9 +172,9 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                     !is_loading_voting_vaults &&
                                     <div className='flex-grow overflow-y-scroll overscroll-contain py-8'>
                                         <div className='flex flex-col divide-y divide-zinc-300 dark:divide-zinc-900'>
-                                            {voting_vaults.map((voting_vault, index) => {
+                                            {voting_vaults.map((voting_vault) => {
                                                 return (
-                                                    <span role='button' key={index} onClick={() => { handle_select_voting_vault(voting_vault) }}
+                                                    <span role='button' key={voting_vault.vault.id} onClick={() => { handle_select_voting_vault(voting_vault) }}
                                                         className="flex items-center py-4 px-8 hover:bg-zinc-300 dark:hover:bg-zinc-800 cursor-pointer">
 
                                                         <span>
@@ -210,7 +210,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
 
                                 <div className='flex flex-row items-center p-8 h-20'>
                                     <span role='button' onClick={() => { setStepHistory(1) }}>Prev</span>
-                                    <button className='flex items-center p-8 ml-auto h-20'
+                                    <button className='flex items-center ml-auto h-20'
                                         onClick={() => setStepHistory(3)}
                                         disabled={!can_vote}>Next</button>
                                 </div>
@@ -225,7 +225,6 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                     <span role='button' onClick={(() => setIsOpen(false))} className='ml-auto'>Close</span>
                                 </div>
                                 <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
-
                                     <div className="flex w-full h-full items-center justify-center">
                                         <h2 className="flex items-center">
                                             Vote {selected_vote_option.title} on proposal {proposal.proposal_id} with vault(s) {Object.values(selected_vaults_map).map(v => v.vault.index_number).join(', ')}
@@ -235,7 +234,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 <div className='flex flex-row items-center p-8 h-20'>
                                     <span role='button' onClick={() => { setStepHistory(2) }}>Back</span>
                                     <span role='button' onClick={handle_vote_on_proposal}
-                                        className='flex items-center p-8 ml-auto h-20'>
+                                        className='flex items-center ml-auto h-20'>
                                         {
                                             is_voting && <>
                                                 <FaSpinner className="w-5 h-5 mr-3 spinner" />

@@ -35,7 +35,7 @@ export default function VoteOptions({ onOptionSelected, default_value: selected_
         <div className="w-full">
             <RadioGroup value={selected_option} onChange={(selected) => { onOptionSelected(selected); }}>
                 <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-                <div className="space-y-8">
+                <div className="space-y-4">
                     {vote_decisions.map((vote_option) => (
                         <RadioGroup.Option
                             key={vote_option.id}

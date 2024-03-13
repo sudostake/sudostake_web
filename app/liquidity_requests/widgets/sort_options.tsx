@@ -76,13 +76,13 @@ export default function SortOptions({ on_select }: ComponentProps) {
                 "hidden": !isOpen
             })}>
                 {
-                    sort_options.map((option, index) => {
+                    sort_options.map((option) => {
                         return (
-                            <div key={index}
-                            className={classNames({
-                                "p-1":true,
-                                "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
-                            })}>
+                            <div key={option.type}
+                                className={classNames({
+                                    "p-1": true,
+                                    "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
+                                })}>
                                 <button onClick={() => { handle_select(option) }} className='group flex w-full items-center p-2 text-xs lg:text-sm'>
                                     <span>{option.label}</span>
 

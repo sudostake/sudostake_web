@@ -34,8 +34,8 @@ export default function ClipBoardButton({ address }: ComponentProps) {
 
     return (
         <button className="flex items-center justify-center w-9 h-9 rounded-full border border-transparent hover:border-zinc-400" onClick={() => handleCopyClick()}>
-            {!isCopied && <FaClipboard className="w-5 h-5" />}
-            {isCopied && <FaClipboardCheck className="w-5 h-5" />}
+            {!isCopied && <FaClipboard className="w-4 h-4" />}
+            {isCopied && <FaClipboardCheck className="w-4 h-4" />}
         </button>
     )
 }

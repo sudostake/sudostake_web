@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { ValidatorInfo, VaultIndexErrorState, selectedChainState, walletState } from "../state";
+import { VaultIndexErrorState, selectedChainState, walletState } from "../state";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
 import { convertDenomToMicroDenom } from "../utils/conversion";
 import { ExecuteInstruction, JsonObject } from "@cosmjs/cosmwasm-stargate";
-import { Currency, Decision, VaultIndex, VotingVault } from "../utils/interface";
+import { Currency, Decision, ValidatorInfo, VaultIndex, VotingVault } from "../utils/interface";
 
 export const useIndexVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
@@ -153,14 +153,14 @@ export const useWithdraw = (from_address: string) => {
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
 
-    return useMutation(async ({ amount, currency, to_address }: { amount: number, currency: Currency, to_address?: string }) => {
+    return useMutation(async ({ amount, currency, to_address, send_memo }: { amount: number, currency: Currency, to_address?: string, send_memo?: string }) => {
         const microAmount = convertDenomToMicroDenom(`${amount}`, currency.coinDecimals);
         return await client.execute(
             address,
             from_address,
             { withdraw_balance: { to_address, funds: coin(microAmount, currency.coinMinimalDenom) } },
             1.4,
-            ''
+            send_memo
         );
     }, {
         async onSuccess(res) {
@@ -357,6 +357,14 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
             microAmount,
             denom
         );
+
+        /**
+         * const keplr = new KeplrClient('chain_id');
+         * const chainClient = new ChainClient();
+         * const transaction = {};
+         * const signed_tx = keplr.sign(transaction)
+         * const res = chainClient.broadcast(signed_tx);
+         */
 
         await client.execute(
             address,

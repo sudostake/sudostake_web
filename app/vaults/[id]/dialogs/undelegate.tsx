@@ -1,11 +1,10 @@
 import { useUndelegate } from '@/app/hooks/use_exec';
-import { Currency } from '@/app/utils/interface';
+import { Currency, ValidatorInfo } from '@/app/utils/interface';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import ValidatorOptions from '../widgets/validator_options';
-import { ValidatorInfo } from '@/app/state';
 
 type UndelegateDialogButtonProps = {
     vault_address: string,
@@ -72,7 +71,7 @@ function UndelegateDialog({ vault_address, currency, is_open, on_close }: Compon
 
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={handle_modal_closed}>
+            <Dialog as="div" className="relative z-30" onClose={handle_modal_closed}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -97,7 +96,7 @@ function UndelegateDialog({ vault_address, currency, is_open, on_close }: Compon
                             leaveTo="opacity-0 scale-95">
                             <Dialog.Panel className={classNames({
                                 "bg-slate-800": true,
-                                "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                 "transform transition-all": true
                             })}>
                                 <Dialog.Title

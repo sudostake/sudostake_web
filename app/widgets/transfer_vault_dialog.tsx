@@ -29,7 +29,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
             </button>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={closeModal}>
+                <Dialog as="div" className="relative z-30" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -54,7 +54,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
                                     "bg-slate-800": true,
-                                    "w-full max-w-xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                    "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
                                     "transform transition-all": true
                                 })}>
                                     <Dialog.Title

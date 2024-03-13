@@ -38,15 +38,15 @@ export default function CurrencyOptions({ onOptionSelected }: ComponentProps) {
             <span role="button" onClick={() => setIsOpen(!isOpen)} className={`fixed inset-0 ${isOpen ? '' : 'hidden'}`} />
 
             <div className={classNames({
-                "z-10 absolute right-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-md shadow-lg": true,
+                "absolute right-0 mt-2 w-56 origin-top-right divide-y divide-current divide-opacity-5 rounded-md shadow-lg": true,
                 "bg-white dark:bg-gray-900": true,
                 "ring-1 ring-current ring-opacity-5 focus:outline-none": true,
                 "hidden": !isOpen
             })}>
 
-                {[chainInfo.request_denoms[0]].map((currency, index) => {
+                {[chainInfo.request_denoms[0]].map((currency) => {
                     return (
-                        <div key={index} className="px-1 py-1">
+                        <div key={currency.coinMinimalDenom} className="px-1 py-1">
                             <button onClick={() => { handle_click(currency) }} className='group flex w-full items-center p-2 text-xs lg:text-sm'>
                                 {currency.coinDenom}
                             </button>

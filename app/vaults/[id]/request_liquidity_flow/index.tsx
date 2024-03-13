@@ -11,6 +11,7 @@ import { useRequestLiquidity } from '@/app/hooks/use_exec';
 import { convertDenomToMicroDenom } from '@/app/utils/conversion';
 import { SECONDS_IN_A_DAY } from '@/app/utils/constants';
 import CurrencyOptions from './widgets/currency_options';
+import Image from 'next/image';
 
 const liquidityRequestOptions: RequestOption[] = [
     {
@@ -136,12 +137,26 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
 
     return (
         <>
-            <div role="button" onClick={() => setIsOpen(true)} className="p-8 rounded-lg text-sm lg:text-base lg:font-medium border border-zinc-400 text-center hover:ring-1 hover:ring-offset-1">
-                Borrow $USDC
+            <div role="button" onClick={() => setIsOpen(true)}
+                className={classNames({
+                    "p-8 rounded-lg  border border-zinc-400 hover:ring-1 hover:ring-offset-1": true,
+                    "text-base lg:font-medium text-center": true,
+                    "flex flex-row gap-4 items-center": true
+                })}
+            >
+                <span>Request Liquidity</span>
+                <Image
+                    src="https://raw.githubusercontent.com/cosmostation/chainlist/master/chain/noble/asset/usdc.png"
+                    alt="logo"
+                    className="rounded-full ml-auto"
+                    width={32}
+                    height={32}
+                    priority
+                />
             </div>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={() => setIsOpen(false)}>
+                <Dialog as="div" className="relative z-30" onClose={() => setIsOpen(false)}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -165,7 +180,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                 leaveFrom="opacity-100 scale-100"
                                 leaveTo="opacity-0 scale-95">
                                 <Dialog.Panel className={classNames({
-                                    "bg-slate-800 fixed w-full max-w-xl": true,
+                                    "bg-slate-800 fixed w-full max-w-3xl": true,
                                     "lg:rounded-lg text-left align-middle shadow-lg": true,
                                     "transform transition-all": true,
                                     "h-full lg:h-max": true
@@ -325,7 +340,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                             }
                                         </span>
 
-                                        <div className="flex flex-row gap-8 w-full justify-end mt-auto border-t border-slate-500 p-4 lg:p-8 h-20 text-gray-300">
+                                        <div className="flex flex-row gap-8 w-full justify-between mt-auto border-t border-slate-500 p-4 lg:p-8 h-20 text-gray-300">
                                             <button
                                                 onClick={() => { setStepHistory(0) }}>
                                                 <span>Back</span>
