@@ -132,7 +132,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
     const vault_details_view = () =>
-        <div className="flex flex-col p-4 lg:p-8">
+        <div className="flex flex-col px-4 py-8">
             <span className="flex flex-row justify-between w-full pb-4">
                 <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                     <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
@@ -236,13 +236,21 @@ export default function Vault({ params }: { params: { id: string } }) {
                 "flex flex-col": true
             }
         )}>
+            {vault_metadata &&
+                <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
+                    <span>
+                        Vault #{vault_info.index_number}
+                    </span>
+                </div>
+            }
+
             {
                 vault_metadata && status === WalletStatusTypes.connected &&
                 <>
                     {vault_details_view()}
 
                     {is_owner && vault_info && vault_info.liquidity_request_status === 'idle' &&
-                        <span className="py-20 px-4 lg:px-8">
+                        <span className="px-4 py-8">
                             <RequestLiquidityFlow
                                 vault_address={params.id}
                                 from_code_id={vault_info.from_code_id} />

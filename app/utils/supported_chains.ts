@@ -2,109 +2,108 @@ import { coin } from "@cosmjs/stargate";
 import { KeplrChainInfoSchema, LiquidityRequestTypes, SudoStakeChainInfoSchema, VaultVersion } from "./interface";
 
 const ArchwayTestNetKeplrConfig: KeplrChainInfoSchema = {
-    "bech32Config": {
-        "bech32PrefixAccAddr": "archway",
-        "bech32PrefixAccPub": "archwaypub",
-        "bech32PrefixConsAddr": "archwayvalcons",
-        "bech32PrefixConsPub": "archwayvalconspub",
-        "bech32PrefixValAddr": "archwayvaloper",
-        "bech32PrefixValPub": "archwayvaloperpub"
+    chainId: "constantine-3",
+    chainName: "Testnet",
+    chainSymbolImageUrl: "/archway.png",
+    stakeCurrency: {
+        coinDecimals: 18,
+        coinDenom: "CONST",
+        coinGeckoId: "constantine-network",
+        coinMinimalDenom: "aconst",
+        coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
     },
-    "bip44": {
-        "coinType": 118
-    },
-    "chainId": "constantine-3",
-    "chainName": "Testnet",
-    "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/constantine/chain.png",
-    "currencies": [
+    currencies: [
         {
-            "coinDecimals": 18,
-            "coinDenom": "CONST",
-            "coinGeckoId": "constantine-network",
-            "coinMinimalDenom": "aconst"
+            coinDecimals: 18,
+            coinDenom: "CONST",
+            coinGeckoId: "constantine-network",
+            coinMinimalDenom: "aconst",
+            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
         }
     ],
-    "features": ["cosmwasm"],
-    "feeCurrencies": [
+    feeCurrencies: [
         {
-            "coinDecimals": 18,
-            "coinDenom": "CONST",
-            "coinGeckoId": "constantine-network",
-            "coinMinimalDenom": "aconst",
-            "gasPriceStep": {
-                "low": 1000000000000,
-                "average": 1500000000000,
-                "high": 2000000000000
-            }
+            coinDecimals: 18,
+            coinDenom: "CONST",
+            coinGeckoId: "constantine-network",
+            coinMinimalDenom: "aconst",
+            gasPriceStep: {
+                low: 1000000000000,
+                average: 1500000000000,
+                high: 2000000000000
+            },
+            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
         }
     ],
-    "rest": "https://api.constantine.archway.io",
-    "rpc": "https://rpc.constantine.archway.io",
-    "stakeCurrency": {
-        "coinDecimals": 18,
-        "coinDenom": "CONST",
-        "coinGeckoId": "constantine-network",
-        "coinMinimalDenom": "aconst"
+    bech32Config: {
+        bech32PrefixAccAddr: "archway",
+        bech32PrefixAccPub: "archwaypub",
+        bech32PrefixConsAddr: "archwayvalcons",
+        bech32PrefixConsPub: "archwayvalconspub",
+        bech32PrefixValAddr: "archwayvaloper",
+        bech32PrefixValPub: "archwayvaloperpub"
     },
-    "nodeProvider": {
-        "name": "Phi Labs",
-        "email": "support@philabs.xyz",
-        "website": "https://philabs.xyz"
+    bip44: { coinType: 118 },
+    features: ["cosmwasm"],
+    rest: "https://api.constantine.archway.io",
+    rpc: "https://rpc.constantine.archway.io",
+    nodeProvider: {
+        name: "Phi Labs",
+        email: "support@philabs.xyz",
+        website: "https://philabs.xyz"
     }
 };
 
 const ArchwayMainnetKeplrConfig: KeplrChainInfoSchema = {
-    "bech32Config": {
-        "bech32PrefixAccAddr": "archway",
-        "bech32PrefixAccPub": "archwaypub",
-        "bech32PrefixConsAddr": "archwayvalcons",
-        "bech32PrefixConsPub": "archwayvalconspub",
-        "bech32PrefixValAddr": "archwayvaloper",
-        "bech32PrefixValPub": "archwayvaloperpub"
+    chainId: "archway-1",
+    chainName: "Mainnet",
+    chainSymbolImageUrl: "/archway.png",
+    stakeCurrency: {
+        coinDecimals: 18,
+        coinDenom: "ARCH",
+        coinGeckoId: "archway",
+        coinMinimalDenom: "aarch",
+        coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
     },
-    "bip44": {
-        "coinType": 118
-    },
-    "chainId": "archway-1",
-    "chainName": "Mainnet",
-    "chainSymbolImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/chain.png",
-    "currencies": [
+    currencies: [
         {
-            "coinDecimals": 18,
-            "coinDenom": "ARCH",
-            "coinGeckoId": "archway",
-            "coinMinimalDenom": "aarch",
-            "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+            coinDecimals: 18,
+            coinDenom: "ARCH",
+            coinGeckoId: "archway",
+            coinMinimalDenom: "aarch",
+            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
         }
     ],
-    "features": ["cosmwasm"],
-    "feeCurrencies": [
+    feeCurrencies: [
         {
-            "coinDecimals": 18,
-            "coinDenom": "ARCH",
-            "coinGeckoId": "archway",
-            "coinMinimalDenom": "aarch",
-            "gasPriceStep": {
-                "low": 1000000000000,
-                "average": 1500000000000,
-                "high": 2000000000000
+            coinDecimals: 18,
+            coinDenom: "ARCH",
+            coinGeckoId: "archway",
+            coinMinimalDenom: "aarch",
+            gasPriceStep: {
+                low: 1000000000000,
+                average: 1500000000000,
+                high: 2000000000000
             },
-            "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
         }
     ],
-    "rest": "https://api.mainnet.archway.io",
-    "rpc": "https://rpc.mainnet.archway.io",
-    "stakeCurrency": {
-        "coinDecimals": 18,
-        "coinDenom": "ARCH",
-        "coinGeckoId": "archway",
-        "coinMinimalDenom": "aarch",
-        "coinImageUrl": "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
+    bech32Config: {
+        bech32PrefixAccAddr: "archway",
+        bech32PrefixAccPub: "archwaypub",
+        bech32PrefixConsAddr: "archwayvalcons",
+        bech32PrefixConsPub: "archwayvalconspub",
+        bech32PrefixValAddr: "archwayvaloper",
+        bech32PrefixValPub: "archwayvaloperpub"
     },
-    "nodeProvider": {
-        "name": "Phi Labs",
-        "email": "support@philabs.xyz",
-        "website": "https://philabs.xyz"
+    bip44: { coinType: 118 },
+    features: ["cosmwasm"],
+    rest: "https://api.mainnet.archway.io",
+    rpc: "https://rpc.mainnet.archway.io",
+    nodeProvider: {
+        name: "Phi Labs",
+        email: "support@philabs.xyz",
+        website: "https://philabs.xyz"
     }
 };
 
@@ -154,12 +153,14 @@ const archway_constantine_3 = {
             coinMinimalDenom: 'aconst',
             coinDecimals: 18,
             coinGeckoId: "constantine-network",
+            coinImageUrl: '/archway.png'
         },
         {
             coinDenom: 'USDC',
             coinMinimalDenom: 'ibc/usdc',
             coinDecimals: 18,
             coinGeckoId: "",
+            coinImageUrl: '/usdc.png'
         }
     ],
     vault_collection_path: 'vaults',
@@ -196,18 +197,21 @@ const archway_mainnet = {
             coinMinimalDenom: 'ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D',
             coinDecimals: 6,
             coinGeckoId: "",
+            coinImageUrl: '/usdc.png'
         },
         {
             coinDenom: 'ARCH',
             coinMinimalDenom: 'aarch',
             coinDecimals: 18,
             coinGeckoId: "archway",
+            coinImageUrl: '/archway.png'
         },
         {
             coinDenom: 'USDC(DEPRECATED)',
             coinMinimalDenom: 'ibc/usdc',
             coinDecimals: 18,
             coinGeckoId: "",
+            coinImageUrl: '/usdc.png'
         }
     ],
     vault_collection_path: 'archway_mainnet_vaults',

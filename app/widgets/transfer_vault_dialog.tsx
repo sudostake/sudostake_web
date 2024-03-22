@@ -24,9 +24,9 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
 
     return (
         <>
-            <button type="button" onClick={openModal} className="flex items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium py-2 px-8">
+            <span role="button" onClick={openModal} className='w-full'>
                 Transfer
-            </button>
+            </span>
 
             <Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-30" onClose={closeModal}>

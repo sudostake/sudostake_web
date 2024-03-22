@@ -49,12 +49,12 @@ export type Currency = {
     coinDenom: string,
     coinGeckoId: string,
     coinMinimalDenom: string,
+    coinImageUrl: string,
     gasPriceStep?: {
         low: number,
         average: number,
         high: number
     },
-    coinImageUrl?: string,
 };
 
 export type KeplrChainInfoSchema = {

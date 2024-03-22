@@ -5,11 +5,14 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 
 type ComponentProps = {
-    address: string
+    address: string,
+    label?: string,
+    size?: 'min' | 'max'
 }
 
-export default function ClipBoardButton({ address }: ComponentProps) {
+export default function ClipBoardButton({ address, label, size = 'max' }: ComponentProps) {
     const [isCopied, setIsCopied] = useState(false);
+    const isMax = size === 'max';
     async function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
             return await navigator.clipboard.writeText(text);
@@ -33,9 +36,12 @@ export default function ClipBoardButton({ address }: ComponentProps) {
     }
 
     return (
-        <button className="flex items-center justify-center w-9 h-9 rounded-full border border-transparent hover:border-zinc-400" onClick={() => handleCopyClick()}>
-            {!isCopied && <FaClipboard className="w-4 h-4" />}
-            {isCopied && <FaClipboardCheck className="w-4 h-4" />}
-        </button>
+        <span className="w-full flex flex-row items-center justify-between gap-4" role="button" onClick={handleCopyClick}>
+            {label}
+            <>
+                {!isCopied && <FaClipboard className={`w-${isMax ? 5 : 4} h-${isMax ? 5 : 4}`} />}
+                {isCopied && <FaClipboardCheck className={`w-${isMax ? 5 : 4} h-${isMax ? 5 : 4}`} />}
+            </>
+        </span>
     )
 }

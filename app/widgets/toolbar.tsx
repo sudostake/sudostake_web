@@ -83,7 +83,7 @@ export default function ToolBar() {
 
             {
                 status === WalletStatusTypes.connected && chainInfo &&
-                <div className="h-20 flex items-center px-4 max-sm:grow">
+                <div className="h-20 flex flex-row gap-2 items-center max-sm:grow max-sm:pl-4">
                     <Image
                         src={wallet_logo_url}
                         alt="wallet logo"
@@ -92,11 +92,20 @@ export default function ToolBar() {
                         priority
                         className="rounded-full"
                     />
-                    <span className="text-sm lg:text-base font-medium ml-2">{name.toUpperCase()}</span>
-                    <span className="">
-                        <ClipBoardButton address={address} />
+
+                    <span className=''>
+                        <ClipBoardButton label={name} address={address} size='min' />
                     </span>
-                    <span className="flex justify-center rounded-full ml-8 max-sm:ml-auto">
+
+                    <span
+                        className={
+                            classNames(
+                                "flex justify-center ml-8 max-sm:ml-auto ",
+                                "border-l border-zinc-300 dark:border-zinc-700",
+                                "h-20 w-20"
+                            )
+                        }
+                    >
                         <button onClick={() => resetWalletConnection()}> <FaSignOutAlt className="w-5 h-5" /></button>
                     </span>
                 </div>

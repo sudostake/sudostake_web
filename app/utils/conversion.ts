@@ -62,3 +62,22 @@ export function secondsToDhms(date: Date): string | 'EXPIRED' {
 
   return dDisplay + hDisplay + mDisplay + sDisplay
 }
+
+// TODO format_for_diaplay()
+// 0-999 > to 1 decimal precision, 999.9       , Divisor=1
+// 1K - 999K > to 1 decimal precision, 999.9K  , Divisor=1,000
+// 1M - 999M > to 1 decimal precision, 999.9M  , Divisor=1,000,000
+// IB - 999B > to 1 decimal precision, 999.9B  , Divisor=1,000,000,000
+// >= 1T === ∞
+export function format_for_diaplay(value: number): string {
+  if (value < 1000) {
+    return value.toFixed(1);
+  } else if (value < 1000000) {
+    return `${(value / 1000).toFixed(1)}K`;
+  } else if (value < 1000000000) {
+    return `${(value / 1000000).toFixed(1)}M`;
+  } else if (value < 1000000000000) {
+    return `${(value/1000000000).toFixed(1)}B`;
+  }
+  return '∞';
+}

@@ -13,7 +13,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
     const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
 
     return (
-        <table className="table-fixed caption-top text-sm text-left">
+        <table className="w-full table-fixed caption-top text-sm text-left">
             <tbody>
                 <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">

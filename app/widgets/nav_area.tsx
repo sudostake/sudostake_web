@@ -109,24 +109,6 @@ export default function NavigationArea() {
                     );
                 })}
 
-                <Link key="History" href={address && chainInfo && (`${chainInfo.explorer_url}/account/${address}`)} passHref className={
-                    classNames(
-                        "min-w-36 w-full",
-                        "flex items-center",
-                        "sm:px-4 sm:py-2",
-                    )
-                }>
-                    <span className={
-                        classNames(
-                            "flex items-center w-full max-sm:justify-center rounded-lg p-4",
-                            "sm:hover:shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900",
-                        )
-                    }>
-                        <span>History</span>
-                        <span className="ml-auto max-sm:hidden"><FaLink className="w-4 h-4" /></span>
-                    </span>
-                </Link>
-
                 <span className={
                     classNames(
                         "sm:mt-auto",
