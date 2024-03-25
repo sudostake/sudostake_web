@@ -148,20 +148,19 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
     return (
         <div className={
             classNames(
-                "fixed z-19 left-0 top-20  h-20 w-full",
+                "h-20 w-full px-4 sticky top-0",
                 "flex flex-row items-center justify-between",
-                "bg-opacity-80 backdrop-blur-lg",
-                "max-sm:pl-4 sm:pl-60 pr-4",
+                "bg-opacity-80 backdrop-blur-xs",
                 "border-b border-zinc-200 dark:border-zinc-800"
             )
         }>
             <SortOptions on_select={handle_select_sort_option} />
 
-            <span className='flex items-center flex-row'>
+            <span className='flex items-center flex-row gap-4'>
                 <button disabled={newer_docs.length === 0}
                     onClick={onPrev}
                     className={classNames({
-                        'flex items-center flex-row gap-2 border border-zinc-400 dark:border-zinc-600 rounded-l-lg p-2': true,
+                        'flex items-center flex-row gap-2': true,
                         'hover:ring-1 hover:ring-offset-1': newer_docs.length > 0,
                         'cursor-not-allowed': newer_docs.length === 0,
                         'opacity-40': newer_docs.length === 0
@@ -176,7 +175,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
                 <button disabled={older_docs.length === 0}
                     onClick={onNext}
                     className={classNames({
-                        'flex items-center flex-row gap-2 border border-zinc-400 dark:border-zinc-600 rounded-r-lg p-2': true,
+                        'flex items-center flex-row gap-2': true,
                         'hover:ring-1 hover:ring-offset-1': older_docs.length > 0,
                         'cursor-not-allowed': older_docs.length === 0,
                         'opacity-40': older_docs.length === 0

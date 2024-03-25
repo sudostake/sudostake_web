@@ -132,7 +132,7 @@ export default function Vault({ params }: { params: { id: string } }) {
     }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
 
     const vault_details_view = () =>
-        <div className="flex flex-col px-4 py-8">
+        <div className="flex flex-col p-4">
             <span className="flex flex-row justify-between w-full pb-4">
                 <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
                     <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
@@ -258,8 +258,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                     }
 
                     {vault_info && vault_info.liquidity_request_status === 'pending' &&
-                        <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 px-4 lg:px-8 font-medium py-4">
+                        <div className="flex flex-col w-full">
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 p-4 font-medium">
                                 <span>Option Details</span>
                                 {
                                     is_owner &&
@@ -302,7 +302,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 }
                             </h2>
 
-                            <div className="flex flex-col w-full px-4 lg:px-8 mt-4">
+                            <div className="flex flex-col w-full p-4">
                                 <PendingLiquidityRequestInfo vault_info={vault_info} show_tvl={false} />
                             </div>
                         </div>
@@ -332,7 +332,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 }
                             </h2>
 
-                            <div className="flex flex-col w-full px-4 lg:px-8 mt-4">
+                            <div className="flex flex-col w-full p-4">
                                 <ActiveLiquidityRequestInfo vault_info={vault_info} />
                             </div>
 
@@ -340,7 +340,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                                 has_expired_fixed_term_loan &&
                                 <div className={classNames({
                                     "flex flex-col": true,
-                                    "mt-8 px-4 lg:px-8": true,
+                                    "p-4": true,
                                 })}>
                                     <div className="text-red-500">
                                         {`Your option has expired and ${is_owner ? 'you' : 'the vault owner'} did not repay the principal + interest to ${is_owner ? 'the lender' : 'you'}.`}

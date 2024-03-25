@@ -52,7 +52,7 @@ export default function Home() {
   }, [address, status, setActiveLendingVaults, chainInfo]);
 
   return (
-    <div className="h-full w-full overflow-y-auto py-20 flex flex-col">
+    <div className="h-full overflow-y-auto py-20 flex flex-col">
       {
         status === WalletStatusTypes.connected &&
         <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8 text-3xl font-bold">
@@ -120,7 +120,7 @@ export default function Home() {
             return (
               <span key={vault.id} className={
                 classNames({
-                  "py-4 px-4 lg:px-8": true,
+                  "p-4": true,
                   "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-700": true,
                   "md:max-lg:border-r": index % 2 === 0,
@@ -145,7 +145,7 @@ export default function Home() {
             return (
               <div key={vault.id} className={
                 classNames({
-                  "py-4 px-4 lg:px-8": true,
+                  "p-4": true,
                   "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-700": true,
                   "md:max-lg:border-r": index % 2 === 0,
@@ -184,7 +184,7 @@ export default function Home() {
       {
         status === WalletStatusTypes.connected && selected_tab === 2 &&
         active_lending_vaults.length === 0 &&
-        <div className="mt-8 px-4 lg:px-8">
+        <div className="px-4">
           <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
             No accepted deals yet. <br />
             <span className=" text-blue-600">

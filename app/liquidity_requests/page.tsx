@@ -13,7 +13,7 @@ export default function LiquidityRequests() {
   const vault_deals_list_ref = useRef(null);
 
   return (
-    <div className='flex flex-col h-full overflow-y-auto pb-20 pt-40'>
+    <div className='h-full overflow-y-auto no-scrollbar py-20 flex flex-col'>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
         <span>
           Vault Deals
@@ -32,7 +32,7 @@ export default function LiquidityRequests() {
                   onClick={() => { router.push(`/vaults/${vault.id}`) }}
                   className={classNames({
                     "flex flex-col": true,
-                    "w-full py-4 px-4 lg:px-8": true,
+                    "w-full p-4": true,
                     "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                     "border-t border-zinc-300 dark:border-zinc-600": true,
                     "md:max-lg:border-r": index % 2 === 0,

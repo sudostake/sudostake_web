@@ -30,8 +30,6 @@ const nav_items: NavItem[] = [
 
 export default function NavigationArea() {
     const pathname = usePathname();
-    const chainInfo = useRecoilValue(selectedChainState);
-    const { address } = useRecoilValue(walletState);
 
     return (
         <div className={
@@ -45,7 +43,7 @@ export default function NavigationArea() {
                 "sm:inset-y-0 sm:left-0",
                 "sm:border-r",
                 "sm:w-56",
-                "bg-opacity-80 backdrop-blur-lg"
+                "bg-opacity-80 backdrop-blur-xs"
             )
         }>
             <div
@@ -99,7 +97,8 @@ export default function NavigationArea() {
                                     "flex w-full max-sm:justify-center rounded-lg p-4",
                                     "sm:hover:shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] dark:sm:hover:bg-zinc-900",
                                     {
-                                        "shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] max-sm:bg-zinc-200 dark:bg-zinc-800": nav_item.href === pathname
+                                        "shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] max-sm:bg-zinc-200 dark:bg-zinc-800":
+                                            nav_item.href === pathname
                                     },
                                 )
                             }>
