@@ -13,7 +13,7 @@ export default function LiquidityRequests() {
   const vault_deals_list_ref = useRef(null);
 
   return (
-    <div className='h-full overflow-y-auto no-scrollbar py-20 flex flex-col'>
+    <div className='h-full overflow-y-auto no-scrollbar py-20 flex flex-col' ref={vault_deals_list_ref}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
         <span>
           Vault Deals
@@ -22,7 +22,7 @@ export default function LiquidityRequests() {
 
       <VaultDealsToolbar on_data={setVaults} list_ref={vault_deals_list_ref} />
 
-      <div ref={vault_deals_list_ref} className="flex-grow text-sm lg:text-base">
+      <div className="flex-grow">
         {
           vaults.length > 0 &&
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
