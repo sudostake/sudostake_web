@@ -29,7 +29,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
     const chainInfo = useRecoilValue(selectedChainState);
 
     // Define params for data pagination
-    const page_size = 4;
+    const page_size = 12;
     const [newer_docs, setNewerDocs] = useState<DocumentSnapshot<DocumentData>[]>([]);
     const [current_docs, setCurrentDocs] = useState<DocumentSnapshot<DocumentData>[]>([]);
     const [older_docs, setOlderDocs] = useState<DocumentSnapshot<DocumentData>[]>([]);
