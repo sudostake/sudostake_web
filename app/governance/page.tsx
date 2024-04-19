@@ -9,25 +9,34 @@ export default function Governance() {
   const { active_proposals } = useQueryActiveProposals();
 
   return (
-    <div className="h-full w-full overflow-y-scroll text-sm lg:text-base py-8 px-2 lg:px-8">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-        {active_proposals.map((proposal) => {
+    <div className="h-full overflow-y-auto py-20 flex flex-col">
+      <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
+        <span>
+          Active Proposals
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {active_proposals.map((proposal, index) => {
           return (
-            <div key={proposal.proposal_id} className={
-              classNames({
-                "w-full p-4 rounded-lg grid grid-cols-1 gap-8": true,
-                "border border-zinc-400 dark:border-zinc-600": true,
-              })
-            }>
+            <div key={proposal.proposal_id}
+              className={classNames({
+                "flex flex-col gap-4": true,
+                "w-full p-4": true,
+                "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                "border-t border-zinc-300 dark:border-zinc-600": true,
+                "md:max-lg:border-r": index % 2 === 0,
+                "md:max-lg:border-b": active_proposals.length <= 2 || index >= active_proposals.length - 2,
+                "lg:border-r": (index + 1) % 3 !== 0,
+                "lg:border-b": active_proposals.length <= 3 || index >= active_proposals.length - 3,
+                "max-sm:border-b": index === active_proposals.length - 1,
+              })}>
               <span className="flex items-center">
-                <span>Proposal ID</span>
-                <span className="ml-auto">
-                  #{proposal.proposal_id}
-                </span>
+                <span>Proposal  #{proposal.id}</span>
               </span>
 
               <span className="flex items-center">
-                {proposal.content.title}
+                {proposal.title}
               </span>
 
               <VoteOnProposalFlow proposal={proposal} />

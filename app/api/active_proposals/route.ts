@@ -18,14 +18,15 @@ export async function GET(req: NextRequest) {
         // How to query for only proposals with status PROPOSAL_STATUS_VOTING_PERIOD
         const api = [
             chain_info.src.rest,
-            '/cosmos/gov/v1beta1/proposals?pagination.reverse=true&pagination.limit=10',
+            '/cosmos/gov/v1/proposals?pagination.reverse=true&pagination.limit=10',
         ].join('');
         const response = await fetch(api, {
             method: "GET",
         });
         const data = await response.json();
-        const active_props = data.proposals.filter(d => d.status === 'PROPOSAL_STATUS_VOTING_PERIOD')
-        return NextResponse.json(active_props)
+        const active_proposals = data.proposals.filter(d => d.status === 'PROPOSAL_STATUS_VOTING_PERIOD');
+        console.log(active_proposals);
+        return NextResponse.json(active_proposals)
     } catch (e) {
         return new Response(e, {
             status: 400,

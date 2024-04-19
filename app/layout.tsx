@@ -1,5 +1,4 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
 import { Providers } from './providers';
 import ToolBar from './widgets/toolbar';
 import { StrictMode, Suspense } from 'react';
@@ -7,7 +6,6 @@ import Loading from './loading';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FailedVaultIndexHandler from './widgets/vault_index_handler';
-import classNames from 'classnames';
 import NavigationArea from './widgets/nav_area';
 
 export const metadata = {
@@ -23,14 +21,14 @@ export default function RootLayout({
   vault_info_modal: React.ReactNode,
 }) {
   return (
-    <html lang="en">
-      <body suppressHydrationWarning={true}>
+    <html lang="en" className='overscroll-contain'>
+      <body suppressHydrationWarning={true} className='overscroll-contain'>
         <StrictMode>
           <Providers>
             <ToolBar />
             <NavigationArea />
 
-            <div className="h-screen sm:pl-56 bg-white dark:bg-zinc-950">
+            <div className="h-screen sm:pl-56 bg-white dark:bg-zinc-950 overscroll-contain">
               <Suspense fallback={<Loading />}>
                 <>
                   {children}

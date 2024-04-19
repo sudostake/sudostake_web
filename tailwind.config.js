@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backdropBlur: {
-        xs: '1px',
+        xs: '2px',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

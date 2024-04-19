@@ -87,7 +87,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
 
                     <div className={
                         classNames({
-                            "flex flex-col h-full absolute inset-0": true,
+                            "flex flex-col h-full absolute inset-0 z-30": true,
                             "bg-white dark:bg-zinc-950": true,
                             "shadow-lg shadow-zinc-300 dark:shadow-black": true,
                             "lg:border border-zinc-300 dark:lg:border-zinc-800": true,
@@ -105,7 +105,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 </div>
                                 <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                     <Markdown>
-                                        {proposal.content.description}
+                                        {proposal.summary}
                                     </Markdown>
                                 </div>
                                 <div className='flex flex-row items-center p-8 h-20'>

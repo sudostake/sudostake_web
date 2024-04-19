@@ -70,14 +70,17 @@ export default function PendingLiquidityRequestInfo({ vault_info, show_tvl }: Co
                     </td>
                 </tr>
 
-                <tr>
-                    <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                        <span>Comission</span>
-                    </th>
-                    <td className="py-4 text-right">
-                        0.3% <span>({(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom})</span>
-                    </td>
-                </tr>
+                {
+                    !show_tvl &&
+                    <tr>
+                        <th scope="row" className="py-4 font-medium whitespace-nowrap">
+                            <span>Comission</span>
+                        </th>
+                        <td className="py-4 text-right">
+                            0.3% <span>({(0.003 * vault_info.requested_amount.amount).toLocaleString('en-us')} {request_currency.coinDenom})</span>
+                        </td>
+                    </tr>
+                }
 
                 {
                     vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&

@@ -2,7 +2,6 @@
 
 import { FaClipboard, FaClipboardCheck } from "react-icons/fa"
 import { useState } from "react";
-import { toast } from "react-toastify";
 
 type ComponentProps = {
     address: string,
@@ -13,7 +12,8 @@ type ComponentProps = {
 export default function ClipBoardButton({ address, label, size = 'max' }: ComponentProps) {
     const [isCopied, setIsCopied] = useState(false);
     const isMax = size === 'max';
-    async function copyTextToClipboard(text) {
+
+    async function copyTextToClipboard(text: string) {
         if ('clipboard' in navigator) {
             return await navigator.clipboard.writeText(text);
         } else {
@@ -24,7 +24,6 @@ export default function ClipBoardButton({ address, label, size = 'max' }: Compon
     const handleCopyClick = () => {
         copyTextToClipboard(address)
             .then(() => {
-                toast(`Address copied`, { type: 'success' });
                 setIsCopied(true);
                 setTimeout(() => {
                     setIsCopied(false);
@@ -36,7 +35,8 @@ export default function ClipBoardButton({ address, label, size = 'max' }: Compon
     }
 
     return (
-        <span className="w-full flex flex-row items-center justify-between gap-4" role="button" onClick={handleCopyClick}>
+        <span className="w-full flex flex-row items-center justify-between gap-4"
+            role="button" onClick={handleCopyClick}>
             {label}
             <>
                 {!isCopied && <FaClipboard className={`w-${isMax ? 5 : 4} h-${isMax ? 5 : 4}`} />}
