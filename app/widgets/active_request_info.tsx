@@ -17,7 +17,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
             <tbody>
                 <tr>
                     <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                        <span className="font-medium">Option Type</span>
+                        <span className="font-medium">Open</span>
                     </th>
                     <td className="py-4 text-right">
                         <span>{vault_info.request_type.split('_').map(d => d.toUpperCase()).join(' ')}</span>

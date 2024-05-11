@@ -303,7 +303,7 @@ export default function Vault({ params }: { params: { id: string } }) {
                             </h2>
 
                             <div className="flex flex-col w-full p-4">
-                                <PendingLiquidityRequestInfo vault_info={vault_info} show_tvl={false} />
+                                <PendingLiquidityRequestInfo vault_info={vault_info} />
                             </div>
                         </div>
                     }

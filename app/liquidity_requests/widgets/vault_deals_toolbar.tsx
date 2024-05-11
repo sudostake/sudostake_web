@@ -167,7 +167,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
                     })}
                 >
                     <FaChevronLeft className="w-4 h-4" />
-                    <span className='text-xs lg:text-base font-medium'>
+                    <span className='font-medium'>
                         {selected_sort_option && selected_sort_option.prev_label}
                     </span>
                 </button>
@@ -181,7 +181,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
                         'opacity-40': older_docs.length === 0
                     })}
                 >
-                    <span className='text-xs lg:text-base font-medium'>
+                    <span className='font-medium'>
                         {selected_sort_option && selected_sort_option.next_label}
                     </span>
                     <FaChevronRight className="w-4 h-4" />

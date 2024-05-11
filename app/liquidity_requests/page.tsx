@@ -1,16 +1,19 @@
 'use client'
 
 import { useRef, useState } from 'react';
-import PendingLiquidityRequestInfo from '../widgets/pending_request_info';
 import { useRouter } from 'next/navigation';
-import { VaultIndex } from '../utils/interface';
+import { LiquidityRequestTypes, VaultIndex } from '../utils/interface';
 import VaultDealsToolbar from './widgets/vault_deals_toolbar';
 import classNames from 'classnames';
+import { useRecoilValue } from 'recoil';
+import { selectedChainState } from '../state';
+import { format_duration } from '../utils/conversion';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
   const router = useRouter();
   const vault_deals_list_ref = useRef(null);
+  const chainInfo = useRecoilValue(selectedChainState);
 
   return (
     <div className='h-full overflow-y-auto no-scrollbar py-20 flex flex-col' ref={vault_deals_list_ref}>
@@ -27,6 +30,11 @@ export default function LiquidityRequests() {
           vaults.length > 0 &&
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {vaults.map((vault, index) => {
+              const formatted_duration = (vault.request_type !== LiquidityRequestTypes.fixed_interest_rental &&
+                format_duration(vault.duration_in_seconds)
+              )
+              const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === vault.requested_amount.denom);
+
               return (
                 <div key={vault.id} role="button"
                   onClick={() => { router.push(`/vaults/${vault.id}`) }}
@@ -41,10 +49,46 @@ export default function LiquidityRequests() {
                     "lg:border-b": vaults.length <= 3 || index >= vaults.length - 3,
                     "max-sm:border-b": index === vaults.length - 1,
                   })}>
-                  <span>
-                    #{vault.index_number}
-                  </span>
-                  <PendingLiquidityRequestInfo vault_info={vault} show_tvl={true} />
+                  <span>Vault #{vault.index_number}</span>
+                  <span>Total amount staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                  <span className='py-4'></span>
+                  {
+                    vault.request_type === LiquidityRequestTypes.fixed_interest_rental &&
+                    <>
+                      <span className='text-green-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      </span>
+                      <span className=''>Claim {vault.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom} in staking rewards.</span>
+                      {
+                        vault.can_cast_vote &&
+                        <span className='italic'>(Includes Voting Rights)</span>
+                      }
+                    </>
+                  }
+                  {
+                    vault.request_type === LiquidityRequestTypes.fixed_term_rental &&
+                    <>
+                      <span className='text-blue-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      </span>
+                      <span className=''>Claim all staking rewards for {formatted_duration}.</span>
+                      {
+                        vault.can_cast_vote &&
+                        <span className='italic'>(Includes Voting Rights)</span>
+                      }
+                    </>
+                  }
+                  {
+                    vault.request_type === LiquidityRequestTypes.fixed_term_loan &&
+                    <>
+                      <span className='text-red-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      </span>
+                      <span className=''>Get {(vault.requested_amount.amount + vault.interest_amount).toLocaleString('en-us')} {request_currency.coinDenom} in return or liquidate {vault.collateral_amount.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom} after {formatted_duration}.</span>
+                    </>
+                  }
+                  <span className='py-4 mb-auto'></span>
+                  <span>Cost: {vault.requested_amount.amount.toLocaleString('en-us')} {request_currency.coinDenom}</span>
                 </div>
               );
             })}

@@ -1,4 +1,4 @@
-import { MAX_DECIMALS_PRECISION } from "./constants";
+import { MAX_DECIMALS_PRECISION, SECONDS_IN_A_DAY } from "./constants";
 
 export const protectAgainstNaN = (value: number) => (isNaN(value) ? 0 : value)
 
@@ -80,4 +80,11 @@ export function format_for_diaplay(value: number): string {
     return `${(value/1000000000).toFixed(1)}B`;
   }
   return '∞';
+}
+
+
+// Calculate duration for fixed term rental options
+export function format_duration(duration_in_seconds: number): string {
+  const days = Math.round(duration_in_seconds / SECONDS_IN_A_DAY)
+  return `${days} ${days > 1 ? 'days' : 'day'}`
 }
