@@ -118,6 +118,7 @@ export const useVoteOnProposal = (proposal_id: string) => {
             toast(`Voted successfully`, { type: 'success' });
         },
         onError(e) {
+            console.log(e);
             toast("Error voting", { type: 'error' })
         }
     });

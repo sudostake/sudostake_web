@@ -19,7 +19,7 @@ export default function Governance() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {active_proposals.map((proposal, index) => {
           return (
-            <div key={proposal.proposal_id}
+            <div key={proposal.id}
               className={classNames({
                 "flex flex-col gap-4": true,
                 "w-full p-4": true,

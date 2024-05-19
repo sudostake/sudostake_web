@@ -19,14 +19,11 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [step_history, setStepHistory] = useState<number>(0);
     const [selected_vote_option, setSelectedVoteOption] = useState<Decision>(null);
-
     const [selected_vaults_map, setSelectedVaults] = useState<IObjectMap<VotingVault>>({});
     const can_vote = Object.keys(selected_vaults_map).length > 0;
-
-    const { mutate: vote, isLoading: is_voting, isSuccess } = useVoteOnProposal(proposal.proposal_id);
-
+    const { mutate: vote, isLoading: is_voting } = useVoteOnProposal(proposal.id);
     const { voting_vaults, isLoading: is_loading_voting_vaults } = useQueryVotingVaultsForProposal(
-        proposal.proposal_id,
+        proposal.id,
         Boolean(selected_vote_option) && step_history === 2
     );
 
@@ -227,7 +224,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                     <div className="flex w-full h-full items-center justify-center">
                                         <h2 className="flex items-center">
-                                            Vote {selected_vote_option.title} on proposal {proposal.proposal_id} with vault(s) {Object.values(selected_vaults_map).map(v => v.vault.index_number).join(', ')}
+                                            Vote {selected_vote_option.title} on proposal {proposal.id} with vault(s) {Object.values(selected_vaults_map).map(v => v.vault.index_number).join(', ')}
                                         </h2>
                                     </div>
                                 </div>
