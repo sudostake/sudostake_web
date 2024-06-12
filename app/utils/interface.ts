@@ -26,7 +26,7 @@ export type WalletState = {
     address: string,
     wallet_logo_url: string,
     selected_wallet: WalletTypes | null
-};
+}
 
 // Each enum keys have values here to override the default numeric indexing
 export enum LiquidityRequestTypes {
@@ -39,7 +39,7 @@ export type RequestOption = {
     id: LiquidityRequestTypes,
     title: string,
     description: string
-};
+}
 
 export type VaultVersion = {
     code_id: number,
@@ -57,7 +57,7 @@ export type Currency = {
         average: number,
         high: number
     },
-};
+}
 
 export type KeplrChainInfoSchema = {
     bech32Config: {
@@ -85,7 +85,7 @@ export type KeplrChainInfoSchema = {
         email: string,
         website: string,
     }
-};
+}
 
 export type SudoStakeChainInfoSchema = {
     src: KeplrChainInfoSchema,
@@ -97,7 +97,7 @@ export type SudoStakeChainInfoSchema = {
     vault_collection_path: string,
     gas_price: string,
     validators_img_base_url: string
-};
+}
 
 /**
  * This type describes a vault object in a read-only firebase database
@@ -169,7 +169,7 @@ export type VaultIndex = {
 
     // This is the amount staked in the vault
     tvl?: number,
-};
+}
 
 export enum vote_options_type {
     yes = 'yes',
@@ -193,7 +193,7 @@ export type ValidatorInfo = {
     name: string,
     address: string,
     delegated_amount: number
-};
+}
 
 export type UnbondingEntry = {
     amount: number,
@@ -204,4 +204,17 @@ export type ValidatorUnbondingInfo = {
     name: string,
     address: string,
     entries: UnbondingEntry[]
-};
+}
+
+// ref: https://developers.google.com/analytics/devguides/collection/ga4/reference/events?sjid=989628820691811072-EU&client_type=gtag#purchase
+export type ItemInfo = {
+    item_id: string,
+    item_name: string
+}
+
+export type PurchaseInfo = {
+    currency: string,
+    value: number,
+    transaction_id: string,
+    items: Array<ItemInfo>
+}

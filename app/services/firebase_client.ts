@@ -2,7 +2,8 @@
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
+import { Analytics, getAnalytics, logEvent } from "firebase/analytics";
+import { PurchaseInfo } from "../utils/interface";
 
 // Initialize Firebase App
 const app = initializeApp({
@@ -15,9 +16,22 @@ const app = initializeApp({
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 });
 
-// Initialize Analytics
-if (app.name && typeof window !== 'undefined') {
-    getAnalytics(app);
+function get_analytics(): Analytics | null {
+    if (app.name && typeof window !== 'undefined') {
+        return getAnalytics(app);
+    }
+
+    return null;
+}
+
+// Init Analytics
+const analytics = get_analytics();
+
+// Export function to log purchase
+export function record_purchase(purchase_info: PurchaseInfo) {
+    if (Boolean(analytics)) {
+        logEvent(analytics, 'purchase', purchase_info);
+    }
 }
 
 // Export DB

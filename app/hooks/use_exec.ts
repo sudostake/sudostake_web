@@ -4,9 +4,10 @@ import { VaultIndexErrorState, selectedChainState, walletState } from "../state"
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
-import { convertDenomToMicroDenom } from "../utils/conversion";
-import { ExecuteInstruction, JsonObject } from "@cosmjs/cosmwasm-stargate";
+import { convertDenomToMicroDenom, convertMicroDenomToDenom } from "../utils/conversion";
+import { ExecuteInstruction, ExecuteResult, JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { Currency, Decision, ValidatorInfo, VaultIndex, VotingVault } from "../utils/interface";
+import { record_purchase } from "../services/firebase_client";
 
 export const useIndexVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
@@ -37,26 +38,51 @@ export const useIndexVault = () => {
 }
 
 export const useMintVault = () => {
-    const chainInfo = useRecoilValue(selectedChainState);
+    const chain_info = useRecoilValue(selectedChainState);
     const { address, client } = useRecoilValue(walletState);
     const queryClient = useQueryClient();
     const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
-        const exec_res = await client.execute(
+        const exec_res: ExecuteResult = await client.execute(
             address,
-            chainInfo.sudomod_address,
+            chain_info.sudomod_address,
             { mint_vault: {} },
             1.4,
             '',
             [
-                chainInfo.vault_creation_fee,
+                chain_info.vault_creation_fee,
             ]
         );
 
         // Find the event of type instantiate and attribute with key _contract_address
         const instantiate_event = exec_res.events.find(e => e.type === 'instantiate');
         const vault_address_attr = instantiate_event.attributes.find(a => a.key === '_contract_address');
+
+        // Get wasm events
+        let vault_instance_seq_id = '';
+        exec_res.events.filter(e => e.type === 'wasm').forEach(wasm_event => {
+            const vault_instance_seq_id_attr = wasm_event.attributes.find(a => a.key === 'vault_instance_seq_id');
+            if (Boolean(vault_instance_seq_id_attr)) {
+                vault_instance_seq_id = vault_instance_seq_id_attr.value;
+            }
+        });
+
+        // Record purchase for analytics
+        record_purchase({
+            transaction_id: exec_res.transactionHash,
+            currency: chain_info.src.stakeCurrency.coinDenom,
+            value: convertMicroDenomToDenom(
+                chain_info.vault_creation_fee.amount,
+                chain_info.src.stakeCurrency.coinDecimals),
+            items: [
+                {
+                    item_id: vault_address_attr.value,
+                    item_name: vault_instance_seq_id
+                }
+            ]
+        });
+
         return await indexVault(vault_address_attr.value);
     }, {
         async onSuccess(res) {
