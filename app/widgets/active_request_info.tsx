@@ -104,7 +104,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 {vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                            <span>Includes Voting Rights</span>
+                            <span>Includes voting rights</span>
                         </th>
                         <td className="py-4 text-right">
                             <span>{vault_info.can_cast_vote ? 'YES' : 'NO'}</span>

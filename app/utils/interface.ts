@@ -1,6 +1,7 @@
 import { Coin } from "@cosmjs/stargate";
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 
+// Defines the shape for objects with unique keys maping to same value type T
 export interface IObjectMap<T> {
     [key: string]: T;
 }
@@ -27,6 +28,7 @@ export type WalletState = {
     selected_wallet: WalletTypes | null
 };
 
+// Each enum keys have values here to override the default numeric indexing
 export enum LiquidityRequestTypes {
     fixed_interest_rental = 'fixed_interest_rental',
     fixed_term_rental = 'fixed_term_rental',
@@ -150,16 +152,19 @@ export type VaultIndex = {
     // (fixed_term_rental and fixed_term_loan)
     duration_in_seconds?: number,
 
-    /**
-     * These applies to only fixed term loan request option
-     */
+    // Amount to be paid as interest on the requested amount
+    // (applies only fixed term loans)
     interest_amount?: number,
+
+    // Amount to be liquidated in the event of a default by the vault owner
+    // (applies only fixed term loans)
     collateral_amount?: number,
 
     // This is the expiry date for fixed term liquidity request options
     end_time?: string | 'EXPIRED',
 
-    // This indicates if an expired fixed term loan is currently undergoing liquidation by the lender
+    // This indicates if an expired fixed term loan is currently 
+    // undergoing liquidation by the lender
     processing_liquidation?: boolean,
 
     // This is the amount staked in the vault

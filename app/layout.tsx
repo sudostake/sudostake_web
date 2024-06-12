@@ -21,14 +21,14 @@ export default function RootLayout({
   vault_info_modal: React.ReactNode,
 }) {
   return (
-    <html lang="en" className='overscroll-contain'>
-      <body suppressHydrationWarning={true} className='overscroll-contain'>
+    <html lang="en">
+      <body suppressHydrationWarning={true}>
         <StrictMode>
           <Providers>
             <ToolBar />
             <NavigationArea />
 
-            <div className="h-screen sm:pl-56 bg-white dark:bg-zinc-950 overscroll-contain">
+            <div className="h-screen sm:pl-56 bg-white dark:bg-zinc-950">
               <Suspense fallback={<Loading />}>
                 <>
                   {children}

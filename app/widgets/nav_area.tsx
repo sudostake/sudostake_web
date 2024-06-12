@@ -4,9 +4,6 @@ import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRecoilValue } from "recoil";
-import { selectedChainState, walletState } from "../state";
-import { FaLink } from "react-icons/fa";
 
 type NavItem = {
     label: string;

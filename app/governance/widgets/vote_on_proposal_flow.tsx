@@ -10,6 +10,7 @@ import ConnectWalletOptions from '@/app/widgets/connect_wallet_options';
 import VoteOptions from './vote_options';
 import { FaCheckSquare, FaSpinner } from "react-icons/fa"
 import { useVoteOnProposal } from '@/app/hooks/use_exec';
+import Loading from '@/app/loading';
 
 type ComponentProps = {
     proposal: IObjectMap<any>,
@@ -160,9 +161,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
 
                                 {
                                     is_loading_voting_vaults &&
-                                    <div className="flex w-full h-full items-center justify-center">
-                                        <h2 className="flex items-center"><FaSpinner className="w-6 h-6 mr-3 spinner" /> <span>Loading...</span></h2>
-                                    </div>
+                                    <Loading />
                                 }
 
                                 {

@@ -8,11 +8,11 @@ export async function GET(req: NextRequest) {
     const chain_info = get_chain_info_from_id(chain_id);
 
     try {
-        // Improvised
+        // Improvised:
         // We are using the limit 10, and a reverse pagination to get the latest
         // 10 proposals, and filter for only those in the voting period.
         // In the event the top ten is no longer sufficient enough to
-        // capture all active props, we can increase the limit
+        // capture all active proposal, we can increase the limit
         // 
         // TODO
         // How to query for only proposals with status PROPOSAL_STATUS_VOTING_PERIOD

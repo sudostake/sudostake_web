@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useState } from "react";
-import { FaEllipsisH, FaTimes, FaHistory, FaEllipsisV } from "react-icons/fa";
+import { FaEllipsisH, FaTimes, FaHistory } from "react-icons/fa";
 import { VaultIndex } from "../utils/interface";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
@@ -28,10 +28,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                 )
             }>
                 {
-                    isOpen && <FaTimes className={`w-5 h-5`} />
-                }
-                {
-                    !isOpen && <FaEllipsisH className={`w-5 h-5`} />
+                    isOpen ? <FaTimes className={`w-5 h-5`} /> : <FaEllipsisH className={`w-5 h-5`} />
                 }
             </span>
 
@@ -63,7 +60,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                     "p-2": true,
                     "hover:bg-zinc-300 dark:hover:bg-zinc-700": true,
                 })}>
-                    <ClipBoardButton label="Copy Address" address={vault_info.id} size="min"/>
+                    <ClipBoardButton label="Copy Address" address={vault_info.id} size="min" />
                 </div>
 
                 <Link passHref href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}

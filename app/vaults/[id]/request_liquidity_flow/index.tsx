@@ -8,8 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
 import { useQueryVaultMetaData } from '@/app/hooks/use_query';
 import { useRequestLiquidity } from '@/app/hooks/use_exec';
-import { convertDenomToMicroDenom } from '@/app/utils/conversion';
-import { SECONDS_IN_A_DAY } from '@/app/utils/constants';
+import { convertDenomToMicroDenom, convert_days_to_seconds } from '@/app/utils/conversion';
 import CurrencyOptions from './widgets/currency_options';
 import Image from 'next/image';
 
@@ -107,7 +106,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
             request_liquidity: {
                 option: {
                     fixed_term_rental: {
-                        duration_in_seconds: Number(duration_in_days) * SECONDS_IN_A_DAY,
+                        duration_in_seconds: convert_days_to_seconds(Number(duration_in_days)),
                         can_cast_vote: allow_lender_to_vote,
                         requested_amount: {
                             denom: requested_denom.coinMinimalDenom,
@@ -120,7 +119,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
             request_liquidity: {
                 option: {
                     fixed_term_loan: {
-                        duration_in_seconds: Number(duration_in_days) * SECONDS_IN_A_DAY,
+                        duration_in_seconds: convert_days_to_seconds(Number(duration_in_days)),
                         collateral_amount: convertDenomToMicroDenom(collateral_amount, staking_currency.coinDecimals),
                         requested_amount: {
                             denom: requested_denom.coinMinimalDenom,
@@ -187,7 +186,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                 })}>
                                     <span className={`${step_history !== 0 && 'hidden'} flex flex-col w-full h-full`} >
                                         <h2 className="h-20 flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
-                                            Select Collateral Offer
+                                            Select security type
                                             <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
                                         </h2>
 

@@ -17,9 +17,15 @@ import ClipBoardButton from "./widgets/clipboard_button";
 import Link from "next/link";
 
 export default function Home() {
+  // define tabs
+  const enum VaultTabs {
+    owned_vaults,
+    accepted_deals
+  };
+
   const [active_lending_vaults, setActiveLendingVaults] = useState<VaultIndex[]>([]);
   const [owner_vaults, setOwnerVaults] = useState<VaultIndex[]>([]);
-  const [selected_tab, setSelectedTab] = useState<number>(1);
+  const [selected_tab, setSelectedTab] = useState<VaultTabs>(VaultTabs.owned_vaults);
   const { address, status } = useRecoilValue(walletState);
   const { mutate: mintVault, isLoading } = useMintVault();
   const router = useRouter();
@@ -28,11 +34,17 @@ export default function Home() {
   // Subscribe to owner's vaults
   useEffect(() => {
     if (status === WalletStatusTypes.connected && chainInfo) {
-      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("owner", "==", address), orderBy("index_number", "desc")), (res) => {
-        const vaults = res.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }));
-        setOwnerVaults(vaults);
-      });
+      return onSnapshot(
+        query(
+          collection(db, chainInfo.vault_collection_path),
+          where("owner", "==", address), orderBy("index_number", "desc")
+        ),
+        (res) => {
+          const vaults = res.docs
+            .map((doc) => ({ ...doc.data(), id: doc.id }));
+          setOwnerVaults(vaults);
+        }
+      );
     } else {
       setOwnerVaults([]);
     }
@@ -41,11 +53,17 @@ export default function Home() {
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
     if (status === WalletStatusTypes.connected && chainInfo) {
-      return onSnapshot(query(collection(db, chainInfo.vault_collection_path), where("lender", "==", address), orderBy("index_number", "desc")), (res) => {
-        const lending_vaults = res.docs
-          .map((doc) => ({ ...doc.data(), id: doc.id }));
-        setActiveLendingVaults(lending_vaults);
-      });
+      return onSnapshot(
+        query(
+          collection(db, chainInfo.vault_collection_path),
+          where("lender", "==", address), orderBy("index_number", "desc")
+        ),
+        (res) => {
+          const lending_vaults = res.docs
+            .map((doc) => ({ ...doc.data(), id: doc.id }));
+          setActiveLendingVaults(lending_vaults);
+        }
+      );
     } else {
       setActiveLendingVaults([]);
     }
@@ -77,7 +95,7 @@ export default function Home() {
               {
                 !isLoading && <>
                   <FaPlusSquare className="w-6 h-6 mr-4" />
-                  <span>Mint Vault</span>
+                  <span>New Vault</span>
                 </>
               }
             </span>
@@ -92,29 +110,29 @@ export default function Home() {
             "flex flex-row max-lg:w-full lg:max-w-80 rounded-lg p-1": true,
             "bg-zinc-300 dark:bg-zinc-800": true,
           })}>
-            <span role="button" onClick={() => setSelectedTab(1)} className={classNames(
+            <span role="button" onClick={() => setSelectedTab(VaultTabs.owned_vaults)} className={classNames(
               'w-full rounded-lg text-sm px-4 py-2',
-              selected_tab === 1
+              selected_tab === VaultTabs.owned_vaults
                 ? 'font-bold bg-white dark:bg-zinc-950'
                 : ''
             )}>
-              Owned Vaults
+              Owned by me
             </span>
 
-            <span role="button" onClick={() => setSelectedTab(2)} className={classNames(
+            <span role="button" onClick={() => setSelectedTab(VaultTabs.accepted_deals)} className={classNames(
               'w-full rounded-lg text-sm px-4 py-2',
-              selected_tab === 2
+              selected_tab === VaultTabs.accepted_deals
                 ? 'font-bold bg-white dark:bg-zinc-950'
                 : ''
             )}>
-              Accepted Deals
+              Invested in
             </span>
           </div>
         </div>
       }
 
       {
-        status === WalletStatusTypes.connected && selected_tab === 1 &&
+        status === WalletStatusTypes.connected && selected_tab === VaultTabs.owned_vaults &&
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {owner_vaults.map((vault, index) => {
             return (
@@ -138,7 +156,7 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusTypes.connected && selected_tab === 2 &&
+        status === WalletStatusTypes.connected && selected_tab === VaultTabs.accepted_deals &&
         active_lending_vaults.length > 0 &&
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {active_lending_vaults.map((vault, index) => {
@@ -182,11 +200,11 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusTypes.connected && selected_tab === 2 &&
+        status === WalletStatusTypes.connected && selected_tab === VaultTabs.accepted_deals &&
         active_lending_vaults.length === 0 &&
         <div className="px-4">
           <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
-            No accepted deals yet. <br />
+            You have not lent to any vaults yet. <br />
             <span className=" text-blue-600">
               Go to market to see available lending options.
             </span>

@@ -18,13 +18,16 @@ import { index_vault_data } from "@/app/services/vault_indexer";
 import DepositDialogButton from "./dialogs/deposit";
 import WithdrawDialogButton from "./dialogs/withdraw";
 import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
+import Loading from "@/app/loading";
 
 export default function Vault({ params }: { params: { id: string } }) {
+    const chainInfo = useRecoilValue(selectedChainState);
+    const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id);
+    const { validator_list } = useQueryValidatorList();
     const { address: current_user, status } = useRecoilValue(walletState);
     const setValidatorListState = useSetRecoilState(validatorListState);
-    const chainInfo = useRecoilValue(selectedChainState);
-    const { vault_metadata } = useQueryVaultMetaData(params.id);
-    const { validator_list } = useQueryValidatorList();
+
+    // TODO: Refactor getting currencies
     const usd_currency = chainInfo && chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
 
     // Here we index the vault_info from the vault metadata to also include state from
@@ -310,7 +313,7 @@ export default function Vault({ params }: { params: { id: string } }) {
 
                     {vault_info && vault_info.liquidity_request_status === 'active' &&
                         <div className="flex w-full mt-8 flex-col text-sm lg:text-base">
-                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 px-4 lg:px-8 font-medium py-4">
+                            <h2 className="flex flex-row items-center justify-between border-b border-t border-zinc-400 dark:border-zinc-700 p-4 font-medium">
                                 <span>Option Details</span>
                                 {
                                     can_repay_loan &&
@@ -369,6 +372,11 @@ export default function Vault({ params }: { params: { id: string } }) {
                         </div>
                     }
                 </>
+            }
+
+            {
+                isLoading && status === WalletStatusTypes.connected &&
+                <Loading />
             }
 
             {

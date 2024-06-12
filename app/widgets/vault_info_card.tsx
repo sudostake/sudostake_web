@@ -1,6 +1,5 @@
 import { FaCircle, FaSpinner } from "react-icons/fa";
 import { useQueryVaultMetaData } from "../hooks/use_query";
-import { useRouter } from 'next/navigation';
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import { VaultIndex } from "../utils/interface";
@@ -73,7 +72,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 </span>
             </span>
 
-            <span className="h-10 flex items-center">
+            <span className="h-4 flex items-center">
                 <span className="flex grow border-b border-zinc-200 dark:border-zinc-900"></span>
             </span>
 

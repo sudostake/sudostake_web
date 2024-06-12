@@ -1,7 +1,5 @@
-import { MAX_DECIMALS_PRECISION, SECONDS_IN_A_DAY } from "./constants";
-
-export const protectAgainstNaN = (value: number) => (isNaN(value) ? 0 : value)
-
+const SECONDS_IN_A_DAY = 24 * 60 * 60;
+const MAX_DECIMALS_PRECISION = 10;
 /**
  * 
  * @param value 
@@ -27,7 +25,7 @@ export function convertMicroDenomToDenom(
 ): number {
   value = normalize_number_string(value, decimals);
   if (decimals === 0) return Number(value)
-  return protectAgainstNaN(Number(value) / Math.pow(10, decimals))
+  return Number(value) / Math.pow(10, decimals)
 }
 
 export function convertDenomToMicroDenom(
@@ -39,7 +37,6 @@ export function convertDenomToMicroDenom(
   let val = Number(value) * Math.pow(10, decimals);
   return val.toLocaleString('en-US', { useGrouping: false, maximumFractionDigits: decimals });
 }
-
 
 // https://medium.com/@vipinc.007/javascript-function-translate-seconds-into-days-hours-minutes-and-seconds-91080a8b5383
 export function secondsToDhms(date: Date): string | 'EXPIRED' {
@@ -63,11 +60,10 @@ export function secondsToDhms(date: Date): string | 'EXPIRED' {
   return dDisplay + hDisplay + mDisplay + sDisplay
 }
 
-// TODO format_for_diaplay()
-// 0-999 > to 1 decimal precision, 999.9       , Divisor=1
-// 1K - 999K > to 1 decimal precision, 999.9K  , Divisor=1,000
-// 1M - 999M > to 1 decimal precision, 999.9M  , Divisor=1,000,000
-// IB - 999B > to 1 decimal precision, 999.9B  , Divisor=1,000,000,000
+// 0  - 999  -> to 1 decimal precision, 999.9   , Divisor=1
+// 1K - 999K -> to 1 decimal precision, 999.9K  , Divisor=1,000
+// 1M - 999M -> to 1 decimal precision, 999.9M  , Divisor=1,000,000
+// IB - 999B -> to 1 decimal precision, 999.9B  , Divisor=1,000,000,000
 // >= 1T === ∞
 export function format_for_diaplay(value: number): string {
   if (value < 1000) {
@@ -77,14 +73,17 @@ export function format_for_diaplay(value: number): string {
   } else if (value < 1000000000) {
     return `${(value / 1000000).toFixed(1)}M`;
   } else if (value < 1000000000000) {
-    return `${(value/1000000000).toFixed(1)}B`;
+    return `${(value / 1000000000).toFixed(1)}B`;
   }
   return '∞';
 }
-
 
 // Calculate duration for fixed term rental options
 export function format_duration(duration_in_seconds: number): string {
   const days = Math.round(duration_in_seconds / SECONDS_IN_A_DAY)
   return `${days} ${days > 1 ? 'days' : 'day'}`
+}
+
+export function convert_days_to_seconds(days: number): number {
+  return days * SECONDS_IN_A_DAY;
 }

@@ -1,4 +1,4 @@
-import { CosmWasmClient, coin } from "cosmwasm";
+import { CosmWasmClient } from "cosmwasm";
 import { IObjectMap, LiquidityRequestTypes, VaultIndex } from "../utils/interface";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
@@ -7,6 +7,8 @@ import { get_chain_info_from_rpc } from "../utils/supported_chains";
 // All chains connection instances
 const connections: IObjectMap<CosmWasmClient> = {};
 
+
+// TODO: optimize the use of this function
 export async function get_connection(rpc: string): Promise<CosmWasmClient> {
     // Return an existing connection
     if (connections[rpc]) {

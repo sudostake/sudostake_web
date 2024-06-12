@@ -2,7 +2,6 @@ import { FaCircle } from "react-icons/fa";
 import { LiquidityRequestTypes, VaultIndex } from "../utils/interface";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
-import { SECONDS_IN_A_DAY } from "../utils/constants";
 import { format_duration } from "../utils/conversion";
 
 type ComponentProps = {
@@ -90,7 +89,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                 {vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
-                            <span>Includes Voting Rights</span>
+                            <span>Includes voting rights</span>
                         </th>
                         <td className="py-4 text-right">
                             <span>{vault_info.can_cast_vote ? 'YES' : 'NO'}</span>

@@ -6,21 +6,20 @@ import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
-import { get_connection } from "../services/vault_indexer";
-import { Currency, SudoStakeChainInfoSchema, ValidatorInfo, ValidatorUnbondingInfo, VaultIndex, VotingVault, WalletStatusTypes } from "../utils/interface";
+import { Currency, ValidatorInfo, ValidatorUnbondingInfo, VaultIndex, VotingVault, WalletStatusTypes } from "../utils/interface";
+import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 
 async function fetchTokenBalance({
-    chain_info,
+    client,
     address,
     denom,
     decimals
 }: {
-    chain_info: SudoStakeChainInfoSchema,
+    client: SigningCosmWasmClient,
     address: string,
     denom: string,
     decimals: number
 }) {
-    const client = await get_connection(chain_info.src.rpc);
     const coin = await client.getBalance(address, denom);
     const amount = coin ? coin.amount : '0';
     return convertMicroDenomToDenom(amount, decimals)
@@ -153,12 +152,11 @@ export const useQueryActiveProposals = () => {
 
 export const useQueryVaultMetaData = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
+    const { status, client } = useRecoilValue(walletState);
 
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
-            const client = await get_connection(chainInfo.src.rpc);
-
             const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
             const [native_balance, usdc_balance, unbonding_details, vault_info, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
@@ -166,7 +164,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                     decimals: chainInfo.src.stakeCurrency.coinDecimals,
                     denom: chainInfo.src.stakeCurrency.coinMinimalDenom,
                     address: vault_address,
-                    chain_info: chainInfo
+                    client
                 }),
 
                 // Fetch USDC balance
@@ -174,7 +172,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                     decimals: usd_currency.coinDecimals,
                     denom: usd_currency.coinMinimalDenom,
                     address: vault_address,
-                    chain_info: chainInfo
+                    client
                 }),
 
                 // Fetch unbonding amount
@@ -207,14 +205,14 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 staking_info,
             };
         },
-        {}
+        { enabled: status === WalletStatusTypes.connected, }
     )
 
     return { vault_metadata, isLoading }
 }
 
 export const useQueryBalance = (address: string, currency: Currency) => {
-    const chainInfo = useRecoilValue(selectedChainState);
+    const { client } = useRecoilValue(walletState);
 
     const { data: balance = 0, isLoading } = useQuery(
         ['address_balance', address, currency.coinMinimalDenom],
@@ -223,7 +221,7 @@ export const useQueryBalance = (address: string, currency: Currency) => {
                 decimals: currency.coinDecimals,
                 denom: currency.coinMinimalDenom,
                 address,
-                chain_info: chainInfo
+                client
             });
         },
         {}

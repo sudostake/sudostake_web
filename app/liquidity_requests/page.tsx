@@ -16,7 +16,7 @@ export default function LiquidityRequests() {
   const chainInfo = useRecoilValue(selectedChainState);
 
   return (
-    <div className='h-full overflow-y-auto no-scrollbar py-20 flex flex-col' ref={vault_deals_list_ref}>
+    <div className='h-full overflow-y-auto py-20 flex flex-col' ref={vault_deals_list_ref}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
         <span>
           Vault Deals
@@ -50,39 +50,49 @@ export default function LiquidityRequests() {
                     "max-sm:border-b": index === vaults.length - 1,
                   })}>
                   <span>Vault #{vault.index_number}</span>
-                  <span>Total amount staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                  <span>Total staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
                   <span className='py-4'></span>
                   {
                     vault.request_type === LiquidityRequestTypes.fixed_interest_rental &&
                     <>
-                      <span className='text-green-600'>
-                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      <span>Open:
+                        <span className='text-green-600'>
+                          {' '}
+                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                        </span>
                       </span>
                       <span className=''>Claim {vault.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom} in staking rewards.</span>
                       {
                         vault.can_cast_vote &&
-                        <span className='italic'>(Includes Voting Rights)</span>
+                        <span className='italic'>(Includes voting rights)</span>
                       }
                     </>
                   }
                   {
                     vault.request_type === LiquidityRequestTypes.fixed_term_rental &&
                     <>
-                      <span className='text-blue-600'>
-                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      <span>Open:
+                        <span className='text-blue-600'>
+                          {' '}
+                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                        </span>
                       </span>
+
                       <span className=''>Claim all staking rewards for {formatted_duration}.</span>
                       {
                         vault.can_cast_vote &&
-                        <span className='italic'>(Includes Voting Rights)</span>
+                        <span className='italic'>(With voting rights)</span>
                       }
                     </>
                   }
                   {
                     vault.request_type === LiquidityRequestTypes.fixed_term_loan &&
                     <>
-                      <span className='text-red-600'>
-                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                      <span>Open:
+                        <span className='text-red-600'>
+                          {' '}
+                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
+                        </span>
                       </span>
                       <span className=''>Get {(vault.requested_amount.amount + vault.interest_amount).toLocaleString('en-us')} {request_currency.coinDenom} in return or liquidate {vault.collateral_amount.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom} after {formatted_duration}.</span>
                     </>
