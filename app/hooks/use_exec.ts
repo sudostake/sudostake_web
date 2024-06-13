@@ -6,8 +6,14 @@ import { useQueryClient } from "@tanstack/react-query"
 import { Coin, coin } from "cosmwasm";
 import { convertDenomToMicroDenom, convertMicroDenomToDenom } from "../utils/conversion";
 import { ExecuteInstruction, ExecuteResult, JsonObject } from "@cosmjs/cosmwasm-stargate";
-import { Currency, Decision, ValidatorInfo, VaultIndex, VotingVault } from "../utils/interface";
 import { record_purchase } from "../services/firebase_client";
+import { Currency } from "../models/currency";
+import { VaultIndex } from "../models/vault_index";
+import { Decision, VotingVault } from "../models/voting";
+import { ValidatorInfo } from "../models/validator_info";
+
+// TODO make this dynamic
+const GAS_ADJUSTMENT = 1.4;
 
 export const useIndexVault = () => {
     const chainInfo = useRecoilValue(selectedChainState);
@@ -16,7 +22,7 @@ export const useIndexVault = () => {
     return useMutation(async (vault_address: string) => {
         const response = await fetch("/api", {
             method: "POST",
-            body: JSON.stringify({ rpc: chainInfo.src.rpc, vault_address }),
+            body: JSON.stringify({ rpc: chainInfo.rpc, vault_address }),
         });
 
         // Return success if ok
@@ -44,22 +50,23 @@ export const useMintVault = () => {
     const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async () => {
+        // Execute transaction
         const exec_res: ExecuteResult = await client.execute(
             address,
             chain_info.sudomod_address,
             { mint_vault: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             '',
             [
                 chain_info.vault_creation_fee,
             ]
         );
 
-        // Find the event of type instantiate and attribute with key _contract_address
+        // Find attr _contract_address from instantiate event
         const instantiate_event = exec_res.events.find(e => e.type === 'instantiate');
         const vault_address_attr = instantiate_event.attributes.find(a => a.key === '_contract_address');
 
-        // Get wasm events
+        // Find attr vault_instance_seq_id from wasm events
         let vault_instance_seq_id = '';
         exec_res.events.filter(e => e.type === 'wasm').forEach(wasm_event => {
             const vault_instance_seq_id_attr = wasm_event.attributes.find(a => a.key === 'vault_instance_seq_id');
@@ -71,10 +78,11 @@ export const useMintVault = () => {
         // Record purchase for analytics
         record_purchase({
             transaction_id: exec_res.transactionHash,
-            currency: chain_info.src.stakeCurrency.coinDenom,
+            currency: chain_info.stakeCurrency.coinDenom,
             value: convertMicroDenomToDenom(
                 chain_info.vault_creation_fee.amount,
-                chain_info.src.stakeCurrency.coinDecimals),
+                chain_info.stakeCurrency.coinDecimals
+            ),
             items: [
                 {
                     item_id: vault_address_attr.value,
@@ -83,6 +91,7 @@ export const useMintVault = () => {
             ]
         });
 
+        // Index vault
         return await indexVault(vault_address_attr.value);
     }, {
         async onSuccess(res) {
@@ -105,7 +114,7 @@ export const useTransferVaultOwnership = (vault: VaultIndex) => {
             address,
             vault.id,
             { transfer_ownership: { to_address } },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -136,7 +145,7 @@ export const useVoteOnProposal = (proposal_id: string) => {
         await client.executeMultiple(
             address,
             instructions,
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
     }, {
@@ -160,7 +169,7 @@ export const useDeposit = (to_address: string) => {
             address,
             to_address,
             [coin(microAmount, currency.coinMinimalDenom)],
-            1.4,
+            GAS_ADJUSTMENT,
             '',
         )
     }, {
@@ -186,7 +195,7 @@ export const useWithdraw = (from_address: string) => {
             address,
             from_address,
             { withdraw_balance: { to_address, funds: coin(microAmount, currency.coinMinimalDenom) } },
-            1.4,
+            GAS_ADJUSTMENT,
             send_memo
         );
     }, {
@@ -211,7 +220,7 @@ export const useClaimRewards = (vault_address: string) => {
             address,
             vault_address,
             { claim_delegator_rewards: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -241,7 +250,7 @@ export const useDelegate = (vault_address: string) => {
             address,
             vault_address,
             { delegate: { validator: validator.address, amount: microAmount } },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -270,7 +279,7 @@ export const useUndelegate = (vault_address: string) => {
             address,
             vault_address,
             { undelegate: { validator: validator.address, amount: microAmount } },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -299,7 +308,7 @@ export const useRedelegate = (vault_address: string) => {
             address,
             vault_address,
             { redelegate: { src_validator: from_validator.address, dst_validator: to_validator.address, amount: microAmount } },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
     }, {
@@ -325,7 +334,7 @@ export const useRequestLiquidity = (vault_address: string) => {
             address,
             vault_address,
             payload,
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -353,7 +362,7 @@ export const useClosePendingLiquidityRequest = (vault_address: string) => {
             address,
             vault_address,
             { close_pending_liquidity_request: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             ''
         );
 
@@ -378,31 +387,49 @@ export const useAcceptLiquidityRequest = (vault_address: string) => {
     const { mutate: indexVault } = useIndexVault();
 
     return useMutation(async ({ amount, denom }: { amount: number, denom: string }) => {
-        const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === denom);
+        const request_currency = chainInfo.request_currencies.find(currency => currency.coinMinimalDenom === denom);
         const microAmount = convertDenomToMicroDenom(`${amount}`, request_currency.coinDecimals);
         const requested_amount: Coin = coin(
             microAmount,
             denom
         );
 
-        /**
-         * const keplr = new KeplrClient('chain_id');
-         * const chainClient = new ChainClient();
-         * const transaction = {};
-         * const signed_tx = keplr.sign(transaction)
-         * const res = chainClient.broadcast(signed_tx);
-         */
-
         await client.execute(
             address,
             vault_address,
             { accept_liquidity_request: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             '',
             [
                 requested_amount,
             ]
         );
+
+        // TODO record_purchase for analytics purpose
+        // TODO refactor currency list across app
+        // let the currency list be a separate list
+        // All currencies
+        // request currencies
+
+        // Get the liquidity_commission sent to instantiator_address
+        // 
+        /**
+         * 
+         record_purchase({
+            transaction_id: exec_res.transactionHash,
+            currency: get_currency(liquidity_commission.denom).coinDenom,
+            value: convertMicroDenomToDenom(
+                liquidity_commission.amount,
+                get_currency(liquidity_commission.denom).coinDecimals,
+            items: [
+                {
+                    item_id: vault_address_attr.value,
+                    item_name: accept_liquidity_request
+                }
+            ]
+        });
+         */
+
 
         return await indexVault(vault_address);
     }, {
@@ -428,7 +455,7 @@ export const useRepayLoan = (vault_address: string) => {
             address,
             vault_address,
             { repay_loan: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             '',
         );
 
@@ -456,7 +483,7 @@ export const useLiquidateCollateral = (vault_address: string) => {
             address,
             vault_address,
             { liquidate_collateral: {} },
-            1.4,
+            GAS_ADJUSTMENT,
             '',
         );
 

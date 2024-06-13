@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
     try {
         const api = [
-            chain_info.src.rest,
+            chain_info.rest,
             '/cosmos/staking/v1beta1/delegators/',
             address,
             '/redelegations'

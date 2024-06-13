@@ -1,6 +1,6 @@
+import { RequestOption } from '@/app/models/liquidity_request';
 import { RadioGroup } from '@headlessui/react'
 import { FaCheckCircle } from "react-icons/fa";
-import { RequestOption } from '@/app/utils/interface';
 
 type ComponentProps = {
     onOptionSelected: (option: RequestOption) => void,

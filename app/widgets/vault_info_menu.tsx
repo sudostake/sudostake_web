@@ -1,13 +1,13 @@
 import classNames from "classnames";
 import { useState } from "react";
 import { FaEllipsisH, FaTimes, FaHistory } from "react-icons/fa";
-import { VaultIndex } from "../utils/interface";
 import { useRouter } from 'next/navigation';
 import TransferVaultDialog from "./transfer_vault_dialog";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import ClipBoardButton from "./clipboard_button";
+import { VaultIndex } from "../models/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex

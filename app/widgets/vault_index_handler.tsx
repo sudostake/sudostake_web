@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil";
 import { VaultIndexErrorState, walletState } from "../state";
 import { useIndexVault } from "../hooks/use_exec";
 import { FaSpinner } from "react-icons/fa";
-import { WalletStatusTypes } from "../utils/interface";
+import { WalletStatusType } from "../enums/wallet_status_type";
 
 export default function VaultIndexHandler() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function VaultIndexHandler() {
 
     useEffect(() => {
         const failed_to_index = localStorage.getItem('failed_vault_index');
-        if (Boolean(failed_to_index) && status === WalletStatusTypes.connected) {
+        if (Boolean(failed_to_index) && status === WalletStatusType.connected) {
             setVaultWithIndexError(failed_to_index);
             setIsOpen(true);
         } else {

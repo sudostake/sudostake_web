@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const chain_info = get_chain_info_from_id(chain_id);
 
     try {
-        const api = `${chain_info.src.rest}/cosmos/gov/v1/proposals/${proposal_id}/votes/${address}`;
+        const api = `${chain_info.rest}/cosmos/gov/v1/proposals/${proposal_id}/votes/${address}`;
         const response = await fetch(api, {
             method: "GET",
         });

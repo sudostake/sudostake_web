@@ -4,10 +4,11 @@ import Image from "next/image";
 import { useConnectWallet } from "../hooks/use_connect_wallet";
 import { useRecoilValue } from "recoil";
 import { walletState } from "../state";
-import { WalletStatusTypes, WalletTypes } from "../utils/interface";
 import { FaSpinner } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import isWebview from "is-ua-webview";
+import { WalletStatusType } from "../enums/wallet_status_type";
+import { WalletType } from "../enums/wallet_type";
 
 type ComponentProps = {
     title: string,
@@ -21,8 +22,8 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
     const { mutate: connectWallet } = useConnectWallet();
     const { status, selected_wallet } = useRecoilValue(walletState);
 
-    function handle_select_wallet(type: WalletTypes) {
-        if (status !== WalletStatusTypes.connecting) {
+    function handle_select_wallet(type: WalletType) {
+        if (status !== WalletStatusType.connecting) {
             localStorage.setItem('selected_wallet', type);
             connectWallet();
         }
@@ -89,12 +90,12 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                         <span className="px-4 text-lg text-center">{title}</span>
                         {
                             show_leap &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.leap)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletType.leap)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {leap_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
                                     {
-                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.leap &&
+                                        status === WalletStatusType.connecting && selected_wallet === WalletType.leap &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
@@ -103,12 +104,12 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                         {
                             show_keplr &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.keplr)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletType.keplr)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {keplr_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Keplr</span>
                                     {
-                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.keplr &&
+                                        status === WalletStatusType.connecting && selected_wallet === WalletType.keplr &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
@@ -117,12 +118,12 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                         {
                             show_cosmostation &&
-                            <button onClick={() => handle_select_wallet(WalletTypes.cosmostation)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletType.cosmostation)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {cosmostation_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
                                     {
-                                        status === WalletStatusTypes.connecting && selected_wallet === WalletTypes.cosmostation &&
+                                        status === WalletStatusType.connecting && selected_wallet === WalletType.cosmostation &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>

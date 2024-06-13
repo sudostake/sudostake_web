@@ -8,7 +8,7 @@ import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { IObjectMap, LiquidityRequestTypes, ValidatorInfo, ValidatorUnbondingInfo, WalletStatusTypes } from "@/app/utils/interface";
+import { IObjectMap } from "@/app/utils/interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
 import RequestLiquidityFlow from "./request_liquidity_flow";
@@ -19,6 +19,9 @@ import DepositDialogButton from "./dialogs/deposit";
 import WithdrawDialogButton from "./dialogs/withdraw";
 import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
 import Loading from "@/app/loading";
+import { LiquidityRequestType } from "@/app/enums/liquidity_request_type";
+import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/models/validator_info";
+import { WalletStatusType } from "@/app/enums/wallet_status_type";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const chainInfo = useRecoilValue(selectedChainState);
@@ -28,14 +31,14 @@ export default function Vault({ params }: { params: { id: string } }) {
     const setValidatorListState = useSetRecoilState(validatorListState);
 
     // TODO: Refactor getting currencies
-    const usd_currency = chainInfo && chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+    const usd_currency = chainInfo && chainInfo.request_currencies.find(currency => currency.coinDenom === 'USDC');
 
     // Here we index the vault_info from the vault metadata to also include state from
     // active liquidity request option
     const vault_info = (vault_metadata && chainInfo && index_vault_data({
         vault_info: vault_metadata.vault_info,
         staking_info: vault_metadata.staking_info,
-        rpc: chainInfo.src.rpc,
+        rpc: chainInfo.rpc,
         include_request_state: true
     }));
 
@@ -54,17 +57,17 @@ export default function Vault({ params }: { params: { id: string } }) {
 
     const has_active_rental_option = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan;
+        vault_info.request_type !== LiquidityRequestType.fixed_term_loan;
     const can_claim_rewards = is_owner || has_active_rental_option;
 
     // Fixed term loan conditions
     const can_repay_loan = is_owner && vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+        vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
         !vault_info.processing_liquidation;
     const has_expired_fixed_term_loan = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+        vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
         vault_info.end_time === 'EXPIRED';
 
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
@@ -81,7 +84,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             // Update validators_with_delegations_map
             vault_metadata.all_delegations.forEach((info) => {
                 const address: string = info['validator'];
-                const amount = convertMicroDenomToDenom(info['amount']['amount'], chainInfo.src.stakeCurrency.coinDecimals)
+                const amount = convertMicroDenomToDenom(info['amount']['amount'], chainInfo.stakeCurrency.coinDecimals)
                 validators_with_delegations_map[address] = {
                     name: '',
                     address,
@@ -138,7 +141,7 @@ export default function Vault({ params }: { params: { id: string } }) {
         <div className="flex flex-col p-4">
             <span className="flex flex-row justify-between w-full pb-4">
                 <span className={is_owner ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                    <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
+                    <span>{chainInfo.stakeCurrency.coinDenom}</span>
                     <span>
                         {native_balance.toLocaleString('en-us')}
                         {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
@@ -147,8 +150,8 @@ export default function Vault({ params }: { params: { id: string } }) {
                 {
                     is_owner &&
                     <span className="flex flex-row gap-2 py-2">
-                        <DepositDialogButton to_address={params.id} currency={chainInfo.src.stakeCurrency} />
-                        <WithdrawDialogButton from_address={params.id} currency={chainInfo.src.stakeCurrency} />
+                        <DepositDialogButton to_address={params.id} currency={chainInfo.stakeCurrency} />
+                        <WithdrawDialogButton from_address={params.id} currency={chainInfo.stakeCurrency} />
                     </span>
                 }
             </span>
@@ -248,7 +251,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                vault_metadata && status === WalletStatusTypes.connected &&
+                vault_metadata && status === WalletStatusType.connected &&
                 <>
                     {vault_details_view()}
 
@@ -375,12 +378,12 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                isLoading && status === WalletStatusTypes.connected &&
+                isLoading && status === WalletStatusType.connected &&
                 <Loading />
             }
 
             {
-                status !== WalletStatusTypes.connected &&
+                status !== WalletStatusType.connected &&
                 <ConnectWalletOptions title="Connect to see vault details." />
             }
         </div>

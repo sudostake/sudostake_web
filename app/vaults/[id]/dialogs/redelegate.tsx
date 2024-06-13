@@ -1,11 +1,12 @@
 import { useRedelegate } from '@/app/hooks/use_exec';
-import { Currency, ValidatorInfo } from '@/app/utils/interface';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import ValidatorOptions from '../widgets/validator_options';
 import { useQueryRedelegationList } from '@/app/hooks/use_query';
+import { Currency } from '@/app/models/currency';
+import { ValidatorInfo } from '@/app/models/validator_info';
 
 type ComponentProps = {
     vault_address: string,

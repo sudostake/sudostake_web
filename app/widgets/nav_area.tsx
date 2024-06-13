@@ -46,7 +46,7 @@ export default function NavigationArea() {
             <div
                 className={
                     classNames(
-                        "flex flex-row gap-5 items-center",
+                        "flex flex-row gap-2 items-center",
                         "border-zinc-300 dark:border-zinc-700",
                         "p-4 h-20",
                         "max-sm:border-r",
@@ -54,7 +54,8 @@ export default function NavigationArea() {
                     )
                 }>
 
-                <span className="h-8 w-8 flex flex-col items-center justify-center">
+
+                <span className="max-sm:h-8 max-sm:w-8 flex flex-col items-center justify-center">
                     <Image
                         src="/logo_light.png"
                         alt="sudostake Logo"
@@ -65,7 +66,8 @@ export default function NavigationArea() {
                     />
                 </span>
 
-                <span className="max-sm:hidden text-lg lg:text-2xl font-bold">
+
+                <span className="max-sm:hidden text-lg lg:text-2xl">
                     SudoStake
                 </span>
             </div>

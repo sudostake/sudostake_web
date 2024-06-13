@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     const chain_info = get_chain_info_from_id(chain_id)
 
     try {
-        const api = `${chain_info.src.rest}/cosmos/staking/v1beta1/validators?pagination.limit=1000`;
+        const api = `${chain_info.rest}/cosmos/staking/v1beta1/validators?pagination.limit=1000`;
         const response = await fetch(api, {
             method: "GET",
         });

@@ -1,7 +1,8 @@
 import { FaCircle } from "react-icons/fa";
-import { LiquidityRequestTypes, VaultIndex } from "../utils/interface";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
+import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { VaultIndex } from "../models/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex,
@@ -10,7 +11,7 @@ type ComponentProps = {
 
 export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info = false }: ComponentProps) {
     const chainInfo = useRecoilValue(selectedChainState);
-    const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
+    const request_currency = chainInfo.request_currencies.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
 
     return (
         <table className="w-full table-fixed caption-top text-sm text-left">
@@ -55,18 +56,18 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 </tr>
 
                 {
-                    vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
+                    vault_info.request_type === LiquidityRequestType.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Rewards</span>
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.claimable_tokens} {chainInfo.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
@@ -77,31 +78,31 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Collateral Amount</span>
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.collateral_amount.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.collateral_amount.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }
 
                 {
-                    vault_info.request_type !== LiquidityRequestTypes.fixed_term_rental && !hide_state_info &&
+                    vault_info.request_type !== LiquidityRequestType.fixed_term_rental && !hide_state_info &&
                     <tr>
                         <th scope="row" className="flex flex-col py-4 font-medium whitespace-nowrap">
                             <span>Already Claimed</span>
 
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.already_claimed.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.already_claimed.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type !== LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Includes voting rights</span>
@@ -112,7 +113,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestTypes.fixed_interest_rental && !hide_state_info &&
+                {vault_info.request_type !== LiquidityRequestType.fixed_interest_rental && !hide_state_info &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Expires In</span>

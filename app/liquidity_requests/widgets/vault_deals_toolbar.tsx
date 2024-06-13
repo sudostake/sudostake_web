@@ -1,4 +1,3 @@
-import { VaultIndex } from '@/app/utils/interface';
 import SortOptions, { SortOption, SortOptionTypes } from './sort_options';
 import { MutableRefObject, useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -8,6 +7,7 @@ import { DocumentData, DocumentSnapshot, collection, limit, onSnapshot, orderBy,
 import { db } from '@/app/services/firebase_client';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
+import { VaultIndex } from '@/app/models/vault_index';
 
 type ComponentProps = {
     on_data: (vaults: VaultIndex[]) => void,

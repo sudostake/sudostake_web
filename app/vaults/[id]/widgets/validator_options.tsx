@@ -3,10 +3,10 @@ import { Combobox } from '@headlessui/react'
 import { FaChevronDown, FaUserShield } from 'react-icons/fa'
 import classNames from 'classnames'
 import { useFilteredValidators } from '@/app/hooks/use_query'
-import { ValidatorInfo } from '@/app/utils/interface'
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil'
 import { selectedChainState } from '@/app/state'
+import { ValidatorInfo } from '@/app/models/validator_info'
 
 type ComponentProps = {
     hide_zero_balance?: boolean,

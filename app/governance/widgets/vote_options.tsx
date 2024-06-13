@@ -1,25 +1,26 @@
-import { Decision, vote_options_type } from '@/app/utils/interface';
+import { VoteOption } from '@/app/enums/vote_option';
+import { Decision } from '@/app/models/voting';
 import { RadioGroup } from '@headlessui/react';
 import { FaCheckCircle } from "react-icons/fa";
 
 const vote_decisions: Decision[] = [
     {
-        id: vote_options_type.yes,
+        id: VoteOption.yes,
         title: 'Yes',
         description: 'I agree',
     },
     {
-        id: vote_options_type.no,
+        id: VoteOption.no,
         title: 'No',
         description: 'I disagree',
     },
     {
-        id: vote_options_type.no_with_veto,
+        id: VoteOption.no_with_veto,
         title: 'No with veto',
         description: 'I strongly disagree',
     },
     {
-        id: vote_options_type.abstain,
+        id: VoteOption.abstain,
         title: 'Abstain',
         description: 'Indecisive',
     },

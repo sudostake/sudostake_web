@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { FaChevronDown } from 'react-icons/fa';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
@@ -34,21 +33,21 @@ export default function ManageStakeActionsMenu({ vault_address }: ManageStakeAct
                     "p-1": true,
                     "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
                 })}>
-                    <DelegateDialogButton vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
+                    <DelegateDialogButton vault_address={vault_address} currency={chainInfo.stakeCurrency} />
                 </div>
 
                 <div className={classNames({
                     "p-1": true,
                     "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
                 })}>
-                    <RedelegateDialog vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
+                    <RedelegateDialog vault_address={vault_address} currency={chainInfo.stakeCurrency} />
                 </div>
 
                 <div className={classNames({
                     "p-1": true,
                     "bg-white dark:bg-zinc-900 hover:bg-zinc-300 dark:hover:bg-zinc-800": true,
                 })}>
-                    <UndelegateDialogButton vault_address={vault_address} currency={chainInfo.src.stakeCurrency} />
+                    <UndelegateDialogButton vault_address={vault_address} currency={chainInfo.stakeCurrency} />
                 </div>
             </div>
         </div>

@@ -1,39 +1,19 @@
 import { coin } from "@cosmjs/stargate";
-import { KeplrChainInfoSchema, LiquidityRequestTypes, SudoStakeChainInfoSchema, VaultVersion } from "./interface";
+import { get_constantine_3_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_triomphe_currencies } from "../models/currency";
+import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { KeplrWalletConfig } from "../models/keplr_wallet_config";
+import { SudoStakeChainInfoSchema } from "../models/chain_info_schema";
 
-const ArchwayTestNetKeplrConfig: KeplrChainInfoSchema = {
+const ArchwayTestNetKeplrConfig: KeplrWalletConfig = {
     chainId: "constantine-3",
     chainName: "Testnet",
     chainSymbolImageUrl: "/archway.png",
-    stakeCurrency: {
-        coinDecimals: 18,
-        coinDenom: "CONST",
-        coinGeckoId: "constantine-network",
-        coinMinimalDenom: "aconst",
-        coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-    },
+    stakeCurrency: get_constantine_3_currency_by_name("CONST"),
     currencies: [
-        {
-            coinDecimals: 18,
-            coinDenom: "CONST",
-            coinGeckoId: "constantine-network",
-            coinMinimalDenom: "aconst",
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-        }
+        get_constantine_3_currency_by_name("CONST")
     ],
     feeCurrencies: [
-        {
-            coinDecimals: 18,
-            coinDenom: "CONST",
-            coinGeckoId: "constantine-network",
-            coinMinimalDenom: "aconst",
-            gasPriceStep: {
-                low: 1000000000000,
-                average: 1500000000000,
-                high: 2000000000000
-            },
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-        }
+        get_constantine_3_currency_by_name("CONST")
     ],
     bech32Config: {
         bech32PrefixAccAddr: "archway",
@@ -54,39 +34,16 @@ const ArchwayTestNetKeplrConfig: KeplrChainInfoSchema = {
     }
 };
 
-const ArchwayMainnetKeplrConfig: KeplrChainInfoSchema = {
+const ArchwayMainnetKeplrConfig: KeplrWalletConfig = {
     chainId: "archway-1",
     chainName: "Mainnet",
     chainSymbolImageUrl: "/archway.png",
-    stakeCurrency: {
-        coinDecimals: 18,
-        coinDenom: "ARCH",
-        coinGeckoId: "archway",
-        coinMinimalDenom: "aarch",
-        coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-    },
+    stakeCurrency: get_triomphe_currency_by_name("ARCH"),
     currencies: [
-        {
-            coinDecimals: 18,
-            coinDenom: "ARCH",
-            coinGeckoId: "archway",
-            coinMinimalDenom: "aarch",
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-        }
+        get_triomphe_currency_by_name("ARCH")
     ],
     feeCurrencies: [
-        {
-            coinDecimals: 18,
-            coinDenom: "ARCH",
-            coinGeckoId: "archway",
-            coinMinimalDenom: "aarch",
-            gasPriceStep: {
-                low: 1000000000000,
-                average: 1500000000000,
-                high: 2000000000000
-            },
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
-        }
+        get_triomphe_currency_by_name("ARCH")
     ],
     bech32Config: {
         bech32PrefixAccAddr: "archway",
@@ -107,8 +64,14 @@ const ArchwayMainnetKeplrConfig: KeplrChainInfoSchema = {
     }
 };
 
-const archway_constantine_3 = {
-    src: ArchwayTestNetKeplrConfig,
+const archway_constantine_3: SudoStakeChainInfoSchema = {
+    keplr_wallet_config: ArchwayTestNetKeplrConfig,
+    chain_id: ArchwayTestNetKeplrConfig.chainId,
+    chain_name: ArchwayTestNetKeplrConfig.chainName,
+    chain_logo_url: ArchwayTestNetKeplrConfig.chainSymbolImageUrl,
+    rpc: ArchwayTestNetKeplrConfig.rpc,
+    rest: ArchwayTestNetKeplrConfig.rest,
+    stakeCurrency: ArchwayTestNetKeplrConfig.stakeCurrency,
     gas_price: '900000000000.000000000000000000aconst',
     sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
     vault_creation_fee: coin('10000000000000000000', 'aconst'),
@@ -117,58 +80,49 @@ const archway_constantine_3 = {
         {
             code_id: 484,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
         {
             code_id: 970,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
         {
             code_id: 1160,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
         {
             code_id: 1906,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
     ],
-    request_denoms: [
-        {
-            coinDenom: 'CONST',
-            coinMinimalDenom: 'aconst',
-            coinDecimals: 18,
-            coinGeckoId: "constantine-network",
-            coinImageUrl: '/archway.png'
-        },
-        {
-            coinDenom: 'USDC',
-            coinMinimalDenom: 'ibc/usdc',
-            coinDecimals: 18,
-            coinGeckoId: "",
-            coinImageUrl: '/usdc.png'
-        }
-    ],
+    request_currencies: supported_constantine_3_currencies,
     vault_collection_path: 'vaults',
     validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
 };
 
-const archway_mainnet = {
-    src: ArchwayMainnetKeplrConfig,
+const archway_mainnet: SudoStakeChainInfoSchema = {
+    keplr_wallet_config: ArchwayMainnetKeplrConfig,
+    chain_id: ArchwayMainnetKeplrConfig.chainId,
+    chain_name: ArchwayMainnetKeplrConfig.chainName,
+    chain_logo_url: ArchwayMainnetKeplrConfig.chainSymbolImageUrl,
+    rpc: ArchwayMainnetKeplrConfig.rpc,
+    rest: ArchwayMainnetKeplrConfig.rest,
+    stakeCurrency: ArchwayMainnetKeplrConfig.stakeCurrency,
     gas_price: '900000000000.000000000000000000aarch',
     sudomod_address: 'archway1wyq63wtaktujyp7zrd58ytzc76g9vtamlgwrq9qhhf0j32usvfesn9s38g',
     vault_creation_fee: coin('10000000000000000000', 'aarch'),
@@ -177,43 +131,21 @@ const archway_mainnet = {
         {
             code_id: 156,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                // @Deprecated LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                // @Deprecated LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
         {
             code_id: 277,
             collateral_options: [
-                LiquidityRequestTypes.fixed_interest_rental,
-                LiquidityRequestTypes.fixed_term_rental,
-                LiquidityRequestTypes.fixed_term_loan,
+                LiquidityRequestType.fixed_interest_rental,
+                LiquidityRequestType.fixed_term_rental,
+                LiquidityRequestType.fixed_term_loan,
             ]
         },
     ],
-    request_denoms: [
-        {
-            coinDenom: 'USDC',
-            coinMinimalDenom: 'ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D',
-            coinDecimals: 6,
-            coinGeckoId: "",
-            coinImageUrl: '/usdc.png'
-        },
-        {
-            coinDenom: 'ARCH',
-            coinMinimalDenom: 'aarch',
-            coinDecimals: 18,
-            coinGeckoId: "archway",
-            coinImageUrl: '/archway.png'
-        },
-        {
-            coinDenom: 'USDC(DEPRECATED)',
-            coinMinimalDenom: 'ibc/usdc',
-            coinDecimals: 18,
-            coinGeckoId: "",
-            coinImageUrl: '/usdc.png'
-        }
-    ],
+    request_currencies: supported_triomphe_currencies,
     vault_collection_path: 'archway_mainnet_vaults',
     validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
 };
@@ -224,9 +156,9 @@ export const supportedChains: SudoStakeChainInfoSchema[] = [
 ];
 
 export function get_chain_info_from_rpc(rpc: string): SudoStakeChainInfoSchema | null {
-    return supportedChains.find(c => c.src.rpc === rpc);
+    return supportedChains.find(c => c.rpc === rpc);
 }
 
 export function get_chain_info_from_id(id: string): SudoStakeChainInfoSchema | null {
-    return supportedChains.find(c => c.src.chainId === id);
+    return supportedChains.find(c => c.chain_id === id);
 }

@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
         // TODO
         // How to query for only proposals with status PROPOSAL_STATUS_VOTING_PERIOD
         const api = [
-            chain_info.src.rest,
+            chain_info.rest,
             '/cosmos/gov/v1/proposals?pagination.reverse=true&pagination.limit=10',
         ].join('');
         const response = await fetch(api, {

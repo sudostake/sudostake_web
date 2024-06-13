@@ -1,8 +1,9 @@
 import { FaCircle } from "react-icons/fa";
-import { LiquidityRequestTypes, VaultIndex } from "../utils/interface";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import { format_duration } from "../utils/conversion";
+import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { VaultIndex } from "../models/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex
@@ -10,8 +11,8 @@ type ComponentProps = {
 
 export default function PendingLiquidityRequestInfo({ vault_info }: ComponentProps) {
     const chainInfo = useRecoilValue(selectedChainState);
-    const request_currency = chainInfo.request_denoms.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
-    const formatted_duration = (vault_info.request_type !== LiquidityRequestTypes.fixed_interest_rental &&
+    const request_currency = chainInfo.request_currencies.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
+    const formatted_duration = (vault_info.request_type !== LiquidityRequestType.fixed_interest_rental &&
         format_duration(vault_info.duration_in_seconds)
     )
 
@@ -42,18 +43,18 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
 
 
                 {
-                    vault_info.request_type === LiquidityRequestTypes.fixed_interest_rental &&
+                    vault_info.request_type === LiquidityRequestType.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Rewards</span>
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.claimable_tokens} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.claimable_tokens} {chainInfo.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestTypes.fixed_interest_rental &&
+                {vault_info.request_type !== LiquidityRequestType.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Duration</span>
@@ -64,7 +65,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
@@ -75,18 +76,18 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Collateral Amount</span>
                         </th>
                         <td className="py-4 text-right">
-                            <span>{vault_info.collateral_amount.toLocaleString('en-us')} {chainInfo.src.stakeCurrency.coinDenom}</span>
+                            <span>{vault_info.collateral_amount.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
                         </td>
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestTypes.fixed_term_loan &&
+                {vault_info.request_type !== LiquidityRequestType.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Includes voting rights</span>

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { Fragment, useState } from 'react'
 import { useTransferVaultOwnership } from '../hooks/use_exec';
 import { FaSpinner } from 'react-icons/fa';
-import { VaultIndex } from '../utils/interface';
+import { VaultIndex } from '../models/vault_index';
 
 type ComponentProps = {
     vault_info: VaultIndex

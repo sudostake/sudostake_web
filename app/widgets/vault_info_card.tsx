@@ -2,11 +2,11 @@ import { FaCircle, FaSpinner } from "react-icons/fa";
 import { useQueryVaultMetaData } from "../hooks/use_query";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
-import { VaultIndex } from "../utils/interface";
 import classNames from "classnames";
 import Image from "next/image";
 import { format_for_diaplay } from "../utils/conversion";
 import VaultInfoMenu from "./vault_info_menu";
+import { VaultIndex } from "../models/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex
@@ -14,7 +14,7 @@ type ComponentProps = {
 export default function VaultInfoCard({ vault_info }: ComponentProps) {
     const { vault_metadata } = useQueryVaultMetaData(vault_info.id);
     const chainInfo = useRecoilValue(selectedChainState);
-    const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+    const usd_currency = chainInfo.request_currencies.find(currency => currency.coinDenom === 'USDC');
     const vault_status_color = vault_info.liquidity_request_status === 'pending' && 'text-orange-500' ||
         vault_info.liquidity_request_status === 'active' && 'text-green-500';
     const native_balance = vault_metadata && format_for_diaplay(vault_metadata.native_balance);
@@ -41,14 +41,14 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
 
             <span className="flex flex-row gap-2 items-center">
                 <Image
-                    src={chainInfo.src.chainSymbolImageUrl}
+                    src={chainInfo.chain_logo_url}
                     alt="logo"
                     className="rounded-full"
                     width={20}
                     height={20}
                     priority
                 />
-                <span>{chainInfo.src.stakeCurrency.coinDenom}</span>
+                <span>{chainInfo.stakeCurrency.coinDenom}</span>
                 <span className="ml-auto">
                     {native_balance}
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}

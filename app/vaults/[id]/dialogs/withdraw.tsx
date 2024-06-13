@@ -1,7 +1,7 @@
 import { useWithdraw } from '@/app/hooks/use_exec';
 import { useQueryBalance } from '@/app/hooks/use_query';
+import { Currency } from '@/app/models/currency';
 import { selectedChainState } from '@/app/state';
-import { Currency } from '@/app/utils/interface';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useEffect, useState } from 'react'
@@ -137,7 +137,7 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
 
                                 <input value={to_address}
                                     onChange={(e) => setToAddress(e.target.value)}
-                                    type="text" placeholder={`Enter ${chainInfo.src.chainName} address`}
+                                    type="text" placeholder={`Enter ${chainInfo.chain_name} address`}
                                     className={classNames({
                                         "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
                                         "placeholder-slate-200 text-slate-100 relative bg-slate-800 border border-slate-500": true,

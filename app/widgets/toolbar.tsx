@@ -6,11 +6,11 @@ import { get_chain_info_from_id, supportedChains } from '../utils/supported_chai
 import { useRecoilState } from 'recoil';
 import { selectedChainState, walletState } from '../state';
 import SelectNetworkDialog from './select_network_dialog';
-import { WalletStatusTypes } from '../utils/interface';
 import Image from 'next/image';
 import ClipBoardButton from './clipboard_button';
 import { useConnectWallet } from '../hooks/use_connect_wallet';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { WalletStatusType } from '../enums/wallet_status_type';
 
 export default function ToolBar() {
     const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
@@ -24,14 +24,14 @@ export default function ToolBar() {
             setSelectedChainState(get_chain_info_from_id(selected_chain_id));
         } else {
             const default_chain = supportedChains[0];
-            localStorage.setItem('selected_chain_id', default_chain.src.chainId);
+            localStorage.setItem('selected_chain_id', default_chain.chain_id);
             setSelectedChainState(default_chain);
         }
     }, [setSelectedChainState]);
 
     // Listen to wallet keystore change
     useEffect(() => {
-        if (status === WalletStatusTypes.connected) {
+        if (status === WalletStatusType.connected) {
             const reconnectWallet = () => {
                 connectWallet();
             }
@@ -52,7 +52,7 @@ export default function ToolBar() {
     function resetWalletConnection() {
         // Reset wallet connection state
         setWalletState({
-            status: WalletStatusTypes.idle,
+            status: WalletStatusType.idle,
             address: '',
             name: '',
             client: null,
@@ -82,7 +82,7 @@ export default function ToolBar() {
             </div>
 
             {
-                status === WalletStatusTypes.connected && chainInfo &&
+                status === WalletStatusType.connected && chainInfo &&
                 <div className="h-20 flex flex-row gap-2 items-center max-sm:grow max-sm:pl-4">
                     <Image
                         src={wallet_logo_url}

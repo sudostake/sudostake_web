@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Fragment, useState } from 'react'
 import { supportedChains } from '../utils/supported_chains';
 import { FaChevronDown } from 'react-icons/fa';
-import { SudoStakeChainInfoSchema } from '../utils/interface';
+import { SudoStakeChainInfoSchema } from '../models/chain_info_schema';
 
 type ComponentProps = {
     selected_chain: SudoStakeChainInfoSchema
@@ -22,7 +22,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
     }
 
     function handle_network_select(selected_chain: SudoStakeChainInfoSchema) {
-        localStorage.setItem('selected_chain_id', selected_chain.src.chainId);
+        localStorage.setItem('selected_chain_id', selected_chain.chain_id);
         location.reload();
     }
 
@@ -30,14 +30,14 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
         <>
             <span role="button" onClick={openModal} className="flex flex-row items-center gap-4 h-full">
                 <Image
-                    src={chainInfo.src.chainSymbolImageUrl}
+                    src={chainInfo.chain_logo_url}
                     alt="logo"
                     className="rounded-full"
                     width={24}
                     height={24}
                     priority
                 />
-                <span className="text-sm lg:text-base font-medium">{chainInfo.src.chainName}</span>
+                <span className="text-sm lg:text-base font-medium">{chainInfo.chain_name}</span>
                 <FaChevronDown className="w-4 h-4" />
             </span>
 
@@ -79,11 +79,11 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                     <div className="mt-8 mb-16 grid grid-cols-1 gap-8 md:grid-cols-2">
                                         {supportedChains.map((chain) => {
                                             return (
-                                                <div key={chain.src.chainId} className="w-full rounded-lg grid grid-cols-1 gap-4">
+                                                <div key={chain.chain_id} className="w-full rounded-lg grid grid-cols-1 gap-4">
                                                     <span role='button' onClick={() => handle_network_select(chain)}
                                                         className="flex flex-row gap-4 items-center justify-center mt-4 border border-zinc-400 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2 text-gray-300">
                                                         <Image
-                                                            src={chainInfo.src.chainSymbolImageUrl}
+                                                            src={chainInfo.chain_logo_url}
                                                             alt="logo"
                                                             className="rounded-full"
                                                             width={24}
@@ -91,7 +91,7 @@ export default function SelectNetworkDialog({ selected_chain: chainInfo }: Compo
                                                             priority
                                                         />
                                                         <span>
-                                                            {chain.src.chainName}
+                                                            {chain.chain_name}
                                                         </span>
                                                     </span>
                                                 </div>

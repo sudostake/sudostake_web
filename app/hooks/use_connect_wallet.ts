@@ -5,7 +5,8 @@ import {
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
-import { WalletStatusTypes, WalletTypes } from '../utils/interface'
+import { WalletStatusType } from '../enums/wallet_status_type'
+import { WalletType } from '../enums/wallet_type'
 
 export const useConnectWallet = () => {
     const setWalletState = useSetRecoilState(walletState)
@@ -13,98 +14,98 @@ export const useConnectWallet = () => {
     const mutation = useMutation(
         async () => {
             // Get selected wallet
-            const selected_wallet = localStorage.getItem('selected_wallet') as WalletTypes;
+            const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
 
             /* set the fetching state */
             setWalletState((value) => ({
                 ...value,
                 client: null,
-                status: WalletStatusTypes.connecting,
+                status: WalletStatusType.connecting,
                 selected_wallet
             }));
 
             // Try connect keplr
-            if (selected_wallet === WalletTypes.keplr) {
-                await window.keplr.experimentalSuggestChain(chainInfo.src);
-                await window.keplr.enable(chainInfo.src.chainId);
+            if (selected_wallet === WalletType.keplr) {
+                await window.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config);
+                await window.keplr.enable(chainInfo.chain_id);
 
                 const offlineSigner = await window.keplr.getOfflineSigner(
-                    chainInfo.src.chainId
+                    chainInfo.chain_id
                 );
                 const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                    chainInfo.src.rpc,
+                    chainInfo.rpc,
                     offlineSigner,
                     {
                         gasPrice: GasPrice.fromString(chainInfo.gas_price),
                     }
                 );
                 const [{ address }] = await offlineSigner.getAccounts();
-                const key = await window.keplr.getKey(chainInfo.src.chainId);
+                const key = await window.keplr.getKey(chainInfo.chain_id);
 
                 // Return response
                 return {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusTypes.connected,
+                    status: WalletStatusType.connected,
                     wallet_logo_url: '/keplr_logo.svg',
                     selected_wallet
                 };
             }
 
             // Try connect leap
-            if (selected_wallet === WalletTypes.leap) {
-                await window.leap.enable(chainInfo.src.chainId);
+            if (selected_wallet === WalletType.leap) {
+                await window.leap.enable(chainInfo.chain_id);
 
                 const offlineSigner = await window.leap.getOfflineSignerAuto(
-                    chainInfo.src.chainId
+                    chainInfo.chain_id
                 );
                 const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                    chainInfo.src.rpc,
+                    chainInfo.rpc,
                     offlineSigner,
                     {
                         gasPrice: GasPrice.fromString(chainInfo.gas_price),
                     }
                 );
                 const [{ address }] = await offlineSigner.getAccounts();
-                const key = await window.leap.getKey(chainInfo.src.chainId);
+                const key = await window.leap.getKey(chainInfo.chain_id);
 
                 // Return response
                 return {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusTypes.connected,
+                    status: WalletStatusType.connected,
                     wallet_logo_url: '/leap_wallet_logo.svg',
                     selected_wallet
                 };
             }
 
             // Try connect cosmostaion
-            if (selected_wallet === WalletTypes.cosmostation) {
-                await window.cosmostation.providers.keplr.experimentalSuggestChain(chainInfo.src)
-                await window.cosmostation.providers.keplr.enable(chainInfo.src.chainId)
+            if (selected_wallet === WalletType.cosmostation) {
+                await window.cosmostation.providers.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config)
+                await window.cosmostation.providers.keplr.enable(chainInfo.chain_id)
 
                 const offlineSigner = await window.cosmostation.providers.keplr.getOfflineSigner(
-                    chainInfo.src.chainId
+                    chainInfo.chain_id
                 )
 
                 const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
-                    chainInfo.src.rpc,
+                    chainInfo.rpc,
                     offlineSigner,
                     {
                         gasPrice: GasPrice.fromString(chainInfo.gas_price),
                     }
                 )
                 const [{ address }] = await offlineSigner.getAccounts()
-                const key = await window.cosmostation.providers.keplr.getKey(chainInfo.src.chainId)
+                const key = await window.cosmostation.providers.keplr.getKey(chainInfo.chain_id)
 
                 // return
                 return {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusTypes.connected,
+                    status: WalletStatusType.connected,
                     wallet_logo_url: '/ibc_wallet.png',
                     selected_wallet
                 };
@@ -118,7 +119,7 @@ export const useConnectWallet = () => {
                 name: '',
                 address: '',
                 client: null,
-                status: WalletStatusTypes.error,
+                status: WalletStatusType.error,
                 wallet_logo_url: '',
                 selected_wallet: null
             })

@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
-import { Decision, IObjectMap, VotingVault, WalletStatusTypes } from '@/app/utils/interface';
+import { IObjectMap } from '@/app/utils/interface';
 import Markdown from 'react-markdown';
 import { useQueryVotingVaultsForProposal } from '@/app/hooks/use_query';
 import { useRecoilValue } from 'recoil';
@@ -11,6 +11,8 @@ import VoteOptions from './vote_options';
 import { FaCheckSquare, FaSpinner } from "react-icons/fa"
 import { useVoteOnProposal } from '@/app/hooks/use_exec';
 import Loading from '@/app/loading';
+import { Decision, VotingVault } from '@/app/models/voting';
+import { WalletStatusType } from '@/app/enums/wallet_status_type';
 
 type ComponentProps = {
     proposal: IObjectMap<any>,
@@ -122,7 +124,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                     <span role='button' onClick={(() => setIsOpen(false))} className='ml-auto'>Close</span>
                                 </div>
                                 {
-                                    status === WalletStatusTypes.connected &&
+                                    status === WalletStatusType.connected &&
                                     <>
                                         <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                             <VoteOptions default_value={selected_vote_option} onOptionSelected={(option) => { setSelectedVoteOption(option) }} />
@@ -136,7 +138,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 }
 
                                 {
-                                    status !== WalletStatusTypes.connected &&
+                                    status !== WalletStatusType.connected &&
                                     <>
                                         <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                             <ConnectWalletOptions title="Connect wallet to vote." />

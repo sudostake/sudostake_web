@@ -1,11 +1,10 @@
 'use client'
 
 import { atom } from 'recoil'
-import {
-    SudoStakeChainInfoSchema, ValidatorInfo,
-    ValidatorUnbondingInfo, WalletState,
-    WalletStatusTypes
-} from './utils/interface';
+import { SudoStakeChainInfoSchema } from './models/chain_info_schema';
+import { WalletStatusType } from './enums/wallet_status_type';
+import { ValidatorInfo, ValidatorUnbondingInfo } from './models/validator_info';
+import { WalletState } from './models/wallet_state';
 
 /**
  * 
@@ -14,7 +13,7 @@ export const walletState = atom<WalletState>({
     key: 'walletState',
     default: {
         client: null,
-        status: WalletStatusTypes.idle,
+        status: WalletStatusType.idle,
         name: '',
         address: '',
         wallet_logo_url: '',

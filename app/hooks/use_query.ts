@@ -6,8 +6,12 @@ import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
-import { Currency, ValidatorInfo, ValidatorUnbondingInfo, VaultIndex, VotingVault, WalletStatusTypes } from "../utils/interface";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+import { Currency } from "../models/currency";
+import { ValidatorInfo, ValidatorUnbondingInfo } from "../models/validator_info";
+import { WalletStatusType } from "../enums/wallet_status_type";
+import { VaultIndex } from "../models/vault_index";
+import { VotingVault } from "../models/voting";
 
 async function fetchTokenBalance({
     client,
@@ -76,7 +80,7 @@ async function fetchUnbondingInfo({
 export const useQueryRedelegationList = (vault_address: string) => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { status } = useRecoilValue(walletState);
-    const api = `/api/redelegations?vault_address=${vault_address}&chain_id=${chainInfo.src.chainId}`;
+    const api = `/api/redelegations?vault_address=${vault_address}&chain_id=${chainInfo.chain_id}`;
 
     const { data: redelegation_list = [], isLoading } = useQuery<any[]>(
         ['redelegation_list', vault_address],
@@ -86,7 +90,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
             });
             return (await response.json())['redelegation_responses'];
         },
-        { enabled: status === WalletStatusTypes.connected, }
+        { enabled: status === WalletStatusType.connected, }
     )
 
     return { redelegation_list, isLoading }
@@ -95,7 +99,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
 export const useQueryValidatorList = () => {
     const chainInfo = useRecoilValue(selectedChainState);
     const { status } = useRecoilValue(walletState);
-    const api = chainInfo && `/api/validators?chain_id=${chainInfo.src.chainId}`;
+    const api = chainInfo && `/api/validators?chain_id=${chainInfo.chain_id}`;
 
     const { data: validator_list = [], isLoading } = useQuery<any[]>(
         ['validator_list'],
@@ -106,7 +110,7 @@ export const useQueryValidatorList = () => {
             const data = await response.json();
             return data['validators'];
         },
-        { enabled: status === WalletStatusTypes.connected, }
+        { enabled: status === WalletStatusType.connected, }
     )
 
     return { validator_list, isLoading }
@@ -124,7 +128,7 @@ export const useFilteredValidators = (hide_zero_balance?: boolean) => {
             }
             return validator_list;
         },
-        { enabled: status === WalletStatusTypes.connected, }
+        { enabled: status === WalletStatusType.connected, }
     )
 
     return { filtered_list }
@@ -135,7 +139,7 @@ export const useQueryActiveProposals = () => {
     const { data: active_proposals = [], isLoading } = useQuery<any[]>(
         ['active_proposals'],
         async () => {
-            const api = `/api/active_proposals?chain_id=${chainInfo.src.chainId}`;
+            const api = `/api/active_proposals?chain_id=${chainInfo.chain_id}`;
             const response = await fetch(api, {
                 method: "GET"
             });
@@ -157,12 +161,12 @@ export const useQueryVaultMetaData = (vault_address: string) => {
     const { data: vault_metadata, isLoading } = useQuery(
         ['vault_metadata', vault_address],
         async () => {
-            const usd_currency = chainInfo.request_denoms.find(currency => currency.coinDenom === 'USDC');
+            const usd_currency = chainInfo.request_currencies.find(currency => currency.coinDenom === 'USDC');
             const [native_balance, usdc_balance, unbonding_details, vault_info, staking_info, all_delegations] = await Promise.all([
                 // Fetch native balance
                 fetchTokenBalance({
-                    decimals: chainInfo.src.stakeCurrency.coinDecimals,
-                    denom: chainInfo.src.stakeCurrency.coinMinimalDenom,
+                    decimals: chainInfo.stakeCurrency.coinDecimals,
+                    denom: chainInfo.stakeCurrency.coinMinimalDenom,
                     address: vault_address,
                     client
                 }),
@@ -179,9 +183,9 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 fetchUnbondingInfo({
                     vault_address,
                     token: {
-                        decimals: chainInfo.src.stakeCurrency.coinDecimals,
+                        decimals: chainInfo.stakeCurrency.coinDecimals,
                     },
-                    chain_id: chainInfo.src.chainId
+                    chain_id: chainInfo.chain_id
                 }),
 
                 // Fetch vault info
@@ -197,15 +201,15 @@ export const useQueryVaultMetaData = (vault_address: string) => {
             return {
                 native_balance,
                 usdc_balance: usdc_balance,
-                total_staked: convertMicroDenomToDenom(staking_info['total_staked'], chainInfo.src.stakeCurrency.coinDecimals),
-                acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], chainInfo.src.stakeCurrency.coinDecimals),
+                total_staked: convertMicroDenomToDenom(staking_info['total_staked'], chainInfo.stakeCurrency.coinDecimals),
+                acc_rewards: convertMicroDenomToDenom(staking_info['accumulated_rewards'], chainInfo.stakeCurrency.coinDecimals),
                 unbonding_details,
                 all_delegations: Array.from<any>(all_delegations.data),
                 vault_info,
                 staking_info,
             };
         },
-        { enabled: status === WalletStatusTypes.connected, }
+        { enabled: status === WalletStatusType.connected, }
     )
 
     return { vault_metadata, isLoading }
@@ -267,10 +271,10 @@ export const useQueryVotingVaultsForProposal = (proposal_id: string, has_selecte
 
             // For each vault, check if the user has already voted on proposal_id
             return await Promise.all(vaults.map(async (vault) => {
-                return await get_voting_vault(vault, proposal_id, chainInfo.src.chainId);
+                return await get_voting_vault(vault, proposal_id, chainInfo.chain_id);
             }))
         },
-        { enabled: status === WalletStatusTypes.connected && has_selected_vote_option, }
+        { enabled: status === WalletStatusType.connected && has_selected_vote_option, }
     )
 
     return { voting_vaults, isLoading }
