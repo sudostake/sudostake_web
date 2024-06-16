@@ -8,6 +8,9 @@ import { GasPrice } from '@cosmjs/stargate'
 import { WalletStatusType } from '../enums/wallet_status_type'
 import { WalletType } from '../enums/wallet_type'
 
+//
+import { getOfflineSigner } from "@cosmostation/cosmos-client";
+
 export const useConnectWallet = () => {
     const setWalletState = useSetRecoilState(walletState)
     const chainInfo = useRecoilValue(selectedChainState)
@@ -29,7 +32,7 @@ export const useConnectWallet = () => {
                 await window.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config);
                 await window.keplr.enable(chainInfo.chain_id);
 
-                const offlineSigner = await window.keplr.getOfflineSigner(
+                const offlineSigner: any = await window.keplr.getOfflineSignerAuto(
                     chainInfo.chain_id
                 );
                 const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
@@ -86,9 +89,7 @@ export const useConnectWallet = () => {
                 await window.cosmostation.providers.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config)
                 await window.cosmostation.providers.keplr.enable(chainInfo.chain_id)
 
-                const offlineSigner = await window.cosmostation.providers.keplr.getOfflineSigner(
-                    chainInfo.chain_id
-                )
+                const offlineSigner: any = await getOfflineSigner(chainInfo.chain_id);
 
                 const wasmChainClient = await SigningCosmWasmClient.connectWithSigner(
                     chainInfo.rpc,

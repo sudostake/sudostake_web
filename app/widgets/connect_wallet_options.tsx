@@ -43,7 +43,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
             setNoSigner(!wallets.keplr && !wallets.leap && !wallets.cosmostation);
             setShowKeplr((!is_webview && wallets.keplr) || (is_webview && only_keplr_signer));
             setShowLeap(wallets.leap);
-            setShowCosmostation(!is_webview && wallets.cosmostation);
+            setShowCosmostation(wallets.cosmostation);
         }, 300);
     }, [setNoSigner, setShowKeplr, setShowLeap, setShowCosmostation]);
 
@@ -63,6 +63,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
             priority
         />;
         const cosmostation_image = <Image
+            className="rounded-lg aspect-square object-cover"
             src="/ibc_wallet.png"
             alt="Cosmostaion Wallet Logo"
             width={30}
@@ -88,14 +89,16 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                     !no_signer_detected &&
                     <div className="flex flex-col gap-8">
                         <span className="px-4 text-lg text-center">{title}</span>
+
                         {
-                            show_leap &&
-                            <button onClick={() => handle_select_wallet(WalletType.leap)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            show_cosmostation &&
+                            <button onClick={() => handle_select_wallet(WalletType.cosmostation)}
+                                className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
-                                    {leap_image}
-                                    <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
+                                    {cosmostation_image}
+                                    <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
                                     {
-                                        status === WalletStatusType.connecting && selected_wallet === WalletType.leap &&
+                                        status === WalletStatusType.connecting && selected_wallet === WalletType.cosmostation &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
@@ -104,7 +107,8 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                         {
                             show_keplr &&
-                            <button onClick={() => handle_select_wallet(WalletType.keplr)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            <button onClick={() => handle_select_wallet(WalletType.keplr)}
+                                className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
                                     {keplr_image}
                                     <span className="ml-2 text-sm lg:text-base font-medium">Keplr</span>
@@ -117,13 +121,14 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                         }
 
                         {
-                            show_cosmostation &&
-                            <button onClick={() => handle_select_wallet(WalletType.cosmostation)} className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
+                            show_leap &&
+                            <button onClick={() => handle_select_wallet(WalletType.leap)}
+                                className="flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 p-3 text-sm lg:text-base font-medium lg:font-medium h-14">
                                 <>
-                                    {cosmostation_image}
-                                    <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
+                                    {leap_image}
+                                    <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
                                     {
-                                        status === WalletStatusType.connecting && selected_wallet === WalletType.cosmostation &&
+                                        status === WalletStatusType.connecting && selected_wallet === WalletType.leap &&
                                         <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
                                     }
                                 </>
