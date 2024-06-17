@@ -48,9 +48,10 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
     }, [setNoSigner, setShowKeplr, setShowLeap, setShowCosmostation]);
 
     const connect_wallet_home = () => {
-        const keplr_image = <Image
-            src="/keplr_logo.svg"
-            alt="Keplr Wallet Logo"
+        const cosmostation_image = <Image
+            className="rounded-lg aspect-square object-cover"
+            src="/ibc_wallet.png"
+            alt="Cosmostaion Wallet Logo"
             width={30}
             height={30}
             priority
@@ -62,10 +63,9 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
             height={30}
             priority
         />;
-        const cosmostation_image = <Image
-            className="rounded-lg aspect-square object-cover"
-            src="/ibc_wallet.png"
-            alt="Cosmostaion Wallet Logo"
+        const keplr_image = <Image
+            src="/keplr_logo.svg"
+            alt="Keplr Wallet Logo"
             width={30}
             height={30}
             priority
@@ -78,9 +78,9 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                     <div className="flex flex-col gap-8">
                         <span className="px-4 text-lg text-center">Install wallet to get started</span>
                         <span className="flex flex-row gap-16 items-center justify-center">
-                            {keplr_image}
-                            {leap_image}
                             {cosmostation_image}
+                            {leap_image}
+                            {keplr_image}
                         </span>
                     </div>
                 }
