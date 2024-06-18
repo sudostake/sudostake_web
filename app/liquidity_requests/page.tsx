@@ -20,7 +20,7 @@ export default function LiquidityRequests() {
     <div className='h-full overflow-y-auto py-20 flex flex-col' ref={vault_deals_list_ref}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
         <span>
-          Vault Deals
+          Open Interests
         </span>
       </div>
 
