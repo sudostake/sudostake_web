@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
-import { IObjectMap } from '@/app/utils/interface';
+import { NamedEntityMap } from '@/app/utils/interface';
 import Markdown from 'react-markdown';
 import { useQueryVotingVaultsForProposal } from '@/app/hooks/use_query';
 import { useRecoilValue } from 'recoil';
@@ -15,14 +15,14 @@ import { Decision, VotingVault } from '@/app/models/voting';
 import { WalletStatusType } from '@/app/enums/wallet_status_type';
 
 type ComponentProps = {
-    proposal: IObjectMap<any>,
+    proposal: NamedEntityMap<any>,
 }
 export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
     const { status } = useRecoilValue(walletState);
     const [isOpen, setIsOpen] = useState(false);
     const [step_history, setStepHistory] = useState<number>(0);
     const [selected_vote_option, setSelectedVoteOption] = useState<Decision>(null);
-    const [selected_vaults_map, setSelectedVaults] = useState<IObjectMap<VotingVault>>({});
+    const [selected_vaults_map, setSelectedVaults] = useState<NamedEntityMap<VotingVault>>({});
     const can_vote = Object.keys(selected_vaults_map).length > 0;
     const { mutate: vote, isLoading: is_voting } = useVoteOnProposal(proposal.id);
     const { voting_vaults, isLoading: is_loading_voting_vaults } = useQueryVotingVaultsForProposal(

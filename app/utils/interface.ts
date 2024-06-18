@@ -1,4 +1,4 @@
-// Defines the shape for objects with unique keys maping to same value type T
-export interface IObjectMap<T> {
+// Defines the shape for objects with unique names maping to same value type T
+export interface NamedEntityMap<T> {
     [key: string]: T;
 }

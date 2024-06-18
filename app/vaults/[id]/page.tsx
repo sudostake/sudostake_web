@@ -8,7 +8,7 @@ import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { IObjectMap } from "@/app/utils/interface";
+import { NamedEntityMap } from "@/app/utils/interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
 import RequestLiquidityFlow from "./request_liquidity_flow";
@@ -77,8 +77,8 @@ export default function Vault({ params }: { params: { id: string } }) {
     // Update validatorListState
     useEffect(() => {
         const validators_without_delegations_list: ValidatorInfo[] = [];
-        const validators_with_delegations_map: IObjectMap<ValidatorInfo> = {};
-        const validators_with_unbondings_map: IObjectMap<ValidatorUnbondingInfo> = {};
+        const validators_with_delegations_map: NamedEntityMap<ValidatorInfo> = {};
+        const validators_with_unbondings_map: NamedEntityMap<ValidatorUnbondingInfo> = {};
 
         if (Boolean(vault_metadata)) {
             // Update validators_with_delegations_map

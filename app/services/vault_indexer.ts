@@ -1,5 +1,5 @@
 import { CosmWasmClient } from "cosmwasm";
-import { IObjectMap } from "../utils/interface";
+import { NamedEntityMap } from "../utils/interface";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { get_chain_info_from_rpc } from "../utils/supported_chains";
@@ -7,7 +7,7 @@ import { LiquidityRequestType } from "../enums/liquidity_request_type";
 import { VaultIndex } from "../models/vault_index";
 
 // All chains connection instances
-const connections: IObjectMap<CosmWasmClient> = {};
+const connections: NamedEntityMap<CosmWasmClient> = {};
 
 
 // TODO: optimize the use of this function
