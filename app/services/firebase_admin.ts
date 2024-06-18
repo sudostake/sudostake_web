@@ -15,13 +15,7 @@ if (!admin.apps.length) {
     }
 }
 
-// Init data
-const db = admin.firestore();
-const doc = (docRef: string): any => {
-    return db.doc(docRef);
-}
-
 // Export Method to set data
 export const set = (docRef: string, data: IObjectMap<any>): Promise<any> => {
-    return doc(docRef).set(data);
+    return admin.firestore().doc(docRef).set(data);
 }
