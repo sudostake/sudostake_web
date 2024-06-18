@@ -56,11 +56,8 @@ export default function LiquidityRequests() {
                   {
                     vault.request_type === LiquidityRequestType.fixed_interest_rental &&
                     <>
-                      <span>Open:
-                        <span className='text-green-600'>
-                          {' '}
-                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
-                        </span>
+                      <span className='text-green-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
                       </span>
                       <span className=''>Claim {vault.claimable_tokens} {chainInfo.stakeCurrency.coinDenom} in staking rewards.</span>
                       {
@@ -72,11 +69,8 @@ export default function LiquidityRequests() {
                   {
                     vault.request_type === LiquidityRequestType.fixed_term_rental &&
                     <>
-                      <span>Open:
-                        <span className='text-blue-600'>
-                          {' '}
-                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
-                        </span>
+                      <span className='text-blue-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
                       </span>
 
                       <span className=''>Claim all staking rewards for {formatted_duration}.</span>
@@ -89,11 +83,8 @@ export default function LiquidityRequests() {
                   {
                     vault.request_type === LiquidityRequestType.fixed_term_loan &&
                     <>
-                      <span>Open:
-                        <span className='text-red-600'>
-                          {' '}
-                          {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
-                        </span>
+                      <span className='text-red-600'>
+                        {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
                       </span>
                       <span className=''>Get {(vault.requested_amount.amount + vault.interest_amount).toLocaleString('en-us')} {request_currency.coinDenom} in return or liquidate {vault.collateral_amount.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom} after {formatted_duration}.</span>
                     </>
