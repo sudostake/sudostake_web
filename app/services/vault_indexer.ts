@@ -1,10 +1,10 @@
 import { CosmWasmClient } from "cosmwasm";
-import { NamedEntityMap } from "../utils/interface";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { get_chain_info_from_rpc } from "../utils/supported_chains";
 import { LiquidityRequestType } from "../enums/liquidity_request_type";
 import { VaultIndex } from "../models/vault_index";
+import { NamedEntityMap } from "../interfaces/named_entity_map";
 
 // All chains connection instances
 const connections: NamedEntityMap<CosmWasmClient> = {};

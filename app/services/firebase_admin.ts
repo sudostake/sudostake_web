@@ -1,5 +1,5 @@
 import * as admin from 'firebase-admin';
-import { NamedEntityMap } from '../utils/interface';
+import { NamedEntityMap } from '../interfaces/named_entity_map';
 
 const serviceAccount = JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT_KEY as string

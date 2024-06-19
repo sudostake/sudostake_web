@@ -1,7 +1,6 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames';
 import { Fragment, useState } from 'react'
-import { NamedEntityMap } from '@/app/utils/interface';
 import Markdown from 'react-markdown';
 import { useQueryVotingVaultsForProposal } from '@/app/hooks/use_query';
 import { useRecoilValue } from 'recoil';
@@ -13,6 +12,7 @@ import { useVoteOnProposal } from '@/app/hooks/use_exec';
 import Loading from '@/app/loading';
 import { Decision, VotingVault } from '@/app/models/voting';
 import { WalletStatusType } from '@/app/enums/wallet_status_type';
+import { NamedEntityMap } from '@/app/interfaces/named_entity_map';
 
 type ComponentProps = {
     proposal: NamedEntityMap<any>,

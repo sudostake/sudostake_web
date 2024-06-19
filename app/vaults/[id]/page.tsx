@@ -8,7 +8,6 @@ import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { NamedEntityMap } from "@/app/utils/interface";
 import { convertMicroDenomToDenom } from "@/app/utils/conversion";
 import UnbondingInfoDialog from "./dialogs/undelegations_info";
 import RequestLiquidityFlow from "./request_liquidity_flow";
@@ -22,6 +21,7 @@ import Loading from "@/app/loading";
 import { LiquidityRequestType } from "@/app/enums/liquidity_request_type";
 import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/models/validator_info";
 import { WalletStatusType } from "@/app/enums/wallet_status_type";
+import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
 
 export default function Vault({ params }: { params: { id: string } }) {
     const chainInfo = useRecoilValue(selectedChainState);
