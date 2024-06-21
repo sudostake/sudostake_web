@@ -3,7 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { Analytics, getAnalytics, logEvent } from "firebase/analytics";
-import { PurchaseInfo } from "../models/analytics_events";
+import { PurchaseInfo } from "../types/analytics_events";
 
 // Initialize Firebase App
 const app = initializeApp({

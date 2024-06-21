@@ -6,7 +6,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import { format_for_diaplay } from "../utils/conversion";
 import VaultInfoMenu from "./vault_info_menu";
-import { VaultIndex } from "../models/vault_index";
+import { VaultIndex } from "../types/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex

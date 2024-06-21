@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import { format_duration } from "../utils/conversion";
 import { LiquidityRequestType } from "../enums/liquidity_request_type";
-import { VaultIndex } from "../models/vault_index";
+import { VaultIndex } from "../types/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex

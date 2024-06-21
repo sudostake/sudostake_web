@@ -7,10 +7,10 @@ import { Coin, coin } from "cosmwasm";
 import { convertDenomToMicroDenom, convertMicroDenomToDenom } from "../utils/conversion";
 import { ExecuteInstruction, ExecuteResult, JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { record_purchase } from "../services/firebase_client";
-import { Currency } from "../models/currency";
-import { VaultIndex } from "../models/vault_index";
-import { Decision, VotingVault } from "../models/voting";
-import { ValidatorInfo } from "../models/validator_info";
+import { Currency } from "../types/currency";
+import { VaultIndex } from "../types/vault_index";
+import { Decision, VotingVault } from "../types/voting";
+import { ValidatorInfo } from "../types/validator_info";
 
 // TODO make this dynamic
 const GAS_ADJUSTMENT = 1.4;

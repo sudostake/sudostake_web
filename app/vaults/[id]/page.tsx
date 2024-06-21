@@ -19,7 +19,7 @@ import WithdrawDialogButton from "./dialogs/withdraw";
 import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
 import Loading from "@/app/loading";
 import { LiquidityRequestType } from "@/app/enums/liquidity_request_type";
-import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/models/validator_info";
+import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_info";
 import { WalletStatusType } from "@/app/enums/wallet_status_type";
 import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
 

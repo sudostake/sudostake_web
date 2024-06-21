@@ -6,7 +6,7 @@ import { useFilteredValidators } from '@/app/hooks/use_query'
 import Image from 'next/image';
 import { useRecoilValue } from 'recoil'
 import { selectedChainState } from '@/app/state'
-import { ValidatorInfo } from '@/app/models/validator_info'
+import { ValidatorInfo } from '@/app/types/validator_info'
 
 type ComponentProps = {
     hide_zero_balance?: boolean,

@@ -7,7 +7,7 @@ import { DocumentData, DocumentSnapshot, collection, limit, onSnapshot, orderBy,
 import { db } from '@/app/services/firebase_client';
 import classNames from 'classnames';
 import { debounce } from 'lodash';
-import { VaultIndex } from '@/app/models/vault_index';
+import { VaultIndex } from '@/app/types/vault_index';
 
 type ComponentProps = {
     on_data: (vaults: VaultIndex[]) => void,

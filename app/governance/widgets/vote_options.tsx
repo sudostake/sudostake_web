@@ -1,5 +1,5 @@
 import { VoteOption } from '@/app/enums/vote_option';
-import { Decision } from '@/app/models/voting';
+import { Decision } from '@/app/types/voting';
 import { RadioGroup } from '@headlessui/react';
 import { FaCheckCircle } from "react-icons/fa";
 

@@ -10,7 +10,7 @@ import VoteOptions from './vote_options';
 import { FaCheckSquare, FaSpinner } from "react-icons/fa"
 import { useVoteOnProposal } from '@/app/hooks/use_exec';
 import Loading from '@/app/loading';
-import { Decision, VotingVault } from '@/app/models/voting';
+import { Decision, VotingVault } from '@/app/types/voting';
 import { WalletStatusType } from '@/app/enums/wallet_status_type';
 import { NamedEntityMap } from '@/app/interfaces/named_entity_map';
 

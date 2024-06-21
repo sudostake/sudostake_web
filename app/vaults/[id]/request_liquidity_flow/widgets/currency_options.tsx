@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '@/app/state';
-import { Currency } from '@/app/models/currency';
+import { Currency } from '@/app/types/currency';
 import Image from 'next/image';
 
 type ComponentProps = {

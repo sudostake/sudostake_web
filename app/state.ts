@@ -1,10 +1,10 @@
 'use client'
 
 import { atom } from 'recoil'
-import { SudoStakeChainInfoSchema } from './models/chain_info_schema';
+import { SudoStakeChainInfoSchema } from './types/chain_info_schema';
 import { WalletStatusType } from './enums/wallet_status_type';
-import { ValidatorInfo, ValidatorUnbondingInfo } from './models/validator_info';
-import { WalletState } from './models/wallet_state';
+import { ValidatorInfo, ValidatorUnbondingInfo } from './types/validator_info';
+import { WalletState } from './types/wallet_state';
 
 /**
  * 

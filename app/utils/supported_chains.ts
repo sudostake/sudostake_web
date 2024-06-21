@@ -1,8 +1,8 @@
 import { coin } from "@cosmjs/stargate";
-import { get_constantine_3_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_triomphe_currencies } from "../models/currency";
+import { get_constantine_3_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_triomphe_currencies } from "../types/currency";
 import { LiquidityRequestType } from "../enums/liquidity_request_type";
-import { KeplrWalletConfig } from "../models/keplr_wallet_config";
-import { SudoStakeChainInfoSchema } from "../models/chain_info_schema";
+import { KeplrWalletConfig } from "../types/keplr_wallet_config";
+import { SudoStakeChainInfoSchema } from "../types/chain_info_schema";
 
 const ArchwayTestNetKeplrConfig: KeplrWalletConfig = {
     chainId: "constantine-3",

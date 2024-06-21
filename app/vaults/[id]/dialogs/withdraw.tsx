@@ -1,6 +1,6 @@
 import { useWithdraw } from '@/app/hooks/use_exec';
 import { useQueryBalance } from '@/app/hooks/use_query';
-import { Currency } from '@/app/models/currency';
+import { Currency } from '@/app/types/currency';
 import { selectedChainState } from '@/app/state';
 import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import ClipBoardButton from "./clipboard_button";
-import { VaultIndex } from "../models/vault_index";
+import { VaultIndex } from "../types/vault_index";
 
 type ComponentProps = {
     vault_info: VaultIndex

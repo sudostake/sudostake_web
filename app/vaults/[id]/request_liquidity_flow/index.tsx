@@ -11,9 +11,9 @@ import { convertDenomToMicroDenom, convert_days_to_seconds } from '@/app/utils/c
 import CurrencyOptions from './widgets/currency_options';
 import Image from 'next/image';
 import { LiquidityRequestType } from '@/app/enums/liquidity_request_type';
-import { Currency } from '@/app/models/currency';
-import { VaultVersion } from '@/app/models/vault_version';
-import { RequestOption } from '@/app/models/liquidity_request';
+import { Currency } from '@/app/types/currency';
+import { VaultVersion } from '@/app/types/vault_version';
+import { RequestOption } from '@/app/types/liquidity_request';
 
 const liquidityRequestOptions: RequestOption[] = [
     {

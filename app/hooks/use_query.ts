@@ -7,11 +7,11 @@ import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { db } from "../services/firebase_client";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
-import { Currency } from "../models/currency";
-import { ValidatorInfo, ValidatorUnbondingInfo } from "../models/validator_info";
+import { Currency } from "../types/currency";
+import { ValidatorInfo, ValidatorUnbondingInfo } from "../types/validator_info";
 import { WalletStatusType } from "../enums/wallet_status_type";
-import { VaultIndex } from "../models/vault_index";
-import { VotingVault } from "../models/voting";
+import { VaultIndex } from "../types/vault_index";
+import { VotingVault } from "../types/voting";
 
 async function fetchTokenBalance({
     client,

@@ -1,4 +1,4 @@
-import { RequestOption } from '@/app/models/liquidity_request';
+import { RequestOption } from '@/app/types/liquidity_request';
 import { RadioGroup } from '@headlessui/react'
 import { FaCheckCircle } from "react-icons/fa";
 

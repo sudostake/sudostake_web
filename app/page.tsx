@@ -15,7 +15,7 @@ import classNames from "classnames";
 import ClipBoardButton from "./widgets/clipboard_button";
 import Link from "next/link";
 import { WalletStatusType } from "./enums/wallet_status_type";
-import { VaultIndex } from "./models/vault_index";
+import { VaultIndex } from "./types/vault_index";
 
 export default function Home() {
   // define tabs

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Fragment, useState } from 'react'
 import { supportedChains } from '../utils/supported_chains';
 import { FaChevronDown } from 'react-icons/fa';
-import { SudoStakeChainInfoSchema } from '../models/chain_info_schema';
+import { SudoStakeChainInfoSchema } from '../types/chain_info_schema';
 
 type ComponentProps = {
     selected_chain: SudoStakeChainInfoSchema
