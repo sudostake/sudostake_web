@@ -1,4 +1,4 @@
-export enum WalletStatusType {
+export enum WalletStatus {
     idle = '@wallet-state/idle',
     connecting = '@wallet-state/connecting',
     connected = '@wallet-state/connected',

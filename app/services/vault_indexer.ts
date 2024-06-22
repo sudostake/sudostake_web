@@ -2,7 +2,7 @@ import { CosmWasmClient } from "cosmwasm";
 import { JsonObject } from "@cosmjs/cosmwasm-stargate";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
 import { get_chain_info_from_rpc } from "../utils/supported_chains";
-import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { LiquidityRequest } from "../enums/liquidity_request";
 import { VaultIndex } from "../types/vault_index";
 import { NamedEntityMap } from "../interfaces/named_entity_map";
 
@@ -49,7 +49,7 @@ export function index_vault_data({ vault_info, staking_info, rpc, include_reques
             const request_denom = msg['fixed_interest_rental']['requested_amount']['denom'];
             const request_currency = chain_info.request_currencies.find(currency => currency.coinMinimalDenom === request_denom);
 
-            index.request_type = LiquidityRequestType.fixed_interest_rental;
+            index.request_type = LiquidityRequest.fixed_interest_rental;
             index.requested_amount = {
                 denom: request_denom,
                 amount: convertMicroDenomToDenom(msg['fixed_interest_rental']['requested_amount']['amount'], request_currency.coinDecimals)
@@ -63,7 +63,7 @@ export function index_vault_data({ vault_info, staking_info, rpc, include_reques
             const request_denom = msg['fixed_term_rental']['requested_amount']['denom'];
             const request_currency = chain_info.request_currencies.find(currency => currency.coinMinimalDenom === request_denom);
 
-            index.request_type = LiquidityRequestType.fixed_term_rental;
+            index.request_type = LiquidityRequest.fixed_term_rental;
             index.requested_amount = {
                 denom: request_denom,
                 amount: convertMicroDenomToDenom(msg['fixed_term_rental']['requested_amount']['amount'], request_currency.coinDecimals)
@@ -77,7 +77,7 @@ export function index_vault_data({ vault_info, staking_info, rpc, include_reques
             const request_denom = msg['fixed_term_loan']['requested_amount']['denom'];
             const request_currency = chain_info.request_currencies.find(currency => currency.coinMinimalDenom === request_denom);
 
-            index.request_type = LiquidityRequestType.fixed_term_loan;
+            index.request_type = LiquidityRequest.fixed_term_loan;
             index.requested_amount = {
                 denom: request_denom,
                 amount: convertMicroDenomToDenom(msg['fixed_term_loan']['requested_amount']['amount'], request_currency.coinDecimals)

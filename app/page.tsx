@@ -14,7 +14,7 @@ import ConnectWalletOptions from "./widgets/connect_wallet_options";
 import classNames from "classnames";
 import ClipBoardButton from "./widgets/clipboard_button";
 import Link from "next/link";
-import { WalletStatusType } from "./enums/wallet_status_type";
+import { WalletStatus } from "./enums/wallet_status";
 import { VaultIndex } from "./types/vault_index";
 
 export default function Home() {
@@ -34,7 +34,7 @@ export default function Home() {
 
   // Subscribe to owner's vaults
   useEffect(() => {
-    if (status === WalletStatusType.connected && chainInfo) {
+    if (status === WalletStatus.connected && chainInfo) {
       return onSnapshot(
         query(
           collection(db, chainInfo.vault_collection_path),
@@ -53,7 +53,7 @@ export default function Home() {
 
   // Subscribe to all vaults where owner has active lending positions
   useEffect(() => {
-    if (status === WalletStatusType.connected && chainInfo) {
+    if (status === WalletStatus.connected && chainInfo) {
       return onSnapshot(
         query(
           collection(db, chainInfo.vault_collection_path),
@@ -73,7 +73,7 @@ export default function Home() {
   return (
     <div className="h-full overflow-y-auto overscroll-contain py-20 flex flex-col">
       {
-        status === WalletStatusType.connected &&
+        status === WalletStatus.connected &&
         <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8 text-3xl font-bold">
           <span>
             My Vaults
@@ -105,7 +105,7 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusType.connected &&
+        status === WalletStatus.connected &&
         <div className="p-4">
           <div className={classNames({
             "flex flex-row max-lg:w-full lg:max-w-80 rounded-lg p-1": true,
@@ -133,7 +133,7 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusType.connected && selected_tab === VaultTabs.owned_vaults &&
+        status === WalletStatus.connected && selected_tab === VaultTabs.owned_vaults &&
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {owner_vaults.map((vault, index) => {
             return (
@@ -157,7 +157,7 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusType.connected && selected_tab === VaultTabs.accepted_deals &&
+        status === WalletStatus.connected && selected_tab === VaultTabs.accepted_deals &&
         active_lending_vaults.length > 0 &&
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {active_lending_vaults.map((vault, index) => {
@@ -201,7 +201,7 @@ export default function Home() {
       }
 
       {
-        status === WalletStatusType.connected && selected_tab === VaultTabs.accepted_deals &&
+        status === WalletStatus.connected && selected_tab === VaultTabs.accepted_deals &&
         active_lending_vaults.length === 0 &&
         <div className="px-4">
           <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
@@ -214,7 +214,7 @@ export default function Home() {
       }
 
       {
-        status !== WalletStatusType.connected &&
+        status !== WalletStatus.connected &&
         <ConnectWalletOptions title="Connect to manage vaults." />
       }
     </div>

@@ -11,7 +11,7 @@ import { FaCheckSquare, FaSpinner } from "react-icons/fa"
 import { useVoteOnProposal } from '@/app/hooks/use_exec';
 import Loading from '@/app/loading';
 import { Decision, VotingVault } from '@/app/types/voting';
-import { WalletStatusType } from '@/app/enums/wallet_status_type';
+import { WalletStatus } from '@/app/enums/wallet_status';
 import { NamedEntityMap } from '@/app/interfaces/named_entity_map';
 
 type ComponentProps = {
@@ -124,7 +124,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                     <span role='button' onClick={(() => setIsOpen(false))} className='ml-auto'>Close</span>
                                 </div>
                                 {
-                                    status === WalletStatusType.connected &&
+                                    status === WalletStatus.connected &&
                                     <>
                                         <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                             <VoteOptions default_value={selected_vote_option} onOptionSelected={(option) => { setSelectedVoteOption(option) }} />
@@ -138,7 +138,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 }
 
                                 {
-                                    status !== WalletStatusType.connected &&
+                                    status !== WalletStatus.connected &&
                                     <>
                                         <div className='flex-grow overflow-y-scroll overscroll-contain p-8'>
                                             <ConnectWalletOptions title="Connect wallet to vote." />

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import ClipBoardButton from './clipboard_button';
 import { useConnectWallet } from '../hooks/use_connect_wallet';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { WalletStatusType } from '../enums/wallet_status_type';
+import { WalletStatus } from '../enums/wallet_status';
 
 export default function ToolBar() {
     const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
@@ -31,7 +31,7 @@ export default function ToolBar() {
 
     // Listen to wallet keystore change
     useEffect(() => {
-        if (status === WalletStatusType.connected) {
+        if (status === WalletStatus.connected) {
             const reconnectWallet = () => {
                 connectWallet();
             }
@@ -52,7 +52,7 @@ export default function ToolBar() {
     function resetWalletConnection() {
         // Reset wallet connection state
         setWalletState({
-            status: WalletStatusType.idle,
+            status: WalletStatus.idle,
             address: '',
             name: '',
             client: null,
@@ -82,7 +82,7 @@ export default function ToolBar() {
             </div>
 
             {
-                status === WalletStatusType.connected && chainInfo &&
+                status === WalletStatus.connected && chainInfo &&
                 <div className="h-20 flex flex-row gap-2 items-center max-sm:grow max-sm:pl-4">
                     <Image
                         src={wallet_logo_url}

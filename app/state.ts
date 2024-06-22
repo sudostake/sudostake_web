@@ -2,7 +2,7 @@
 
 import { atom } from 'recoil'
 import { SudoStakeChainInfoSchema } from './types/chain_info_schema';
-import { WalletStatusType } from './enums/wallet_status_type';
+import { WalletStatus } from './enums/wallet_status';
 import { ValidatorInfo, ValidatorUnbondingInfo } from './types/validator_info';
 import { WalletState } from './types/wallet_state';
 
@@ -13,7 +13,7 @@ export const walletState = atom<WalletState>({
     key: 'walletState',
     default: {
         client: null,
-        status: WalletStatusType.idle,
+        status: WalletStatus.idle,
         name: '',
         address: '',
         wallet_logo_url: '',

@@ -18,9 +18,9 @@ import DepositDialogButton from "./dialogs/deposit";
 import WithdrawDialogButton from "./dialogs/withdraw";
 import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
 import Loading from "@/app/loading";
-import { LiquidityRequestType } from "@/app/enums/liquidity_request_type";
+import { LiquidityRequest } from "@/app/enums/liquidity_request";
 import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_info";
-import { WalletStatusType } from "@/app/enums/wallet_status_type";
+import { WalletStatus } from "@/app/enums/wallet_status";
 import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
 
 export default function Vault({ params }: { params: { id: string } }) {
@@ -57,17 +57,17 @@ export default function Vault({ params }: { params: { id: string } }) {
 
     const has_active_rental_option = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type !== LiquidityRequestType.fixed_term_loan;
+        vault_info.request_type !== LiquidityRequest.fixed_term_loan;
     const can_claim_rewards = is_owner || has_active_rental_option;
 
     // Fixed term loan conditions
     const can_repay_loan = is_owner && vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+        vault_info.request_type === LiquidityRequest.fixed_term_loan &&
         !vault_info.processing_liquidation;
     const has_expired_fixed_term_loan = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+        vault_info.request_type === LiquidityRequest.fixed_term_loan &&
         vault_info.end_time === 'EXPIRED';
 
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
@@ -251,7 +251,7 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                vault_metadata && status === WalletStatusType.connected &&
+                vault_metadata && status === WalletStatus.connected &&
                 <>
                     {vault_details_view()}
 
@@ -378,12 +378,12 @@ export default function Vault({ params }: { params: { id: string } }) {
             }
 
             {
-                isLoading && status === WalletStatusType.connected &&
+                isLoading && status === WalletStatus.connected &&
                 <Loading />
             }
 
             {
-                status !== WalletStatusType.connected &&
+                status !== WalletStatus.connected &&
                 <ConnectWalletOptions title="Connect to see vault details." />
             }
         </div>

@@ -1,7 +1,7 @@
 import { FaCircle } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
-import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { LiquidityRequest } from "../enums/liquidity_request";
 import { VaultIndex } from "../types/vault_index";
 
 type ComponentProps = {
@@ -56,7 +56,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 </tr>
 
                 {
-                    vault_info.request_type === LiquidityRequestType.fixed_interest_rental &&
+                    vault_info.request_type === LiquidityRequest.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Rewards</span>
@@ -67,7 +67,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
@@ -78,7 +78,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Collateral Amount</span>
@@ -90,7 +90,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                 }
 
                 {
-                    vault_info.request_type !== LiquidityRequestType.fixed_term_rental && !hide_state_info &&
+                    vault_info.request_type !== LiquidityRequest.fixed_term_rental && !hide_state_info &&
                     <tr>
                         <th scope="row" className="flex flex-col py-4 font-medium whitespace-nowrap">
                             <span>Already Claimed</span>
@@ -102,7 +102,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type !== LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Includes voting rights</span>
@@ -113,7 +113,7 @@ export default function ActiveLiquidityRequestInfo({ vault_info, hide_state_info
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestType.fixed_interest_rental && !hide_state_info &&
+                {vault_info.request_type !== LiquidityRequest.fixed_interest_rental && !hide_state_info &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Expires In</span>

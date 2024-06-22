@@ -1,6 +1,6 @@
 import { coin } from "@cosmjs/stargate";
 import { get_constantine_3_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_triomphe_currencies } from "../types/currency";
-import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { LiquidityRequest } from "../enums/liquidity_request";
 import { KeplrWalletConfig } from "../types/keplr_wallet_config";
 import { SudoStakeChainInfoSchema } from "../types/chain_info_schema";
 
@@ -80,33 +80,33 @@ const archway_constantine_3: SudoStakeChainInfoSchema = {
         {
             code_id: 484,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
         {
             code_id: 970,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
         {
             code_id: 1160,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
         {
             code_id: 1906,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
     ],
@@ -131,17 +131,17 @@ const archway_mainnet: SudoStakeChainInfoSchema = {
         {
             code_id: 156,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                // @Deprecated LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                // @Deprecated LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
         {
             code_id: 277,
             collateral_options: [
-                LiquidityRequestType.fixed_interest_rental,
-                LiquidityRequestType.fixed_term_rental,
-                LiquidityRequestType.fixed_term_loan,
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
             ]
         },
     ],

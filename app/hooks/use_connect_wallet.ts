@@ -5,8 +5,8 @@ import {
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
-import { WalletStatusType } from '../enums/wallet_status_type'
-import { WalletType } from '../enums/wallet_type'
+import { WalletStatus } from '../enums/wallet_status'
+import { Wallet } from '../enums/wallet'
 
 //
 import { getOfflineSigner } from "@cosmostation/cosmos-client";
@@ -17,18 +17,18 @@ export const useConnectWallet = () => {
     const mutation = useMutation(
         async () => {
             // Get selected wallet
-            const selected_wallet = localStorage.getItem('selected_wallet') as WalletType;
+            const selected_wallet = localStorage.getItem('selected_wallet') as Wallet;
 
             /* set the fetching state */
             setWalletState((value) => ({
                 ...value,
                 client: null,
-                status: WalletStatusType.connecting,
+                status: WalletStatus.connecting,
                 selected_wallet
             }));
 
             // Try connect keplr
-            if (selected_wallet === WalletType.keplr) {
+            if (selected_wallet === Wallet.keplr) {
                 await window.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config);
                 await window.keplr.enable(chainInfo.chain_id);
 
@@ -50,14 +50,14 @@ export const useConnectWallet = () => {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatus.connected,
                     wallet_logo_url: '/keplr_logo.svg',
                     selected_wallet
                 };
             }
 
             // Try connect leap
-            if (selected_wallet === WalletType.leap) {
+            if (selected_wallet === Wallet.leap) {
                 await window.leap.enable(chainInfo.chain_id);
 
                 const offlineSigner = await window.leap.getOfflineSignerAuto(
@@ -78,14 +78,14 @@ export const useConnectWallet = () => {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatus.connected,
                     wallet_logo_url: '/leap_wallet_logo.svg',
                     selected_wallet
                 };
             }
 
             // Try connect cosmostaion
-            if (selected_wallet === WalletType.cosmostation) {
+            if (selected_wallet === Wallet.cosmostation) {
                 await window.cosmostation.providers.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config)
                 await window.cosmostation.providers.keplr.enable(chainInfo.chain_id)
 
@@ -106,7 +106,7 @@ export const useConnectWallet = () => {
                     name: key.name,
                     address,
                     client: wasmChainClient,
-                    status: WalletStatusType.connected,
+                    status: WalletStatus.connected,
                     wallet_logo_url: '/ibc_wallet.png',
                     selected_wallet
                 };
@@ -120,7 +120,7 @@ export const useConnectWallet = () => {
                 name: '',
                 address: '',
                 client: null,
-                status: WalletStatusType.error,
+                status: WalletStatus.error,
                 wallet_logo_url: '',
                 selected_wallet: null
             })

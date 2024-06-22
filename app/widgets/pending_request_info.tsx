@@ -2,7 +2,7 @@ import { FaCircle } from "react-icons/fa";
 import { useRecoilValue } from "recoil";
 import { selectedChainState } from "../state";
 import { format_duration } from "../utils/conversion";
-import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { LiquidityRequest } from "../enums/liquidity_request";
 import { VaultIndex } from "../types/vault_index";
 
 type ComponentProps = {
@@ -12,7 +12,7 @@ type ComponentProps = {
 export default function PendingLiquidityRequestInfo({ vault_info }: ComponentProps) {
     const chainInfo = useRecoilValue(selectedChainState);
     const request_currency = chainInfo.request_currencies.find(currency => currency.coinMinimalDenom === vault_info.requested_amount.denom);
-    const formatted_duration = (vault_info.request_type !== LiquidityRequestType.fixed_interest_rental &&
+    const formatted_duration = (vault_info.request_type !== LiquidityRequest.fixed_interest_rental &&
         format_duration(vault_info.duration_in_seconds)
     )
 
@@ -43,7 +43,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
 
 
                 {
-                    vault_info.request_type === LiquidityRequestType.fixed_interest_rental &&
+                    vault_info.request_type === LiquidityRequest.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Claimable Rewards</span>
@@ -54,7 +54,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestType.fixed_interest_rental &&
+                {vault_info.request_type !== LiquidityRequest.fixed_interest_rental &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Duration</span>
@@ -65,7 +65,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Interest Amount</span>
@@ -76,7 +76,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type === LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type === LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Collateral Amount</span>
@@ -87,7 +87,7 @@ export default function PendingLiquidityRequestInfo({ vault_info }: ComponentPro
                     </tr>
                 }
 
-                {vault_info.request_type !== LiquidityRequestType.fixed_term_loan &&
+                {vault_info.request_type !== LiquidityRequest.fixed_term_loan &&
                     <tr>
                         <th scope="row" className="py-4 font-medium whitespace-nowrap">
                             <span>Includes voting rights</span>

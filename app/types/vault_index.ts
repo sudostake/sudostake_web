@@ -1,4 +1,4 @@
-import { LiquidityRequestType } from "../enums/liquidity_request_type";
+import { LiquidityRequest } from "../enums/liquidity_request";
 
 /**
  * This type describes a vault object in a read-only firebase database
@@ -32,7 +32,7 @@ export type VaultIndex = {
 
     // This describes the terms the vault owner is offering to a potential lender
     // in excahange of the requested amount of liquidity
-    request_type?: LiquidityRequestType,
+    request_type?: LiquidityRequest,
 
     // This describes the amount the vault owner is requesting for
     requested_amount?: {

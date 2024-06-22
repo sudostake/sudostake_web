@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '../state';
 import { format_duration } from '../utils/conversion';
-import { LiquidityRequestType } from '../enums/liquidity_request_type';
+import { LiquidityRequest } from '../enums/liquidity_request';
 import { VaultIndex } from '../types/vault_index';
 
 export default function LiquidityRequests() {
@@ -31,7 +31,7 @@ export default function LiquidityRequests() {
           vaults.length > 0 &&
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {vaults.map((vault, index) => {
-              const formatted_duration = (vault.request_type !== LiquidityRequestType.fixed_interest_rental &&
+              const formatted_duration = (vault.request_type !== LiquidityRequest.fixed_interest_rental &&
                 format_duration(vault.duration_in_seconds)
               )
               const request_currency = chainInfo.request_currencies.find(currency => currency.coinMinimalDenom === vault.requested_amount.denom);
@@ -54,7 +54,7 @@ export default function LiquidityRequests() {
                   <span>Total staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
                   <span className='py-4'></span>
                   {
-                    vault.request_type === LiquidityRequestType.fixed_interest_rental &&
+                    vault.request_type === LiquidityRequest.fixed_interest_rental &&
                     <>
                       <span className='text-green-600'>
                         {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
@@ -67,7 +67,7 @@ export default function LiquidityRequests() {
                     </>
                   }
                   {
-                    vault.request_type === LiquidityRequestType.fixed_term_rental &&
+                    vault.request_type === LiquidityRequest.fixed_term_rental &&
                     <>
                       <span className='text-blue-600'>
                         {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}
@@ -81,7 +81,7 @@ export default function LiquidityRequests() {
                     </>
                   }
                   {
-                    vault.request_type === LiquidityRequestType.fixed_term_loan &&
+                    vault.request_type === LiquidityRequest.fixed_term_loan &&
                     <>
                       <span className='text-red-600'>
                         {vault.request_type.split('_').map(d => `${d[0].toUpperCase()}${d.substring(1)}`).join(' ')}

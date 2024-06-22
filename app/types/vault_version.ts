@@ -1,6 +1,6 @@
-import { LiquidityRequestType } from "../enums/liquidity_request_type"
+import { LiquidityRequest } from "../enums/liquidity_request"
 
 export type VaultVersion = {
     code_id: number,
-    collateral_options: LiquidityRequestType[]
+    collateral_options: LiquidityRequest[]
 }

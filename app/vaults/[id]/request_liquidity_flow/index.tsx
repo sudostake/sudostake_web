@@ -10,24 +10,24 @@ import { useRequestLiquidity } from '@/app/hooks/use_exec';
 import { convertDenomToMicroDenom, convert_days_to_seconds } from '@/app/utils/conversion';
 import CurrencyOptions from './widgets/currency_options';
 import Image from 'next/image';
-import { LiquidityRequestType } from '@/app/enums/liquidity_request_type';
+import { LiquidityRequest } from '@/app/enums/liquidity_request';
 import { Currency } from '@/app/types/currency';
 import { VaultVersion } from '@/app/types/vault_version';
 import { RequestOption } from '@/app/types/liquidity_request';
 
 const liquidityRequestOptions: RequestOption[] = [
     {
-        id: LiquidityRequestType.fixed_interest_rental,
+        id: LiquidityRequest.fixed_interest_rental,
         title: 'Fixed Interest Rental',
         description: 'Allow the lender to claim a fixed amount of staking rewards.',
     },
     {
-        id: LiquidityRequestType.fixed_term_rental,
+        id: LiquidityRequest.fixed_term_rental,
         title: 'Fixed Term Rental',
         description: 'Allow the lender to claim staking rewards for a fixed duration of time.',
     },
     {
-        id: LiquidityRequestType.fixed_term_loan,
+        id: LiquidityRequest.fixed_term_loan,
         title: 'Fixed Term Loan',
         description: 'Allow the lender to liquidate a fixed amount of staked tokens when you default on the loan.',
     }
@@ -55,9 +55,9 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
     const [duration_in_days, setDurationInDays] = useState('');
 
     // Check when the continue button should be active
-    const is_fixed_interest_rental = selected_request_type.id === LiquidityRequestType.fixed_interest_rental;
-    const is_fixed_term_rental = selected_request_type.id === LiquidityRequestType.fixed_term_rental;
-    const is_fixed_term_loan = selected_request_type.id === LiquidityRequestType.fixed_term_loan;
+    const is_fixed_interest_rental = selected_request_type.id === LiquidityRequest.fixed_interest_rental;
+    const is_fixed_term_rental = selected_request_type.id === LiquidityRequest.fixed_term_rental;
+    const is_fixed_term_loan = selected_request_type.id === LiquidityRequest.fixed_term_loan;
     const can_continue =
         (is_fixed_interest_rental && Number(requested_amount) > 0 && Number(claimable_amount) > 0) ||
         (is_fixed_term_rental && Number(requested_amount) > 0 && Number(duration_in_days) > 0) ||
@@ -237,7 +237,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                                 </div>
                                             </span>
 
-                                            {selected_request_type.id === LiquidityRequestType.fixed_interest_rental &&
+                                            {selected_request_type.id === LiquidityRequest.fixed_interest_rental &&
                                                 <span className='flex flex-col w-full mb-8 mt-8'>
                                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                                         Enter claimable tokens
@@ -258,8 +258,8 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                                 </span>
                                             }
 
-                                            {(selected_request_type.id === LiquidityRequestType.fixed_term_rental
-                                                || selected_request_type.id === LiquidityRequestType.fixed_term_loan) &&
+                                            {(selected_request_type.id === LiquidityRequest.fixed_term_rental
+                                                || selected_request_type.id === LiquidityRequest.fixed_term_loan) &&
                                                 <span className='flex flex-col w-full mt-8'>
                                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                                         Enter duration in days
@@ -276,7 +276,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                             }
 
                                             {
-                                                selected_request_type.id === LiquidityRequestType.fixed_term_loan &&
+                                                selected_request_type.id === LiquidityRequest.fixed_term_loan &&
                                                 <span className='flex flex-col w-full mt-8 '>
                                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                                         Enter interest amount
@@ -298,7 +298,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                             }
 
                                             {
-                                                selected_request_type.id === LiquidityRequestType.fixed_term_loan &&
+                                                selected_request_type.id === LiquidityRequest.fixed_term_loan &&
                                                 <span className='flex flex-col w-full mt-8'>
                                                     <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
                                                         Enter collateral amount: Available {vault_metadata && Number(vault_metadata.total_staked).toLocaleString('en-us')}
@@ -320,7 +320,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                             }
 
                                             {
-                                                selected_request_type.id !== LiquidityRequestType.fixed_term_loan &&
+                                                selected_request_type.id !== LiquidityRequest.fixed_term_loan &&
                                                 <Switch.Group>
                                                     <div className="flex items-center mt-8">
                                                         <Switch.Label className="text-gray-400 text-xs lg:text-sm mr-4">

@@ -1,12 +1,12 @@
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate"
-import { WalletStatusType } from "../enums/wallet_status_type"
-import { WalletType } from "../enums/wallet_type"
+import { WalletStatus } from "../enums/wallet_status"
+import { Wallet } from "../enums/wallet"
 
 export type WalletState = {
     client: SigningCosmWasmClient | null,
-    status: WalletStatusType,
+    status: WalletStatus,
     name: string,
     address: string,
     wallet_logo_url: string,
-    selected_wallet: WalletType | null
+    selected_wallet: Wallet | null
 }

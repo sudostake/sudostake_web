@@ -9,7 +9,7 @@ import { db } from "../services/firebase_client";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Currency } from "../types/currency";
 import { ValidatorInfo, ValidatorUnbondingInfo } from "../types/validator_info";
-import { WalletStatusType } from "../enums/wallet_status_type";
+import { WalletStatus } from "../enums/wallet_status";
 import { VaultIndex } from "../types/vault_index";
 import { VotingVault } from "../types/voting";
 
@@ -90,7 +90,7 @@ export const useQueryRedelegationList = (vault_address: string) => {
             });
             return (await response.json())['redelegation_responses'];
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatus.connected, }
     )
 
     return { redelegation_list, isLoading }
@@ -110,7 +110,7 @@ export const useQueryValidatorList = () => {
             const data = await response.json();
             return data['validators'];
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatus.connected, }
     )
 
     return { validator_list, isLoading }
@@ -128,7 +128,7 @@ export const useFilteredValidators = (hide_zero_balance?: boolean) => {
             }
             return validator_list;
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatus.connected, }
     )
 
     return { filtered_list }
@@ -209,7 +209,7 @@ export const useQueryVaultMetaData = (vault_address: string) => {
                 staking_info,
             };
         },
-        { enabled: status === WalletStatusType.connected, }
+        { enabled: status === WalletStatus.connected, }
     )
 
     return { vault_metadata, isLoading }
@@ -274,7 +274,7 @@ export const useQueryVotingVaultsForProposal = (proposal_id: string, has_selecte
                 return await get_voting_vault(vault, proposal_id, chainInfo.chain_id);
             }))
         },
-        { enabled: status === WalletStatusType.connected && has_selected_vote_option, }
+        { enabled: status === WalletStatus.connected && has_selected_vote_option, }
     )
 
     return { voting_vaults, isLoading }
