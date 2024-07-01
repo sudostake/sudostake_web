@@ -57,11 +57,11 @@ export default function NavigationArea() {
 
                 <span className="max-sm:h-8 max-sm:w-8 flex flex-col items-center justify-center">
                     <Image
-                        src="/logo_light.png"
+                        src="/logo.png"
                         alt="sudostake Logo"
-                        className="invert dark:invert-0"
-                        width={24}
-                        height={24}
+                        className="invert-0 dark:invert rounded-full"
+                        width={32}
+                        height={32}
                         priority
                     />
                 </span>
