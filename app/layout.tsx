@@ -9,7 +9,7 @@ import FailedVaultIndexHandler from './widgets/vault_index_handler';
 import NavigationArea from './widgets/nav_area';
 
 export const metadata = {
-  title: 'Sudo Stake',
+  title: 'sudo stake',
   description: 'On-chain property rights for everyone.',
 }
 
