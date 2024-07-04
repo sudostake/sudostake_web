@@ -68,7 +68,7 @@ export default function NavigationArea() {
 
 
                 <span className="max-sm:hidden text-lg">
-                    sudo stake
+                    SudoStake
                 </span>
             </div>
 
