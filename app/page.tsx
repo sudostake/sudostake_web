@@ -76,7 +76,7 @@ export default function Home() {
         status === WalletStatus.connected &&
         <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8 text-3xl font-bold">
           <span>
-            My Vaults
+            Manage Vaults
           </span>
 
           <div role="button" onClick={() => { !isLoading && mintVault() }}
@@ -112,25 +112,40 @@ export default function Home() {
             "bg-zinc-300 dark:bg-zinc-800": true,
           })}>
             <span role="button" onClick={() => setSelectedTab(VaultTabs.owned_vaults)} className={classNames(
-              'w-full rounded-lg text-sm px-4 py-2',
+              'w-full rounded-lg text-sm px-4 py-2 text-center',
               selected_tab === VaultTabs.owned_vaults
                 ? 'font-bold bg-white dark:bg-zinc-950'
                 : ''
             )}>
-              Owned by me
+              Owner
             </span>
 
             <span role="button" onClick={() => setSelectedTab(VaultTabs.accepted_deals)} className={classNames(
-              'w-full rounded-lg text-sm px-4 py-2',
+              'w-full rounded-lg text-sm px-4 py-2 text-center',
               selected_tab === VaultTabs.accepted_deals
                 ? 'font-bold bg-white dark:bg-zinc-950'
                 : ''
             )}>
-              Invested in
+              Lender
             </span>
           </div>
         </div>
       }
+
+
+      {
+        status === WalletStatus.connected && selected_tab === VaultTabs.owned_vaults &&
+        owner_vaults.length === 0 &&
+        <div className="px-4">
+          <span className="whitespace-normal">
+            You have 0 vaults. <br />
+            <span className=" text-blue-600" role="button" onClick={() => { !isLoading && mintVault() }}>
+              Click &ldquo;New Vault&rdquo; to get started.
+            </span>
+          </span>
+        </div>
+      }
+
 
       {
         status === WalletStatus.connected && selected_tab === VaultTabs.owned_vaults &&
@@ -207,7 +222,7 @@ export default function Home() {
           <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
             You have not lent to any vaults yet. <br />
             <span className=" text-blue-600">
-              Go to market to see available lending options.
+              See all open interests.
             </span>
           </span>
         </div>
