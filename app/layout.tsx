@@ -28,7 +28,7 @@ export default function RootLayout({
             <ToolBar />
             <NavigationArea />
 
-            <div className="h-screen sm:pl-56 bg-white dark:bg-zinc-950">
+            <div className="h-dvh sm:pl-56 bg-white dark:bg-zinc-950">
               <Suspense fallback={<Loading />}>
                 <>
                   {children}
