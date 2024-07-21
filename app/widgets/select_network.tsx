@@ -10,7 +10,7 @@ export default function SelectNetwork() {
         const selected = supportedChains.find(x => x.chain_id === selected_chain_id)!;
         setSelectedChainState(selected);
         localStorage.setItem('selected_chain_id', selected_chain_id);
-        // location.reload();
+        location.reload();
     }
 
     return (
