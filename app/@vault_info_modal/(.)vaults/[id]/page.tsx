@@ -10,7 +10,7 @@ export default function VaultModalView({ params }: { params: { id: string } }) {
         <>
             {
                 pathname.startsWith('/vaults/') &&
-                <span className='z-19 fixed left-0 right-0 top-0 bottom-0 mx-auto sm:ml-56'>
+                <span className='z-30 fixed left-0 right-0 top-0 bottom-0 mx-auto sm:ml-56'>
                     <Vault params={params} />
                 </span>
             }

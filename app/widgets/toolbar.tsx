@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { get_chain_info_from_id, supportedChains } from '../utils/supported_chains';
 import { useRecoilState } from 'recoil';
 import { selectedChainState, walletState } from '../state';
-import SelectNetworkDialog from './select_network_dialog';
+import SelectNetwork from './select_network';
 import Image from 'next/image';
 import ClipBoardButton from './clipboard_button';
 import { useConnectWallet } from '../hooks/use_connect_wallet';
@@ -71,13 +71,13 @@ export default function ToolBar() {
                 "w-full h-20",
                 "sm:pl-56",
                 "border-b border-zinc-300 dark:border-zinc-700",
-                "bg-opacity-80 backdrop-blur-xs"
+                "bg-opacity-80 backdrop-blur-xs",
             )
         }>
-            <div className='h-20 flex items-center pl-4 pr-8 border-r border-zinc-300 dark:border-zinc-700'>
+            <div className='h-20 flex items-center pl-4 pr-8'>
                 {
                     chainInfo &&
-                    <SelectNetworkDialog selected_chain={chainInfo} />
+                    <SelectNetwork />
                 }
             </div>
 

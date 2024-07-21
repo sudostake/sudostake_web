@@ -5,7 +5,7 @@ import { selectedChainState, walletState } from "./state";
 import { useEffect, useState } from "react";
 import { collection, onSnapshot, where, query, orderBy } from "firebase/firestore";
 import { db } from "./services/firebase_client";
-import { FaHistory, FaPlusSquare, FaSpinner } from "react-icons/fa";
+import { FaHistory, FaPlus, FaSpinner } from "react-icons/fa";
 import { useMintVault } from "./hooks/use_exec";
 import VaultInfoCard from "./widgets/vault_info_card";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
@@ -74,8 +74,8 @@ export default function Home() {
     <div className="h-full overflow-y-auto overscroll-contain py-20 flex flex-col">
       {
         status === WalletStatus.connected &&
-        <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8 text-3xl font-bold">
-          <span>
+        <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
+          <span className="text-3xl">
             Manage Vaults
           </span>
 
@@ -95,7 +95,7 @@ export default function Home() {
 
               {
                 !isLoading && <>
-                  <FaPlusSquare className="w-6 h-6 mr-4" />
+                  <FaPlus className="w-4 h-4 mr-4" />
                   <span>New Vault</span>
                 </>
               }
@@ -136,16 +136,15 @@ export default function Home() {
       {
         status === WalletStatus.connected && selected_tab === VaultTabs.owned_vaults &&
         owner_vaults.length === 0 &&
-        <div className="px-4">
-          <span className="whitespace-normal">
+        <div className="flex w-full h-full items-center justify-center">
+          <span className="whitespace-normal text-center">
             You have 0 vaults. <br />
             <span className=" text-blue-600" role="button" onClick={() => { !isLoading && mintVault() }}>
-              Click &ldquo;New Vault&rdquo; to get started.
+              Click New Vault to get started
             </span>
           </span>
         </div>
       }
-
 
       {
         status === WalletStatus.connected && selected_tab === VaultTabs.owned_vaults &&
@@ -218,8 +217,8 @@ export default function Home() {
       {
         status === WalletStatus.connected && selected_tab === VaultTabs.accepted_deals &&
         active_lending_vaults.length === 0 &&
-        <div className="px-4">
-          <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal">
+        <div className="flex w-full h-full items-center justify-center">
+          <span role="button" onClick={() => { router.push('/liquidity_requests') }} className="whitespace-normal text-center">
             You have not lent to any vaults yet. <br />
             <span className=" text-blue-600">
               See all open interests.

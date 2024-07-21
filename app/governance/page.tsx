@@ -10,8 +10,8 @@ export default function Governance() {
 
   return (
     <div className="h-full overflow-y-auto py-20 flex flex-col">
-      <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
-        <span>
+      <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
+        <span className='text-3xl'>
           Active Proposals
         </span>
       </div>

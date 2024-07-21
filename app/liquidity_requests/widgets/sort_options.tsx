@@ -62,7 +62,9 @@ export default function SortOptions({ on_select }: ComponentProps) {
             {
                 selected_option &&
                 <label className='h-12 flex items-center gap-4'>
-                    <FaSortAmountDown className="w-4 h-4" />
+                    <span className='size-4'>
+                        <FaSortAmountDown className="w-4 h-4" />
+                    </span>
                     <select name="sort_options" id="sort_options"
                         className='rounded-lg bg-zinc-200 dark:bg-zinc-900 px-2'
                         value={selected_option.type}
