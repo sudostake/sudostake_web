@@ -23,7 +23,7 @@ import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_inf
 import { WalletStatus } from "@/app/enums/wallet_status";
 import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
 
-export default function Vault({ params }: { params: { id: string } }) {
+export default function Vault({ params }: { params: { id: string, intercepted: boolean } }) {
     const chainInfo = useRecoilValue(selectedChainState);
     const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id);
     const { validator_list } = useQueryValidatorList();
@@ -239,7 +239,8 @@ export default function Vault({ params }: { params: { id: string } }) {
             "bg-white dark:bg-zinc-950"
             , {
                 "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base pb-20": true,
-                "flex flex-col": true
+                "flex flex-col": true,
+                "pt-20": !Boolean(params.intercepted)
             }
         )}>
             {vault_metadata &&
