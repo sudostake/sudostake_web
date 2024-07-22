@@ -15,7 +15,7 @@ export default function SelectNetwork() {
 
     return (
         <>
-            <label className='h-12 flex items-center gap-4'>
+            <label className='flex items-center gap-4'>
                 <span className='size-4'>
                     <Image
                         src={chainInfo.chain_logo_url}
