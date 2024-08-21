@@ -12,15 +12,15 @@ type NavItem = {
 
 const nav_items: NavItem[] = [
     {
-        label: "Vaults",
+        label: "Assets",
         href: "/",
     },
     {
-        label: "Deals",
+        label: "DEX",
         href: "/liquidity_requests",
     },
     {
-        label: "Vote",
+        label: "Poll",
         href: "/governance",
     },
 ];
@@ -31,7 +31,7 @@ export default function NavigationArea() {
     return (
         <div className={
             classNames(
-                "z-20 flex fixed border-zinc-300 dark:border-zinc-700",
+                "z-20 flex fixed border-zinc-300 dark:border-zinc-800",
                 "max-sm:flex-row",
                 "max-sm:inset-x-0 bottom-0",
                 "max-sm:h-20",
@@ -47,7 +47,7 @@ export default function NavigationArea() {
                 className={
                     classNames(
                         "flex flex-row gap-2 items-center",
-                        "border-zinc-300 dark:border-zinc-700",
+                        "border-zinc-300 dark:border-zinc-800",
                         "p-4 h-20",
                         "max-sm:border-r",
                         "sm:border-b"
@@ -55,15 +55,17 @@ export default function NavigationArea() {
                 }>
 
 
-                <span className="max-sm:h-8 max-sm:w-8 flex flex-col items-center justify-center">
-                    <Image
-                        src="/logo.png"
-                        alt="sudostake Logo"
-                        className="invert-0 dark:invert rounded-full"
-                        width={32}
-                        height={32}
-                        priority
-                    />
+                <span className="max-sm:h-8 max-sm:w-8 flex items-center justify-center">
+                    <span className='flex size-6 items-center'>
+                        <Image
+                            src="/logo.png"
+                            alt="sudostake Logo"
+                            className="invert-0 dark:invert rounded-full"
+                            width={32}
+                            height={32}
+                            priority
+                        />
+                    </span>
                 </span>
 
 
@@ -84,13 +86,16 @@ export default function NavigationArea() {
             }>
                 {nav_items.map((nav_item) => {
                     return (
-                        <Link key={nav_item.label} href={nav_item.href} passHref className={
-                            classNames(
-                                "min-w-36 w-full",
-                                "flex items-center",
-                                "sm:px-4 sm:py-2"
-                            )
-                        }>
+                        <Link key={nav_item.label}
+                            href={nav_item.href}
+                            passHref
+                            className={
+                                classNames(
+                                    "min-w-36 w-full",
+                                    "flex items-center",
+                                    "sm:px-4 sm:py-2"
+                                )
+                            }>
                             <span className={
                                 classNames(
                                     "flex w-full max-sm:justify-center rounded-lg p-4",
@@ -110,13 +115,16 @@ export default function NavigationArea() {
                 <span className={
                     classNames(
                         "sm:mt-auto",
-                        "sm:border-t sm:border-zinc-300 dark:sm:border-zinc-700",
+                        "sm:border-t sm:border-zinc-300 dark:sm:border-zinc-800",
                         "min-w-36 w-full",
                         "flex items-center",
                         "sm:px-4 sm:py-2"
                     )
                 }>
-                    <a href="https://github.com/sudostake" target="_blank" rel="noreferrer" className="flex w-full max-sm:justify-center rounded-lg p-2">
+                    <a href="https://github.com/sudostake"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex w-full max-sm:justify-center rounded-lg p-2">
                         GitHub
                     </a>
                 </span>

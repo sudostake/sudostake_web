@@ -70,7 +70,7 @@ export default function ToolBar() {
                 "fixed z-20 top-0 flex flex-row sm:justify-between",
                 "w-full h-20",
                 "sm:pl-56",
-                "border-b border-zinc-300 dark:border-zinc-700",
+                "border-b border-zinc-300 dark:border-zinc-800",
                 "bg-opacity-80 backdrop-blur-xs",
             )
         }>
@@ -101,7 +101,7 @@ export default function ToolBar() {
                         className={
                             classNames(
                                 "flex justify-center ml-8 max-sm:ml-auto ",
-                                "border-l border-zinc-300 dark:border-zinc-700",
+                                "border-l border-zinc-300 dark:border-zinc-800",
                                 "h-20 w-20"
                             )
                         }

@@ -238,7 +238,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
         <div className={classNames(
             "bg-white dark:bg-zinc-950"
             , {
-                "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base pb-20": true,
+                "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base": true,
                 "flex flex-col": true,
                 "pt-20": !Boolean(params.intercepted)
             }
