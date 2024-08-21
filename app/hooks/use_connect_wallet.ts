@@ -7,8 +7,6 @@ import { SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
 import { GasPrice } from '@cosmjs/stargate'
 import { WalletStatus } from '../enums/wallet_status'
 import { Wallet } from '../enums/wallet'
-
-//
 import { getOfflineSigner } from "@cosmostation/cosmos-client";
 
 export const useConnectWallet = () => {
@@ -45,7 +43,6 @@ export const useConnectWallet = () => {
                 const [{ address }] = await offlineSigner.getAccounts();
                 const key = await window.keplr.getKey(chainInfo.chain_id);
 
-                // Return response
                 return {
                     name: key.name,
                     address,
@@ -73,7 +70,6 @@ export const useConnectWallet = () => {
                 const [{ address }] = await offlineSigner.getAccounts();
                 const key = await window.leap.getKey(chainInfo.chain_id);
 
-                // Return response
                 return {
                     name: key.name,
                     address,
@@ -101,7 +97,6 @@ export const useConnectWallet = () => {
                 const [{ address }] = await offlineSigner.getAccounts()
                 const key = await window.cosmostation.providers.keplr.getKey(chainInfo.chain_id)
 
-                // return
                 return {
                     name: key.name,
                     address,

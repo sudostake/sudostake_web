@@ -4,12 +4,11 @@ import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import VaultDealsToolbar from './widgets/vault_deals_toolbar';
 import classNames from 'classnames';
-import { useRecoilValue } from 'recoil';
-import { selectedChainState } from '../state';
-import { format_duration } from '../utils/conversion';
-import { LiquidityRequest } from '../enums/liquidity_request';
 import { VaultIndex } from '../types/vault_index';
 import OpenInterestCard from './widgets/open_interest_card';
+import DocumentCounter from './widgets/document_counter';
+import { useRecoilValue } from 'recoil';
+import { selectedChainState } from '../state';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
@@ -21,7 +20,7 @@ export default function LiquidityRequests() {
     <div className='h-full overflow-y-auto pt-20 max-sm:pb-20 flex flex-col' ref={vault_deals_list_ref}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
         <span className='text-3xl'>
-          Open Interests
+          Open Interests (<DocumentCounter collection_path={chainInfo && chainInfo.vault_collection_path} />)
         </span>
       </div>
 
