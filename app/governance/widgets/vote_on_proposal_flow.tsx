@@ -71,7 +71,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
 
             {
                 isOpen &&
-                <div role='button' onClick={closeModal} className="fixed inset-0 bg-opacity-80 backdrop-blur-xs" />
+                <div role='button' onClick={closeModal} className="fixed inset-0 bg-opacity-80 backdrop-blur-xs z-30" />
             }
 
             <Transition appear show={isOpen} as={Fragment}>
@@ -87,7 +87,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
 
                     <div className={
                         classNames({
-                            "flex flex-col h-full absolute inset-0 z-30": true,
+                            "flex flex-col h-full absolute inset-0 z-40": true,
                             "bg-white dark:bg-zinc-950": true,
                             "shadow-lg shadow-zinc-300 dark:shadow-black": true,
                             "lg:border border-zinc-300 dark:lg:border-zinc-800": true,
