@@ -4,9 +4,10 @@ import { useQueryActiveProposals } from '../hooks/use_query';
 import classNames from 'classnames';
 import VoteOnProposalFlow from './widgets/vote_on_proposal_flow';
 import { FaGlobe } from 'react-icons/fa';
+import Loading from '../loading';
 
 export default function Governance() {
-  const { active_proposals } = useQueryActiveProposals();
+  const { active_proposals, isLoading } = useQueryActiveProposals();
 
   return (
     <div className="h-full overflow-y-auto py-20 flex flex-col">
@@ -46,13 +47,17 @@ export default function Governance() {
       </div>
 
       {
-        active_proposals.length === 0 &&
+        active_proposals.length === 0 && !isLoading &&
         <div className="flex w-full h-full items-center justify-center">
           <h2 className="flex flex-row gap-2 items-center">
             <FaGlobe className="w-6 h-6 mr-2" />
             <span>No active proposal(s).</span>
           </h2>
         </div>
+      }
+
+      {
+        isLoading && <Loading />
       }
     </div>
   )
