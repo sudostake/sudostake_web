@@ -145,7 +145,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                         </div>
                                         <div className='flex flex-row items-center p-8 h-20'>
                                             <span role='button' onClick={() => { setStepHistory(0) }}>Prev</span>
-                                            <button disabled={!Boolean(selected_vote_option)} onClick={() => { setStepHistory(2) }}
+                                            <button onClick={(() => setIsOpen(false))}
                                                 className='flex items-center ml-auto h-20'>Close</button>
                                         </div>
                                     </>
