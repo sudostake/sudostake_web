@@ -15,7 +15,7 @@ export default function VaultModalView({ params }: { params: { id: string } }) {
             {
                 pathname.startsWith('/vaults/') &&
                 <div role="button" onClick={() => router.back()}
-                    className="fixed inset-0 bg-opacity-80 backdrop-blur-xs z-30" />
+                    className="fixed inset-0 bg-opacity-80 backdrop-blur-md z-30" />
             }
 
             {
