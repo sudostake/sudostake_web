@@ -40,7 +40,7 @@ export default function NavigationArea() {
                 "sm:inset-y-0 sm:left-0",
                 "sm:border-r",
                 "sm:w-56",
-                "bg-opacity-80 backdrop-blur-xs",
+                "bg-opacity-80 backdrop-blur-sm",
             )
         }>
             <div
