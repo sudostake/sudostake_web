@@ -251,7 +251,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                         params.intercepted &&
                         <span className="flex flex-row gap-2 items-center justify-center absolute right-0 top-0 p-4"
                             role="button" onClick={() => router.back()} >
-                            close
+                            Close
                         </span>
                     }
 
