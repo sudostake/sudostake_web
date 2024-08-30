@@ -4,7 +4,7 @@ import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_qu
 import { selectedChainState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { useEffect } from "react"
-import { FaSpinner, FaTimes } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
