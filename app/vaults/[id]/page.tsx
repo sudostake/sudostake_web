@@ -4,7 +4,7 @@ import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_qu
 import { selectedChainState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
 import { useEffect } from "react"
-import { FaSpinner } from "react-icons/fa";
+import { FaSpinner, FaTimes } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
 import ManageStakeActionsMenu from "./widgets/stake_actions";
@@ -22,8 +22,10 @@ import { LiquidityRequest } from "@/app/enums/liquidity_request";
 import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_info";
 import { WalletStatus } from "@/app/enums/wallet_status";
 import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
+import { useRouter } from 'next/navigation';
 
 export default function Vault({ params }: { params: { id: string, intercepted: boolean } }) {
+    const router = useRouter();
     const chainInfo = useRecoilValue(selectedChainState);
     const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id);
     const { validator_list } = useQueryValidatorList();
@@ -244,8 +246,16 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
             }
         )}>
             {vault_metadata &&
-                <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 text-3xl font-bold">
-                    <span>
+                <div className="relative px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
+                    {
+                        params.intercepted &&
+                        <span className="flex flex-row gap-2 items-center justify-center absolute right-0 top-0 p-4"
+                            role="button" onClick={() => router.back()} >
+                            close
+                        </span>
+                    }
+
+                    <span className="text-3xl font-bold">
                         Vault #{vault_info.index_number}
                     </span>
                 </div>
