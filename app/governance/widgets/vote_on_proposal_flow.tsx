@@ -167,7 +167,16 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                 }
 
                                 {
-                                    !is_loading_voting_vaults &&
+                                    !is_loading_voting_vaults && voting_vaults.length === 0 &&
+                                    <div className="flex w-full h-full items-center justify-center">
+                                        <h2 className="flex flex-row gap-2 items-center">
+                                            <span>You have 0 vaults.</span>
+                                        </h2>
+                                    </div>
+                                }
+
+                                {
+                                    !is_loading_voting_vaults && voting_vaults.length > 0 &&
                                     <div className='flex-grow overflow-y-scroll overscroll-contain py-8'>
                                         <div className='flex flex-col divide-y divide-zinc-300 dark:divide-zinc-900'>
                                             {voting_vaults.map((voting_vault) => {
