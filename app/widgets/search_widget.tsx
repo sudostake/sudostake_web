@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import classNames from "classnames";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useLayoutEffect, useState } from "react";
 import { FaSearch, FaCaretRight } from "react-icons/fa";
 import { useQueryVaultInfo } from "../hooks/use_query";
 import Link from "next/link";
@@ -14,7 +14,7 @@ export default function SearchWidget() {
     const [search_query, setSearchQuery] = useState("");
     const { vault_info } = useQueryVaultInfo(search_query);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setDocumentNode(document);
     });
 
