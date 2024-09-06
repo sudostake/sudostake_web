@@ -221,19 +221,21 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                 }
             </span>
 
-            <span className="flex flex-row justify-between w-full py-4">
-                <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
-                    <span>Unbonding</span>
-                    <span>
-                        {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
-                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+            {
+                vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount > 0 &&
+                <span className="flex flex-row justify-between w-full py-4">
+                    <span className={can_view_unbonding_info ? "flex flex-col" : "flex flex-row justify-between w-full"}>
+                        <span>Unbonding</span>
+                        <span>
+                            {vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
+                        </span>
                     </span>
+                    {
+                        can_view_unbonding_info &&
+                        <UnbondingInfoDialog />
+                    }
                 </span>
-                {
-                    can_view_unbonding_info &&
-                    <UnbondingInfoDialog />
-                }
-            </span>
+            }
         </div>;
 
     return (

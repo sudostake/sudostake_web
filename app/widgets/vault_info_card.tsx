@@ -90,13 +90,16 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                     {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
                 </span>
             </span>
-            <span className="flex items-center">
-                <span>Unbonding</span>
-                <span className="ml-auto">
-                    {vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
-                    {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
+
+            {
+                vault_metadata && vault_metadata.unbonding_details.total_unbonding_amount > 0 &&
+                <span className="flex items-center">
+                    <span>Unbonding</span>
+                    <span className="ml-auto">
+                        {vault_metadata.unbonding_details.total_unbonding_amount.toLocaleString('en-us')}
+                    </span>
                 </span>
-            </span>
+            }
         </div>
     );
 }
