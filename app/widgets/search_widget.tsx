@@ -56,7 +56,7 @@ export default function SearchWidget() {
                                 <Dialog.Title
                                     as="h2"
                                     className="text-lg font-bold leading-6 mb-4">
-                                    Enter Vaults Address
+                                    Enter the vault address
                                 </Dialog.Title>
 
                                 <div className="flex flex-row gap-4 mb-12">
