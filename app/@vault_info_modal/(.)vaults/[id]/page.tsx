@@ -15,14 +15,14 @@ export default function VaultModalView({ params }: { params: { id: string } }) {
             {
                 pathname.startsWith('/vaults/') &&
                 <div role="button" onClick={() => router.back()}
-                    className="fixed inset-0 bg-opacity-80 backdrop-blur-xs z-30" />
+                    className="fixed inset-0 bg-opacity-80 backdrop-blur-xs z-40" />
             }
 
             {
                 pathname.startsWith('/vaults/') &&
                 <span className={
                     classNames({
-                        "z-30 fixed left-0 right-0 top-0 bottom-0": true,
+                        "z-50 fixed left-0 right-0 top-0 bottom-0": true,
                         "shadow-lg shadow-zinc-300 dark:shadow-black": true,
                         "lg:border border-zinc-300 dark:lg:border-zinc-800": true,
                         "w-full max-w-5xl mx-auto": true,

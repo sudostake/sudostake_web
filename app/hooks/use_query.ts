@@ -4,14 +4,14 @@ import { useQuery } from "@tanstack/react-query"
 import { selectedChainState, validatorListState, walletState } from "../state";
 import { useRecoilValue } from "recoil";
 import { convertMicroDenomToDenom, secondsToDhms } from "../utils/conversion";
-import { collection, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
-import { db } from "../services/firebase_client";
+import { collection, doc, getDoc, getDocsFromServer, orderBy, query, where } from "firebase/firestore";
 import { SigningCosmWasmClient } from "@cosmjs/cosmwasm-stargate";
 import { Currency } from "../types/currency";
 import { ValidatorInfo, ValidatorUnbondingInfo } from "../types/validator_info";
 import { WalletStatus } from "../enums/wallet_status";
 import { VaultIndex } from "../types/vault_index";
 import { VotingVault } from "../types/voting";
+import { db } from "../services/firebase_client";
 
 async function fetchTokenBalance({
     client,
@@ -278,4 +278,26 @@ export const useQueryVotingVaultsForProposal = (proposal_id: string, has_selecte
     )
 
     return { voting_vaults, isLoading }
+}
+
+export const useQueryVaultInfo = (address: string) => {
+    const chainInfo = useRecoilValue(selectedChainState);
+
+    const { data: vault_info } = useQuery<VaultIndex>(
+        ['vault_info', address],
+        async () => {
+            const docRef = doc(db, chainInfo.vault_collection_path, address);
+            const docSnap = await getDoc(docRef);
+            const data = docSnap.data();
+
+            if (docSnap.exists()) {
+                return { ...data, id: docSnap.id };
+            }
+        },
+        {
+            enabled: Boolean(address)
+        }
+    )
+
+    return { vault_info }
 }

@@ -11,6 +11,7 @@ import ClipBoardButton from './clipboard_button';
 import { useConnectWallet } from '../hooks/use_connect_wallet';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { WalletStatus } from '../enums/wallet_status';
+import SearchWidget from './search_widget';
 
 export default function ToolBar() {
     const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
@@ -67,7 +68,7 @@ export default function ToolBar() {
     return (
         <div className={
             classNames(
-                "fixed z-20 top-0 flex flex-row sm:justify-between",
+                "fixed z-20 top-0 flex flex-row",
                 "w-full h-20",
                 "sm:pl-56",
                 "border-b border-zinc-300 dark:border-zinc-800",
@@ -80,6 +81,8 @@ export default function ToolBar() {
                     <SelectNetwork />
                 }
             </div>
+
+            <div className='grow'></div>
 
             {
                 status === WalletStatus.connected && chainInfo &&
@@ -96,20 +99,20 @@ export default function ToolBar() {
                     <span className=''>
                         <ClipBoardButton label={name} address={address} size='min' />
                     </span>
-
-                    <span
-                        className={
-                            classNames(
-                                "flex justify-center ml-8 max-sm:ml-auto ",
-                                "border-l border-zinc-300 dark:border-zinc-800",
-                                "h-20 w-20"
-                            )
-                        }
-                    >
-                        <button onClick={() => resetWalletConnection()}> <FaSignOutAlt className="w-5 h-5" /></button>
-                    </span>
                 </div>
             }
+
+            <span
+                className={
+                    classNames(
+                        "flex justify-center ml-8 max-sm:ml-auto ",
+                        "border-l border-zinc-300 dark:border-zinc-800",
+                        "h-20 w-20"
+                    )
+                }
+            >
+                <SearchWidget />
+            </span>
         </div>
     )
 }
