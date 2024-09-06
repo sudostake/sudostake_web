@@ -3,18 +3,16 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
 import { get_chain_info_from_id, supportedChains } from '../utils/supported_chains';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedChainState, walletState } from '../state';
 import SelectNetwork from './select_network';
-import Image from 'next/image';
-import ClipBoardButton from './clipboard_button';
 import { useConnectWallet } from '../hooks/use_connect_wallet';
-import { FaSignOutAlt } from 'react-icons/fa';
 import { WalletStatus } from '../enums/wallet_status';
 import SearchWidget from './search_widget';
+import WalletInfo from './wallet-info';
 
 export default function ToolBar() {
-    const [{ name, status, address, wallet_logo_url }, setWalletState] = useRecoilState(walletState);
+    const { status } = useRecoilValue(walletState);
     const [chainInfo, setSelectedChainState] = useRecoilState(selectedChainState);
     const { mutate: connectWallet } = useConnectWallet();
 
@@ -50,21 +48,6 @@ export default function ToolBar() {
 
     }, [status]);
 
-    function resetWalletConnection() {
-        // Reset wallet connection state
-        setWalletState({
-            status: WalletStatus.idle,
-            address: '',
-            name: '',
-            client: null,
-            wallet_logo_url: '',
-            selected_wallet: null
-        })
-
-        // Update local storage
-        localStorage.removeItem('selected_wallet');
-    }
-
     return (
         <div className={
             classNames(
@@ -86,26 +69,13 @@ export default function ToolBar() {
 
             {
                 status === WalletStatus.connected && chainInfo &&
-                <div className="h-20 flex flex-row gap-2 items-center max-sm:grow max-sm:pl-4">
-                    <Image
-                        src={wallet_logo_url}
-                        alt="wallet logo"
-                        width={24}
-                        height={24}
-                        priority
-                        className="rounded-full"
-                    />
-
-                    <span className=''>
-                        <ClipBoardButton label={name} address={address} size='min' />
-                    </span>
-                </div>
+                <WalletInfo />
             }
 
             <span
                 className={
                     classNames(
-                        "flex justify-center ml-8 max-sm:ml-auto ",
+                        "flex justify-center",
                         "border-l border-zinc-300 dark:border-zinc-800",
                         "h-20 w-20"
                     )
