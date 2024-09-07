@@ -76,7 +76,7 @@ function _WithdrawDialog({ from_address, currency, is_open, on_close }: _Withdra
 
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-30" onClose={on_close}>
+            <Dialog as="div" className="relative z-[70]" onClose={on_close}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

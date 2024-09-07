@@ -72,7 +72,7 @@ function UndelegateDialog({ vault_address, currency, is_open, on_close }: Compon
 
     return (
         <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-30" onClose={handle_modal_closed}>
+            <Dialog as="div" className="relative z-[70]" onClose={handle_modal_closed}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"

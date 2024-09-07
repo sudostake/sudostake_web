@@ -158,7 +158,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
             </div>
 
             <Transition appear show={isOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-30" onClose={() => setIsOpen(false)}>
+                <Dialog as="div" className="relative z-[70]" onClose={() => setIsOpen(false)}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
