@@ -24,6 +24,8 @@ async function fetchTokenBalance({
     denom: string,
     decimals: number
 }) {
+    if (!Boolean(address)) return convertMicroDenomToDenom('0', decimals);
+
     const coin = await client.getBalance(address, denom);
     const amount = coin ? coin.amount : '0';
     return convertMicroDenomToDenom(amount, decimals)

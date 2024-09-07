@@ -2,57 +2,55 @@ import { useDeposit } from '@/app/hooks/use_exec';
 import { useQueryBalance } from '@/app/hooks/use_query';
 import { Currency } from '@/app/types/currency';
 import { walletState } from '@/app/state';
-import { Dialog, Transition } from '@headlessui/react'
 import classNames from 'classnames';
-import { Fragment, useEffect, useState } from 'react'
+import { MutableRefObject, useEffect, useLayoutEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa';
 import { useRecoilValue } from 'recoil';
+import { createPortal } from 'react-dom';
 
 type DepositDialogButonProps = {
     to_address: string,
-    currency: Currency
-}
-
-export default function DepositDialogButton({ to_address, currency }: DepositDialogButonProps) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    return (
-        <>
-            <button onClick={() => setIsOpen(true)} className="items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium">
-                Deposit
-            </button>
-
-            {
-                isOpen && <_DepositDialog
-                    to_address={to_address}
-                    currency={currency}
-                    is_open={isOpen}
-                    on_close={() => { setIsOpen(false) }} />
-            }
-        </>
-    )
-}
-
-
-type _DepositDialogProps = {
-    to_address: string,
     currency: Currency,
-    is_open: boolean,
-    on_close: () => void,
+    vault_page_ref: MutableRefObject<any>
 }
 
-function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDialogProps) {
-    const [amount, setAmount] = useState('');
+export default function DepositDialogButton({ to_address, currency, vault_page_ref }: DepositDialogButonProps) {
+    const [is_open, setIsOpen] = useState(false);
+    const [document_node, setDocumentNode] = useState<globalThis.Document>();
     const { address } = useRecoilValue(walletState);
-    const { balance } = useQueryBalance(address, currency);
+    const [amount, setAmount] = useState('');
     const { mutate: deposit, isLoading, isSuccess } = useDeposit(to_address);
+
+    // We use local_address to get the current balance when 
+    // the modal is open
+    const [local_address, setLocalAddress] = useState("")
+    const { balance } = useQueryBalance(local_address, currency)
+
+    // Set document node where modal will be inserted
+    useLayoutEffect(() => {
+        setDocumentNode(document)
+    })
+
+    // Only get balance when the dialog is open
+    useEffect(() => {
+        if (is_open) {
+            setLocalAddress(address)
+        } else {
+            setLocalAddress("")
+        }
+    }, [is_open])
 
     // Close modal when the deposit is done
     useEffect(() => {
         if (isSuccess) {
-            on_close();
+            close_modal();
         }
-    }, [isSuccess, on_close]);
+    }, [isSuccess])
+
+    function close_modal() {
+        setAmount('')
+        setIsOpen(false)
+    }
 
     // Validate user input to make sure it is not bigger than available balance
     function validate_amount(amount: number) {
@@ -63,82 +61,80 @@ function _DepositDialog({ to_address, currency, is_open, on_close }: _DepositDia
         }
     }
 
-    return (
-        <Transition appear show={is_open} as={Fragment}>
-            <Dialog as="div" className="relative z-[70]" onClose={on_close}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-opacity-80 backdrop-blur-xs" />
-                </Transition.Child>
+    const modal_content = <>
+        {
+            is_open &&
+            <div role='button' onClick={close_modal}
+                className="fixed inset-0 z-[70]" />
+        }
 
-                <div className="fixed inset-0 overflow-y-auto">
-                    <div className="flex min-h-full items-center justify-center p-4 text-center">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 scale-95"
-                            enterTo="opacity-100 scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 scale-100"
-                            leaveTo="opacity-0 scale-95">
-                            <Dialog.Panel className={classNames({
-                                "bg-slate-800": true,
-                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
-                                "transform transition-all": true
-                            })}>
-                                <Dialog.Title
-                                    as="h2"
-                                    className="text-lg font-bold leading-6 text-gray-300">
-                                    Deposit Tokens
-                                </Dialog.Title>
+        {
+            is_open &&
+            <div className='z-[80] center max-w-3xl w-full max-sm:px-4 rounded-lg'>
+                <div className={classNames({
+                    "bg-white dark:bg-zinc-950": true,
+                    "shadow-lg shadow-zinc-300 dark:shadow-black": true,
+                    "border border-zinc-300 dark:border-zinc-800 rounded-lg": true,
+                    "flex flex-col gap-8 w-full": true,
+                    "p-8": true
+                })}>
+                    <h2 className="text-lg font-bold leading-6 mb-4">
+                        Deposit Tokens
+                    </h2>
 
-                                <p className="text-gray-300 text-xs lg:text-base mt-2 mb-8">
-                                    Enter the amount of {currency.coinDenom} to deposit
-                                </p>
+                    <div className='flex flex-col gap-4'>
+                        <div className="text-xs lg:text-sm">
+                            Available: {balance.toLocaleString('en-us')} {currency.coinDenom}
+                        </div>
 
-                                <div className="flex items-center mb-2 w-full text-gray-400 text-xs lg:text-sm">
-                                    Available: {balance.toLocaleString('en-us')} {currency.coinDenom}
-                                </div>
+                        <input value={amount} onChange={(e) => validate_amount(Number(e.target.value))}
+                            type="number" placeholder="Enter amount to deposit"
+                            className={classNames({
+                                "p-3 rounded-lg text-sm w-full relative": true,
+                                "bg-slate-100 placeholder-slate-500 text-slate-500 border border-slate-500": true,
+                                "dark:placeholder-slate-100 dark:text-slate-100 dark:bg-slate-800 border dark:border-slate-500": true,
+                            })} />
+                    </div>
 
-                                <input value={amount}
-                                    onChange={(e) => validate_amount(Number(e.target.value))}
-                                    type="number" placeholder="0.00"
-                                    className={classNames({
-                                        "p-3 rounded-lg text-sm outline-none focus:outline-none focus:ring w-full": true,
-                                        "placeholder-slate-100 text-slate-100 relative bg-slate-800 border border-slate-500": true,
-                                    })} />
-
-                                <div className="flex mt-20 w-full justify-end">
-                                    <button
-                                        disabled={!Boolean(amount) && isLoading}
-                                        type="button"
-                                        onClick={() => { deposit({ amount: Number(amount), currency }) }}
-                                        className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
-                                        {
-                                            isLoading && <>
-                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
-                                                <span>depositing ...</span>
-                                            </>
-                                        }
-                                        {
-                                            !isLoading && <>
-                                                <span>deposit</span>
-                                            </>
-                                        }
-                                    </button>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
+                    <div className="flex w-full justify-end">
+                        <button
+                            className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium"
+                            disabled={!Boolean(amount) && isLoading} type="button" onClick={() => {
+                                deposit({
+                                    amount: Number(amount),
+                                    currency
+                                })
+                            }}
+                        >
+                            {
+                                isLoading && <>
+                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                    <span>depositing ...</span>
+                                </>
+                            }
+                            {
+                                !isLoading && <>
+                                    <span>deposit</span>
+                                </>
+                            }
+                        </button>
                     </div>
                 </div>
-            </Dialog>
-        </Transition>
+            </div>
+        }
+    </>;
+
+    return (
+        <>
+            <button onClick={() => setIsOpen(true)} className="items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium">
+                Deposit
+            </button>
+
+            {document_node && createPortal(
+                modal_content,
+                vault_page_ref.current,
+                "deposit"
+            )}
+        </>
     )
 }

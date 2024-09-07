@@ -3,7 +3,7 @@
 import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
 import { selectedChainState, validatorListState, walletState } from "@/app/state";
 import classNames from "classnames";
-import { useEffect } from "react"
+import { useEffect, useRef } from "react"
 import { FaSpinner } from "react-icons/fa";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
@@ -25,6 +25,7 @@ import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
 import { useRouter } from 'next/navigation';
 
 export default function Vault({ params }: { params: { id: string, intercepted: boolean } }) {
+    const vault_page_ref = useRef(null);
     const router = useRouter();
     const chainInfo = useRecoilValue(selectedChainState);
     const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id);
@@ -152,7 +153,11 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                 {
                     is_owner &&
                     <span className="flex flex-row gap-2 py-2">
-                        <DepositDialogButton to_address={params.id} currency={chainInfo.stakeCurrency} />
+                        <DepositDialogButton
+                            to_address={params.id}
+                            currency={chainInfo.stakeCurrency}
+                            vault_page_ref={vault_page_ref}
+                        />
                         <WithdrawDialogButton from_address={params.id} currency={chainInfo.stakeCurrency} />
                     </span>
                 }
@@ -169,7 +174,10 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                 {
                     is_owner &&
                     <span className="flex flex-row gap-2 py-2">
-                        <DepositDialogButton to_address={params.id} currency={usd_currency} />
+                        <DepositDialogButton
+                            to_address={params.id}
+                            currency={usd_currency}
+                            vault_page_ref={vault_page_ref} />
                         <WithdrawDialogButton from_address={params.id} currency={usd_currency} />
                     </span>
                 }
@@ -239,7 +247,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
         </div>;
 
     return (
-        <div className={classNames(
+        <div ref={vault_page_ref} className={classNames(
             "bg-white dark:bg-zinc-950"
             , {
                 "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base": true,
