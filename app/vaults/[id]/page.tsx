@@ -158,7 +158,11 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                             currency={chainInfo.stakeCurrency}
                             vault_page_ref={vault_page_ref}
                         />
-                        <WithdrawDialogButton from_address={params.id} currency={chainInfo.stakeCurrency} />
+                        <WithdrawDialogButton
+                            from_address={params.id}
+                            currency={chainInfo.stakeCurrency}
+                            vault_page_ref={vault_page_ref}
+                        />
                     </span>
                 }
             </span>
@@ -178,7 +182,10 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                             to_address={params.id}
                             currency={usd_currency}
                             vault_page_ref={vault_page_ref} />
-                        <WithdrawDialogButton from_address={params.id} currency={usd_currency} />
+                        <WithdrawDialogButton
+                            from_address={params.id}
+                            currency={usd_currency}
+                            vault_page_ref={vault_page_ref} />
                     </span>
                 }
             </span>
