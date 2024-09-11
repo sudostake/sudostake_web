@@ -18,7 +18,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
     const chainInfo = useRecoilValue(selectedChainState);
 
     return (
-        <div className="relative inline-block text-left py-2">
+        <div className="relative inline-block">
             <span role="button" onClick={() => setIsOpen(!isOpen)} className={
                 classNames(
                     'w-7 h-7 inline-flex items-center justify-center rounded-lg hover:ring-1 hover:ring-offset-1',
@@ -32,10 +32,13 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                 }
             </span>
 
-            <span role="button" onClick={() => setIsOpen(!isOpen)} className={`fixed inset-0 ${isOpen ? '' : 'hidden'}`} />
+            {
+                isOpen &&
+                <span role="button" onClick={() => setIsOpen(!isOpen)} className="fixed inset-0 z-30" />
+            }
 
             <div className={classNames({
-                "absolute right-0 mt-2 w-56 origin-top-right rounded-lg shadow-lg overflow-hidden": true,
+                "absolute z-40 right-0 mt-2 w-56 origin-top-right rounded-lg shadow-lg overflow-hidden": true,
                 "divide-y divide-zinc-300 dark:divide-zinc-900": true,
                 "bg-zinc-100 dark:bg-zinc-800": true,
                 "hidden": !isOpen

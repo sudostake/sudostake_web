@@ -1,29 +1,27 @@
-import { useWithdraw } from '@/app/hooks/use_exec';
-import { useQueryBalance } from '@/app/hooks/use_query';
-import { Currency } from '@/app/types/currency';
-import { selectedChainState } from '@/app/state';
-import classNames from 'classnames';
-import { MutableRefObject, useEffect, useId, useLayoutEffect, useState } from 'react'
-import { FaSpinner } from 'react-icons/fa';
-import { useRecoilValue } from 'recoil';
-import { createPortal } from 'react-dom';
+import { useWithdraw } from '@/app/hooks/use_exec'
+import { useQueryBalance } from '@/app/hooks/use_query'
+import { Currency } from '@/app/types/currency'
+import { selectedChainState } from '@/app/state'
+import classNames from 'classnames'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { FaSpinner } from 'react-icons/fa'
+import { useRecoilValue } from 'recoil'
+import { createPortal } from 'react-dom'
 
 type WithdrawDialogButtonProps = {
     from_address: string,
-    currency: Currency,
-    vault_page_ref: MutableRefObject<any>
+    currency: Currency
 }
 
-export default function WithdrawDialogButton({ from_address, currency, vault_page_ref }: WithdrawDialogButtonProps) {
-    const id = useId();
-    const [is_open, setIsOpen] = useState(false);
-    const [document_node, setDocumentNode] = useState<globalThis.Document>();
-    const [amount, setAmount] = useState('');
+export default function WithdrawDialogButton({ from_address, currency }: WithdrawDialogButtonProps) {
+    const [is_open, setIsOpen] = useState(false)
+    const [document_node, setDocumentNode] = useState<globalThis.Document>()
+    const [amount, setAmount] = useState('')
 
-    const { mutate: withdraw, isLoading, isSuccess } = useWithdraw(from_address);
-    const [to_address, setToAddress] = useState("");
-    const [send_memo, setSendMemo] = useState("");
-    const chainInfo = useRecoilValue(selectedChainState);
+    const { mutate: withdraw, isLoading, isSuccess } = useWithdraw(from_address)
+    const [to_address, setToAddress] = useState("")
+    const [send_memo, setSendMemo] = useState("")
+    const chainInfo = useRecoilValue(selectedChainState)
 
     // Ensure the browser document is available
     useLayoutEffect(() => {
@@ -31,18 +29,19 @@ export default function WithdrawDialogButton({ from_address, currency, vault_pag
     })
 
     // Only get vault balance when the dialog is open
-    const [vault_address, setVaultAddress] = useState("");
-    const { balance } = useQueryBalance(vault_address, currency);
+    const [vault_address, setVaultAddress] = useState("")
+    const { balance } = useQueryBalance(vault_address, currency)
     useEffect(() => {
-        is_open ? setVaultAddress(from_address) : setVaultAddress("");
+        if (is_open) setVaultAddress(from_address)
     }, [is_open])
 
     // Close the modal when the deposit is done
     useEffect(() => {
-        if (isSuccess) close_modal();
+        if (isSuccess) close_modal()
     }, [isSuccess])
 
     function close_modal() {
+        setVaultAddress("")
         setToAddress("")
         setAmount("")
         setSendMemo("")
@@ -55,15 +54,15 @@ export default function WithdrawDialogButton({ from_address, currency, vault_pag
             currency,
             to_address: Boolean(to_address) ? to_address : null,
             send_memo
-        });
+        })
     }
 
     // Validate user input to make sure it is not bigger than available balance
     function validate_amount(amount: number) {
         if (amount > Number(balance)) {
-            setAmount('');
+            setAmount('')
         } else {
-            setAmount(`${amount}`);
+            setAmount(`${amount}`)
         }
     }
 
@@ -163,7 +162,7 @@ export default function WithdrawDialogButton({ from_address, currency, vault_pag
                 </div>
             </div>
         }
-    </>;
+    </>
 
     return (
         <>
@@ -173,8 +172,7 @@ export default function WithdrawDialogButton({ from_address, currency, vault_pag
 
             {document_node && createPortal(
                 modal_content,
-                vault_page_ref.current,
-                id
+                document_node.body
             )}
         </>
     )

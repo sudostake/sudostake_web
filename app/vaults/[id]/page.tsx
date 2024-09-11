@@ -1,40 +1,39 @@
 'use client'
 
-import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query";
-import { selectedChainState, validatorListState, walletState } from "@/app/state";
-import classNames from "classnames";
-import { useEffect, useRef } from "react"
-import { FaSpinner } from "react-icons/fa";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec";
-import ManageStakeActionsMenu from "./widgets/stake_actions";
-import { convertMicroDenomToDenom } from "@/app/utils/conversion";
-import UnbondingInfoDialog from "./dialogs/undelegations_info";
-import RequestLiquidityFlow from "./request_liquidity_flow";
-import PendingLiquidityRequestInfo from "@/app/widgets/pending_request_info";
-import ActiveLiquidityRequestInfo from "@/app/widgets/active_request_info";
-import { index_vault_data } from "@/app/services/vault_indexer";
-import DepositDialogButton from "./dialogs/deposit";
-import WithdrawDialogButton from "./dialogs/withdraw";
-import ConnectWalletOptions from "@/app/widgets/connect_wallet_options";
-import Loading from "@/app/loading";
-import { LiquidityRequest } from "@/app/enums/liquidity_request";
-import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_info";
-import { WalletStatus } from "@/app/enums/wallet_status";
-import { NamedEntityMap } from "@/app/interfaces/named_entity_map";
-import { useRouter } from 'next/navigation';
+import { useQueryValidatorList, useQueryVaultMetaData } from "@/app/hooks/use_query"
+import { selectedChainState, validatorListState, walletState } from "@/app/state"
+import classNames from "classnames"
+import { useEffect } from "react"
+import { FaSpinner } from "react-icons/fa"
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { useAcceptLiquidityRequest, useClaimRewards, useClosePendingLiquidityRequest, useLiquidateCollateral, useRepayLoan } from "@/app/hooks/use_exec"
+import ManageStakeActionsMenu from "./widgets/stake_actions"
+import { convertMicroDenomToDenom } from "@/app/utils/conversion"
+import UnbondingInfoDialog from "./dialogs/undelegations_info"
+import RequestLiquidityFlow from "./request_liquidity_flow"
+import PendingLiquidityRequestInfo from "@/app/widgets/pending_request_info"
+import ActiveLiquidityRequestInfo from "@/app/widgets/active_request_info"
+import { index_vault_data } from "@/app/services/vault_indexer"
+import DepositDialogButton from "./dialogs/deposit"
+import WithdrawDialogButton from "./dialogs/withdraw"
+import ConnectWalletOptions from "@/app/widgets/connect_wallet_options"
+import Loading from "@/app/loading"
+import { LiquidityRequest } from "@/app/enums/liquidity_request"
+import { ValidatorInfo, ValidatorUnbondingInfo } from "@/app/types/validator_info"
+import { WalletStatus } from "@/app/enums/wallet_status"
+import { NamedEntityMap } from "@/app/interfaces/named_entity_map"
+import { useRouter } from 'next/navigation'
 
 export default function Vault({ params }: { params: { id: string, intercepted: boolean } }) {
-    const vault_page_ref = useRef(null);
-    const router = useRouter();
-    const chainInfo = useRecoilValue(selectedChainState);
-    const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id);
-    const { validator_list } = useQueryValidatorList();
-    const { address: current_user, status } = useRecoilValue(walletState);
-    const setValidatorListState = useSetRecoilState(validatorListState);
+    const router = useRouter()
+    const chainInfo = useRecoilValue(selectedChainState)
+    const { vault_metadata, isLoading } = useQueryVaultMetaData(params.id)
+    const { validator_list } = useQueryValidatorList()
+    const { address: current_user, status } = useRecoilValue(walletState)
+    const setValidatorListState = useSetRecoilState(validatorListState)
 
     // TODO: Refactor getting currencies
-    const usd_currency = chainInfo && chainInfo.request_currencies.find(currency => currency.coinDenom === 'USDC');
+    const usd_currency = chainInfo && chainInfo.request_currencies.find(currency => currency.coinDenom === 'USDC')
 
     // Here we index the vault_info from the vault metadata to also include state from
     // active liquidity request option
@@ -43,57 +42,57 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
         staking_info: vault_metadata.staking_info,
         rpc: chainInfo.rpc,
         include_request_state: true
-    }));
+    }))
 
     // Vault actions
-    const { mutate: claimRewards, isLoading: isClaimRewardsLoading } = useClaimRewards(params.id);
-    const { mutate: close_request, isLoading: isCloseRequestLoading } = useClosePendingLiquidityRequest(params.id);
-    const { mutate: accept_request, isLoading: isAcceptLoading } = useAcceptLiquidityRequest(params.id);
-    const { mutate: repay_loan, isLoading: isRepayLoanLoading } = useRepayLoan(params.id);
-    const { mutate: liquidate_collateral, isLoading: isLiquidatingCollateralLoading } = useLiquidateCollateral(params.id);
+    const { mutate: claimRewards, isLoading: isClaimRewardsLoading } = useClaimRewards(params.id)
+    const { mutate: close_request, isLoading: isCloseRequestLoading } = useClosePendingLiquidityRequest(params.id)
+    const { mutate: accept_request, isLoading: isAcceptLoading } = useAcceptLiquidityRequest(params.id)
+    const { mutate: repay_loan, isLoading: isRepayLoanLoading } = useRepayLoan(params.id)
+    const { mutate: liquidate_collateral, isLoading: isLiquidatingCollateralLoading } = useLiquidateCollateral(params.id)
 
     // Vault conditions
-    const is_owner = current_user === (vault_info && vault_info.owner);
+    const is_owner = current_user === (vault_info && vault_info.owner)
     const is_lender = current_user === (vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.lender);
+        vault_info.lender)
 
     const has_active_rental_option = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
-        vault_info.request_type !== LiquidityRequest.fixed_term_loan;
-    const can_claim_rewards = is_owner || has_active_rental_option;
+        vault_info.request_type !== LiquidityRequest.fixed_term_loan
+    const can_claim_rewards = is_owner || has_active_rental_option
 
     // Fixed term loan conditions
     const can_repay_loan = is_owner && vault_info &&
         vault_info.liquidity_request_status === 'active' &&
         vault_info.request_type === LiquidityRequest.fixed_term_loan &&
-        !vault_info.processing_liquidation;
+        !vault_info.processing_liquidation
     const has_expired_fixed_term_loan = vault_info &&
         vault_info.liquidity_request_status === 'active' &&
         vault_info.request_type === LiquidityRequest.fixed_term_loan &&
-        vault_info.end_time === 'EXPIRED';
+        vault_info.end_time === 'EXPIRED'
 
     const can_view_unbonding_info = is_owner || (is_lender && has_expired_fixed_term_loan)
-    const native_balance = vault_metadata && vault_metadata.native_balance;
-    const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards;
+    const native_balance = vault_metadata && vault_metadata.native_balance
+    const accumulated_rewards = vault_metadata && vault_metadata.acc_rewards
 
     // Update validatorListState
     useEffect(() => {
-        const validators_without_delegations_list: ValidatorInfo[] = [];
-        const validators_with_delegations_map: NamedEntityMap<ValidatorInfo> = {};
-        const validators_with_unbondings_map: NamedEntityMap<ValidatorUnbondingInfo> = {};
+        const validators_without_delegations_list: ValidatorInfo[] = []
+        const validators_with_delegations_map: NamedEntityMap<ValidatorInfo> = {}
+        const validators_with_unbondings_map: NamedEntityMap<ValidatorUnbondingInfo> = {}
 
         if (Boolean(vault_metadata)) {
             // Update validators_with_delegations_map
             vault_metadata.all_delegations.forEach((info) => {
-                const address: string = info['validator'];
+                const address: string = info['validator']
                 const amount = convertMicroDenomToDenom(info['amount']['amount'], chainInfo.stakeCurrency.coinDecimals)
                 validators_with_delegations_map[address] = {
                     name: '',
                     address,
                     delegated_amount: amount
-                };
-            });
+                }
+            })
 
             // Update validators_with_unbondings_map
             vault_metadata.unbonding_details.unbonding_list.forEach((info) => {
@@ -104,14 +103,14 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
         // Update validators_without_delegations_list,
         // jailed_validator_list and validators_with_delegations
         validator_list.forEach((info) => {
-            const address = info['operator_address'];
-            const is_jailed = info['jailed'];
-            const bonded_status = info['status'];
-            const name = info['description']['moniker'];
+            const address = info['operator_address']
+            const is_jailed = info['jailed']
+            const bonded_status = info['status']
+            const name = info['description']['moniker']
 
             // Update the names on validators_with_unbondings_map
             if (Boolean(validators_with_unbondings_map[address])) {
-                validators_with_unbondings_map[address].name = name;
+                validators_with_unbondings_map[address].name = name
             }
 
             // Update validator list groups
@@ -121,13 +120,13 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                         name,
                         address,
                         delegated_amount: 0
-                    });
+                    })
                 }
             } else {
                 // Update the names on validators_with_delegations_map
-                validators_with_delegations_map[address].name = name;
+                validators_with_delegations_map[address].name = name
             }
-        });
+        })
 
         // setValidatorListState
         setValidatorListState({
@@ -136,9 +135,9 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                 ...Object.values(validators_with_delegations_map).sort((a, b) => Number(b.delegated_amount) - Number(a.delegated_amount)),
                 ...validators_without_delegations_list,
             ],
-        });
+        })
 
-    }, [vault_metadata, validator_list, setValidatorListState, chainInfo]);
+    }, [vault_metadata, validator_list, setValidatorListState, chainInfo])
 
     const vault_details_view = () =>
         <div className="flex flex-col p-4">
@@ -156,12 +155,10 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                         <DepositDialogButton
                             to_address={params.id}
                             currency={chainInfo.stakeCurrency}
-                            vault_page_ref={vault_page_ref}
                         />
                         <WithdrawDialogButton
                             from_address={params.id}
                             currency={chainInfo.stakeCurrency}
-                            vault_page_ref={vault_page_ref}
                         />
                     </span>
                 }
@@ -180,12 +177,10 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     <span className="flex flex-row gap-2 py-2">
                         <DepositDialogButton
                             to_address={params.id}
-                            currency={usd_currency}
-                            vault_page_ref={vault_page_ref} />
+                            currency={usd_currency} />
                         <WithdrawDialogButton
                             from_address={params.id}
-                            currency={usd_currency}
-                            vault_page_ref={vault_page_ref} />
+                            currency={usd_currency} />
                     </span>
                 }
             </span>
@@ -251,10 +246,10 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     }
                 </span>
             }
-        </div>;
+        </div>
 
     return (
-        <div ref={vault_page_ref} className={classNames(
+        <div className={classNames(
             "bg-white dark:bg-zinc-950"
             , {
                 "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base": true,
@@ -415,5 +410,5 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                 <ConnectWalletOptions title="Connect to see vault details." />
             }
         </div>
-    );
+    )
 }

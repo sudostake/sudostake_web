@@ -1,64 +1,62 @@
-import { useDeposit } from '@/app/hooks/use_exec';
-import { useQueryBalance } from '@/app/hooks/use_query';
-import { Currency } from '@/app/types/currency';
-import { walletState } from '@/app/state';
-import classNames from 'classnames';
-import { MutableRefObject, useEffect, useLayoutEffect, useState } from 'react'
-import { FaSpinner } from 'react-icons/fa';
-import { useRecoilValue } from 'recoil';
-import { createPortal } from 'react-dom';
+import { useDeposit } from '@/app/hooks/use_exec'
+import { useQueryBalance } from '@/app/hooks/use_query'
+import { Currency } from '@/app/types/currency'
+import { walletState } from '@/app/state'
+import classNames from 'classnames'
+import { useEffect, useLayoutEffect, useState } from 'react'
+import { FaSpinner } from 'react-icons/fa'
+import { useRecoilValue } from 'recoil'
+import { createPortal } from 'react-dom'
 
 type DepositDialogButonProps = {
     to_address: string,
     currency: Currency,
-    vault_page_ref: MutableRefObject<any>
 }
 
-export default function DepositDialogButton({ to_address, currency, vault_page_ref }: DepositDialogButonProps) {
-    const [is_open, setIsOpen] = useState(false);
-    const [document_node, setDocumentNode] = useState<globalThis.Document>();
-    const { address } = useRecoilValue(walletState);
-    const [amount, setAmount] = useState('');
-    const { mutate: deposit, isLoading, isSuccess } = useDeposit(to_address);
+export default function DepositDialogButton({ to_address, currency }: DepositDialogButonProps) {
+    const [is_open, setIsOpen] = useState(false)
+    const [document_node, setDocumentNode] = useState<globalThis.Document>()
+    const [amount, setAmount] = useState('')
+    const [from_address, setFromAddress] = useState("")
 
-    // We use local_address to get the current balance when 
-    // the modal is open
-    const [local_address, setLocalAddress] = useState("")
-    const { balance } = useQueryBalance(local_address, currency)
+    const { address } = useRecoilValue(walletState)
+    const { mutate: deposit, isLoading, isSuccess } = useDeposit(to_address)
+    const { balance } = useQueryBalance(from_address, currency)
 
-    // Set document node where modal will be inserted
+    // Ensure the browser document is available
     useLayoutEffect(() => {
         setDocumentNode(document)
     })
 
-    // Only get balance when the dialog is open
+    // Only get EOA balance when the dialog is open
     useEffect(() => {
-        if (is_open) {
-            setLocalAddress(address)
-        } else {
-            setLocalAddress("")
-        }
+        if (is_open) setFromAddress(address)
     }, [is_open])
 
-    // Close modal when the deposit is done
+    // Close the modal when the deposit is done
     useEffect(() => {
-        if (isSuccess) {
-            close_modal();
-        }
+        if (isSuccess) close_modal()
     }, [isSuccess])
 
     function close_modal() {
+        setFromAddress("")
         setAmount('')
         setIsOpen(false)
     }
 
-    // Validate user input to make sure it is not bigger than available balance
     function validate_amount(amount: number) {
         if (amount > Number(balance)) {
-            setAmount('');
+            setAmount('')
         } else {
-            setAmount(`${amount}`);
+            setAmount(`${amount}`)
         }
+    }
+
+    function handle_deposit() {
+        deposit({
+            amount: Number(amount),
+            currency
+        })
     }
 
     const modal_content = <>
@@ -99,12 +97,7 @@ export default function DepositDialogButton({ to_address, currency, vault_page_r
                     <div className="flex w-full justify-end">
                         <button
                             className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium"
-                            disabled={!Boolean(amount) && isLoading} type="button" onClick={() => {
-                                deposit({
-                                    amount: Number(amount),
-                                    currency
-                                })
-                            }}
+                            disabled={!Boolean(amount) && isLoading} type="button" onClick={handle_deposit}
                         >
                             {
                                 isLoading && <>
@@ -122,7 +115,7 @@ export default function DepositDialogButton({ to_address, currency, vault_page_r
                 </div>
             </div>
         }
-    </>;
+    </>
 
     return (
         <>
@@ -132,8 +125,7 @@ export default function DepositDialogButton({ to_address, currency, vault_page_r
 
             {document_node && createPortal(
                 modal_content,
-                vault_page_ref.current,
-                "deposit"
+                document_node.body
             )}
         </>
     )

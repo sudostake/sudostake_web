@@ -1,6 +1,6 @@
 'use client'
 
-import { FaEllipsisH, FaEllipsisV, FaSignOutAlt } from "react-icons/fa"
+import { FaEllipsisH, FaSignOutAlt } from "react-icons/fa"
 import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -66,7 +66,7 @@ export default function WalletInfo() {
         <div className={classNames(
             {
                 "absolute top-20 right-20 z-40 w-56 rounded-lg shadow-lg overflow-hidden": true,
-                "divide-y divide-zinc-300 dark:divide-zinc-900": true,
+                "divide-y divide-zinc-300 dark:divide-zinc-700": true,
                 "bg-zinc-100 dark:bg-zinc-900": true,
                 "hidden": !isOpen
             }
@@ -103,9 +103,7 @@ export default function WalletInfo() {
                     className="rounded-full"
                 />
                 <span>{name}</span>
-                {
-                    isOpen ? <FaEllipsisV className="w-3 h-3" /> : <FaEllipsisH className="w-3 h-3" />
-                }
+                <FaEllipsisH className="w-3 h-3" />
             </div>
 
             {document_node && createPortal(

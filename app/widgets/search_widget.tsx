@@ -31,7 +31,7 @@ export default function SearchWidget() {
         {
             is_open &&
             <div role='button' onClick={close_modal}
-                className="fixed inset-0 bg-opacity-80 backdrop-blur-xs z-30" />
+                className="fixed inset-0 z-30" />
         }
 
         <Transition appear show={is_open} as={Fragment}>
@@ -50,7 +50,7 @@ export default function SearchWidget() {
                                 "bg-white dark:bg-zinc-950": true,
                                 "shadow-lg shadow-zinc-300 dark:shadow-black": true,
                                 "border border-zinc-300 dark:border-zinc-800": true,
-                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-lg": true,
+                                "w-full max-w-3xl overflow-hidden rounded-lg p-8 text-left align-middle shadow-2xl": true,
                                 "transform transition-all": true
                             })}>
                                 <Dialog.Title
