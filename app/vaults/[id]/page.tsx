@@ -254,7 +254,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
             , {
                 "h-full w-full overflow-y-scroll overscroll-contain text-sm lg:text-base": true,
                 "flex flex-col": true,
-                "pt-20": !Boolean(params.intercepted)
+                "pt-14": !Boolean(params.intercepted)
             }
         )}>
             {vault_metadata &&

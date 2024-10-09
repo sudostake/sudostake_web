@@ -71,7 +71,7 @@ export default function Home() {
   }, [address, status, setActiveLendingVaults, chainInfo]);
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pt-20 max-sm:pb-20">
+    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pt-14 max-sm:pb-14">
       {
         status === WalletStatus.connected &&
         <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
@@ -153,7 +153,7 @@ export default function Home() {
             return (
               <span key={vault.id} className={
                 classNames({
-                  "p-4": true,
+                  "px-4 py-8": true,
                   "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-800": true,
                   "md:max-lg:border-r": index % 2 === 0,
@@ -178,7 +178,7 @@ export default function Home() {
             return (
               <div key={vault.id} className={
                 classNames({
-                  "p-4": true,
+                  "px-4 py-8": true,
                   "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-800": true,
                   "md:max-lg:border-r": index % 2 === 0,

@@ -34,7 +34,7 @@ export default function NavigationArea() {
                 "z-20 flex fixed border-zinc-300 dark:border-zinc-800",
                 "max-sm:flex-row",
                 "max-sm:inset-x-0 bottom-0",
-                "max-sm:h-20",
+                "max-sm:h-14",
                 "max-sm:border-t",
                 "sm:flex-col",
                 "sm:inset-y-0 sm:left-0",
@@ -48,12 +48,11 @@ export default function NavigationArea() {
                     classNames(
                         "flex flex-row gap-2 items-center",
                         "border-zinc-300 dark:border-zinc-800",
-                        "p-4 h-20",
+                        "p-4 h-14",
                         "max-sm:border-r",
                         "sm:border-b"
                     )
                 }>
-
 
                 <span className="max-sm:h-8 max-sm:w-8 flex items-center justify-center">
                     <span className='flex size-6 items-center'>
@@ -77,11 +76,10 @@ export default function NavigationArea() {
             <div className={
                 classNames(
                     "grow",
-                    "flex flex-nowrap overflow-auto no-scrollbar",
+                    "flex flex-nowrap",
                     "max-sm:flex-row",
-                    "max-sm:pl-4",
+                    "sm:flex-col",
                     "sm:pt-4",
-                    "sm:flex-col"
                 )
             }>
                 {nav_items.map((nav_item) => {
@@ -91,14 +89,14 @@ export default function NavigationArea() {
                             passHref
                             className={
                                 classNames(
-                                    "min-w-36 w-full",
+                                    "w-full sm:min-w-36",
                                     "flex items-center",
                                     "sm:px-4 sm:py-2"
                                 )
                             }>
                             <span className={
                                 classNames(
-                                    "flex w-full max-sm:justify-center rounded-lg p-4",
+                                    "flex w-full max-sm:justify-center sm:rounded-lg p-4",
                                     "sm:hover:shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] dark:sm:hover:bg-zinc-900",
                                     {
                                         "shadow-[3px_9px_32px_-4px_rgba(0,0,0,0.07)] max-sm:bg-zinc-200 dark:bg-zinc-800":

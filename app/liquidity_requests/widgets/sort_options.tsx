@@ -16,7 +16,7 @@ export type SortOption = {
 const sort_options: SortOption[] = [
     {
         type: SortOptionTypes.latest,
-        label: 'Latest',
+        label: 'Date',
         prev_label: 'Newer',
         next_label: 'Older'
     },
@@ -62,8 +62,8 @@ export default function SortOptions({ on_select }: ComponentProps) {
             {
                 selected_option &&
                 <label className='h-12 flex items-center gap-4'>
-                    <span className='size-4'>
-                        <FaSortAmountDown className="w-4 h-4" />
+                    <span>
+                        Sort by
                     </span>
                     <select name="sort_options" id="sort_options"
                         className='rounded-lg bg-zinc-200 dark:bg-zinc-900 px-2'

@@ -52,13 +52,13 @@ export default function ToolBar() {
         <div className={
             classNames(
                 "fixed z-20 top-0 flex flex-row",
-                "w-full h-20",
+                "w-full h-14",
                 "sm:pl-56",
                 "border-b border-zinc-300 dark:border-zinc-800",
                 "bg-opacity-80 backdrop-blur-sm",
             )
         }>
-            <div className='h-20 flex items-center pl-4 pr-8'>
+            <div className='h-full flex items-center pl-4 pr-8'>
                 {
                     chainInfo &&
                     <SelectNetwork />
@@ -67,17 +67,20 @@ export default function ToolBar() {
 
             <div className='grow'></div>
 
-            {
-                status === WalletStatus.connected && chainInfo &&
-                <WalletInfo />
-            }
+
+            <div className='h-full flex items-center'>
+                {
+                    status === WalletStatus.connected && chainInfo &&
+                    <WalletInfo />
+                }
+            </div>
 
             <span
                 className={
                     classNames(
                         "flex justify-center",
                         "border-l border-zinc-300 dark:border-zinc-800",
-                        "h-20 w-20"
+                        "h-full w-20"
                     )
                 }
             >

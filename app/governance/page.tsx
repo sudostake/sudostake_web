@@ -10,7 +10,7 @@ export default function Governance() {
   const { active_proposals, isLoading } = useQueryActiveProposals();
 
   return (
-    <div className="h-full overflow-y-auto py-20 flex flex-col">
+    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pt-14 max-sm:pb-14">
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
         <span className='text-3xl'>
           Active Proposals
@@ -22,8 +22,9 @@ export default function Governance() {
           return (
             <div key={proposal.id}
               className={classNames({
+                "px-4 py-8": true,
                 "flex flex-col gap-4": true,
-                "w-full p-4": true,
+                "w-full": true,
                 "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
                 "border-t border-zinc-300 dark:border-zinc-600": true,
                 "md:max-lg:border-r": index % 2 === 0,

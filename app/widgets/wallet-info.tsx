@@ -65,7 +65,7 @@ export default function WalletInfo() {
 
         <div className={classNames(
             {
-                "absolute top-20 right-20 z-40 w-56 rounded-lg shadow-lg overflow-hidden": true,
+                "absolute top-14 right-20 z-40 w-56 rounded-lg shadow-lg overflow-hidden": true,
                 "divide-y divide-zinc-300 dark:divide-zinc-700": true,
                 "bg-zinc-100 dark:bg-zinc-900": true,
                 "hidden": !isOpen

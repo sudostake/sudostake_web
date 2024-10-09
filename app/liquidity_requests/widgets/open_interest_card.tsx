@@ -18,7 +18,7 @@ export default function OpenInterestCard({ vault_info: vault }: { vault_info: Va
     return (
         <>
             <span>Vault #{vault.index_number}</span>
-            <span>Total staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
+            <span>Amount staked: {vault.tvl.toLocaleString('en-us')} {chainInfo.stakeCurrency.coinDenom}</span>
             <span className='py-4'></span>
 
             {

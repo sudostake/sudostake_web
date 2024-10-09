@@ -16,13 +16,13 @@ export default function SelectNetwork() {
     return (
         <>
             <label className='flex items-center gap-4'>
-                <span className='size-4'>
+                <span className='size-6'>
                     <Image
                         src={chainInfo.chain_logo_url}
                         alt="logo"
                         className="rounded-full"
-                        width={24}
-                        height={24}
+                        width={32}
+                        height={32}
                         priority
                     />
                 </span>

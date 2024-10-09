@@ -25,7 +25,6 @@ export async function GET(req: NextRequest) {
         });
         const data = await response.json();
         const active_proposals = data.proposals.filter(d => d.status === 'PROPOSAL_STATUS_VOTING_PERIOD');
-        console.log(active_proposals);
         return NextResponse.json(active_proposals)
     } catch (e) {
         return new Response(e, {
