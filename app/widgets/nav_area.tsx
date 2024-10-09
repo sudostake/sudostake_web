@@ -80,6 +80,10 @@ export default function NavigationArea() {
                     "max-sm:flex-row",
                     "sm:flex-col",
                     "sm:pt-4",
+                    "max-sm:overflow-x-auto",
+                    "max-sm:overflow-y-hidden",
+                    "sm:overflow-y-auto",
+                    "no-scrollbar"
                 )
             }>
                 {nav_items.map((nav_item) => {
