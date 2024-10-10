@@ -4,6 +4,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaCaretRight, FaChevronRight } from "react-icons/fa";
 
 type NavItem = {
     label: string;
@@ -119,8 +120,8 @@ export default function NavigationArea() {
                         "sm:mt-auto",
                         "sm:border-t sm:border-zinc-300 dark:sm:border-zinc-800",
                         "min-w-36 w-full",
-                        "flex items-center",
-                        "sm:px-4 sm:py-2"
+                        "flex flex-row items-center justify-between",
+                        "px-4 sm:py-2",
                     )
                 }>
                     <a href="https://github.com/sudostake"
@@ -129,6 +130,8 @@ export default function NavigationArea() {
                         className="flex w-full max-sm:justify-center rounded-lg p-2">
                         GitHub
                     </a>
+
+                    <FaChevronRight className="w-4 h-4" />
                 </span>
             </div>
         </div >

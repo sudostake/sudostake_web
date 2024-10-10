@@ -59,7 +59,7 @@ export default function VoteOptions({ onOptionSelected, default_value: selected_
                                         </div>
                                     </div>
                                     <div className="shrink-0 ml-4 w-8">
-                                        {checked && <FaCheckCircle className="w-6 h-6" />}
+                                        {checked && <FaCheckCircle className="w-4 h-4" />}
                                     </div>
                                 </div>
                             )}

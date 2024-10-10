@@ -89,7 +89,7 @@ export default function SearchWidget() {
                                     <Link passHref href={(`/vaults/${vault_info.id}`)}
                                         className="relative flex w-full items-center gap-4 text-blue-600" role="button">
                                         <span>Vault Number {vault_info.index_number}</span>
-                                        <FaCaretRight className="w-5 h-5" />
+                                        <FaCaretRight className="w-4 h-4" />
                                     </Link>
                                 }
                             </Dialog.Panel>
@@ -103,7 +103,7 @@ export default function SearchWidget() {
     return (
         <>
             <button onClick={() => setIsOpen(true)}>
-                <FaSearch className="w-5 h-5" />
+                <FaSearch className="w-4 h-4" />
             </button>
 
             {document_node && createPortal(

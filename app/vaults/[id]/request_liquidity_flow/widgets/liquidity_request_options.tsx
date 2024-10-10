@@ -34,7 +34,7 @@ export default function LiquidityRequestOptions({ onOptionSelected, default_valu
                                         </div>
                                     </div>
                                     <div className="shrink-0 text-white ml-4 w-8">
-                                        {checked && <FaCheckCircle className="w-6 h-6" />}
+                                        {checked && <FaCheckCircle className="w-4 h-4" />}
                                     </div>
                                 </div>
                             )}

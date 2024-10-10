@@ -88,7 +88,7 @@ export default function Home() {
             <span className="flex items-center text-sm lg:text-base font-medium justify-center">
               {
                 isLoading && <>
-                  <FaSpinner className="w-6 h-6 mr-4 spinner" />
+                  <FaSpinner className="w-4 h-4 mr-4 spinner" />
                   <span>Minting...</span>
                 </>
               }
@@ -201,7 +201,7 @@ export default function Home() {
                   <Link passHref href={(`${chainInfo.explorer_url}/account/${vault.id}`)}
                     target="_blank"
                     className="flex items-center justify-center w-9 h-9 rounded-full">
-                    <FaHistory className="w-5 h-5" />
+                    <FaHistory className="w-4 h-4" />
                   </Link>
 
                   <button onClick={() => { router.push(`/vaults/${vault.id}`) }} className="w-full flex items-center justify-center h-9 border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 text-xs lg:text-sm lg:font-medium p-2">

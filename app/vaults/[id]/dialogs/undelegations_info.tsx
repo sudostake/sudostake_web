@@ -54,7 +54,7 @@ export default function UnbondingInfoDialog() {
                                     <span className="flex flex-col w-full h-full">
                                         <h2 className="flex items-center text-sm lg:text-base font-bold leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
                                             Unbonding Details
-                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
+                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-4 h-4" /></button>
                                         </h2>
 
 

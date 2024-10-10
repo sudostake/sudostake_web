@@ -51,7 +51,7 @@ export default function Governance() {
         active_proposals.length === 0 && !isLoading &&
         <div className="flex w-full h-full items-center justify-center">
           <h2 className="flex flex-row gap-2 items-center">
-            <FaGlobe className="w-6 h-6 mr-2" />
+            <FaGlobe className="w-4 h-4 mr-2" />
             <span>No active proposal(s).</span>
           </h2>
         </div>

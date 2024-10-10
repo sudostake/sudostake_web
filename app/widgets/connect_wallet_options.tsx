@@ -99,7 +99,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     <span className="ml-2 text-sm lg:text-base font-medium">Cosmostation</span>
                                     {
                                         status === WalletStatus.connecting && selected_wallet === Wallet.cosmostation &&
-                                        <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
+                                        <FaSpinner className="w-4 h-4 ml-auto mr-3 spinner" />
                                     }
                                 </>
                             </button>
@@ -114,7 +114,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     <span className="ml-2 text-sm lg:text-base font-medium">Keplr</span>
                                     {
                                         status === WalletStatus.connecting && selected_wallet === Wallet.keplr &&
-                                        <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
+                                        <FaSpinner className="w-4 h-4 ml-auto mr-3 spinner" />
                                     }
                                 </>
                             </button>
@@ -129,7 +129,7 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
                                     <span className="ml-2 text-sm lg:text-base font-medium">Leap</span>
                                     {
                                         status === WalletStatus.connecting && selected_wallet === Wallet.leap &&
-                                        <FaSpinner className="w-6 h-6 ml-auto mr-3 spinner" />
+                                        <FaSpinner className="w-4 h-4 ml-auto mr-3 spinner" />
                                     }
                                 </>
                             </button>

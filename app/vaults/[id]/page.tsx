@@ -146,7 +146,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     <span>{chainInfo.stakeCurrency.coinDenom}</span>
                     <span>
                         {native_balance.toLocaleString('en-us')}
-                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                        {!vault_metadata && <FaSpinner className="w-4 h-4 mr-3 spinner" />}
                     </span>
                 </span>
                 {
@@ -169,7 +169,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     <span>{usd_currency.coinDenom}</span>
                     <span>
                         {vault_metadata && vault_metadata.usdc_balance.toLocaleString('en-us')}
-                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                        {!vault_metadata && <FaSpinner className="w-4 h-4 mr-3 spinner" />}
                     </span>
                 </span>
                 {
@@ -190,7 +190,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     <span>Delegated</span>
                     <span>
                         {vault_metadata && vault_metadata.total_staked.toLocaleString('en-us')}
-                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                        {!vault_metadata && <FaSpinner className="w-4 h-4 mr-3 spinner" />}
                     </span>
                 </span>
                 {is_owner && <ManageStakeActionsMenu vault_address={params.id} />}
@@ -201,7 +201,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                     <span>Rewards</span>
                     <span>
                         {accumulated_rewards.toLocaleString('en-us')}
-                        {!vault_metadata && <FaSpinner className="w-5 h-5 mr-3 spinner" />}
+                        {!vault_metadata && <FaSpinner className="w-4 h-4 mr-3 spinner" />}
                     </span>
                 </span>
                 {
@@ -297,7 +297,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                                     })}>
                                         {
                                             isCloseRequestLoading && <>
-                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                 <span>Cancelling Request...</span>
                                             </>
                                         }
@@ -318,7 +318,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                                         })}>
                                         {
                                             isAcceptLoading && <>
-                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                 <span>Accepting Request...</span>
                                             </>
                                         }
@@ -348,7 +348,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                                     })}>
                                         {
                                             isRepayLoanLoading && <>
-                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                 <span>Repaying Loan</span>
                                             </>
                                         }
@@ -382,7 +382,7 @@ export default function Vault({ params }: { params: { id: string, intercepted: b
                                         })}>
                                             {
                                                 isLiquidatingCollateralLoading && <>
-                                                    <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                    <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                     <span>Processing ...</span>
                                                 </>
                                             }

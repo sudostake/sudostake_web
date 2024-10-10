@@ -187,12 +187,12 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                                         <span>
                                                             {
                                                                 selected_vaults_map[voting_vault.vault.id] &&
-                                                                <FaCheckSquare className="w-5 h-5 mr-8" />
+                                                                <FaCheckSquare className="w-4 h-4 mr-8" />
                                                             }
 
                                                             {
                                                                 !selected_vaults_map[voting_vault.vault.id] &&
-                                                                <div className="w-5 h-5 mr-8 border-2 border-current" />
+                                                                <div className="w-4 h-4 mr-8 border-2 border-current" />
                                                             }
                                                         </span>
 
@@ -244,7 +244,7 @@ export default function VoteOnProposalFlow({ proposal }: ComponentProps) {
                                         className='flex items-center ml-auto h-20'>
                                         {
                                             is_voting && <>
-                                                <FaSpinner className="w-5 h-5 mr-3 spinner" />
+                                                <FaSpinner className="w-4 h-4 mr-3 spinner" />
                                                 <span>Voting...</span>
                                             </>
                                         }

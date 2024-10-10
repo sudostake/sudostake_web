@@ -190,7 +190,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                     <span className={`${step_history !== 0 && 'hidden'} flex flex-col w-full h-full`} >
                                         <h2 className="h-20 flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 p-4 lg:p-8 border-b border-slate-500">
                                             Select security type
-                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-5 h-5" /></button>
+                                            <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden"> <FaTimes className="w-4 h-4" /></button>
                                         </h2>
 
                                         <span className='flex py-16 overflow-y-auto p-4 lg:p-8'>
@@ -212,7 +212,7 @@ export default function RequestLiquidityFlow({ vault_address, from_code_id }: Co
                                         <h2 className="h-20 flex items-center text-lg lg:text-2xl font-medium leading-6 text-gray-300 px-4 lg:p-8 border-b border-slate-500">
                                             {selected_request_type.title}
                                             <button onClick={() => setIsOpen(false)} className="rounded-full ml-auto mr-4 lg:hidden">
-                                                <FaTimes className="w-5 h-5" />
+                                                <FaTimes className="w-4 h-4" />
                                             </button>
                                         </h2>
 

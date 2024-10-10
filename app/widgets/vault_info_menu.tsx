@@ -28,7 +28,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                 )
             }>
                 {
-                    isOpen ? <FaTimes className={`w-5 h-5`} /> : <FaEllipsisH className={`w-5 h-5`} />
+                    isOpen ? <FaTimes className="w-4 h-4" /> : <FaEllipsisH className="w-4 h-4" />
                 }
             </span>
 

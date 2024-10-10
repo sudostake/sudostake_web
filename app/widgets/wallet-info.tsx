@@ -103,7 +103,7 @@ export default function WalletInfo() {
                     className="rounded-full"
                 />
                 <span>{name}</span>
-                <FaEllipsisH className="w-3 h-3" />
+                <FaEllipsisH className="w-4 h-4" />
             </div>
 
             {document_node && createPortal(

@@ -51,7 +51,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <span>{chainInfo.stakeCurrency.coinDenom}</span>
                 <span className="ml-auto">
                     {native_balance}
-                    {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
+                    {!vault_metadata && <FaSpinner className="w-4 h-4 spinner" />}
                 </span>
             </span>
 
@@ -68,7 +68,7 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <span>{usd_currency.coinDenom}</span>
                 <span className="ml-auto">
                     {usdc_balance}
-                    {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
+                    {!vault_metadata && <FaSpinner className="w-4 h-4 spinner" />}
                 </span>
             </span>
 
@@ -80,14 +80,14 @@ export default function VaultInfoCard({ vault_info }: ComponentProps) {
                 <span>Delegated</span>
                 <span className="ml-auto">
                     {vault_metadata && Number(vault_metadata.total_staked).toLocaleString('en-us')}
-                    {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
+                    {!vault_metadata && <FaSpinner className="w-4 h-4 spinner" />}
                 </span>
             </span>
             <span className="flex items-center">
                 <span>Rewards</span>
                 <span className="ml-auto">
                     {vault_metadata && Number(vault_metadata.acc_rewards).toLocaleString('en-us')}
-                    {!vault_metadata && <FaSpinner className="w-5 h-5 spinner" />}
+                    {!vault_metadata && <FaSpinner className="w-4 h-4 spinner" />}
                 </span>
             </span>
 
