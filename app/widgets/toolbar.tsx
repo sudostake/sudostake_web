@@ -80,7 +80,7 @@ export default function ToolBar() {
                     classNames(
                         "flex justify-center",
                         "border-l border-zinc-300 dark:border-zinc-800",
-                        "h-full w-20"
+                        "h-full"
                     )
                 }
             >
