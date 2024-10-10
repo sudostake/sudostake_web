@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function WelcomePage() {
     return (
-        <div className="p-8">
+        <div className="py-8 px-4">
             <h1 className="font-bold text-2xl">Welcome to SudoStake</h1>
             <h2>On-chain property rights for everyone.</h2>
 
