@@ -46,7 +46,7 @@ export default function ConnectWallet() {
 
         <div className={classNames(
             {
-                "absolute sm:right-0 top-14 z-40 max-sm:w-full sm:min-w-96 shadow-lg overflow-hidden p-4": true,
+                "absolute sm:right-0 top-14 z-40 max-sm:w-full sm:min-w-96 shadow-lg overflow-hidden px-4 py-16": true,
                 "max-sm:rounded-b-lg sm:rounded-bl-lg": true,
                 "bg-white dark:bg-zinc-900": true,
                 "divide-y divide-zinc-300 dark:divide-zinc-700": true,

@@ -5,8 +5,8 @@ export default function WelcomePage() {
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-col items-center justify-center w-full min-h-72 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
-                <h1 className="font-bold text-4xl">Welcome to SudoStake</h1>
-                <h2>On-chain property rights for everyone.</h2>
+                <h1 className="font-bold text-4xl">SudoStake</h1>
+                <h2>On-chain property rights for everyone</h2>
             </div>
 
             <div className="flex flex-col p-8">
@@ -19,7 +19,7 @@ export default function WelcomePage() {
                 </ul>
             </div>
 
-            <h3 className="font-bold text-xl mt-8 px-4 text-center"> Types of rights you can extend to lenders as a vault owner</h3>
+            <h3 className="font-normal text-xl mt-8 px-4 text-center"> Types of rights you can extend to lenders as a vault owner</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 <div
                     className={classNames({
@@ -84,7 +84,7 @@ export default function WelcomePage() {
                 </ol>
             </div>
 
-            <div className="flex flex-col px-4 py-8">
+            <div className="flex flex-col px-4 py-8 items-center">
                 Get started today! 🚀
             </div>
         </div>
