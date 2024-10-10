@@ -16,6 +16,7 @@ import ClipBoardButton from "./widgets/clipboard_button";
 import Link from "next/link";
 import { WalletStatus } from "./enums/wallet_status";
 import { VaultIndex } from "./types/vault_index";
+import WelcomePage from "./widgets/welcome_page";
 
 export default function Home() {
   // define tabs
@@ -229,7 +230,7 @@ export default function Home() {
 
       {
         status !== WalletStatus.connected &&
-        <ConnectWalletOptions title="Connect to manage vaults." />
+        <WelcomePage />
       }
     </div>
   )

@@ -10,6 +10,7 @@ import { useConnectWallet } from '../hooks/use_connect_wallet';
 import { WalletStatus } from '../enums/wallet_status';
 import SearchWidget from './search_widget';
 import WalletInfo from './wallet-info';
+import ConnectWallet from './connect_wallet';
 
 export default function ToolBar() {
     const { status } = useRecoilValue(walletState);
@@ -72,6 +73,13 @@ export default function ToolBar() {
                 {
                     status === WalletStatus.connected && chainInfo &&
                     <WalletInfo />
+                }
+            </div>
+
+            <div className='h-full flex items-center pr-4'>
+                {
+                    status !== WalletStatus.connected && chainInfo &&
+                    <ConnectWallet />
                 }
             </div>
 

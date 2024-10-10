@@ -87,8 +87,8 @@ export default function ConnectWalletOptions({ title }: ComponentProps) {
 
                 {
                     !no_signer_detected &&
-                    <div className="flex flex-col gap-8">
-                        <span className="px-4 text-lg text-center">{title}</span>
+                    <div className="flex flex-col gap-4">
+                        <span className="px-4 text-center">{title}</span>
 
                         {
                             show_cosmostation &&
