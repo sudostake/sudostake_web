@@ -56,7 +56,7 @@ export default function ToolBar() {
                 "w-full h-14",
                 "sm:pl-56",
                 "border-b border-zinc-300 dark:border-zinc-800",
-                "bg-opacity-80 backdrop-blur-sm",
+                " bg-white dark:bg-zinc-900",
             )
         }>
             <div className='h-full flex items-center pl-4 pr-8'>

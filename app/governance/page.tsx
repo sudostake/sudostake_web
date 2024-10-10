@@ -25,7 +25,7 @@ export default function Governance() {
                 "px-4 py-8": true,
                 "flex flex-col gap-4": true,
                 "w-full": true,
-                "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                "hover:shadow-lg dark:hover:bg-zinc-900": true,
                 "border-t border-zinc-300 dark:border-zinc-600": true,
                 "md:max-lg:border-r": index % 2 === 0,
                 "md:max-lg:border-b": active_proposals.length <= 2 || index >= active_proposals.length - 2,

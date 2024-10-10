@@ -155,7 +155,7 @@ export default function Home() {
               <span key={vault.id} className={
                 classNames({
                   "px-4 py-8": true,
-                  "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                  "hover:shadow-lg dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-800": true,
                   "md:max-lg:border-r": index % 2 === 0,
                   "md:max-lg:border-b": owner_vaults.length <= 2 || index >= owner_vaults.length - 2,
@@ -180,7 +180,7 @@ export default function Home() {
               <div key={vault.id} className={
                 classNames({
                   "px-4 py-8": true,
-                  "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                  "hover:shadow-lg dark:hover:bg-zinc-900": true,
                   "border-t border-zinc-300 dark:border-zinc-800": true,
                   "md:max-lg:border-r": index % 2 === 0,
                   "md:max-lg:border-b": active_lending_vaults.length <= 2 || index >= active_lending_vaults.length - 2,

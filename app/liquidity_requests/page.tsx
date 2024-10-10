@@ -42,10 +42,10 @@ export default function LiquidityRequests() {
                 return <div key={vault.id} role="button"
                   onClick={() => { router.push(`/vaults/${vault.id}`) }}
                   className={classNames({
-                    "px-4 py-8": true,
+                    "p-4": true,
                     "flex flex-col": true,
                     "w-full": true,
-                    "hover:shadow-[16px_32px_128px_-8px_rgba(0,0,0,0.07)] dark:hover:bg-zinc-900": true,
+                    "hover:shadow-lg dark:hover:bg-zinc-900": true,
                     "border-t border-zinc-300 dark:border-zinc-800": true,
                     "md:max-lg:border-r": index % 2 === 0,
                     "md:max-lg:border-b": vaults.length <= 2 || index >= vaults.length - 2,

@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function WelcomePage() {
     return (
         <div className="p-8">
-            <h1 className="font-bold">Welcome to SudoStake</h1>
+            <h1 className="font-bold text-lg">Welcome to SudoStake</h1>
             <h2>On-chain property rights for everyone.</h2>
 
             <br />
@@ -21,7 +21,7 @@ export default function WelcomePage() {
             <br />
 
             <h3 className="font-medium underline underline-offset-4 mb-4"> Types of rights you can extend to lenders as a vault owner</h3>
-            <ol className="flex flex-col gap-4 sm:max-w-96">
+            <ol className="flex flex-col gap-4">
                 <li><span className="text-green-600">Fixed interest rental</span> <br /> You can allow the lender to claim a fixed amount of staking rewards with optional voting rights that can be exercised by the lender during the rewards claiming process.</li>
                 <li><span className='text-blue-600'>Fixed term rental</span> <br /> Allow the lender to claim all staking rewards for a fixed duration of time with optional voting rights that can be exercised by the lender during the rewards claiming process.</li>
                 <li><span className='text-red-600'>Fixed term loan</span> <br /> Allow the lender to liquidate a fixed amount of your staked tokens when you default on the loan.</li>

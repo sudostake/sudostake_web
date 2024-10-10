@@ -150,7 +150,7 @@ export default function VaultDealsToolbar({ on_data, list_ref }: ComponentProps)
             classNames(
                 "max-h-20 w-full px-4 sticky top-0",
                 "flex flex-row items-center justify-between",
-                "bg-opacity-80 backdrop-blur-sm",
+                "bg-white dark:bg-zinc-900",
                 "border-b border-zinc-200 dark:border-zinc-800"
             )
         }>
