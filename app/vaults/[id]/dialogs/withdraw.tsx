@@ -145,7 +145,7 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
                             disabled={!Boolean(amount) || isLoading}
                             type="button"
                             onClick={handle_withdraw}
-                            className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium">
+                            className="inline-flex items-center justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium">
                             {
                                 isLoading && <>
                                     <FaSpinner className="w-4 h-4 mr-3 spinner" />

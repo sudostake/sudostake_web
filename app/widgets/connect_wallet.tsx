@@ -61,7 +61,7 @@ export default function ConnectWallet() {
         <>
             <div role="button"
                 onClick={toggleModal}
-                className="px-4 flex items-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium"
+                className="px-4 flex items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium"
                 ref={buttonRef}>
                 <span>Connect</span>
             </div>
