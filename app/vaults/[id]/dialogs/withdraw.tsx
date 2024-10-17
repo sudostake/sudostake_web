@@ -149,7 +149,7 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
                             {
                                 isLoading && <>
                                     <FaSpinner className="w-4 h-4 mr-3 spinner" />
-                                    <span>withdrawing ...</span>
+                                    <span>processing</span>
                                 </>
                             }
                             {
