@@ -12,8 +12,9 @@ export default function WelcomePage() {
             <div className="flex flex-col p-8">
                 <h3 className="font-bold text-xl mb-4">How it works</h3>
                 <ul className="list-disc">
+                    <li> Connect your wallet.</li>
                     <li> Mint a vault.</li>
-                    <li> Stake and manage your ARCH tokens in your vault.</li>
+                    <li> Deposit, stake and manage your ARCH tokens.</li>
                     <li> Access USDC anytime by trading rights to your staked tokens with lenders.</li>
                     <li> Provide USDC to vault owners in exchange for rights to their staked tokens.</li>
                 </ul>
