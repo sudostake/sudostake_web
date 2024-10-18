@@ -102,7 +102,7 @@ export default function NavigationArea() {
                             <span className={
                                 classNames(
                                     "flex w-full max-sm:justify-center sm:rounded-lg p-4",
-                                    "sm:hover:shadow-lg dark:sm:hover:bg-zinc-900",
+                                    "sm:hover:shadow-lg sm:hover:bg-zinc-100 dark:sm:hover:bg-zinc-800",
                                     {
                                         "shadow-lg bg-zinc-100 dark:bg-zinc-800":
                                             nav_item.href === pathname
