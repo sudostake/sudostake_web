@@ -7,7 +7,7 @@ import { SudoStakeChainInfoSchema } from "../types/chain_info_schema";
 const ArchwayTestNetKeplrConfig: KeplrWalletConfig = {
     chainId: "constantine-3",
     chainName: "Testnet",
-    chainSymbolImageUrl: "/archway.png",
+    chainSymbolImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png",
     stakeCurrency: get_constantine_3_currency_by_name("CONST"),
     currencies: [
         get_constantine_3_currency_by_name("CONST")
@@ -37,7 +37,7 @@ const ArchwayTestNetKeplrConfig: KeplrWalletConfig = {
 const ArchwayMainnetKeplrConfig: KeplrWalletConfig = {
     chainId: "archway-1",
     chainName: "Mainnet",
-    chainSymbolImageUrl: "/archway.png",
+    chainSymbolImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png",
     stakeCurrency: get_triomphe_currency_by_name("ARCH"),
     currencies: [
         get_triomphe_currency_by_name("ARCH")

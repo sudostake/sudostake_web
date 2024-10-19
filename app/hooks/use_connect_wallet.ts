@@ -27,6 +27,7 @@ export const useConnectWallet = () => {
 
             // Try connect keplr
             if (selected_wallet === Wallet.keplr) {
+
                 await window.keplr.experimentalSuggestChain(chainInfo.keplr_wallet_config);
                 await window.keplr.enable(chainInfo.chain_id);
 
@@ -110,7 +111,7 @@ export const useConnectWallet = () => {
         onSuccess(res) {
             setWalletState(res);
         },
-        onError(_) {
+        onError(e) {
             setWalletState({
                 name: '',
                 address: '',

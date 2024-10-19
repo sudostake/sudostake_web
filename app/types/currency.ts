@@ -18,7 +18,7 @@ export const supported_constantine_3_currencies: Currency[] = [
         coinDenom: 'USDC',
         coinMinimalDenom: 'ibc/usdc',
         coinDecimals: 18,
-        coinImageUrl: '/usdc.png'
+        coinImageUrl: 'https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/noble/uusdc.png'
     }
 ];
 
@@ -28,13 +28,13 @@ export const supported_triomphe_currencies: Currency[] = [
         coinDenom: 'USDC',
         coinMinimalDenom: 'ibc/43897B9739BD63E3A08A88191999C632E052724AB96BD4C74AE31375C991F48D',
         coinDecimals: 6,
-        coinImageUrl: '/usdc.png'
+        coinImageUrl: 'https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/noble/uusdc.png'
     },
     {
         coinDenom: 'ARCH',
         coinMinimalDenom: 'aarch',
         coinDecimals: 18,
-        coinImageUrl: '/archway.png'
+        coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png"
     },
 
     // Deprecated
@@ -42,7 +42,7 @@ export const supported_triomphe_currencies: Currency[] = [
         coinDenom: 'TEST USDC',
         coinMinimalDenom: 'ibc/usdc',
         coinDecimals: 18,
-        coinImageUrl: '/usdc.png'
+        coinImageUrl: 'https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/noble/uusdc.png'
     }
 ];
 
