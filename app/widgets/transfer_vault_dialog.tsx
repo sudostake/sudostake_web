@@ -82,7 +82,7 @@ export default function TransferVaultDialog({ vault_info }: ComponentProps) {
                                             disabled={!Boolean(address)}
                                             type="button"
                                             onClick={() => { !isLoading && transferVault(address) }}
-                                            className="inline-flex justify-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
+                                            className="inline-flex justify-center items-center rounded-md border border-zinc-400 px-4 py-2 text-xs lg:text-base font-medium text-gray-300">
                                             {
                                                 isLoading && <>
                                                     <FaSpinner className="w-4 h-4 mr-3 spinner" />
