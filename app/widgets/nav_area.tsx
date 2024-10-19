@@ -13,7 +13,7 @@ type NavItem = {
 
 const nav_items: NavItem[] = [
     {
-        label: "Assets",
+        label: "Vaults",
         href: "/",
     },
     {
@@ -21,7 +21,7 @@ const nav_items: NavItem[] = [
         href: "/liquidity_requests",
     },
     {
-        label: "Poll",
+        label: "Vote",
         href: "/governance",
     },
 ];
