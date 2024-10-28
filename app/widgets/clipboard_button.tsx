@@ -14,10 +14,32 @@ export default function ClipBoardButton({ address, label, size = 'max' }: Compon
     const isMax = size === 'max';
 
     async function copyTextToClipboard(text: string) {
-        if ('clipboard' in navigator) {
-            return await navigator.clipboard.writeText(text);
-        } else {
-            return document.execCommand('copy', true, text);
+        if (navigator.clipboard?.writeText) {
+            try {
+                await navigator.clipboard.writeText(text);
+                console.log("Text copied to clipboard!");
+                return;
+            } catch (error) {
+                console.error("Clipboard API failed:", error);
+            }
+        }
+
+        // Fallback for older browsers
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed"; // Prevents scrolling
+        textArea.style.opacity = "0"; // Hide the text area
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand("copy");
+            console.log("Text copied to clipboard!");
+        } catch (error) {
+            console.error("Fallback method failed:", error);
+        } finally {
+            document.body.removeChild(textArea);
         }
     }
 
