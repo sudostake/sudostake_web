@@ -4,7 +4,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaCaretRight, FaChevronRight } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 
 type NavItem = {
     label: string;
@@ -23,6 +23,10 @@ const nav_items: NavItem[] = [
     {
         label: "Vote",
         href: "/governance",
+    },
+    {
+        label: "Stats",
+        href: "/statistics",
     },
 ];
 
