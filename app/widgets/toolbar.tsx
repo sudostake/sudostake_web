@@ -11,7 +11,7 @@ import { WalletStatus } from '../enums/wallet_status';
 import SearchWidget from './search_widget';
 import WalletInfo from './wallet-info';
 import ConnectWallet from './connect_wallet';
-import { NAV_BAR_HEIGHT_SIZE } from '../utils/constants';
+import { MIN_NAVBAR_TOOLBAR_HEIGHT } from '../utils/constants';
 
 export default function ToolBar() {
     const { status } = useRecoilValue(walletState);
@@ -54,7 +54,7 @@ export default function ToolBar() {
         <div className={
             classNames(
                 "fixed z-20 top-0 flex flex-row",
-                `w-full h-${NAV_BAR_HEIGHT_SIZE}`,
+                `w-full h-${MIN_NAVBAR_TOOLBAR_HEIGHT}`,
                 "sm:pl-56",
                 "border-b border-zinc-300 dark:border-zinc-800",
                 "bg-white dark:bg-zinc-900",

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaChevronRight } from "react-icons/fa";
-import { NAV_BAR_HEIGHT_SIZE } from "../utils/constants";
+import { MIN_NAVBAR_TOOLBAR_HEIGHT } from "../utils/constants";
 
 type NavItem = {
     label: string;
@@ -40,7 +40,7 @@ export default function NavigationArea() {
                 "z-20 flex fixed border-zinc-300 dark:border-zinc-800",
                 "max-sm:flex-row",
                 "max-sm:inset-x-0 bottom-0",
-                `max-sm:h-${NAV_BAR_HEIGHT_SIZE}`,
+                `max-sm:h-${MIN_NAVBAR_TOOLBAR_HEIGHT}`,
                 "max-sm:border-t",
                 "sm:flex-col",
                 "sm:inset-y-0 sm:left-0",
@@ -54,7 +54,7 @@ export default function NavigationArea() {
                     classNames(
                         "flex flex-row gap-2 items-center",
                         "border-zinc-300 dark:border-zinc-800",
-                        `p-4 h-${NAV_BAR_HEIGHT_SIZE}`,
+                        `p-4 h-${MIN_NAVBAR_TOOLBAR_HEIGHT}`,
                         "max-sm:border-r",
                         "sm:border-b"
                     )

@@ -17,7 +17,7 @@ import Link from "next/link";
 import { WalletStatus } from "./enums/wallet_status";
 import { VaultIndex } from "./types/vault_index";
 import WelcomePage from "./widgets/welcome_page";
-import { NAV_BAR_HEIGHT_SIZE } from "./utils/constants";
+import { MIN_NAVBAR_TOOLBAR_HEIGHT } from "./utils/constants";
 
 export default function Home() {
   // define tabs
@@ -74,7 +74,7 @@ export default function Home() {
 
   return (
     <div className={classNames(
-      `flex flex-col h-full overflow-y-auto overscroll-contain pt-${NAV_BAR_HEIGHT_SIZE} max-sm:pb-${NAV_BAR_HEIGHT_SIZE}`
+      `flex flex-col h-full overflow-y-auto overscroll-contain pt-${MIN_NAVBAR_TOOLBAR_HEIGHT} max-sm:pb-${MIN_NAVBAR_TOOLBAR_HEIGHT}`
     )}>
       {
         status === WalletStatus.connected &&
