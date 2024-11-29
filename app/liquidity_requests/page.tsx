@@ -9,6 +9,7 @@ import OpenInterestCard from './widgets/open_interest_card';
 import DocumentCounter from './widgets/document_counter';
 import { useRecoilValue } from 'recoil';
 import { selectedChainState } from '../state';
+import { NAV_BAR_HEIGHT_SIZE } from '../utils/constants';
 
 export default function LiquidityRequests() {
   const [vaults, setVaults] = useState<VaultIndex[]>([]);
@@ -17,7 +18,9 @@ export default function LiquidityRequests() {
   const chainInfo = useRecoilValue(selectedChainState);
 
   return (
-    <div className='h-full overflow-y-auto pt-14 max-sm:pb-14 flex flex-col' ref={vault_deals_list_ref}>
+    <div className={classNames(
+      `flex flex-col h-full overflow-y-auto overscroll-contain pt-${NAV_BAR_HEIGHT_SIZE} max-sm:pb-${NAV_BAR_HEIGHT_SIZE}`
+    )} ref={vault_deals_list_ref}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
         <span className='text-3xl'>
           Open Interests (<DocumentCounter collection_path={chainInfo && chainInfo.vault_collection_path} />)

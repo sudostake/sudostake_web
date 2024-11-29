@@ -17,6 +17,7 @@ import Link from "next/link";
 import { WalletStatus } from "./enums/wallet_status";
 import { VaultIndex } from "./types/vault_index";
 import WelcomePage from "./widgets/welcome_page";
+import { NAV_BAR_HEIGHT_SIZE } from "./utils/constants";
 
 export default function Home() {
   // define tabs
@@ -72,7 +73,9 @@ export default function Home() {
   }, [address, status, setActiveLendingVaults, chainInfo]);
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pt-14 max-sm:pb-14">
+    <div className={classNames(
+      `flex flex-col h-full overflow-y-auto overscroll-contain pt-${NAV_BAR_HEIGHT_SIZE} max-sm:pb-${NAV_BAR_HEIGHT_SIZE}`
+    )}>
       {
         status === WalletStatus.connected &&
         <div className="flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">

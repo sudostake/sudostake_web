@@ -5,12 +5,15 @@ import classNames from 'classnames';
 import VoteOnProposalFlow from './widgets/vote_on_proposal_flow';
 import { FaGlobe } from 'react-icons/fa';
 import Loading from '../loading';
+import { NAV_BAR_HEIGHT_SIZE } from '../utils/constants';
 
 export default function Governance() {
   const { active_proposals, isLoading } = useQueryActiveProposals();
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pt-14 max-sm:pb-14">
+    <div className={classNames(
+      `flex flex-col h-full overflow-y-auto overscroll-contain pt-${NAV_BAR_HEIGHT_SIZE} max-sm:pb-${NAV_BAR_HEIGHT_SIZE}`
+    )}>
       <div className="px-4 py-8 flex flex-row items-center justify-between w-full min-h-36 bg-zinc-200 dark:bg-zinc-800">
         <span className='text-3xl'>
           Active Proposals
