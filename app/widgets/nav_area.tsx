@@ -25,10 +25,10 @@ const nav_items: NavItem[] = [
         label: "Vote",
         href: "/governance",
     },
-    {
+    /*{
         label: "Stats",
         href: "/statistics",
-    },
+    },*/
 ];
 
 export default function NavigationArea() {
