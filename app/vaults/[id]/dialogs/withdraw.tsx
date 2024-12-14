@@ -20,7 +20,6 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
 
     const { mutate: withdraw, isLoading, isSuccess } = useWithdraw(from_address)
     const [to_address, setToAddress] = useState("")
-    const [send_memo, setSendMemo] = useState("")
     const chainInfo = useRecoilValue(selectedChainState)
 
     // Ensure the browser document is available
@@ -44,7 +43,6 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
         setVaultAddress("")
         setToAddress("")
         setAmount("")
-        setSendMemo("")
         setIsOpen(false)
     }
 
@@ -52,8 +50,7 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
         withdraw({
             amount: Number(amount),
             currency,
-            to_address: Boolean(to_address) ? to_address : null,
-            send_memo
+            to_address: Boolean(to_address) ? to_address : null
         })
     }
 
@@ -121,24 +118,6 @@ export default function WithdrawDialogButton({ from_address, currency }: Withdra
                                 "dark:placeholder-slate-100 dark:text-slate-100 dark:bg-slate-800 border dark:border-slate-500": true,
                             })} />
                     </div>
-
-                    {
-                        Boolean(to_address) &&
-                        <div className='flex flex-col gap-4 mt-8'>
-                            <div className="flex items-center w-full text-xs lg:text-sm">
-                                Optional: Add memo
-                            </div>
-
-                            <input value={send_memo}
-                                onChange={(e) => setSendMemo(e.target.value)}
-                                type="text" placeholder="Memo"
-                                className={classNames({
-                                    "p-3 rounded-lg text-sm w-full relative": true,
-                                    "bg-slate-100 placeholder-slate-500 text-slate-500 border border-slate-500": true,
-                                    "dark:placeholder-slate-100 dark:text-slate-100 dark:bg-slate-800 border dark:border-slate-500": true,
-                                })} />
-                        </div>
-                    }
 
                     <div className="flex mt-20 w-full justify-end">
                         <button

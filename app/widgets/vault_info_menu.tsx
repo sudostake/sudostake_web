@@ -49,14 +49,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                         "p-2": true,
                         "hover:bg-zinc-300 dark:hover:bg-zinc-700": true,
                     })}>
-                    <span>View Details</span>
-                </div>
-
-                <div role="button" className={classNames({
-                    "p-2": true,
-                    "hover:bg-zinc-300 dark:hover:bg-zinc-700": true,
-                })}>
-                    <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />
+                    <span>Open</span>
                 </div>
 
                 <div role="button" className={classNames({
@@ -65,6 +58,8 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                 })}>
                     <ClipBoardButton label="Copy Address" address={vault_info.id} size="min" />
                 </div>
+
+                
 
                 <Link passHref href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
                     target="_blank" role="button" className={classNames({
@@ -77,6 +72,13 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                         <FaHistory className={`w-4 h-4`} />
                     </span>
                 </Link>
+
+                <div role="button" className={classNames({
+                    "p-2": true,
+                    "hover:bg-zinc-300 dark:hover:bg-zinc-700": true,
+                })}>
+                    <TransferVaultDialog key={vault_info.id} vault_info={vault_info} />
+                </div>
             </div>
         </div >
     );
