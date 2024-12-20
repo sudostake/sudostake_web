@@ -14,8 +14,8 @@ export default function WelcomePage() {
             </div>
 
             <div className="flex flex-col p-8 max-w-md">
-                <h3 className="font-bold text-xl mb-4">How it works</h3>
-                <ul className="flex flex-col gap-8">
+                <h3 className="font-bold text-xl mb-4 text-center">How it works</h3>
+                <ul className="flex flex-row gap-8">
                     <li>
                         <div className="flex flex-col">
                             <span className="text-blue-600">For vault owners</span>
@@ -33,7 +33,7 @@ export default function WelcomePage() {
             </div>
 
             <div className="flex flex-col p-8 max-w-md">
-                <h3 className="font-bold text-xl mb-4">Loan Options</h3>
+                <h3 className="font-bold text-xl mb-4 text-center">Loan Option</h3>
                 <div className="flex flex-col hover:shadow-lg p-4 border rounded-lg  border-zinc-300 dark:border-zinc-800">
                     <div className={classNames(
                         "flex flex-col",
@@ -45,12 +45,12 @@ export default function WelcomePage() {
                 </div>
             </div>
 
-            <div className="flex flex-col p-8 max-w-md">
+            <div className="flex flex-col p-8 max-w-md text-center">
                 <h3 className="font-bold text-xl mb-4">Get Started</h3>
-                <div className="flex flex-col gap-4">
-                    <button className="btn btn-primary">Create a vault</button>
-                    <button className="btn btn-secondary">Provide liquidity</button>
-                </div>
+                <span className="flex flex-row gap-8">
+                    <button className="btn btn-primary ">Create a vault</button>
+                    <button className="btn btn-primary ">Provide liquidity</button>
+                </span>
             </div>
         </div>
     );
