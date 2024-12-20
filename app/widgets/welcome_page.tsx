@@ -36,7 +36,7 @@ export default function WelcomePage() {
                         "w-full",
                     )}>
                         <span className='text-red-600 font-bold'>Fixed term loan</span>
-                        <p>Liquidity providers can liquidate a fixed amount of tokens staked in a vault when the owner defaults.</p>
+                        <p>Liquidity providers can liquidate a fixed amount of tokens held in a vault when the owner defaults.</p>
                     </div>
                 </div>
             </div>
