@@ -15,7 +15,7 @@ export default function WelcomePage() {
 
             <div className="flex flex-col p-8 max-w-md">
                 <h3 className="font-bold text-xl mb-4 text-center">How it works</h3>
-                <ul className="flex flex-row gap-8">
+                <ul className="flex sm:flex-row max-sm:flex-col gap-8">
                     <li className="flex flex-col">
                         <span className="text-blue-600 text-bold">For vault owners</span>
                         <span>Access USDC anytime by trading rights to your staked tokens with liquidity providers.</span>
