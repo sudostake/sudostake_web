@@ -6,8 +6,8 @@ export default function WelcomePage() {
         <div className="flex flex-col justify-center items-center">
             <div className="flex flex-col items-center justify-center w-full min-h-72 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
                 <span className="flex flex-row gap-2 items-center justify-center">
-                    <h1 className="font-bold text-4xl ">
-                        SudoStake
+                    <h1 className="font-bold text-2xl">
+                        Welcome to <span>SudoStake</span>
                     </h1>
                 </span>
                 <h2>On-chain property rights for everyone</h2>
@@ -24,11 +24,11 @@ export default function WelcomePage() {
                     </li>
                     <li>
                         <div className="flex flex-col">
-                            <span className="text-green-600">For liquidity providers</span>
+                            <span className="text-green-700">For liquidity providers</span>
                             <span>Provide USDC to vault owners in exchange for rights to their staked tokens.</span>
                         </div>
                     </li>
-                    
+
                 </ul>
             </div>
 
@@ -45,20 +45,12 @@ export default function WelcomePage() {
                 </div>
             </div>
 
-            <div className="flex flex-col px-4 py-8 items-center">
-                <h3 className="font-bold text-xl mb-4">Supported stablecoins</h3>
-                <ol>
-                    <li>
-                        <Image
-                            src="https://raw.githubusercontent.com/cosmostation/chainlist/master/chain/noble/asset/usdc.png"
-                            alt="USDC logo"
-                            className="rounded-full"
-                            width={32}
-                            height={32}
-                            priority
-                        />
-                    </li>
-                </ol>
+            <div className="flex flex-col p-8 max-w-md">
+                <h3 className="font-bold text-xl mb-4">Get Started</h3>
+                <div className="flex flex-col gap-4">
+                    <button className="btn btn-primary">Create a vault</button>
+                    <button className="btn btn-secondary">Provide liquidity</button>
+                </div>
             </div>
         </div>
     );
