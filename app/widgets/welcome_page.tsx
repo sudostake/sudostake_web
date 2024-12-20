@@ -19,7 +19,7 @@ export default function WelcomePage() {
                     <li>
                         <div className="flex flex-col">
                             <span className="text-blue-600">For vault owners</span>
-                            <span>Access USDC anytime by trading rights to your staked tokens with lenders.</span>
+                            <span>Access USDC anytime by trading rights to your staked tokens with liquidity providers.</span>
                         </div>
                     </li>
                     <li>
