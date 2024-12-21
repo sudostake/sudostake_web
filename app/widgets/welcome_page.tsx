@@ -18,7 +18,7 @@ export default function WelcomePage() {
             <div className="flex flex-col p-8 max-w-2xl">
                 <h3 className="font-bold text-xl mb-4 text-center">How it works</h3>
 
-                <ul className="flex flex-row gap-8">
+                <ul className="flex max-sm:flex-col sm:flex-row gap-8">
                     <li className="flex flex-col hover:shadow-lg p-4 border rounded-lg  border-zinc-300 dark:border-zinc-800">
                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                             For vault owners
