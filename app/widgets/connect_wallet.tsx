@@ -1,13 +1,15 @@
 'use client'
 
-import { FaEllipsisH, FaSignOutAlt } from "react-icons/fa"
-import Image from "next/image";
 import { useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import classNames from "classnames";
 import ConnectWalletOptions from "./connect_wallet_options";
 
-export default function ConnectWallet() {
+type ComponentProps = {
+    label?: string,
+}
+
+export default function ConnectWallet({ label }: ComponentProps) {
     const [document_node, setDocumentNode] = useState<globalThis.Document>();
     const [isOpen, setIsOpen] = useState(false);
 
@@ -61,9 +63,9 @@ export default function ConnectWallet() {
         <>
             <div role="button"
                 onClick={toggleModal}
-                className="px-4 flex items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 w-24 h-9 text-xs lg:text-sm lg:font-medium"
+                className="px-4 flex items-center justify-center border border-zinc-400 dark:border-zinc-700 rounded-lg hover:ring-1 hover:ring-offset-1 min-w-24 h-9 text-xs lg:text-sm lg:font-medium"
                 ref={buttonRef}>
-                <span>Connect</span>
+                <span>{label || 'Connect'}</span>
             </div>
 
             {document_node && createPortal(

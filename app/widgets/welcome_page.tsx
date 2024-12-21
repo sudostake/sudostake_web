@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useRouter } from 'next/navigation';
+import ConnectWallet from "./connect_wallet";
 
 export default function WelcomePage() {
     const router = useRouter();
@@ -55,7 +56,7 @@ export default function WelcomePage() {
             <div className="flex flex-col p-8 max-w-lg text-center">
                 <h3 className="font-bold text-xl mb-4">Get Started</h3>
                 <span className="flex flex-row gap-8">
-                    <button className="btn btn-primary">Create a vault</button>
+                    <ConnectWallet label="Mint a vault" />
                     <button onClick={() => { router.push('/liquidity_requests') }}
                         className="btn btn-primary hover:underline">Provide liquidity</button>
                 </span>
