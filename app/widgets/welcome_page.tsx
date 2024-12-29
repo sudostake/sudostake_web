@@ -10,10 +10,9 @@ export default function WelcomePage() {
             <div className="flex flex-col items-center justify-center w-full min-h-72 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
                 <span className="flex flex-row gap-2 items-center justify-center">
                     <h1 className="font-bold text-2xl">
-                        Welcome to <span>SudoStake</span>
+                        Liquidity for Staked <span>ARCH</span>
                     </h1>
                 </span>
-                <h2>Empowering On-Chain Property Rights for Everyone</h2>
             </div>
 
             <div className="flex flex-col p-8 max-w-2xl">
