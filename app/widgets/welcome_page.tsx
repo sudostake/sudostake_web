@@ -13,28 +13,28 @@ export default function WelcomePage() {
                         Welcome to <span>SudoStake</span>
                     </h1>
                 </span>
-                <h2>On-chain property rights for everyone</h2>
+                <h2>Empowering On-Chain Property Rights for Everyone</h2>
             </div>
 
             <div className="flex flex-col p-8 max-w-2xl">
-                <h3 className="font-bold text-xl mb-4 text-center">How it works</h3>
+                <h3 className="font-bold text-xl mb-4 text-center">How it Works</h3>
 
                 <ul className="flex max-sm:flex-col sm:flex-row gap-8">
                     <li className="flex flex-col hover:shadow-lg p-4 border rounded-lg  border-zinc-300 dark:border-zinc-800">
                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            For vault owners
+                            For Vault Owners
                         </h5>
                         <p className="font-normal text-gray-700 dark:text-gray-400">
-                            Access USDC anytime by trading rights to your staked tokens with liquidity providers.
+                            Access USDC anytime by trading the rights to your staked tokens with liquidity providers.
                         </p>
                     </li>
 
                     <li className="flex flex-col hover:shadow-lg p-4 border rounded-lg  border-zinc-300 dark:border-zinc-800">
                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            For liquidity providers
+                            For Liquidity Providers
                         </h5>
                         <p className="font-normal text-gray-700 dark:text-gray-400">
-                            Provide USDC to vault owners in exchange for rights to their staked tokens.
+                            Provide USDC to vault owners in exchange for the rights to their staked tokens.
                         </p>
                     </li>
                 </ul>
@@ -47,8 +47,8 @@ export default function WelcomePage() {
                         "flex flex-col",
                         "w-full",
                     )}>
-                        <span className='text-red-600 font-bold'>Fixed term loan</span>
-                        <p>Liquidity providers can liquidate a fixed amount of tokens held in a vault when the owner defaults.</p>
+                        <span className='text-red-600 font-bold'>Fixed Term Loan</span>
+                        <p>Liquidity providers have the right to liquidate a fixed amount of tokens held in a vault if the owner defaults.</p>
                     </div>
                 </div>
             </div>
@@ -56,9 +56,9 @@ export default function WelcomePage() {
             <div className="flex flex-col p-8 max-w-lg text-center">
                 <h3 className="font-bold text-xl mb-4">Get Started</h3>
                 <span className="flex flex-row gap-8">
-                    <ConnectWallet label="Mint a vault" />
+                    <ConnectWallet label="Mint a Vault" />
                     <button onClick={() => { router.push('/liquidity_requests') }}
-                        className="btn btn-primary hover:underline">Provide liquidity</button>
+                        className="btn btn-primary hover:underline">Provide Liquidity</button>
                 </span>
             </div>
         </div>

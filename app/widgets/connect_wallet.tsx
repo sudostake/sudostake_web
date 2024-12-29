@@ -55,7 +55,7 @@ export default function ConnectWallet({ label }: ComponentProps) {
                 "hidden": !isOpen
             }
         )}>
-            <ConnectWalletOptions title="Connect to manage vaults." />
+            <ConnectWalletOptions title="Connect to Manage Your Vaults." />
         </div>
     </>;
 
