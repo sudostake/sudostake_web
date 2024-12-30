@@ -10,7 +10,7 @@ export default function WelcomePage() {
             <div className="flex flex-col items-center justify-center w-full min-h-72 bg-zinc-200 dark:bg-zinc-800 px-4 py-8">
                 <span className="flex flex-row gap-2 items-center justify-center">
                     <h1 className="font-bold text-2xl">
-                        Liquidity for Staked <span>ARCH</span>
+                        The Liquidity Protocol for <span>Stakers</span>
                     </h1>
                 </span>
             </div>
