@@ -107,6 +107,8 @@ export const useConnectWallet = () => {
                     selected_wallet
                 };
             }
+
+            // TODO Connect to ledger directly. 
         }, {
         onSuccess(res) {
             setWalletState(res);
