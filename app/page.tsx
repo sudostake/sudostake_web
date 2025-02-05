@@ -10,7 +10,6 @@ import { useMintVault } from "./hooks/use_exec";
 import VaultInfoCard from "./widgets/vault_info_card";
 import ActiveLiquidityRequestInfo from "./widgets/active_request_info";
 import { useRouter } from 'next/navigation';
-import ConnectWalletOptions from "./widgets/connect_wallet_options";
 import classNames from "classnames";
 import ClipBoardButton from "./widgets/clipboard_button";
 import Link from "next/link";
