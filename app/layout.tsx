@@ -10,7 +10,7 @@ import NavigationArea from './widgets/nav_area';
 
 export const metadata = {
   title: 'SudoStake',
-  description: 'On-chain property rights for everyone.',
+  description: 'The Liquidity Protocol for Stakers',
 }
 
 export default function RootLayout({
