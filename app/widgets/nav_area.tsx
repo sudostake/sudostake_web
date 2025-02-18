@@ -114,25 +114,6 @@ export default function NavigationArea() {
                         </Link>
                     );
                 })}
-
-                <span className={
-                    classNames(
-                        "sm:mt-auto",
-                        "sm:border-t sm:border-zinc-300 dark:sm:border-zinc-800",
-                        "min-w-36 w-full",
-                        "flex flex-row items-center justify-between",
-                        "px-4 sm:py-2",
-                    )
-                }>
-                    <a href="https://github.com/sudostake"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex w-full max-sm:justify-center rounded-lg p-2">
-                        GitHub
-                    </a>
-
-                    <FaChevronRight className="w-4 h-4" />
-                </span>
             </div>
         </div >
     );
