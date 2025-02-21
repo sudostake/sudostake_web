@@ -106,7 +106,7 @@ export default function SearchWidget() {
                 aria-label="search for a vault"
                 onClick={() => setIsOpen(true)}
                 className="flex h-full items-center px-4">
-                <FaSearch className="w-4 h-4" />
+                <FaSearch className="w-6 h-6" />
             </span>
 
             {document_node && createPortal(

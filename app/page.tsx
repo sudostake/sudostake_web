@@ -79,28 +79,15 @@ export default function Home() {
             Manage Vaults
           </span>
 
-          <div role="button" onClick={() => { !isLoading && mintVault() }}
-            className={classNames(
-              'px-4 py-2 flex flex-row gap-2 items-center',
-              'border border-transparent hover:border-dashed hover:border-zinc-700  dark:hover:border-zinc-300',
-              'rounded-lg'
-            )}>
-            <span className="flex items-center text-sm lg:text-base font-medium justify-center">
-              {
-                isLoading && <>
-                  <FaSpinner className="w-4 h-4 mr-4 spinner" />
-                  <span>Minting...</span>
-                </>
-              }
+          <button onClick={() => { !isLoading && mintVault() }}>
+            {
+              isLoading && <FaSpinner className="w-6 h-6 spinner" />
+            }
 
-              {
-                !isLoading && <>
-                  <FaPlus className="w-4 h-4 mr-4" />
-                  <span>New Vault</span>
-                </>
-              }
-            </span>
-          </div>
+            {
+              !isLoading && <FaPlus className="w-6 h-6" />
+            }
+          </button>
         </div>
       }
 

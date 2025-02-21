@@ -19,14 +19,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
 
     return (
         <div className="relative inline-block">
-            <span role="button" onClick={() => setIsOpen(!isOpen)} className={
-                classNames(
-                    'w-7 h-7 inline-flex items-center justify-center rounded-lg hover:ring-1 hover:ring-offset-1',
-                    {
-                        'ring-1 ring-offset-1': isOpen
-                    }
-                )
-            }>
+            <span role="button" onClick={() => setIsOpen(!isOpen)}>
                 {
                     isOpen ? <FaTimes className="w-4 h-4" /> : <FaEllipsisH className="w-4 h-4" />
                 }
@@ -59,7 +52,7 @@ export default function VaultInfoMenu({ vault_info }: ComponentProps) {
                     <ClipBoardButton label="Copy Address" address={vault_info.id} size="min" />
                 </div>
 
-                
+
 
                 <Link passHref href={(`${chainInfo.explorer_url}/account/${vault_info.id}`)}
                     target="_blank" role="button" className={classNames({
