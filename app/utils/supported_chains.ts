@@ -1,5 +1,5 @@
 import { coin } from "@cosmjs/stargate";
-import { get_constantine_3_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_triomphe_currencies } from "../types/currency";
+import { get_constantine_3_currency_by_name, get_near_currency_by_name, get_triomphe_currency_by_name, supported_constantine_3_currencies, supported_near_currencies, supported_triomphe_currencies } from "../types/currency";
 import { LiquidityRequest } from "../enums/liquidity_request";
 import { KeplrWalletConfig } from "../types/keplr_wallet_config";
 import { SudoStakeChainInfoSchema } from "../types/chain_info_schema";
@@ -34,9 +34,39 @@ const ArchwayTestNetKeplrConfig: KeplrWalletConfig = {
     }
 };
 
+const NearDemoKeplrConfig: KeplrWalletConfig = {
+    chainId: "constantine-3",
+    chainName: "NEAR",
+    chainSymbolImageUrl: "https://pages.near.org/wp-content/uploads/2023/11/NEAR_token.png",
+    stakeCurrency: get_near_currency_by_name("NEAR"),
+    currencies: [
+        get_near_currency_by_name("NEAR")
+    ],
+    feeCurrencies: [
+        get_near_currency_by_name("NEAR")
+    ],
+    bech32Config: {
+        bech32PrefixAccAddr: "archway",
+        bech32PrefixAccPub: "archwaypub",
+        bech32PrefixConsAddr: "archwayvalcons",
+        bech32PrefixConsPub: "archwayvalconspub",
+        bech32PrefixValAddr: "archwayvaloper",
+        bech32PrefixValPub: "archwayvaloperpub"
+    },
+    bip44: { coinType: 118 },
+    features: ["cosmwasm"],
+    rest: "https://api.constantine.archway.io",
+    rpc: "https://rpc.constantine.archway.io",
+    nodeProvider: {
+        name: "Phi Labs",
+        email: "support@philabs.xyz",
+        website: "https://philabs.xyz"
+    }
+};
+
 const ArchwayMainnetKeplrConfig: KeplrWalletConfig = {
     chainId: "archway-1",
-    chainName: "Mainnet",
+    chainName: "Archway",
     chainSymbolImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/archway/aarch.png",
     stakeCurrency: get_triomphe_currency_by_name("ARCH"),
     currencies: [
@@ -115,6 +145,57 @@ const archway_constantine_3: SudoStakeChainInfoSchema = {
     validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
 };
 
+const near_demo: SudoStakeChainInfoSchema = {
+    keplr_wallet_config: NearDemoKeplrConfig,
+    chain_id: NearDemoKeplrConfig.chainId,
+    chain_name: NearDemoKeplrConfig.chainName,
+    chain_logo_url: NearDemoKeplrConfig.chainSymbolImageUrl,
+    rpc: NearDemoKeplrConfig.rpc,
+    rest: NearDemoKeplrConfig.rest,
+    stakeCurrency: NearDemoKeplrConfig.stakeCurrency,
+    gas_price: '900000000000.000000000000000000aconst',
+    sudomod_address: 'archway1fdnwzl70mz467h96x0stl2xdayysmnt9pgusqfpnnmjep2xyqj7q79heyg',
+    vault_creation_fee: coin('10000000000000000000', 'aconst'),
+    explorer_url: 'https://mintscan.io/archway-testnet',
+    vault_versions: [
+        {
+            code_id: 484,
+            collateral_options: [
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
+            ]
+        },
+        {
+            code_id: 970,
+            collateral_options: [
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
+            ]
+        },
+        {
+            code_id: 1160,
+            collateral_options: [
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
+            ]
+        },
+        {
+            code_id: 1906,
+            collateral_options: [
+                LiquidityRequest.fixed_interest_rental,
+                LiquidityRequest.fixed_term_rental,
+                LiquidityRequest.fixed_term_loan,
+            ]
+        },
+    ],
+    request_currencies: supported_near_currencies,
+    vault_collection_path: 'vaults',
+    validators_img_base_url: 'https://raw.githubusercontent.com/cosmostation/chainlist/main/chain/archway/moniker/'
+};
+
 const archway_mainnet: SudoStakeChainInfoSchema = {
     keplr_wallet_config: ArchwayMainnetKeplrConfig,
     chain_id: ArchwayMainnetKeplrConfig.chainId,
@@ -152,7 +233,8 @@ const archway_mainnet: SudoStakeChainInfoSchema = {
 
 export const supportedChains: SudoStakeChainInfoSchema[] = [
     archway_mainnet,
-    archway_constantine_3
+    // archway_constantine_3,
+    near_demo
 ];
 
 export function get_chain_info_from_rpc(rpc: string): SudoStakeChainInfoSchema | null {

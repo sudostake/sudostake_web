@@ -22,6 +22,23 @@ export const supported_constantine_3_currencies: Currency[] = [
     }
 ];
 
+
+// NEAR currencies
+export const supported_near_currencies: Currency[] = [
+    {
+        coinDenom: "NEAR",
+        coinMinimalDenom: "aconst",
+        coinDecimals: 18,
+        coinImageUrl: "https://pages.near.org/wp-content/uploads/2023/11/NEAR_token.png"
+    },
+    {
+        coinDenom: 'USDC',
+        coinMinimalDenom: 'ibc/usdc',
+        coinDecimals: 18,
+        coinImageUrl: 'https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/noble/uusdc.png'
+    }
+];
+
 // Archway main-net currencies
 export const supported_triomphe_currencies: Currency[] = [
     {
@@ -54,4 +71,9 @@ export function get_triomphe_currency_by_name(name: string): Currency | null {
 // 
 export function get_constantine_3_currency_by_name(name: string): Currency | null {
     return supported_constantine_3_currencies.find(currency => currency.coinDenom === name);
+}
+
+// 
+export function get_near_currency_by_name(name: string): Currency | null {
+    return supported_near_currencies.find(currency => currency.coinDenom === name);
 }
