@@ -62,13 +62,28 @@ export default function WelcomePage() {
             <section className="py-12 px-4 flex flex-col gap-4 items-center max-w-2xl w-full">
                 <h3 className="text-xl font-semibold text-center">Socials</h3>
                 <div className="flex flex-row gap-6">
-                    <a href="https://github.com/sudostake" target="_blank" rel="noreferrer">
+                    <a
+                        href="https://github.com/sudostake"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="SudoStake GitHub"
+                    >
                         <FaGithub className="w-5 h-5 sm:w-6 sm:h-6" />
                     </a>
-                    <a href="https://x.com/sudostake" target="_blank" rel="noreferrer">
+                    <a
+                        href="https://x.com/sudostake"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="SudoStake Twitter (X)"
+                    >
                         <FaXTwitter className="w-5 h-5 sm:w-6 sm:h-6" />
                     </a>
-                    <a href="https://t.me/sudostake" target="_blank" rel="noreferrer">
+                    <a
+                        href="https://t.me/sudostake"
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label="SudoStake Telegram"
+                    >
                         <FaTelegram className="w-5 h-5 sm:w-6 sm:h-6" />
                     </a>
                 </div>

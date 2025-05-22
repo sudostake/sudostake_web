@@ -1,7 +1,7 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useLayoutEffect, useState } from 'react';
+import React, { Fragment, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import { FaCheckCircle, FaRegCircle, FaArrowRight, FaTools } from 'react-icons/fa';
@@ -83,7 +83,7 @@ export default function NearLaunchModal({ trigger }: { trigger: JSX.Element }) {
                                                 </li>
                                             ))}
                                             {in_progress.map((item, i) => (
-                                                <li key={`done-${i}`} className="flex items-center gap-3 text-yellow-600 dark:text-yellow-400">
+                                                <li key={`in-progress-${i}`} className="flex items-center gap-3 text-yellow-600 dark:text-yellow-400">
                                                     <FaTools className="w-4 h-4" />
                                                     <span className="text-sm text-gray-900 dark:text-gray-200">{item}</span>
                                                 </li>
@@ -118,9 +118,7 @@ export default function NearLaunchModal({ trigger }: { trigger: JSX.Element }) {
 
     return (
         <>
-            <div role="button" onClick={() => setIsOpen(true)}>
-                {trigger}
-            </div>
+            {React.cloneElement(trigger, { onClick: () => setIsOpen(true) })}
             {documentNode && createPortal(modalContent, documentNode.body)}
         </>
     );
