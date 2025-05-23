@@ -7,11 +7,11 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import { onRequest } from "firebase-functions/v2/https";
+import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import * as admin from "firebase-admin";
-import { applyCorsHeaders, isPreflightRequest } from "./utils/apply_cors";
-import { CONTRACT_WHITELIST, getVaultState } from "./utils/get_vault_state";
+import {applyCorsHeaders, isPreflightRequest} from "./utils/apply_cors";
+import {CONTRACT_WHITELIST, getVaultState} from "./utils/get_vault_state";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -26,27 +26,37 @@ export const index_vault = onRequest(async (req, res) => {
     }
 
     if (req.method !== "POST") {
-        res.set("Allow", "POST").status(405).send("Method Not Allowed");
+        res.set("Allow", "POST").status(405)
+            .send("Method Not Allowed");
         return;
     }
 
     try {
-        const { vault } = req.body;
-        const { state, suffix } = await getVaultState(vault);
+        const {vault} = req.body;
+        const {state, suffix} = await getVaultState(vault);
 
         if (!state) {
-            res.status(400).json({ error: "Failed to fetch vault state" });
+            res.status(400).json({
+                error: "Failed to fetch vault state",
+            });
             return;
         }
 
         // Index into Firestore under collection = factory contract
-        logger.info(`Indexing vault to Firestore: ${suffix}/${vault}`, state);
-        await db.collection(suffix).doc(vault).set({ owner: state.owner });
+        logger.info(
+            `Indexing vault to Firestore: ${suffix}/${vault}`,
+            state
+        );
+        await db.collection(suffix).doc(vault).
+            set({owner: state.owner});
 
         res.status(200).json(state);
     } catch (err) {
         logger.error("Failed to fetch vault state", err);
-        res.status(500).json({ error: "Internal error", details: (err as Error).message });
+        res.status(500).json({
+            error: "Internal error",
+            details: (err as Error).message,
+        });
     }
 });
 
@@ -67,12 +77,14 @@ export const get_user_vaults = onRequest(async (req, res) => {
     const factory_id = req.query.factory_id as string;
 
     if (!owner || !factory_id) {
-        res.status(400).json({ error: "Missing 'owner' or 'factory_id' query parameter" });
+        res.status(400).json({
+            error: "Missing 'owner' or 'factory_id' query parameter",
+        });
         return;
     }
 
     if (!CONTRACT_WHITELIST[factory_id]) {
-        res.status(403).json({ error: "Unauthorized factory_id" });
+        res.status(403).json({error: "Unauthorized factory_id"});
         return;
     }
 
@@ -81,10 +93,12 @@ export const get_user_vaults = onRequest(async (req, res) => {
             .where("owner", "==", owner)
             .get();
 
-        const vault_ids = snapshot.docs.map(doc => doc.id);
+        const vault_ids = snapshot.docs.map((doc) => doc.id);
         res.status(200).json(vault_ids);
     } catch (err) {
         logger.error("Failed to fetch user vaults", err);
-        res.status(500).json({ error: "Internal error", details: (err as Error).message });
+        res.status(500).json({
+            error: "Internal error", details: (err as Error).message,
+        });
     }
 });

@@ -1,4 +1,4 @@
-import { providers } from "near-api-js";
+import {providers} from "near-api-js";
 
 type FunctionCallQueryResponse = {
     kind: "function_call";
@@ -9,7 +9,7 @@ type FunctionCallQueryResponse = {
 export type VaultStateResult = {
     state: {
         owner: string;
-        [key: string]: any;
+        [key: string]: unknown;
     };
     suffix: string;
 };
@@ -23,19 +23,23 @@ export const CONTRACT_WHITELIST: Record<string, string> = {
 /**
  * Determines RPC URL and fetches vault state from the chain.
  * Throws if the vault address is invalid or the query fails.
+ *
+ * @param {string} vault - The vault contract account ID
+ * @return {Promise<VaultStateResult>}
  */
 export async function getVaultState(vault: string): Promise<VaultStateResult> {
     if (!vault || typeof vault !== "string") {
         throw new Error("Missing or invalid vault address");
     }
 
-    const suffix = Object.keys(CONTRACT_WHITELIST).find((key) => vault.endsWith(key));
+    const suffix = Object.keys(CONTRACT_WHITELIST)
+        .find((key) => vault.endsWith(key));
     if (!suffix) {
         throw new Error("Vault address not allowed");
     }
 
     const rpcUrl = CONTRACT_WHITELIST[suffix];
-    const provider = new providers.JsonRpcProvider({ url: rpcUrl });
+    const provider = new providers.JsonRpcProvider({url: rpcUrl});
 
     const raw = await provider.query({
         request_type: "call_function",

@@ -1,4 +1,4 @@
-import { getVaultState } from "../utils/get_vault_state";
+import {getVaultState} from "../utils/get_vault_state";
 
 jest.mock("near-api-js", () => {
     const original = jest.requireActual("near-api-js");
@@ -8,7 +8,9 @@ jest.mock("near-api-js", () => {
             JsonRpcProvider: jest.fn().mockImplementation(() => ({
                 query: jest.fn().mockResolvedValue({
                     kind: "function_call",
-                    result: Buffer.from(JSON.stringify({ owner: "test-owner.near" })),
+                    result: Buffer.from(JSON.stringify({
+                        owner: "test-owner.near",
+                    })),
                     logs: [],
                 }),
             })),
@@ -18,25 +20,29 @@ jest.mock("near-api-js", () => {
 
 describe("getVaultState", () => {
     it("returns decoded state and suffix for testnet vault", async () => {
-        const { state, suffix } = await getVaultState("vault-123.vaultmint.testnet");
+        const {state, suffix} = await getVaultState(
+            "vault-123.vaultmint.testnet"
+        );
 
-        expect(state).toEqual({ owner: "test-owner.near" });
+        expect(state).toEqual({owner: "test-owner.near"});
         expect(suffix).toBe("vaultmint.testnet");
     });
 
     it("returns decoded state and suffix for mainnet vault", async () => {
-        const { state, suffix } = await getVaultState("vault-0.sudostake.near");
+        const {state, suffix} = await getVaultState("vault-0.sudostake.near");
 
-        expect(state).toEqual({ owner: "test-owner.near" });
+        expect(state).toEqual({owner: "test-owner.near"});
         expect(suffix).toBe("sudostake.near");
     });
 
     it("throws error for unwhitelisted vault address", async () => {
-        await expect(getVaultState("unlisted.near")).rejects.toThrow("Vault address not allowed");
+        await expect(getVaultState("unlisted.near"))
+            .rejects.toThrow("Vault address not allowed");
     });
 
     it("throws error for missing vault", async () => {
         // @ts-expect-error: intentionally testing invalid input
-        await expect(getVaultState(undefined)).rejects.toThrow("Missing or invalid vault address");
+        await expect(getVaultState(undefined))
+            .rejects.toThrow("Missing or invalid vault address");
     });
 });
