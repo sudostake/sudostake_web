@@ -23,7 +23,7 @@ export default function ComingSoonToNEAR() {
                                 height={20}
                                 priority
                             />
-                            <span>Mainnet integration in progress</span>
+                            <span>Check Integration Progress</span>
                             <FaArrowRight className="text-sm" />
                         </button>
                     }
