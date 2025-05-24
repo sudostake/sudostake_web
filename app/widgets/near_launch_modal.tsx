@@ -15,7 +15,7 @@ export default function NearLaunchModal({ trigger }: { trigger: JSX.Element }) {
     }, []);
 
     const completed = [
-        'Vault factory contract deployed to NEAR testnet',
+        'Vault factory deployed to NEAR testnet',
     ];
 
     const in_progress = [
