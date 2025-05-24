@@ -13,11 +13,11 @@ The project includes:
 
 ```
 sudostake_web/
-├── functions/        # Firebase Cloud Functions (TypeScript)
-├── public/           # Static assets
-├── app/              # Next.js source code
-├── .env.local        # Environment variables (not committed)
-└── README.md         # Project documentation
+├── firebase_functions/        # Firebase Cloud Functions (TypeScript)
+├── public/                    # Static assets
+├── app/                       # Next.js source code
+├── .env.local                 # Environment variables (not committed)
+└── README.md                  # Project documentation
 ```
 
 &nbsp;
@@ -78,7 +78,7 @@ Your function will be available at:
 http://localhost:5001/YOUR_PROJECT_ID/us-central1/helloWorld
 ```
 
-> 🔎 View the Emulator UI at [http://localhost:4000](http://localhost:4000)
+> 🔎 View the Emulator UI at [http://localhost:5002](http://localhost:5002)
 
 &nbsp;
 
@@ -86,5 +86,5 @@ http://localhost:5001/YOUR_PROJECT_ID/us-central1/helloWorld
 
 - Frontend is built with **Next.js + TypeScript + TailwindCSS**
 - Functions are written using **Firebase Cloud Functions (TypeScript)**
-- All functions are located in `functions/src/index.ts`
+- All functions are located in `firebase_functions/src/index.ts`
 - Functions must be **built before being served** locally
