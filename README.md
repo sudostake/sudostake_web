@@ -48,10 +48,10 @@ http://localhost:3000
 
 ## 🔧 Running Firebase Functions Locally
 
-1. **Navigate to the `functions/` folder**:
+1. **Navigate to the `firebase_functions/` folder**:
 
 ```bash
-cd functions
+cd firebase_functions
 ```
 
 2. **Install dependencies**:
@@ -69,7 +69,7 @@ npm run build
 4. **Start the Firebase Functions emulator**:
 
 ```bash
-firebase emulators:start --only functions
+npm run serve
 ```
 
 Your function will be available at:

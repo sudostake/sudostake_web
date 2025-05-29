@@ -21,11 +21,11 @@ jest.mock("near-api-js", () => {
 describe("getVaultState", () => {
     it("returns decoded state and suffix for testnet vault", async () => {
         const {state, suffix} = await getVaultState(
-            "vault-123.vaultmint.testnet"
+            "vault-123.nzaza.testnet"
         );
 
         expect(state).toEqual({owner: "test-owner.near"});
-        expect(suffix).toBe("vaultmint.testnet");
+        expect(suffix).toBe("nzaza.testnet");
     });
 
     it("returns decoded state and suffix for mainnet vault", async () => {

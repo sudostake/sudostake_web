@@ -16,10 +16,8 @@ export type VaultStateResult = {
 
 // Maps allowed vault suffixes to their RPC URLs
 export const CONTRACT_WHITELIST: Record<string, string> = {
-    "nzaza.testnet": "https://rpc.testnet.near.org",
-    "vaultmint.testnet": "https://rpc.testnet.near.org",
-    "satoshidream.testnet": "https://rpc.testnet.near.org",
-    "sudostake.near": "https://rpc.mainnet.near.org",
+    "nzaza.testnet": "https://rpc.testnet.fastnear.com",
+    "sudostake.near": "https://rpc.mainnet.fastnear.com",
 };
 
 /**
