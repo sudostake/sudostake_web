@@ -7,11 +7,12 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import {onRequest} from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 import * as admin from "firebase-admin";
-import {applyCorsHeaders, isPreflightRequest} from "./utils/apply_cors";
-import {CONTRACT_WHITELIST, getVaultState} from "./utils/get_vault_state";
+import { applyCorsHeaders, isPreflightRequest } from "./utils/apply_cors";
+import { CONTRACT_WHITELIST, getVaultState } from "./utils/get_vault_state";
+import { transformVaultState } from "./utils/transform_vault_state";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -32,8 +33,8 @@ export const index_vault = onRequest(async (req, res) => {
     }
 
     try {
-        const {vault} = req.body;
-        const {state, suffix} = await getVaultState(vault);
+        const { vault } = req.body;
+        const { state, suffix } = await getVaultState(vault);
 
         if (!state) {
             res.status(400).json({
@@ -47,10 +48,11 @@ export const index_vault = onRequest(async (req, res) => {
             `Indexing vault to Firestore: ${suffix}/${vault}`,
             state
         );
-        await db.collection(suffix).doc(vault).
-            set({owner: state.owner});
 
-        res.status(200).json(state);
+        const transformed = transformVaultState(state);
+        await db.collection(suffix).doc(vault).set(transformed);
+
+        res.status(200).json(transformed);
     } catch (err) {
         logger.error("Failed to fetch vault state", err);
         res.status(500).json({
@@ -84,7 +86,7 @@ export const get_user_vaults = onRequest(async (req, res) => {
     }
 
     if (!CONTRACT_WHITELIST[factory_id]) {
-        res.status(403).json({error: "Unauthorized factory_id"});
+        res.status(403).json({ error: "Unauthorized factory_id" });
         return;
     }
 
