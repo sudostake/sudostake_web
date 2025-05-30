@@ -12,6 +12,7 @@ import * as logger from "firebase-functions/logger";
 import * as admin from "firebase-admin";
 import {applyCorsHeaders, isPreflightRequest} from "./utils/apply_cors";
 import {CONTRACT_WHITELIST, getVaultState} from "./utils/get_vault_state";
+import { transformVaultState } from "./utils/transform_vault_state";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp();
@@ -47,10 +48,11 @@ export const index_vault = onRequest(async (req, res) => {
             `Indexing vault to Firestore: ${suffix}/${vault}`,
             state
         );
-        await db.collection(suffix).doc(vault).
-            set({owner: state.owner});
 
-        res.status(200).json(state);
+        const transformed = transformVaultState(state);
+        await db.collection(suffix).doc(vault).set(transformed);
+
+        res.status(200).json(transformed);
     } catch (err) {
         logger.error("Failed to fetch vault state", err);
         res.status(500).json({
