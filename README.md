@@ -72,10 +72,18 @@ npm run build
 npm run serve
 ```
 
-Your function will be available at:
-
 ```
-http://localhost:5001/YOUR_PROJECT_ID/us-central1/helloWorld
+http://127.0.0.1:5001/sudostake/us-central1
+
+# Index a vault example
+curl -X POST http://127.0.0.1:5001/sudostake/us-central1/index_vault \
+  -H "Content-Type: application/json" \
+  -d '{"vault": "vault-0.nzaza.testnet"}'
+{"owner":"selfcustody.testnet","state":"idle"}
+
+# Get user vaults example
+curl -X GET "http://127.0.0.1:5001/sudostake/us-central1/get_user_vaults?owner=selfcustody.testnet&factory_id=nzaza.testnet" \
+  -H "Content-Type: application/json"
 ```
 
 > 🔎 View the Emulator UI at [http://localhost:5002](http://localhost:5002)
