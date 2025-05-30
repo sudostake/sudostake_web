@@ -1,4 +1,4 @@
-import {getVaultState} from "../utils/get_vault_state";
+import { getVaultState } from "../utils/get_vault_state";
 
 jest.mock("near-api-js", () => {
     const original = jest.requireActual("near-api-js");
@@ -20,18 +20,18 @@ jest.mock("near-api-js", () => {
 
 describe("getVaultState", () => {
     it("returns decoded state and suffix for testnet vault", async () => {
-        const {state, suffix} = await getVaultState(
+        const { state, suffix } = await getVaultState(
             "vault-123.nzaza.testnet"
         );
 
-        expect(state).toEqual({owner: "test-owner.near"});
+        expect(state).toEqual({ owner: "test-owner.near" });
         expect(suffix).toBe("nzaza.testnet");
     });
 
     it("returns decoded state and suffix for mainnet vault", async () => {
-        const {state, suffix} = await getVaultState("vault-0.sudostake.near");
+        const { state, suffix } = await getVaultState("vault-0.sudostake.near");
 
-        expect(state).toEqual({owner: "test-owner.near"});
+        expect(state).toEqual({ owner: "test-owner.near" });
         expect(suffix).toBe("sudostake.near");
     });
 

@@ -64,7 +64,7 @@ describe("transformVaultState", () => {
             accepted_at: Timestamp.fromMillis(Math.floor(acceptedAtNs / 1_000_000)),
         });
 
-        expect(result.liquidity_request.duration).toBe(86400);
+        expect(result.liquidity_request?.duration).toBe(86400);
     });
 
     it("includes liquidation field if present", () => {

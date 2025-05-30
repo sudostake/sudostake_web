@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase-admin/firestore";
-
-type RawVaultState = any;
+import { RawVaultState } from "../types/raw_vault_state";
+import { TransformedVaultState } from "../types/transformed_vault_state";
 
 /**
  * Transforms raw vault state into a Firestore-compatible object.
@@ -14,10 +14,10 @@ type RawVaultState = any;
  *    - "pending" → liquidity request without accepted offer
  *    - "active" → liquidity request with accepted offer
  *
- * @param vault_state - The raw vault state returned from the smart contract
- * @returns Transformed object ready to be stored in Firestore
+ * @param {Record<string, unknown>} vault_state - The raw vault state returned from the smart contract
+ * @return {Record<string, unknown>} Transformed object ready to be stored in Firestore
  */
-export function transformVaultState(vault_state: RawVaultState) {
+export function transformVaultState(vault_state: RawVaultState): TransformedVaultState {
     const { owner, liquidity_request, accepted_offer, liquidation } = vault_state;
 
     // Compute the vault status
@@ -26,7 +26,7 @@ export function transformVaultState(vault_state: RawVaultState) {
         state = accepted_offer ? "active" : "pending";
     }
 
-    const transformed: any = {
+    const transformed: TransformedVaultState = {
         owner,
         state,
     };

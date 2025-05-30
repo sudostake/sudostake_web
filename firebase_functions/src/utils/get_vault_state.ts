@@ -1,4 +1,4 @@
-import {providers} from "near-api-js";
+import { providers } from "near-api-js";
 
 type FunctionCallQueryResponse = {
     kind: "function_call";
@@ -39,7 +39,7 @@ export async function getVaultState(vault: string): Promise<VaultStateResult> {
     }
 
     const rpcUrl = CONTRACT_WHITELIST[suffix];
-    const provider = new providers.JsonRpcProvider({url: rpcUrl});
+    const provider = new providers.JsonRpcProvider({ url: rpcUrl });
 
     const raw = await provider.query({
         request_type: "call_function",
