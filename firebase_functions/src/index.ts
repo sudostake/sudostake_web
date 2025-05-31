@@ -104,3 +104,49 @@ export const get_user_vaults = onRequest(async (req, res) => {
         });
     }
 });
+
+export const view_pending_liquidity_requests = onRequest(async (req, res) => {
+    applyCorsHeaders(res);
+
+    if (isPreflightRequest(req)) {
+        res.status(204).send("");
+        return;
+    }
+
+    if (req.method !== "GET") {
+        res.set("Allow", "GET").status(405).send("Method Not Allowed");
+        return;
+    }
+
+    const factory_id = req.query.factory_id as string;
+
+    if (!factory_id) {
+        res.status(400).json({ error: "Missing 'vault_factory_id' query parameter" });
+        return;
+    }
+
+    if (!CONTRACT_WHITELIST[factory_id]) {
+        res.status(403).json({ error: "Unauthorized factory_id" });
+        return;
+    }
+
+    try {
+        const snapshot = await db
+            .collection(factory_id)
+            .where("state", "==", "pending")
+            .get();
+
+        const pendingVaults = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        res.status(200).json(pendingVaults);
+    } catch (err) {
+        logger.error("Failed to fetch pending liquidity requests", err);
+        res.status(500).json({
+            error: "Internal error",
+            details: (err as Error).message,
+        });
+    }
+});
