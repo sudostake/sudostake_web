@@ -121,7 +121,7 @@ export const view_pending_liquidity_requests = onRequest(async (req, res) => {
     const factory_id = req.query.factory_id as string;
 
     if (!factory_id) {
-        res.status(400).json({ error: "Missing 'vault_factory_id' query parameter" });
+        res.status(400).json({ error: "Missing 'factory_id' query parameter" });
         return;
     }
 
