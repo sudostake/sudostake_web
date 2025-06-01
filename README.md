@@ -79,7 +79,6 @@ http://127.0.0.1:5001/sudostake/us-central1
 curl -X POST http://127.0.0.1:5001/sudostake/us-central1/index_vault \
   -H "Content-Type: application/json" \
   -d '{"vault": "vault-0.nzaza.testnet"}'
-{"owner":"selfcustody.testnet","state":"idle"}
 
 # Get user vaults example
 curl -X GET "http://127.0.0.1:5001/sudostake/us-central1/get_user_vaults?owner=selfcustody.testnet&factory_id=nzaza.testnet" \
@@ -88,6 +87,9 @@ curl -X GET "http://127.0.0.1:5001/sudostake/us-central1/get_user_vaults?owner=s
 # View pending liquidity requests
 curl -X GET "http://127.0.0.1:5001/sudostake/us-central1/view_pending_liquidity_requests?factory_id=nzaza.testnet" \
   -H "Content-Type: application/json"
+
+# View lender positions
+curl -X GET "http://127.0.0.1:5001/sudostake/us-central1/view_lender_positions?factory_id=nzaza.testnet&lender_id=usdclender.testnet"
 ```
 
 > 🔎 View the Emulator UI at [http://localhost:5002](http://localhost:5002)

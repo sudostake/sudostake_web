@@ -1,0 +1,19 @@
+{
+    "indexes": [
+        {
+            "collectionGroup": "nzaza.testnet",
+            "queryScope": "COLLECTION",
+            "fields": [
+                {
+                    "fieldPath": "accepted_offer.lender",
+                    "order": "ASCENDING"
+                },
+                {
+                    "fieldPath": "accepted_offer.accepted_at",
+                    "order": "DESCENDING"
+                }
+            ]
+        }
+    ],
+    "fieldOverrides": []
+}

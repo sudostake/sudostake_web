@@ -150,3 +150,57 @@ export const view_pending_liquidity_requests = onRequest(async (req, res) => {
         });
     }
 });
+
+export const view_lender_positions = onRequest(async (req, res) => {
+    applyCorsHeaders(res);
+
+    if (isPreflightRequest(req)) {
+        res.status(204).send("");
+        return;
+    }
+
+    if (req.method !== "GET") {
+        res.set("Allow", "GET").status(405).send("Method Not Allowed");
+        return;
+    }
+
+    const factory_id = req.query.factory_id as string;
+
+    if (!factory_id) {
+        res.status(400).json({ error: "Missing 'factory_id' query parameter" });
+        return;
+    }
+
+    if (!CONTRACT_WHITELIST[factory_id]) {
+        res.status(403).json({ error: "Unauthorized factory_id" });
+        return;
+    }
+
+    const lender_id = req.query.lender_id as string;
+
+    if (!lender_id) {
+        res.status(400).json({ error: "Missing 'lender_id' query parameter" });
+        return;
+    }
+
+    try {
+        const snapshot = await db
+            .collection(factory_id)
+            .where("accepted_offer.lender", "==", lender_id)
+            .orderBy("accepted_offer.accepted_at", "desc")
+            .get();
+
+        const lender_positions = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+
+        res.status(200).json(lender_positions);
+    } catch (err) {
+        logger.error("Failed to fetch lender positions", err);
+        res.status(500).json({
+            error: "Internal error",
+            details: (err as Error).message,
+        });
+    }
+});
