@@ -99,7 +99,7 @@ export default function NearLaunchModal({ trigger }: { trigger: JSX.Element }) {
 
                                     <div className="flex justify-end">
                                         <a
-                                            href="https://github.com/sudostake/sudostake_contracts_near"
+                                            href="https://github.com/sudostake"
                                             target="_blank"
                                             rel="noreferrer"
                                             className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-black dark:bg-white dark:text-black rounded-lg hover:opacity-90 transition"
