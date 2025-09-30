@@ -15,15 +15,16 @@ export default function NearLaunchModal({ trigger }: { trigger: JSX.Element }) {
     }, []);
 
     const completed = [
-        'Vault factory deployed to NEAR testnet',
+        'SudoStake Vault factory deployed on NEAR testnet',
+        'SudoStake AI Agent running on NEAR testnet',
+        'SudoStake web interface deployed for NEAR testnet',
     ];
 
     const in_progress = [
-        'SudoStake NEAR AI Agent under development',
+       'Final testnet stress testing',
     ];
 
     const pending = [
-        'Final testnet stress testing',
         'Audit & security reviews',
         'Mainnet deployment',
         'NEAR-native UX polish',
