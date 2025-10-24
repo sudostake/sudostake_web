@@ -7,12 +7,12 @@ export default function Home() {
             Welcome to SudoStake
           </p>
           <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
-            Unlock USDC with Your Staked L1 Assets
+            Unlock Liquidity with the Assets You Already Stake
           </h1>
           <p className="mx-auto max-w-2xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
-            Borrow stablecoins against the Archway or NEAR positions you already
-            stake. Stay in control of your L1 tokens, keep rewards compounding,
-            and tap into USDC liquidity on demand.
+            Borrow stablecoins against staked positions without unbonding.
+            Maintain custody, keep rewards compounding, and tap into on-demand
+            liquidity while your assets keep working for you.
           </p>
         </section>
 
