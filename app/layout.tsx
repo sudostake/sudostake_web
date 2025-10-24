@@ -15,17 +15,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SudoStake | Multichain Staking",
   description:
-    "Launch the Archway or NEAR staking experience built by SudoStake. Secure validators, intuitive delegations, unified rewards.",
+    "Launch the Cosmos or NEAR staking experience built by SudoStake. Secure validators, intuitive delegations, unified rewards.",
   openGraph: {
     title: "SudoStake | Multichain Staking",
     description:
-      "Launch the Archway or NEAR staking experience built by SudoStake.",
+      "Launch the Cosmos or NEAR staking experience built by SudoStake.",
   },
   twitter: {
     card: "summary_large_image",
     title: "SudoStake | Multichain Staking",
     description:
-      "Launch the Archway or NEAR staking experience built by SudoStake.",
+      "Launch the Cosmos or NEAR staking experience built by SudoStake.",
   },
 };
 

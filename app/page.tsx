@@ -17,22 +17,25 @@ export default function Home() {
         </section>
 
         <section className="grid w-full gap-6 sm:grid-cols-2">
-          <div
-            className="group relative cursor-not-allowed overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 text-left shadow-sm transition dark:border-zinc-800 dark:bg-zinc-900 sm:p-10"
-            aria-disabled="true"
+          <a
+            href="https://sudostake-web-cosmos--sudostake.us-east4.hosted.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-8 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900 sm:p-10"
           >
             <div className="absolute inset-0 opacity-0 transition group-hover:opacity-100">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10 dark:from-indigo-400/10 dark:via-purple-400/10 dark:to-blue-400/10" />
             </div>
-            <h2 className="text-2xl font-semibold">Archway DApp</h2>
+            <h2 className="text-2xl font-semibold">Cosmos DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Collateralize staked ARCH to open a flexible USDC credit line
-              without unbonding or disrupting rewards.
+              Tap liquidity against staked ATOM and allied Cosmos assets while
+              rewards continue to compound.
             </p>
-            <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-zinc-100 px-4 py-1 text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:bg-zinc-800 dark:text-indigo-300">
-              Coming Soon
+            <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition group-hover:gap-3 dark:text-indigo-400">
+              Launch Cosmos App
+              <span aria-hidden>&rarr;</span>
             </span>
-          </div>
+          </a>
 
           <a
             href="https://sudostake-web-near--sudostake.us-east4.hosted.app"
