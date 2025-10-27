@@ -4,14 +4,14 @@ export default function Home() {
       <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center justify-center gap-14 px-5 pb-20 pt-14 text-center sm:px-8 sm:pb-24 sm:pt-16 md:px-16 md:pt-20">
         <section className="space-y-5">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400 sm:text-sm">
-            Instant liquidity. Zero unbonding.
+            Liquidity, locked to your validators.
           </p>
           <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
-            Borrow USDC Against Staked Tokens
+            Borrow USDC While Your Stake Keeps Working
           </h1>
           <p className="mx-auto max-w-2xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
-            Spin up a self-custodied SudoStake vault, draw stablecoins in minutes,
-            and keep every L1 delegation earning with the validators you trust.
+            Create a vault you control, delegate L1 tokens through it, draw
+            stablecoins fast, and keep validator rewards compounding.
           </p>
         </section>
 
@@ -27,8 +27,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-semibold">Cosmos DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Vault staked ARCH, ATOM, or OSMO for instant USDC. Delegations stay
-              under your keys on the validators you choose.
+              Set up a vault, delegate your Cosmos L1 stake through it, and draw
+              USDC while rewards stay under your keys.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition group-hover:gap-3 dark:text-indigo-400">
               Open Cosmos App
@@ -47,8 +47,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-semibold">NEAR DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Use staked NEAR as vault collateral, pull USDC instantly, and keep
-              rewards running under your custody.
+              Launch a vault, delegate NEAR through it, unlock USDC, and stay in
+              full custody as rewards continue.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition group-hover:gap-3 dark:text-emerald-400">
               Open NEAR App
