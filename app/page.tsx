@@ -10,8 +10,8 @@ export default function Home() {
             Borrow USDC Against Staked Tokens
           </h1>
           <p className="mx-auto max-w-2xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
-            Spin up a non-custodial SudoStake vault, draw stablecoins in minutes,
-            and keep every delegation earning with the validators you trust.
+            Spin up a self-custodied SudoStake vault, draw stablecoins in minutes,
+            and keep every L1 delegation earning with the validators you trust.
           </p>
         </section>
 
@@ -27,8 +27,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-semibold">Cosmos DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Vault ATOM, OSMO, and LSDs for instant USDC—with delegates staying
-              on your preferred validators.
+              Vault staked ARCH, ATOM, or OSMO for instant USDC. Delegations stay
+              under your keys on the validators you choose.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition group-hover:gap-3 dark:text-indigo-400">
               Open Cosmos App
@@ -47,8 +47,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-semibold">NEAR DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Use staked NEAR and LSDs as vault collateral, pull USDC instantly,
-              and keep rewards running.
+              Use staked NEAR as vault collateral, pull USDC instantly, and keep
+              rewards running under your custody.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition group-hover:gap-3 dark:text-emerald-400">
               Open NEAR App
@@ -58,7 +58,7 @@ export default function Home() {
         </section>
 
         <footer className="text-[0.65rem] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-600 sm:text-xs">
-          Validator-grade infrastructure powering multichain liquidity
+          Validator grade infrastructure powering multichain liquidity
         </footer>
       </main>
     </div>
