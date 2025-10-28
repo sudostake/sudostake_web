@@ -4,14 +4,14 @@ export default function Home() {
       <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col items-center justify-center gap-14 px-5 pb-20 pt-14 text-center sm:px-8 sm:pb-24 sm:pt-16 md:px-16 md:pt-20">
         <section className="space-y-5">
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400 sm:text-sm">
-            Liquidity, locked to your validators.
+            USDC liquidity for stakers, yield for lenders.
           </p>
           <h1 className="text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
-            Borrow USDC While Your Stake Keeps Working
+            Earn from Staking, Trade Anytime.
           </h1>
           <p className="mx-auto max-w-2xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
-            Create a vault you control, delegate L1 tokens through it, draw
-            stablecoins fast, and keep validator rewards compounding.
+            Borrow USDC against your staked collateral while rewards keep
+            compounding, or supply USDC to vaults and earn validator-secured yield.
           </p>
         </section>
 
@@ -25,13 +25,13 @@ export default function Home() {
             <div className="absolute inset-0 opacity-0 transition group-hover:opacity-100">
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-blue-500/10 dark:from-indigo-400/10 dark:via-purple-400/10 dark:to-blue-400/10" />
             </div>
-            <h2 className="text-2xl font-semibold">Cosmos DApp</h2>
+            <h2 className="text-2xl font-semibold">Archway DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Set up a vault, delegate your Cosmos L1 stake through it, and draw
-              USDC while rewards stay under your keys.
+              Borrow USDC with ARCH collateral, or lend into Archway vaults for
+              validator-backed yield.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-indigo-600 transition group-hover:gap-3 dark:text-indigo-400">
-              Open Cosmos App
+              Open Archway App
               <span aria-hidden>&rarr;</span>
             </span>
           </a>
@@ -47,8 +47,8 @@ export default function Home() {
             </div>
             <h2 className="text-2xl font-semibold">NEAR DApp</h2>
             <p className="mt-3 text-sm text-zinc-600 dark:text-zinc-400">
-              Launch a vault, delegate NEAR through it, unlock USDC, and stay in
-              full custody as rewards continue.
+              Borrow USDC with NEAR collateral, or lend into NEAR vaults for
+              validator-backed yield.
             </p>
             <span className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-emerald-600 transition group-hover:gap-3 dark:text-emerald-400">
               Open NEAR App
@@ -58,7 +58,7 @@ export default function Home() {
         </section>
 
         <footer className="text-[0.65rem] uppercase tracking-[0.3em] text-zinc-400 dark:text-zinc-600 sm:text-xs">
-          Validator grade infrastructure powering multichain liquidity
+          Validator-grade infrastructure for borrowing across chains
         </footer>
       </main>
     </div>
