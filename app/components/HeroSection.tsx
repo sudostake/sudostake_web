@@ -25,7 +25,7 @@ export function HeroSection() {
         <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-center">
           <a
             href="#apps"
-            className="inline-flex w-full items-center justify-center rounded-full bg-[#1e4dd9] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#193ec7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e4dd9] sm:w-auto"
+            className="inline-flex w-full items-center justify-center rounded-full bg-[#1e4dd9] px-6 py-3 text-sm font-semibold text-white !text-white transition hover:bg-[#193ec7] hover:!text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e4dd9] sm:w-auto dark:!text-white"
           >
             Explore Apps
           </a>
