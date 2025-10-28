@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SudoStake | Multichain Staking",
+  title: "SudoStake | Validator Liquidity",
   description:
-    "Launch the Cosmos or NEAR staking experience built by SudoStake. Secure validators, intuitive delegations, unified rewards.",
+    "Launch the validator-first credit and staking experience from SudoStake. Secure validators, intuitive delegations, unified rewards.",
   openGraph: {
-    title: "SudoStake | Multichain Staking",
+    title: "SudoStake | Validator Liquidity",
     description:
-      "Launch the Cosmos or NEAR staking experience built by SudoStake.",
+      "Launch the validator-first credit and staking experience from SudoStake.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudoStake | Multichain Staking",
+    title: "SudoStake | Validator Liquidity",
     description:
-      "Launch the Cosmos or NEAR staking experience built by SudoStake.",
+      "Launch the validator-first credit and staking experience from SudoStake.",
   },
 };
 
