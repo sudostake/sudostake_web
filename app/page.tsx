@@ -12,8 +12,21 @@ export default function Home() {
         <NetworkSection />
       </main>
 
-      <footer className="border-t border-zinc-200/60 bg-white/80 py-8 text-center text-xs uppercase tracking-[0.32em] text-zinc-500/90 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80 dark:text-zinc-400/90">
-        Validator-native liquidity rails for cross-chain borrowing
+      <footer className="border-t border-zinc-200/60 bg-white/80 py-8 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-950/80">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-4 px-5 text-center text-xs uppercase tracking-[0.3em] text-zinc-500/90 sm:px-6 dark:text-zinc-400/90">
+          <span>Validator-native liquidity rails for cross-chain borrowing</span>
+          <nav className="flex flex-wrap items-center justify-center gap-4 text-[0.7rem] tracking-[0.2em]">
+            <a href="https://github.com/sudostake" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#1e4dd9] dark:hover:text-[#7c97f5]">
+              GitHub
+            </a>
+            <a href="https://github.com/sudostake" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#1e4dd9] dark:hover:text-[#7c97f5]">
+              Docs
+            </a>
+            <a href="https://twitter.com/sudostake" target="_blank" rel="noopener noreferrer" className="transition hover:text-[#1e4dd9] dark:hover:text-[#7c97f5]">
+              X
+            </a>
+          </nav>
+        </div>
       </footer>
     </div>
   );

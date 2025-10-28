@@ -1,6 +1,7 @@
 type Network = {
   name: string;
   href: string;
+  status: string;
   accent: {
     base: string;
     gradient: string;
@@ -12,6 +13,7 @@ const networks: Network[] = [
   {
     name: "Archway DApp",
     href: "https://sudostake-web-cosmos--sudostake.us-east4.hosted.app",
+    status: "Mainnet",
     accent: {
       base: "#ff4d00",
       gradient:
@@ -22,6 +24,7 @@ const networks: Network[] = [
   {
     name: "NEAR DApp",
     href: "https://sudostake-web-near--sudostake.us-east4.hosted.app",
+    status: "Testnet",
     accent: {
       base: "#00ed96",
       gradient:
@@ -56,12 +59,15 @@ export function NetworkSection() {
               />
               <div className="relative flex flex-col gap-8">
                 <div className="space-y-3">
-                  <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: network.accent.base }}
-                    />
-                    {network.name.split(" ")[0]}
+                  <div className="flex items-center justify-between text-xs font-medium uppercase tracking-[0.3em] text-zinc-500 dark:text-zinc-400">
+                    <span className="inline-flex items-center gap-2">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ backgroundColor: network.accent.base }}
+                      />
+                      {network.name.split(" ")[0]}
+                    </span>
+                    <span>{network.status}</span>
                   </div>
                   <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
                     {network.name}

@@ -14,14 +14,15 @@ const roles = [
 export function HeroSection() {
   return (
     <section className="flex w-full flex-col items-center gap-16 py-16">
-      <div className="flex w-full max-w-5xl flex-col items-center gap-5 rounded-[2.5rem] border border-zinc-200/80 bg-white/95 px-8 py-16 text-center shadow-sm shadow-zinc-900/5 dark:border-zinc-800/70 dark:bg-zinc-900/70 dark:shadow-none">
-        <h1 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
+      <div className="relative flex w-full max-w-5xl flex-col items-center gap-4 overflow-hidden rounded-[2rem] border border-zinc-200/70 bg-white px-8 py-14 text-center shadow-sm shadow-zinc-900/5 dark:border-zinc-800/70 dark:bg-zinc-900">
+        <div className="absolute inset-0 -z-10 opacity-80 blur-3xl [background:radial-gradient(circle_at_top,_rgba(30,77,217,0.14)_0%,_rgba(30,77,217,0)_70%)] dark:opacity-60" />
+        <h1 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-[3.75rem]">
           Stake. Earn. Trade.
         </h1>
         <p className="text-pretty max-w-xl text-base text-zinc-600 dark:text-zinc-400 sm:text-lg">
           Earn from staking, trade anytime.
         </p>
-        <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+        <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:items-center sm:justify-center">
           <a
             href="#apps"
             className="inline-flex w-full items-center justify-center rounded-full bg-[#1e4dd9] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#193ec7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1e4dd9] sm:w-auto"
@@ -52,11 +53,12 @@ export function HeroSection() {
           {roles.map((role) => (
             <article
               key={role.title}
-              className="flex h-full flex-col gap-4 rounded-2xl border border-zinc-200/80 bg-white/95 p-6 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#1e4dd9] dark:border-zinc-800/70 dark:bg-zinc-900/80 dark:hover:border-[#4d73eb]"
+              className="flex h-full min-h-[10rem] flex-col gap-4 rounded-2xl border border-zinc-200/70 bg-white/95 p-6 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-[#1e4dd9] dark:border-zinc-800/70 dark:bg-zinc-900/80 dark:hover:border-[#4d73eb]"
             >
               <h4 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
                 {role.title}
               </h4>
+              <div className="h-px w-12 bg-zinc-200 dark:bg-zinc-700" />
               <p className="text-sm text-zinc-600 dark:text-zinc-400">
                 {role.description}
               </p>
