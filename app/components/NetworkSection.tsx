@@ -51,7 +51,8 @@ export function NetworkSection() {
               href={network.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/95 p-6 text-left shadow-sm ${network.accent.shadow} transition duration-200 hover:-translate-y-1 hover:shadow-lg dark:border-zinc-800/70 dark:bg-zinc-900/80 dark:shadow-black/40`}
+              aria-label={`Open ${network.name} ${network.status}`}
+              className={`group relative flex flex-col justify-between gap-8 overflow-hidden rounded-3xl border border-zinc-200/80 bg-white/95 p-6 text-left shadow-sm ${network.accent.shadow} transition duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[#1e4dd9]/70 motion-reduce:transform-none motion-reduce:transition-none dark:border-zinc-800/70 dark:bg-zinc-900/80 dark:shadow-black/40`}
             >
               <div
                 className="absolute inset-0 opacity-0 transition group-hover:opacity-100"
@@ -75,7 +76,7 @@ export function NetworkSection() {
                 </div>
                 <div className="relative">
                   <span
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white transition group-hover:-translate-y-0.5 group-hover:brightness-95"
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold text-white transition group-hover:-translate-y-0.5 group-hover:brightness-95 motion-reduce:transform-none motion-reduce:transition-none"
                     style={{ backgroundColor: network.accent.base }}
                   >
                     Open App
