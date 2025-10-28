@@ -13,7 +13,7 @@ const roles = [
 
 export function HeroSection() {
   return (
-    <section className="flex w-full flex-col items-center gap-16 px-5 py-16 sm:px-6">
+    <section className="flex w-full flex-col items-center gap-16 py-16">
       <div className="flex w-full max-w-5xl flex-col items-center gap-5 rounded-[2.5rem] border border-zinc-200/80 bg-white/95 px-8 py-16 text-center shadow-sm shadow-zinc-900/5 dark:border-zinc-800/70 dark:bg-zinc-900/70 dark:shadow-none">
         <h1 className="text-balance text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">
           Stake. Earn. Trade.
@@ -39,7 +39,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl px-5 sm:px-6">
+      <div className="w-full max-w-5xl">
         <div className="text-center">
           <h3 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100">
             How It Works

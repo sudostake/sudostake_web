@@ -34,7 +34,7 @@ const networks: Network[] = [
 export function NetworkSection() {
   return (
     <section id="apps" className="w-full">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-5 sm:px-6">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
         <div className="space-y-2 text-left">
           <span className="text-xs font-semibold uppercase tracking-[0.35em] text-zinc-500 dark:text-zinc-400">
             Apps across networks
