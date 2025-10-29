@@ -1,8 +1,23 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light dark;
+  --background: #f7f9ff;
+  --foreground: #0b1220;
+  --surface-primary: #ffffff;
+  --surface-muted: #eef2ff;
+  --surface-glass: rgba(255, 255, 255, 0.92);
+  --border-soft: #d4dcf7;
+  --border-strong: #bcc8f0;
+  --text-primary: #0f172a;
+  --text-secondary: #24345b;
+  --text-tertiary: #3b4a73;
+  --text-muted: rgba(59, 74, 115, 0.72);
+  --shadow-soft-color: rgba(15, 23, 42, 0.16);
+  --accent-primary: #1e4dd9;
+  --accent-primary-hover: #193ec7;
+  --accent-subtle: rgba(30, 77, 217, 0.08);
+  --accent-strong: rgba(30, 77, 217, 0.18);
   --font-geist-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-geist-mono: "JetBrains Mono", "Fira Mono", ui-monospace,
     SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
@@ -16,14 +31,41 @@ html {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface-primary: var(--surface-primary);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-glass: var(--surface-glass);
+  --color-border-soft: var(--border-soft);
+  --color-border-strong: var(--border-strong);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-hover: var(--accent-primary-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #04070f;
+    --foreground: #f4f7ff;
+    --surface-primary: #0f1528;
+    --surface-muted: #101b2f;
+    --surface-glass: rgba(12, 18, 31, 0.85);
+    --border-soft: rgba(148, 163, 184, 0.24);
+    --border-strong: rgba(148, 163, 184, 0.38);
+    --text-primary: #f8fafc;
+    --text-secondary: #d1d8f5;
+    --text-tertiary: #9ea9cf;
+    --text-muted: rgba(148, 163, 184, 0.72);
+    --shadow-soft-color: rgba(8, 8, 8, 0.55);
+    --accent-primary: #4d73eb;
+    --accent-primary-hover: #6282f0;
+    --accent-subtle: rgba(77, 115, 235, 0.12);
+    --accent-strong: rgba(77, 115, 235, 0.2);
   }
 }
 
@@ -31,6 +73,8 @@ body {
   font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
     sans-serif;
   margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 a {
@@ -41,4 +85,50 @@ a {
 a:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 4px;
+}
+
+@layer utilities {
+  .bg-surface-primary {
+    background-color: var(--surface-primary);
+  }
+
+  .bg-surface-muted {
+    background-color: var(--surface-muted);
+  }
+
+  .bg-surface-glass {
+    background-color: var(--surface-glass);
+  }
+
+  .bg-accent-subtle {
+    background: var(--accent-subtle);
+  }
+
+  .border-soft {
+    border-color: var(--border-soft);
+  }
+
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+
+  .text-primary-strong {
+    color: var(--text-primary);
+  }
+
+  .text-secondary-strong {
+    color: var(--text-secondary);
+  }
+
+  .text-tertiary-soft {
+    color: var(--text-tertiary);
+  }
+
+  .text-muted-soft {
+    color: var(--text-muted);
+  }
+
+  .shadow-soft-elevated {
+    box-shadow: 0 12px 40px -24px var(--shadow-soft-color);
+  }
 }
