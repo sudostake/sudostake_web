@@ -2,19 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SudoStake | Stake-Backed Liquidity",
+  title: "SudoStake | Stake-Backed Loans",
   description:
-    "Stake with your preferred validators, keep rewards compounding, and borrow stablecoins through SudoStake vaults.",
+    "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
   openGraph: {
-    title: "SudoStake | Stake-Backed Liquidity",
+    title: "SudoStake | Stake-Backed Loans",
     description:
-      "Stake with your preferred validators, keep rewards compounding, and borrow stablecoins through SudoStake vaults.",
+      "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudoStake | Stake-Backed Liquidity",
+    title: "SudoStake | Stake-Backed Loans",
     description:
-      "Stake with your preferred validators, keep rewards compounding, and borrow stablecoins through SudoStake vaults.",
+      "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
   },
 };
 

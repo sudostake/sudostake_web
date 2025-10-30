@@ -33,7 +33,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/85 backdrop-blur-md transition-colors dark:border-zinc-800/80 dark:bg-zinc-950/85">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
         <span className="font-display text-xs font-semibold uppercase tracking-[0.32em] text-zinc-900 transition-colors dark:text-zinc-100">
           SudoStake
         </span>
@@ -66,7 +66,7 @@ export function SiteHeader() {
           id="mobile-nav"
           className="border-t border-zinc-200/70 bg-white/95 px-5 py-4 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden"
         >
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3">
+          <div className="mx-auto flex w-full max-w-5xl flex-col gap-3">
             {navLinks.map(({ label, href, external, ariaLabel }) => (
               <a
                 key={href}
