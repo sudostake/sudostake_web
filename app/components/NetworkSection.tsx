@@ -2,6 +2,7 @@ type Network = {
   name: string;
   href: string;
   status: string;
+  description: string;
   accent: {
     base: string;
     gradient: string;
@@ -15,6 +16,8 @@ const networks: Network[] = [
     name: "Archway dApp",
     href: "https://sudostake-web-cosmos--sudostake.us-east4.hosted.app",
     status: "Mainnet",
+    description:
+      "Borrow USDC against staked ARCH without interrupting validator rewards.",
     accent: {
       base: "#ff4d00",
       gradient:
@@ -27,6 +30,8 @@ const networks: Network[] = [
     name: "NEAR dApp",
     href: "https://sudostake-web-near--sudostake.us-east4.hosted.app",
     status: "Testnet",
+    description:
+      "Simulate stake-backed NEAR loans and liquidation flows on testnet.",
     accent: {
       base: "#00ed96",
       gradient:
@@ -78,7 +83,7 @@ export function NetworkSection() {
                     {network.name}
                   </h3>
                   <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">
-                    Delegated stake backs quick loans for {network.name.split(" ")[0]} staking.
+                    {network.description}
                   </p>
                 </div>
                 <span
