@@ -19,6 +19,8 @@
   --accent-subtle: rgba(30, 77, 217, 0.08);
   --accent-strong: rgba(30, 77, 217, 0.18);
   --font-geist-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
   --font-geist-mono: "JetBrains Mono", "Fira Mono", ui-monospace,
     SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
@@ -45,6 +47,7 @@ html {
   --color-accent-subtle: var(--accent-subtle);
   --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-display);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -75,6 +78,8 @@ body {
   margin: 0;
   background-color: var(--background);
   color: var(--foreground);
+  font-feature-settings: "liga", "clig", "kern";
+  line-height: 1.55;
 }
 
 a {
@@ -131,4 +136,18 @@ a:focus-visible {
   .shadow-soft-elevated {
     box-shadow: 0 12px 40px -24px var(--shadow-soft-color);
   }
+
+  .font-display {
+    font-family: var(--font-display), var(--font-geist-sans), system-ui,
+      -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), var(--font-geist-sans), system-ui,
+    -apple-system, "Segoe UI", sans-serif;
+  letter-spacing: -0.01em;
 }

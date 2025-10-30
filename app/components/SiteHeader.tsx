@@ -1,16 +1,26 @@
 export function SiteHeader() {
   return (
-    <header className="fixed top-0 left-0 z-40 w-full border-b border-soft bg-surface-glass backdrop-blur-lg transition duration-200 ease-out dark:border-zinc-800/70 dark:bg-zinc-950/80">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-3 sm:px-6">
-        <div className="text-sm font-semibold text-primary-strong transition-colors duration-200 dark:text-zinc-100">
+    <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/85 backdrop-blur-md transition-colors dark:border-zinc-800/80 dark:bg-zinc-950/85">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+        <span className="font-display text-xs font-semibold uppercase tracking-[0.32em] text-zinc-900 transition-colors dark:text-zinc-100">
           SudoStake
-        </div>
-        <nav>
+        </span>
+        <nav className="flex items-center gap-4 text-sm font-medium text-zinc-700 transition-colors dark:text-zinc-300">
           <a
-            href="#apps"
-            className="inline-flex items-center justify-center rounded-full border border-[color:var(--accent-primary)] px-5 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-[color:var(--accent-primary)] transition hover:bg-[color:var(--accent-primary)] hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-primary)] dark:border-[#4d73eb] dark:text-[#4d73eb] dark:hover:bg-[#1e4dd9] dark:hover:text-white"
+            href="https://github.com/sudostake"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition hover:text-zinc-900 dark:hover:text-zinc-100"
           >
-            Explore Apps
+            GitHub
+          </a>
+          <a
+            href="https://github.com/sudostake/sudostake_web_near/tree/main/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition hover:text-zinc-900 dark:hover:text-zinc-100"
+          >
+            Docs
           </a>
         </nav>
       </div>
