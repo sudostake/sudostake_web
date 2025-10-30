@@ -58,10 +58,7 @@ const resources: ResourceLink[] = [
 function ResourcesSection() {
   return (
     <section id="resources" className="w-full py-10">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-5 sm:px-6 lg:px-8">
-        <span className="inline-flex w-fit items-center rounded-full border border-[color:var(--border-strong)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-tertiary-soft dark:border-zinc-700/70">
-          Stay connected
-        </span>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5">
         <div className="flex flex-col gap-3 sm:max-w-lg">
           <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
             Key guides and updates for stake-backed loans.
@@ -71,22 +68,22 @@ function ResourcesSection() {
           </p>
         </div>
 
-        <ul className="flex flex-col text-sm">
+        <ul className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
           {resources.map(({ name, href, description, label, accent }) => (
             <li
               key={href}
-              className="border-t border-[color:var(--border-strong)] py-5 first:border-t-0 first:pt-0 dark:border-zinc-800/80"
+              className="surface-panel group h-full rounded-3xl border border-[color:var(--border-soft)] bg-white/80 transition hover:-translate-y-1 hover:border-[color:var(--accent-primary)] hover:shadow-[0_30px_60px_-50px_rgba(15,23,42,0.5)] dark:border-zinc-800/60 dark:bg-zinc-950/60"
             >
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex flex-col gap-3 transition hover:text-primary-strong sm:flex-row sm:items-center sm:justify-between"
+                className="flex h-full flex-col justify-between gap-4 px-5 py-5 text-left transition sm:px-6 sm:py-6 lg:px-8"
               >
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-3">
                   <span
-                    className="text-xs font-semibold uppercase tracking-[0.28em]"
+                    className="inline-flex w-fit items-center gap-2 rounded-full border border-transparent bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-secondary-strong shadow-sm ring-1 ring-inset ring-white/60 backdrop-blur transition group-hover:text-[color:var(--accent-primary)] dark:bg-zinc-900/70 dark:text-zinc-300 dark:ring-zinc-800/80"
                     style={{ color: accent.base }}
                   >
                     {label}
@@ -116,7 +113,7 @@ function ResourcesSection() {
 
 export default function Home() {
   return (
-    <div className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
+    <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
       <SiteHeader />
 
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-5 pb-20 pt-14 sm:px-6 lg:px-8">

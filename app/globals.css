@@ -75,10 +75,28 @@ html {
 body {
   font-family: var(--font-geist-sans);
   margin: 0;
-  background-color: var(--background);
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(30, 77, 217, 0.12), transparent 55%),
+    radial-gradient(circle at 82% 0%, rgba(0, 184, 123, 0.12), transparent 48%),
+    var(--background);
   color: var(--foreground);
   font-feature-settings: "liga", "clig", "kern";
   line-height: 1.55;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background:
+      radial-gradient(circle at 12% 15%, rgba(77, 115, 235, 0.22), transparent 53%),
+      radial-gradient(circle at 78% -5%, rgba(30, 217, 185, 0.16), transparent 45%),
+      var(--background);
+  }
+}
+
+::selection {
+  background-color: rgba(30, 77, 217, 0.28);
+  color: #f8fafc;
 }
 
 a {
@@ -92,6 +110,20 @@ a:focus-visible {
 }
 
 @layer utilities {
+  .surface-panel {
+    border: 1px solid var(--border-soft);
+    background: var(--surface-glass);
+    box-shadow: 0 20px 40px -28px var(--shadow-soft-color);
+    backdrop-filter: blur(28px);
+  }
+
+  .section-shell {
+    border-radius: 32px;
+    border: 1px solid color-mix(in srgb, var(--border-strong) 48%, transparent);
+    background: color-mix(in srgb, var(--surface-primary) 88%, transparent);
+    box-shadow: 0 28px 60px -32px color-mix(in srgb, var(--shadow-soft-color) 35%, transparent);
+  }
+
   .bg-surface-primary {
     background-color: var(--surface-primary);
   }

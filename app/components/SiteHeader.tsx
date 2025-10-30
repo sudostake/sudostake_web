@@ -32,11 +32,19 @@ export function SiteHeader() {
   const handleNavClick = () => setMenuOpen(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/85 backdrop-blur-md transition-colors dark:border-zinc-800/80 dark:bg-zinc-950/85">
+    <header className="sticky top-0 z-40 border-b border-transparent bg-white/75 backdrop-blur-xl transition dark:bg-zinc-950/80">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-        <span className="font-display text-xs font-semibold uppercase tracking-[0.32em] text-zinc-900 transition-colors dark:text-zinc-100">
+        <a
+          href="#top"
+          className="inline-flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-[0.32em] text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
+          aria-label="SudoStake home"
+        >
+          <span
+            aria-hidden
+            className="inline-flex h-2.5 w-2.5 rounded-full bg-[color:var(--accent-primary)] shadow-[0_0_12px_rgba(30,77,217,0.45)]"
+          />
           SudoStake
-        </span>
+        </a>
         <button
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
@@ -46,20 +54,22 @@ export function SiteHeader() {
         >
           Menu
         </button>
-        <nav className="hidden items-center gap-5 text-sm font-medium text-zinc-700 transition-colors dark:text-zinc-300 sm:flex">
-          {navLinks.map(({ label, href, external, ariaLabel }) => (
-            <a
-              key={href}
-              href={href}
-              className="transition hover:text-zinc-900 dark:hover:text-zinc-100"
-              target={external ? "_blank" : undefined}
-              rel={external ? "noopener noreferrer" : undefined}
-              aria-label={ariaLabel}
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
+        <div className="hidden items-center gap-6 sm:flex">
+          <nav className="flex items-center gap-4 text-sm font-medium text-zinc-600 transition dark:text-zinc-300">
+            {navLinks.map(({ label, href, external, ariaLabel }) => (
+              <a
+                key={href}
+                href={href}
+                className="rounded-full px-2 py-1 transition hover:text-[color:var(--accent-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-primary)] dark:hover:text-[color:var(--accent-primary)]"
+                target={external ? "_blank" : undefined}
+                rel={external ? "noopener noreferrer" : undefined}
+                aria-label={ariaLabel}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+        </div>
       </div>
       {menuOpen ? (
         <nav

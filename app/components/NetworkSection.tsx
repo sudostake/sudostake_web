@@ -45,54 +45,58 @@ const networks: Network[] = [
 export function NetworkSection() {
   return (
     <section id="apps" className="w-full py-10">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5 px-5 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-3">
-          <span className="inline-flex w-fit items-center rounded-full border border-[color:var(--border-strong)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] text-tertiary-soft dark:border-zinc-700/70">
-            Apps across networks
-          </span>
-          <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
-            Apps you can use today.
-          </h2>
-        </div>
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5">
+        <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
+          Apps you can use today.
+        </h2>
 
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-5">
           {networks.map((network) => (
             <li
               key={network.name}
-              className="border-t border-[color:var(--border-strong)] py-5 first:border-t-0 first:pt-0 dark:border-zinc-800/80"
+              className="group relative overflow-hidden rounded-3xl border border-[color:var(--border-strong)] bg-white/85 shadow-soft-elevated transition hover:-translate-y-1 hover:shadow-[0_30px_60px_-40px_rgba(15,23,42,0.35)] dark:border-zinc-800/75 dark:bg-zinc-950/70"
             >
               <a
                 href={network.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${network.name} ${network.status}`}
-                className="flex flex-col gap-4 text-left transition hover:text-primary-strong sm:flex-row sm:items-center sm:justify-between"
+                className="flex h-full flex-col gap-6 px-5 py-6 transition sm:px-6 sm:py-7 lg:px-8"
               >
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-wrap items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-tertiary-soft dark:text-zinc-400">
-                    <span className="inline-flex items-center gap-2">
-                      <span
-                        className="h-2 w-2 rounded-full"
-                        style={{ backgroundColor: network.accent.base }}
-                      />
-                      {network.status}
-                    </span>
-                    <span>{network.name.split(" ")[0]}</span>
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-80 transition group-hover:opacity-100"
+                  style={{ background: network.accent.gradient }}
+                />
+                <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.32em] text-tertiary-soft dark:text-zinc-400">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-white/70 px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-zinc-700 shadow-sm ring-1 ring-inset ring-white/60 backdrop-blur dark:bg-zinc-900/60 dark:text-zinc-200">
+                        <span
+                          className="h-2 w-2 rounded-full"
+                          style={{ backgroundColor: network.accent.base }}
+                        />
+                        {network.status}
+                      </span>
+                      <span className="text-zinc-600 dark:text-zinc-300">
+                        {network.name.split(" ")[0]} network
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-semibold text-primary-strong dark:text-zinc-100">
+                      {network.name}
+                    </h3>
+                    <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">
+                      {network.description}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-semibold text-primary-strong dark:text-zinc-100">
-                    {network.name}
-                  </h3>
-                  <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">
-                    {network.description}
-                  </p>
+                  <span
+                    className="inline-flex items-center gap-2 rounded-full border border-current px-4 py-2 text-sm font-semibold transition group-hover:translate-x-1"
+                    style={{ color: network.accent.base }}
+                  >
+                    Open app
+                    <span aria-hidden className="text-base">→</span>
+                  </span>
                 </div>
-                <span
-                  className="inline-flex items-center gap-2 text-sm font-semibold transition"
-                  style={{ color: network.accent.base }}
-                >
-                  Open App
-                  <span aria-hidden className="text-base">→</span>
-                </span>
               </a>
             </li>
           ))}
