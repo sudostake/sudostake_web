@@ -26,20 +26,20 @@ export function HeroSection() {
         <div className="relative grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(320px,380px)] lg:items-center">
           <div className="flex flex-col gap-8 text-left">
             <span className="inline-flex w-fit items-center rounded-full border border-[color:var(--border-strong)] bg-surface-muted/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.38em] text-tertiary-soft dark:border-zinc-700/70 dark:bg-zinc-900/60">
-              Validator-native liquidity
+              Stake-backed liquidity
             </span>
             <div className="space-y-6">
               <h1 className="text-balance text-4xl font-semibold leading-tight text-primary-strong sm:text-5xl lg:text-[3.5rem]">
                 Stake. Earn. Trade.
               </h1>
               <p className="text-pretty max-w-xl text-base text-secondary-strong sm:text-lg dark:text-zinc-300/90">
-                Earn from staking while staying liquid. SudoStake unlocks
-                on-demand credit on top of your delegated stake so you can move
-                capital without interrupting compounding rewards.
+                Stay liquid while staking with your preferred validators. SudoStake
+                vaults collateralize delegated positions, giving you stablecoin credit
+                without interrupting rewards.
               </p>
               <p className="text-pretty max-w-xl text-sm text-muted-soft sm:text-base">
-                No pauses. No forced exits. Just validator-first liquidity rails
-                with disciplined risk controls.
+                No pauses. No forced exits. Vault-backed credit rails with disciplined
+                risk controls for stakers and lenders.
               </p>
             </div>
 
@@ -69,7 +69,7 @@ export function HeroSection() {
                   Two sides of the market
                 </span>
                 <p className="text-balance text-lg font-semibold text-primary-strong dark:text-zinc-100">
-                  Purpose-built credit rails for validators and vaults.
+                  Built for staking vaults and liquidity partners.
                 </p>
               </div>
 

@@ -47,13 +47,13 @@ export function NetworkSection() {
               Apps across networks
             </span>
             <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
-              Launch validator-first liquidity wherever your community stakes.
+              Launch stake-backed liquidity where your community delegates.
             </h2>
           </div>
           <p className="max-w-md text-sm text-secondary-strong/90 dark:text-zinc-400">
-            Each deployment balances delegator rewards, underwriting capital,
-            and liquidation coverage. Pick the stack that matches your validator
-            footprint and open the rails instantly.
+            Each deployment keeps delegators bonded to preferred validators while
+            balancing underwriting capital and liquidation coverage. Choose the
+            stack that fits your footprint and unlock credit instantly.
           </p>
         </div>
 
@@ -86,8 +86,8 @@ export function NetworkSection() {
                   {network.name}
                 </h3>
                 <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">
-                  Delegated vaults, instant credit lines, and orderly unwind
-                  mechanics tuned to {network.name.split(" ")[0]} validators.
+                  Delegated vaults, instant credit, and orderly unwind mechanics
+                  tuned to {network.name.split(" ")[0]} staking flows.
                 </p>
               </div>
 
