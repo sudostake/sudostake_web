@@ -2,138 +2,134 @@
 
 :root {
   color-scheme: light dark;
-  --background: #f7f9ff;
-  --foreground: #0b1220;
-  --surface-primary: #ffffff;
-  --surface-muted: #eef2ff;
-  --surface-glass: rgba(255, 255, 255, 0.92);
-  --border-soft: #d4dcf7;
-  --border-strong: #bcc8f0;
-  --text-primary: #0f172a;
-  --text-secondary: #24345b;
-  --text-tertiary: #3b4a73;
-  --text-muted: rgba(59, 74, 115, 0.72);
-  --shadow-soft-color: rgba(15, 23, 42, 0.16);
-  --accent-primary: #1e4dd9;
-  --accent-primary-hover: #193ec7;
-  --accent-subtle: rgba(30, 77, 217, 0.08);
-  --accent-strong: rgba(30, 77, 217, 0.18);
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --surface-glass: color-mix(in oklab, var(--surface) 90%, transparent);
+  --primary: #1d4ed8;
+  --primary-text: #ffffff;
+  --secondary-text: #475569;
+  --border: color-mix(in oklab, var(--foreground) 10%, transparent);
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
   --nav-height: 56px;
-  --font-display: var(
-    --font-geist-sans,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif
-  );
-}
-
-html {
-  scroll-behavior: smooth;
+  /* Legacy aliases to keep landing components aligned */
+  --surface-primary: var(--surface);
+  --border-soft: var(--border);
+  --border-strong: color-mix(in oklab, var(--foreground) 18%, transparent);
+  --text-primary: var(--foreground);
+  --text-secondary: var(--secondary-text);
+  --text-tertiary: color-mix(in oklab, var(--secondary-text) 75%, transparent 25%);
+  --text-muted: color-mix(in oklab, var(--secondary-text) 55%, transparent 45%);
+  --shadow-soft-color: rgba(15, 23, 42, 0.16);
+  --accent-primary: var(--primary);
+  --accent-primary-hover: color-mix(in oklab, var(--primary) 88%, black 12%);
+  --accent-subtle: color-mix(in oklab, var(--primary) 12%, transparent);
+  --accent-strong: color-mix(in oklab, var(--primary) 22%, transparent);
+  --font-display: var(--font-geist-sans);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-surface-primary: var(--surface-primary);
-  --color-surface-muted: var(--surface-muted);
-  --color-surface-glass: var(--surface-glass);
-  --color-border-soft: var(--border-soft);
-  --color-border-strong: var(--border-strong);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-tertiary: var(--text-tertiary);
-  --color-text-muted: var(--text-muted);
-  --color-accent-primary: var(--accent-primary);
-  --color-accent-primary-hover: var(--accent-primary-hover);
-  --color-accent-subtle: var(--accent-subtle);
-  --color-accent-strong: var(--accent-strong);
-  --font-sans: var(
-    --font-geist-sans,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif
-  );
-  --font-display: var(--font-display);
-  --font-mono: var(
-    --font-geist-mono,
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Monaco,
-    Consolas,
-    "Liberation Mono",
-    "Courier New",
-    monospace
-  );
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-primary-text: var(--primary-text);
+  --color-secondary-text: var(--secondary-text);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #04070f;
-    --foreground: #f4f7ff;
-    --surface-primary: #0f1528;
-    --surface-muted: #101b2f;
-    --surface-glass: rgba(12, 18, 31, 0.85);
-    --border-soft: rgba(148, 163, 184, 0.24);
-    --border-strong: rgba(148, 163, 184, 0.38);
-    --text-primary: #f8fafc;
-    --text-secondary: #d1d8f5;
-    --text-tertiary: #9ea9cf;
-    --text-muted: rgba(148, 163, 184, 0.72);
-    --shadow-soft-color: rgba(8, 8, 8, 0.55);
-    --accent-primary: #4d73eb;
-    --accent-primary-hover: #6282f0;
-    --accent-subtle: rgba(77, 115, 235, 0.12);
-    --accent-strong: rgba(77, 115, 235, 0.2);
+    color-scheme: dark;
+    --background: #060b16;
+    --foreground: #e2e8f0;
+    --surface: #111827;
+    --surface-muted: #1e293b;
+    --surface-glass: color-mix(in oklab, var(--surface) 85%, transparent);
+    --primary: #2563eb;
+    --primary-text: #ffffff;
+    --secondary-text: #94a3b8;
+    --border: color-mix(in oklab, var(--foreground) 16%, transparent);
+    --surface-primary: var(--surface);
+    --border-soft: var(--border);
+    --border-strong: color-mix(in oklab, var(--foreground) 26%, transparent);
+    --text-primary: var(--foreground);
+    --text-secondary: var(--secondary-text);
+    --text-tertiary: color-mix(in oklab, var(--secondary-text) 78%, transparent 22%);
+    --text-muted: color-mix(in oklab, var(--secondary-text) 60%, transparent 40%);
+    --shadow-soft-color: rgba(6, 11, 22, 0.55);
+    --accent-primary: var(--primary);
+    --accent-primary-hover: color-mix(in oklab, var(--primary) 82%, white 18%);
+    --accent-subtle: color-mix(in oklab, var(--primary) 18%, transparent);
+    --accent-strong: color-mix(in oklab, var(--primary) 28%, transparent);
   }
 }
 
-body {
-  font-family: var(
-    --font-geist-sans,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif
-  );
-  margin: 0;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(30, 77, 217, 0.12), transparent 55%),
-    radial-gradient(circle at 82% 0%, rgba(0, 184, 123, 0.12), transparent 48%),
-    var(--background);
-  color: var(--foreground);
-  font-feature-settings: "liga", "clig", "kern";
-  line-height: 1.55;
-}
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
 
-@media (prefers-color-scheme: dark) {
   body {
-    background:
-      radial-gradient(circle at 12% 15%, rgba(77, 115, 235, 0.22), transparent 53%),
-      radial-gradient(circle at 78% -5%, rgba(30, 217, 185, 0.16), transparent 45%),
-      var(--background);
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height: 1.6;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--primary);
+  }
+
+  a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
   }
 }
 
-::selection {
-  background-color: rgba(30, 77, 217, 0.28);
-  color: #f8fafc;
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Custom utility classes */
+@utility max-h-modal {
+  max-height: 85vh;
 }
 
-a:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
+/* App-wide radius utilities */
+@utility rounded-app {
+  border-radius: var(--radius-md);
+}
+
+@utility rounded-app-lg {
+  border-radius: var(--radius-lg);
+}
+
+@layer components {
+  .focus-soft {
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .focus-soft:is(:focus, :focus-visible) {
+    outline: none;
+    border-color: color-mix(in oklab, var(--primary) 55%, transparent);
+    background-color: color-mix(in oklab, var(--surface) 96%, var(--primary) 4%);
+    box-shadow: none;
+  }
 }
 
 @layer utilities {
@@ -147,7 +143,7 @@ a:focus-visible {
   .section-shell {
     border-radius: 32px;
     border: 1px solid color-mix(in srgb, var(--border-strong) 48%, transparent);
-    background: color-mix(in srgb, var(--surface-primary) 88%, transparent);
+    background: color-mix(in srgb, var(--surface-primary) 90%, transparent);
     box-shadow: 0 28px 60px -32px color-mix(in srgb, var(--shadow-soft-color) 35%, transparent);
   }
 
@@ -199,10 +195,95 @@ a:focus-visible {
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
+}
 
-  .animate-pulse-glow {
-    animation: pulse-glow 6s ease-in-out infinite;
+/* Subtle, accessible pulse for live indicators */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
   }
+  .animate-pulse-soft {
+    animation: pulse-soft 2.2s ease-in-out infinite;
+  }
+}
+
+/* Docs styling */
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: clamp(72px, 10vh, 128px);
+}
+
+.prose :where(ul, ol) {
+  padding-inline-start: 1.4rem;
+}
+
+.prose :where(li + li) {
+  margin-top: 0.35rem;
+}
+
+.prose :where(blockquote) {
+  border-color: color-mix(in oklab, var(--foreground) 18%, transparent);
+  background: color-mix(in oklab, var(--surface) 88%, var(--foreground) 12%);
+  padding: 0.75rem 1rem;
+  border-radius: 0.8rem;
+}
+
+.prose :where(code) {
+  font-size: 0.9em;
+}
+
+.prose :where(pre) {
+  background: color-mix(in oklab, var(--foreground) 12%, transparent);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.docs-table__wrapper {
+  margin: 1.25rem 0;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+  overflow-x: auto;
+  background: color-mix(in oklab, var(--surface) 94%, var(--foreground) 6%);
+}
+
+.prose :where(.docs-table) {
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.prose :where(.docs-table th),
+.prose :where(.docs-table td) {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+.prose :where(.docs-table th) {
+  font-weight: 600;
+  text-align: left;
+  background: color-mix(in oklab, var(--surface) 88%, var(--foreground) 12%);
+}
+
+.prose :where(.docs-table tr:last-child td) {
+  border-bottom: none;
+}
+
+.prose :where(h2#tl-dr + ul),
+.prose :where(h2#tl-dr + p),
+.prose :where(h2#tl-dr + div > ul) {
+  background: color-mix(in oklab, var(--surface) 90%, var(--primary) 10%);
+  border-left: 3px solid color-mix(in oklab, var(--primary) 50%, transparent);
+  border-radius: 0.9rem;
+  padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.docs-toc summary::-webkit-details-marker {
+  display: none;
+}
+
+.docs-toc[open] .docs-toc__icon {
+  transform: rotate(180deg);
 }
 
 @keyframes pulse-glow {
@@ -215,7 +296,7 @@ a:focus-visible {
   40%,
   60% {
     transform: scale(2);
-    opacity: 0.1;
+    opacity: 0.12;
   }
 }
 
