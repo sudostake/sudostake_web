@@ -57,8 +57,8 @@ const resources: ResourceLink[] = [
 
 function ResourcesSection() {
   return (
-    <section id="resources" className="w-full py-12">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+    <section id="resources" className="mt-28 w-full py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <div className="flex flex-col gap-2 sm:max-w-xl">
           <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
             Resources
@@ -121,14 +121,14 @@ export default function Home() {
     <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
       <SiteHeader />
 
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-12 px-5 pb-20 pt-14 sm:px-6 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-12 sm:px-6 sm:pt-16 lg:px-8">
         <HeroSection />
         <NetworkSection />
         <ResourcesSection />
       </main>
 
       <footer className="border-t border-zinc-200/70 bg-white/85 py-10 text-center text-xs text-zinc-500 dark:border-zinc-800/70 dark:bg-zinc-950/85 dark:text-zinc-400">
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <span className="font-semibold uppercase tracking-[0.28em]">© 2025 SudoStake</span>
         </div>
       </footer>

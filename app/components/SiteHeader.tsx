@@ -33,25 +33,25 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-transparent bg-white/75 backdrop-blur-xl transition dark:bg-zinc-950/80">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-1.5 px-4 py-1.5 sm:flex-nowrap sm:justify-between sm:px-6 sm:py-2.5 lg:px-8">
         <a
           href="#top"
-          className="inline-flex items-center gap-2.5 font-display text-sm font-semibold uppercase tracking-[0.32em] text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
+          className="inline-flex items-center whitespace-nowrap text-xl font-bold text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
           aria-label="SudoStake home"
         >
+          <span className="leading-none">SudoStake</span>
           <span
             aria-hidden
-            className="relative inline-flex h-2.5 w-2.5"
+            className="relative ml-2 inline-flex h-2.5 w-2.5 sm:ml-2.5"
           >
             <span className="absolute inset-0 inline-flex rounded-full bg-accent-primary/45 animate-pulse-glow" />
             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-primary shadow-[0_0_12px_rgba(30,77,217,0.45)]" />
           </span>
-          SudoStake
         </a>
         <button
           type="button"
           onClick={() => setMenuOpen((open) => !open)}
-          className="inline-flex items-center justify-center rounded-full border border-zinc-300/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-zinc-700 transition hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500 dark:border-zinc-700/70 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-zinc-100 dark:focus-visible:outline-zinc-400 sm:hidden"
+          className="ml-auto inline-flex items-center justify-center rounded-full border border-zinc-300/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.32em] text-zinc-700 transition hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500 dark:border-zinc-700/70 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-zinc-100 dark:focus-visible:outline-zinc-400 sm:hidden"
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
         >
@@ -77,9 +77,9 @@ export function SiteHeader() {
       {menuOpen ? (
         <nav
           id="mobile-nav"
-          className="border-t border-zinc-200/70 bg-white/95 px-5 py-4 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden"
+          className="border-t border-zinc-200/70 bg-white/95 px-4 py-3 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden"
         >
-          <div className="mx-auto flex w-full max-w-5xl flex-col gap-3">
+          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3">
             {navLinks.map(({ label, href, external, ariaLabel }) => (
               <a
                 key={href}
