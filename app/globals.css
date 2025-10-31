@@ -172,6 +172,24 @@ a:focus-visible {
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 6s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  40%,
+  60% {
+    transform: scale(2);
+    opacity: 0.1;
+  }
 }
 
 h1,

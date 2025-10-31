@@ -41,8 +41,11 @@ export function SiteHeader() {
         >
           <span
             aria-hidden
-            className="inline-flex h-2.5 w-2.5 rounded-full bg-[color:var(--accent-primary)] shadow-[0_0_12px_rgba(30,77,217,0.45)]"
-          />
+            className="relative inline-flex h-2.5 w-2.5"
+          >
+            <span className="absolute inset-0 inline-flex rounded-full bg-accent-primary/45 animate-pulse-glow" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-primary shadow-[0_0_12px_rgba(30,77,217,0.45)]" />
+          </span>
           SudoStake
         </a>
         <button
