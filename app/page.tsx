@@ -57,47 +57,52 @@ const resources: ResourceLink[] = [
 
 function ResourcesSection() {
   return (
-    <section id="resources" className="w-full py-10">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-5">
-        <div className="flex flex-col gap-3 sm:max-w-lg">
+    <section id="resources" className="w-full py-12">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+        <div className="flex flex-col gap-2 sm:max-w-xl">
           <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
-            Key guides and updates for stake-backed loans.
+            Resources
           </h2>
-          <p className="max-w-xl text-sm text-secondary-strong/90 dark:text-zinc-400">
-            Choose the channel you prefer to stay in sync.
-          </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-2">
-          {resources.map(({ name, href, description, label, accent }) => (
-            <li
-              key={href}
-              className="surface-panel group h-full rounded-3xl border border-[color:var(--border-soft)] bg-white/80 transition hover:-translate-y-1 hover:border-[color:var(--accent-primary)] hover:shadow-[0_30px_60px_-50px_rgba(15,23,42,0.5)] dark:border-zinc-800/60 dark:bg-zinc-950/60"
-            >
+        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {resources.map(({ name, href, description, accent }) => (
+            <li key={href} className="group">
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex h-full flex-col justify-between gap-4 px-5 py-5 text-left transition sm:px-6 sm:py-6 lg:px-8"
+                className="relative flex h-full flex-col justify-between gap-5 overflow-hidden rounded-3xl border border-[color:var(--border-soft)] bg-white/92 px-6 py-6 text-left shadow-[0_32px_60px_-48px_rgba(15,23,42,0.55)] transition hover:-translate-y-1 hover:shadow-[0_40px_70px_-42px_rgba(15,23,42,0.6)] dark:border-zinc-800/70 dark:bg-zinc-950/75 sm:px-7 sm:py-7"
               >
-                <div className="flex flex-col gap-3">
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 h-1 opacity-90 transition group-hover:opacity-100"
+                  style={{ background: `linear-gradient(90deg, ${accent.base} 0%, rgba(30,77,217,0.45) 100%)` }}
+                />
+                <div className="relative flex items-start gap-4">
                   <span
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-transparent bg-white/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.32em] text-secondary-strong shadow-sm ring-1 ring-inset ring-white/60 backdrop-blur transition group-hover:text-[color:var(--accent-primary)] dark:bg-zinc-900/70 dark:text-zinc-300 dark:ring-zinc-800/80"
-                    style={{ color: accent.base }}
+                    aria-hidden
+                    className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full bg-white/85 shadow-[0_20px_30px_-24px_rgba(15,23,42,0.4)] transition group-hover:scale-105 dark:bg-zinc-900/70"
+                    style={{ border: `1px solid ${accent.base}33` }}
                   >
-                    {label}
+                    <span
+                      aria-hidden
+                      className="h-2.5 w-2.5 rounded-full"
+                      style={{ backgroundColor: accent.base }}
+                    />
                   </span>
-                  <span className="text-base font-semibold text-primary-strong dark:text-zinc-50">
-                    {name}
-                  </span>
-                  <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">
-                    {description}
-                  </p>
+                  <div className="flex flex-col gap-2">
+                    <span className="text-lg font-semibold text-primary-strong dark:text-zinc-50">
+                      {name}
+                    </span>
+                    <p className="text-sm leading-6 text-secondary-strong/90 dark:text-zinc-400">
+                      {description}
+                    </p>
+                  </div>
                 </div>
                 <span
-                  className="inline-flex items-center gap-2 text-sm font-semibold transition"
-                  style={{ color: accent.base }}
+                  className="relative inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)] transition group-hover:gap-3"
                 >
                   Visit resource
                   <span aria-hidden className="text-base">→</span>
@@ -122,8 +127,8 @@ export default function Home() {
         <ResourcesSection />
       </main>
 
-      <footer className="border-t border-zinc-200/70 bg-white/85 py-10 text-xs text-zinc-500 dark:border-zinc-800/70 dark:bg-zinc-950/85 dark:text-zinc-400">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-5 sm:px-6 lg:px-8">
+      <footer className="border-t border-zinc-200/70 bg-white/85 py-10 text-center text-xs text-zinc-500 dark:border-zinc-800/70 dark:bg-zinc-950/85 dark:text-zinc-400">
+        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <span className="font-semibold uppercase tracking-[0.28em]">© 2025 SudoStake</span>
         </div>
       </footer>
