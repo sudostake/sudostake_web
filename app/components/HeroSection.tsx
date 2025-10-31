@@ -22,7 +22,7 @@ export function HeroSection() {
           <div className="flex flex-col gap-10">
             <div className="flex flex-col gap-6 text-left">
               <h1 className="text-pretty text-4xl font-semibold leading-[1.05] tracking-tight text-primary-strong sm:text-5xl lg:text-[3.6rem]">
-                Earn from staking, trade anytime
+                Earn from staking, trade anytime.
               </h1>
 
               <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:gap-4">
