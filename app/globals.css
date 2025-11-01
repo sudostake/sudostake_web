@@ -39,6 +39,10 @@
   --color-primary-text: var(--primary-text);
   --color-secondary-text: var(--secondary-text);
   --color-border: var(--border);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-hover: var(--accent-primary-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-accent-strong: var(--accent-strong);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
