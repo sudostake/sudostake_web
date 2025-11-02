@@ -28,7 +28,7 @@ const networks: Network[] = [
   },
   {
     name: "NEAR dApp",
-    href: "https://sudostake-web-near--sudostake.us-east4.hosted.app",
+    href: "https://near.sudostake.com",
     status: "Testnet",
     description:
       "Simulate stake-backed NEAR loans and liquidation flows on testnet.",
