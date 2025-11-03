@@ -44,7 +44,7 @@ const networks: Network[] = [
 
 export function NetworkSection() {
   return (
-    <section id="apps" className="mt-28 w-full py-12">
+    <section id="apps" className="w-full pt-10 pb-0 sm:pt-12 sm:pb-0 lg:pt-16">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
           Explore Apps

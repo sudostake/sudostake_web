@@ -13,7 +13,7 @@ const roles = [
 
 export function HeroSection() {
   return (
-    <section className="w-full mt-20 md:mt-28">
+    <section className="w-full mt-16 sm:mt-20 md:mt-24">
       <div className="mx-auto w-full max-w-6xl">
         <div className="section-shell relative overflow-hidden bg-white/70 px-6 py-10 shadow-soft-elevated backdrop-blur-2xl dark:bg-zinc-950/55 sm:px-8 lg:px-12 lg:py-14">
           <div className="pointer-events-none absolute -left-28 -top-24 h-64 w-64 rounded-full bg-(--accent-primary)/18 blur-3xl sm:-left-32 sm:-top-32 sm:h-72 sm:w-72" />

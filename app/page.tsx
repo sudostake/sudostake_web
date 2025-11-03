@@ -57,7 +57,7 @@ const resources: ResourceLink[] = [
 
 function ResourcesSection() {
   return (
-    <section id="resources" className="mt-28 w-full py-12">
+    <section id="resources" className="w-full pt-10 pb-0 sm:pt-12 sm:pb-0 lg:pt-16">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
         <div className="flex flex-col gap-2 sm:max-w-xl">
           <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
@@ -121,7 +121,7 @@ export default function Home() {
     <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
       <SiteHeader />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-12 sm:px-6 sm:pt-16 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 pb-20 pt-12 sm:gap-12 sm:px-6 sm:pt-16 lg:px-8">
         <HeroSection />
         <NetworkSection />
         <ResourcesSection />
