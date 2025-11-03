@@ -13,8 +13,8 @@ type Network = {
 
 const networks: Network[] = [
   {
-    name: "Archway dApp",
-    href: "https://sudostake-web-cosmos--sudostake.us-east4.hosted.app",
+    name: "Cosmos dApp",
+    href: "https://cosmos.sudostake.com",
     status: "Mainnet",
     description:
       "Borrow USDC against staked ARCH without interrupting validator rewards.",
