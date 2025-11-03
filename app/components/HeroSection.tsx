@@ -34,12 +34,12 @@ export function HeroSection() {
                   Explore Apps
                 </a>
                 <a
-                  href="https://github.com/sudostake/sudostake_web_near/tree/main/docs"
+                  href="https://github.com/sudostake/sudostake_web_near"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex w-full items-center justify-center rounded-full border border-border-strong bg-white/70 px-7 py-3 text-sm font-semibold text-secondary-strong transition hover:-translate-y-0.5 hover:border-accent-primary hover:text-accent-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-primary sm:w-auto dark:border-zinc-700 dark:bg-zinc-950/70 dark:text-zinc-300"
                 >
-                  View Docs
+                  View Source Code
                 </a>
               </div>
             </div>

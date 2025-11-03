@@ -14,16 +14,6 @@ type ResourceLink = {
 
 const resources: ResourceLink[] = [
   {
-    name: "Developer Docs",
-    href: "https://github.com/sudostake/sudostake_web_near/tree/main/docs",
-    description:
-      "Step-by-step guides to launch stake-backed loans.",
-    label: "Docs",
-    accent: {
-      base: "#1e4dd9",
-    },
-  },
-  {
     name: "GitHub Repositories",
     href: "https://github.com/sudostake",
     description:

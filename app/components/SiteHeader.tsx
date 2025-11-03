@@ -14,11 +14,6 @@ const navLinks: NavLink[] = [
   { label: "Resources", href: "#resources" },
   { label: "GitHub", href: "https://github.com/sudostake", external: true },
   {
-    label: "Docs",
-    href: "https://github.com/sudostake/sudostake_web_near/tree/main/docs",
-    external: true,
-  },
-  {
     label: "X",
     href: "https://x.com/sudostake",
     external: true,
