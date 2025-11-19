@@ -47,34 +47,40 @@ const resources: ResourceLink[] = [
 
 function ResourcesSection() {
   return (
-    <section id="resources" className="w-full pt-10 pb-0 sm:pt-12 sm:pb-0 lg:pt-16">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
+    <section id="resources" className="w-full py-12">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-2 sm:max-w-xl">
-          <h2 className="text-pretty text-3xl font-semibold leading-tight text-primary-strong sm:text-4xl dark:text-zinc-100">
-            Resources
-          </h2>
+          <h2 className="section-heading text-primary-strong dark:text-zinc-100">Resources</h2>
+          <p className="section-subtitle text-secondary-strong/90 dark:text-zinc-400">
+            Real-time support, code, and live updates—each link keeps the process transparent so you
+            always know what comes next.
+          </p>
         </div>
 
         <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {resources.map(({ name, href, description, accent }) => (
-            <li key={href} className="group">
+          {resources.map(({ name, href, description, label, accent }) => (
+            <li key={href}>
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="relative flex h-full flex-col justify-between gap-5 overflow-hidden rounded-3xl border border-[color:var(--border-soft)] bg-white/92 px-6 py-6 text-left shadow-[0_32px_60px_-48px_rgba(15,23,42,0.55)] transition hover:-translate-y-1 hover:shadow-[0_40px_70px_-42px_rgba(15,23,42,0.6)] dark:border-zinc-800/70 dark:bg-zinc-950/75 sm:px-7 sm:py-7"
+                className="flex flex-col gap-4 rounded-2xl border border-border-soft bg-surface-glass px-5 py-6 text-left transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:border-zinc-800/60 dark:bg-surface-muted"
               >
                 <span
-                  aria-hidden
-                  className="absolute inset-x-0 top-0 h-1 opacity-90 transition group-hover:opacity-100"
-                  style={{ background: `linear-gradient(90deg, ${accent.base} 0%, rgba(30,77,217,0.45) 100%)` }}
-                />
-                <div className="relative flex items-start gap-4">
+                  className="text-[0.65rem] font-semibold uppercase tracking-[0.32em]"
+                  style={{ color: accent.base }}
+                >
+                  {label}
+                </span>
+                <div className="flex items-center gap-3">
                   <span
                     aria-hidden
-                    className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full bg-white/85 shadow-[0_20px_30px_-24px_rgba(15,23,42,0.4)] transition group-hover:scale-105 dark:bg-zinc-900/70"
-                    style={{ border: `1px solid ${accent.base}33` }}
+                    className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full"
+                    style={{
+                      border: `1px solid ${accent.base}33`,
+                      backgroundColor: `${accent.base}12`,
+                    }}
                   >
                     <span
                       aria-hidden
@@ -82,19 +88,17 @@ function ResourcesSection() {
                       style={{ backgroundColor: accent.base }}
                     />
                   </span>
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-1">
                     <span className="text-lg font-semibold text-primary-strong dark:text-zinc-50">
                       {name}
                     </span>
-                    <p className="text-sm leading-6 text-secondary-strong/90 dark:text-zinc-400">
+                    <p className="text-sm leading-relaxed text-secondary-strong/90 dark:text-zinc-400">
                       {description}
                     </p>
                   </div>
                 </div>
-                <span
-                  className="relative inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)] transition group-hover:gap-3"
-                >
-                  Visit resource
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)]">
+                  Explore resource
                   <span aria-hidden className="text-base">→</span>
                 </span>
               </a>
@@ -111,7 +115,7 @@ export default function Home() {
     <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
       <SiteHeader />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 pb-20 pt-12 sm:gap-12 sm:px-6 sm:pt-16 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-12 sm:gap-14 sm:px-6 sm:pt-16 lg:px-8">
         <HeroSection />
         <NetworkSection />
         <ResourcesSection />
