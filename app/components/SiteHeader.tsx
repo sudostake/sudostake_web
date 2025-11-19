@@ -21,9 +21,14 @@ const navLinks: NavLink[] = [
   },
 ];
 
+const MENU_ANIMATION_DURATION = 220;
+
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [renderMenu, setRenderMenu] = useState(false);
+  const [navState, setNavState] = useState<"open" | "closed">("closed");
   const navRef = useRef<HTMLDivElement | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
 
   useEffect(() => {
     const el = navRef.current;
@@ -63,6 +68,50 @@ export function SiteHeader() {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      setRenderMenu(true);
+      setNavState("closed");
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      animationFrameRef.current = requestAnimationFrame(() => {
+        setNavState("open");
+        animationFrameRef.current = null;
+      });
+
+      return () => {
+        if (animationFrameRef.current !== null) {
+          cancelAnimationFrame(animationFrameRef.current);
+          animationFrameRef.current = null;
+        }
+      };
+    }
+
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+      animationFrameRef.current = null;
+    }
+
+    setNavState("closed");
+    return undefined;
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen && renderMenu) {
+      const timeout = setTimeout(() => {
+        setRenderMenu(false);
+      }, MENU_ANIMATION_DURATION);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+
+    return undefined;
+  }, [menuOpen, renderMenu]);
 
   const handleNavClick = () => setMenuOpen(false);
 
@@ -120,10 +169,18 @@ export function SiteHeader() {
         </div>
       </header>
       <div aria-hidden="true" style={{ height: "var(--nav-height, 56px)" }} />
-      {menuOpen ? (
+      {renderMenu ? (
         <nav
           id="mobile-nav"
-          className="border-t border-zinc-200/70 bg-white/95 px-4 py-3 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden"
+          className="fixed inset-x-0 border-t border-zinc-200/70 bg-white/95 px-4 py-3 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden nav-entry"
+          style={{
+            top: "var(--nav-height, 56px)",
+            zIndex: "calc(var(--z-nav, 50) + 1)",
+            maxHeight: "calc(100vh - var(--nav-height, 56px))",
+            overflowY: "auto",
+          }}
+          data-state={navState}
+          aria-hidden={!menuOpen}
         >
           <div className="mx-auto flex w-full max-w-6xl flex-col gap-3">
             {navLinks.map(({ label, href, external, ariaLabel }) => (

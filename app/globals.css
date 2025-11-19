@@ -222,6 +222,19 @@
     font-family: var(--font-display);
     letter-spacing: -0.01em;
   }
+
+  .nav-entry {
+    transition: opacity 220ms ease-in-out, transform 220ms ease-in-out;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+  }
+
+  .nav-entry[data-state="open"] {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 
 /* Subtle, accessible pulse for live indicators */
@@ -232,6 +245,12 @@
   }
   .animate-pulse-soft {
     animation: pulse-soft 2.2s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-entry {
+    transition: none;
   }
 }
 
