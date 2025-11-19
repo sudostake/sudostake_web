@@ -134,7 +134,7 @@ export function SiteHeader() {
               aria-label="SudoStake home"
             >
               <LogoMark size={34} className="h-9 w-9 flex-none rounded-[12px]" />
-              <span>Sudostake</span>
+              <span>SudoStake</span>
             </a>
           </div>
           <div className="ml-auto flex items-center gap-2 sm:justify-end">
