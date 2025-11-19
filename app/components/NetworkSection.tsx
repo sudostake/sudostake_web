@@ -64,7 +64,7 @@ export function NetworkSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${network.name} ${network.status}`}
-                className="flex flex-col gap-5 rounded-2xl border border-border-soft bg-surface-glass px-6 py-5 text-left transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:border-zinc-800/60 dark:bg-surface-muted"
+                className="flex flex-col gap-5 rounded-2xl border border-border-soft bg-surface-glass px-6 py-5 text-left transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:hover:bg-zinc-900/70 dark:border-zinc-800/60 dark:bg-surface-muted"
               >
                 <div className="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-tertiary-soft dark:text-zinc-400">
                   <span

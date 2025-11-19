@@ -97,7 +97,7 @@ export function HeroSection() {
               {roles.map((role) => (
                 <article
                   key={role.title}
-                  className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-surface-glass px-5 py-5 transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:border-zinc-800/60 dark:bg-surface-muted"
+                className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-surface-glass px-5 py-5 transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:hover:bg-zinc-900/70 dark:border-zinc-800/60 dark:bg-surface-muted"
                 >
                   <div className="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-tertiary-soft dark:text-zinc-400">
                     <span>WHO WE PAIR WITH</span>

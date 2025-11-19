@@ -65,7 +65,7 @@ function ResourcesSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex flex-col gap-4 rounded-2xl border border-border-soft bg-surface-glass px-5 py-6 text-left transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:border-zinc-800/60 dark:bg-surface-muted"
+                className="flex flex-col gap-4 rounded-2xl border border-border-soft bg-surface-glass px-5 py-6 text-left transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:hover:bg-zinc-900/70 dark:border-zinc-800/60 dark:bg-surface-muted"
               >
                 <span
                   className="text-[0.65rem] font-semibold uppercase tracking-[0.32em]"
