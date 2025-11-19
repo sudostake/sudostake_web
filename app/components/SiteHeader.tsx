@@ -135,13 +135,6 @@ export function SiteHeader() {
             >
               <LogoMark size={34} className="h-9 w-9 flex-none rounded-[12px]" />
               <span>Sudostake</span>
-              <span
-                aria-hidden
-                className="relative inline-flex h-2.5 w-2.5 flex-shrink-0 items-center justify-center"
-              >
-                <span className="absolute inset-0 inline-flex rounded-full bg-accent-primary/45 animate-pulse-glow" />
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent-primary shadow-[0_0_12px_rgba(30,77,217,0.45)]" />
-              </span>
             </a>
           </div>
           <div className="ml-auto flex items-center gap-2 sm:justify-end">
