@@ -47,10 +47,10 @@ export function NetworkSection() {
     <section id="apps" className="w-full py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-2">
-          <h2 className="section-heading text-white">
+          <h2 className="section-heading text-[color:var(--text-primary)]">
             Launch across networks
           </h2>
-          <p className="section-subtitle text-white/80">
+          <p className="section-subtitle text-[color:var(--text-secondary)]">
             Pick the network that mirrors your validator set; the interface guides you through borrowing,
             lending, or liquidating with steady, predictable confirmations.
           </p>
@@ -64,9 +64,9 @@ export function NetworkSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${network.name} ${network.status}`}
-                className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/5 px-6 py-6 text-left text-white/80 transition hover:border-[color:var(--accent-primary)] hover:bg-white/10 hover:shadow-[0_30px_55px_-30px_rgba(0,0,0,0.85)]"
+                className="flex flex-col gap-5 rounded-3xl surface-card px-6 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] hover:bg-[color:var(--surface-card-bg)] hover:shadow-[0_30px_55px_-30px_rgba(0,0,0,0.85)]"
               >
-                <div className="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-white/60">
+                <div className="flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-[color:var(--text-secondary)]">
                   <span
                     className="inline-flex h-2 w-2 rounded-full"
                     style={{ backgroundColor: network.accent.base }}
@@ -74,8 +74,8 @@ export function NetworkSection() {
                   {network.status}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-2xl font-semibold text-white">{network.name}</h3>
-                  <p className="text-sm leading-relaxed text-white/70">{network.description}</p>
+                  <h3 className="text-2xl font-semibold text-[color:var(--text-primary)]">{network.name}</h3>
+                  <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{network.description}</p>
                 </div>
                 <span className="text-sm font-semibold text-[color:var(--accent-primary)]">
                   Open {network.name} →

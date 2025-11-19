@@ -46,24 +46,24 @@ const resources: ResourceLink[] = [
 function ResourcesSection() {
   return (
     <section id="resources" className="w-full py-12">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-          <div className="flex flex-col gap-2 sm:max-w-xl">
-            <h2 className="section-heading text-white">Connections</h2>
-            <p className="section-subtitle text-white/80">
-              Code, community, and live updates keep every step transparent so you know what happens next.
-            </p>
-          </div>
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
+        <div className="flex flex-col gap-2 sm:max-w-xl">
+          <h2 className="section-heading text-[color:var(--text-primary)]">Connections</h2>
+          <p className="section-subtitle text-[color:var(--text-secondary)]">
+            Code, community, and live updates keep every step transparent so you know what happens next.
+          </p>
+        </div>
 
-          <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {resources.map(({ name, href, description, label, accent }) => (
-              <li key={href} className="h-full">
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`Open ${name} in a new tab`}
-                  className="flex h-full flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-6 text-left text-white/80 transition hover:border-[color:var(--accent-primary)] hover:bg-white/10 hover:shadow-[0_20px_45px_-30px_rgba(0,0,0,0.8)]"
-                >
+        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {resources.map(({ name, href, description, label, accent }) => (
+            <li key={href} className="h-full">
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Open ${name} in a new tab`}
+                className="flex h-full flex-col gap-4 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] hover:bg-[color:var(--surface-card-bg)] hover:shadow-[0_20px_45px_-30px_rgba(0,0,0,0.8)]"
+              >
                 <span
                   className="text-[0.65rem] font-semibold uppercase tracking-[0.32em]"
                   style={{ color: accent.base }}
@@ -86,10 +86,10 @@ function ResourcesSection() {
                     />
                   </span>
                   <div className="flex flex-col gap-1">
-                    <span className="text-lg font-semibold text-white">
+                    <span className="text-lg font-semibold text-[color:var(--text-primary)]">
                       {name}
                     </span>
-                    <p className="text-sm leading-relaxed text-white/70">
+                    <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">
                       {description}
                     </p>
                   </div>
@@ -118,12 +118,12 @@ export default function Home() {
         <ResourcesSection />
       </main>
 
-      <footer className="border-t border-white/10 bg-gradient-to-r from-[#0b1c2a] via-[#0f2a4b] to-[#132d4a] py-10 text-center text-xs text-white/80">
+      <footer className="footer-panel py-10 text-center text-xs text-[color:var(--text-secondary)]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark size={36} className="h-10 w-10" ariaLabel="SudoStake mark" />
-          <span className="font-semibold uppercase tracking-[0.28em] text-white/80">© 2025 SudoStake</span>
+          <span className="font-semibold uppercase tracking-[0.28em] text-[color:var(--text-secondary)]">© 2025 SudoStake</span>
         </div>
       </footer>
-      </div>
-    );
-  }
+    </div>
+  );
+}

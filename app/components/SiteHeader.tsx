@@ -120,7 +120,7 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className="fixed left-0 right-0 top-0 border-b border-white/10 bg-gradient-to-b from-[#0b1c2a]/90 via-[#071028]/80 to-[#020617]/95 backdrop-blur transition"
+        className="nav-panel fixed left-0 right-0 top-0 transition"
         style={{ zIndex: "var(--z-nav, 50)" }}
       >
         <div
@@ -130,7 +130,7 @@ export function SiteHeader() {
           <div className="flex flex-1 items-center gap-2 sm:gap-4">
             <a
               href="#top"
-              className="inline-flex items-center gap-3 whitespace-nowrap text-xl font-bold text-white transition hover:text-[color:var(--accent-primary)]"
+              className="inline-flex items-center gap-3 whitespace-nowrap text-xl font-bold text-[color:var(--foreground)] transition hover:text-[color:var(--accent-primary)]"
               aria-label="SudoStake home"
             >
               <LogoMark size={34} className="h-9 w-9 flex-none rounded-[12px]" />
@@ -148,13 +148,13 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex h-9 items-center justify-center rounded-full border border-white/30 px-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/80 transition hover:border-white/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:hidden"
+              className="inline-flex h-9 items-center justify-center rounded-full border border-[color:var(--border)] px-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-[color:var(--text-secondary)] transition hover:border-[color:var(--accent-primary)] hover:text-[color:var(--foreground)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--accent-primary)] sm:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
             >
               Menu
             </button>
-            <nav className="hidden items-center gap-3 text-sm font-medium text-white/70 transition sm:flex">
+            <nav className="hidden items-center gap-3 text-sm font-medium text-[color:var(--text-secondary)] transition sm:flex">
               {navLinks.map(({ label, href, external, ariaLabel }) => (
                 <a
                   key={href}
@@ -175,7 +175,7 @@ export function SiteHeader() {
       {renderMenu ? (
         <nav
           id="mobile-nav"
-          className="fixed inset-x-0 border-t border-white/10 bg-gradient-to-b from-[#0b1c2a]/90 via-[#071028]/80 to-[#020617]/95 px-4 py-3 text-sm text-white/80 shadow-sm sm:hidden nav-entry"
+          className="nav-panel-mobile fixed inset-x-0 px-4 py-3 text-sm text-[color:var(--text-secondary)] shadow-sm sm:hidden nav-entry"
           style={{
             top: "var(--nav-height, 56px)",
             zIndex: "calc(var(--z-nav, 50) + 1)",
@@ -190,7 +190,11 @@ export function SiteHeader() {
               <a
                 key={href}
                 href={href}
-                className="inline-flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
+                className="inline-flex items-center justify-between rounded-lg border px-3 py-2 text-[color:var(--text-secondary)] transition hover:border-[color:var(--accent-primary)] hover:text-[color:var(--accent-primary)]"
+                style={{
+                  borderColor: "var(--border)",
+                  backgroundColor: "color-mix(in oklab, var(--surface), transparent 60%)",
+                }}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
                 aria-label={ariaLabel}

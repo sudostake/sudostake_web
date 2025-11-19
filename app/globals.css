@@ -2,28 +2,35 @@
 
 :root {
   color-scheme: light dark;
-  --background: #071028;
-  --foreground: #f5fbff;
-  --surface: #0d1a2f;
-  --surface-muted: #111b2e;
+  --background: #f5f8ff;
+  --foreground: #0b1c2a;
+  --surface: #ffffff;
+  --surface-muted: #f1f4fb;
   --surface-glass: color-mix(in oklab, var(--surface) 90%, transparent);
   --primary: #00d8c5;
-  --primary-text: #f7fbff;
-  --secondary-text: #9fc8e0;
-  --border: color-mix(in oklab, #0b1733 20%, transparent);
+  --primary-text: #0b1c2a;
+  --secondary-text: #475569;
+  --border: color-mix(in oklab, var(--foreground) 10%, transparent);
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
   --nav-height: 56px;
+  --glow-top: rgba(0, 216, 197, 0.25);
+  --glow-bottom: rgba(28, 125, 215, 0.35);
+  --panel-bg: var(--surface);
+  --panel-border: color-mix(in oklab, var(--foreground) 15%, transparent 40%);
+  --hero-panel-from: color-mix(in oklab, var(--surface), var(--primary) 30%);
+  --hero-panel-to: var(--surface);
+  --surface-card-bg: color-mix(in oklab, var(--surface), transparent 25%);
   /* Legacy aliases to keep landing components aligned */
   --surface-primary: var(--surface);
   --border-soft: var(--border);
-  --border-strong: color-mix(in oklab, #0b1733 32%, transparent);
+  --border-strong: color-mix(in oklab, var(--foreground) 18%, transparent);
   --text-primary: var(--foreground);
   --text-secondary: var(--secondary-text);
   --text-tertiary: color-mix(in oklab, var(--secondary-text) 75%, transparent 25%);
   --text-muted: color-mix(in oklab, var(--secondary-text) 55%, transparent 45%);
-  --shadow-soft-color: rgba(6, 11, 22, 0.08);
+  --shadow-soft-color: rgba(15, 23, 42, 0.08);
   --accent-primary: var(--primary);
   --accent-primary-hover: color-mix(in oklab, var(--primary) 88%, black 12%);
   --accent-subtle: color-mix(in oklab, var(--primary) 12%, transparent);
@@ -48,30 +55,36 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --background: #020616;
-    --foreground: #e0f2ff;
-    --surface: #071126;
-    --surface-muted: #090f1e;
-    --surface-glass: color-mix(in oklab, var(--surface) 85%, transparent);
-    --primary: #1c7dd7;
-    --primary-text: #ffffff;
-    --secondary-text: #a1c8f1;
-    --border: color-mix(in oklab, #09132a 20%, transparent);
-    --surface-primary: var(--surface);
-    --border-soft: var(--border);
-    --border-strong: color-mix(in oklab, #09132a 26%, transparent);
-    --text-primary: var(--foreground);
-    --text-secondary: var(--secondary-text);
-    --text-tertiary: color-mix(in oklab, var(--secondary-text) 78%, transparent 22%);
-    --text-muted: color-mix(in oklab, var(--secondary-text) 60%, transparent 40%);
-    --shadow-soft-color: rgba(2, 6, 22, 0.25);
-    --accent-primary: var(--primary);
-    --accent-primary-hover: color-mix(in oklab, var(--primary) 82%, white 18%);
-    --accent-subtle: color-mix(in oklab, var(--primary) 18%, transparent);
-    --accent-strong: color-mix(in oklab, var(--primary) 28%, transparent);
-  }
+    :root {
+      color-scheme: dark;
+      --background: #071028;
+      --foreground: #f5fbff;
+      --surface: #0d1a2f;
+      --surface-muted: #111b2e;
+      --surface-glass: color-mix(in oklab, var(--surface) 90%, transparent);
+      --primary: #00d8c5;
+      --primary-text: #f7fbff;
+      --secondary-text: #9fc8e0;
+      --border: color-mix(in oklab, #0b1733 20%, transparent);
+      --surface-primary: var(--surface);
+      --border-soft: color-mix(in oklab, #0b1733 32%, transparent);
+      --text-primary: var(--foreground);
+      --text-secondary: var(--secondary-text);
+      --text-tertiary: color-mix(in oklab, var(--secondary-text) 75%, transparent 25%);
+      --text-muted: color-mix(in oklab, var(--secondary-text) 55%, transparent 45%);
+      --shadow-soft-color: rgba(6, 11, 22, 0.08);
+      --accent-primary: var(--primary);
+      --accent-primary-hover: color-mix(in oklab, var(--primary) 88%, black 12%);
+      --accent-subtle: color-mix(in oklab, var(--primary) 12%, transparent);
+      --accent-strong: color-mix(in oklab, var(--primary) 22%, transparent);
+      --glow-top: rgba(0, 216, 197, 0.25);
+      --glow-bottom: rgba(28, 125, 215, 0.35);
+      --panel-bg: var(--surface);
+      --panel-border: color-mix(in oklab, var(--foreground) 15%, transparent 40%);
+      --hero-panel-from: color-mix(in oklab, var(--surface), var(--primary) 30%);
+      --hero-panel-to: var(--surface);
+      --surface-card-bg: color-mix(in oklab, var(--surface), transparent 25%);
+    }
 }
 
 @layer base {
@@ -81,8 +94,8 @@
 
   body {
     background:
-      radial-gradient(circle at top left, rgba(0, 216, 197, 0.25), transparent 45%),
-      radial-gradient(circle at bottom right, rgba(28, 125, 215, 0.35), transparent 55%),
+      radial-gradient(circle at top left, var(--glow-top), transparent 45%),
+      radial-gradient(circle at bottom right, var(--glow-bottom), transparent 55%),
       var(--background);
     color: var(--foreground);
     font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -136,6 +149,42 @@
     border-color: color-mix(in oklab, var(--primary) 55%, transparent);
     background-color: color-mix(in oklab, var(--surface) 96%, var(--primary) 4%);
     box-shadow: none;
+  }
+
+  .hero-panel {
+    background: linear-gradient(145deg, var(--hero-panel-from), var(--hero-panel-to));
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 40px 90px -45px color-mix(in srgb, var(--foreground) 0.4, transparent);
+  }
+
+  .surface-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    box-shadow: 0 35px 65px -45px color-mix(in srgb, var(--foreground) 0.35, transparent);
+  }
+
+  .surface-card {
+    background: var(--surface-card-bg);
+    border: 1px solid color-mix(in oklab, var(--border) 70%, transparent 30%);
+    box-shadow: 0 20px 45px -30px color-mix(in srgb, var(--foreground) 0.4, transparent);
+  }
+
+  .nav-panel {
+    background: color-mix(in oklab, var(--surface), transparent 30%);
+    border-bottom: 1px solid var(--panel-border);
+    backdrop-filter: blur(16px);
+  }
+
+  .nav-panel-mobile {
+    background: color-mix(in oklab, var(--surface), transparent 70%);
+    border-top: 1px solid var(--panel-border);
+    box-shadow: 0 16px 32px -12px color-mix(in srgb, var(--foreground) 0.3, transparent);
+  }
+
+  .footer-panel {
+    background: linear-gradient(90deg, color-mix(in oklab, var(--surface), var(--primary) 20%), var(--surface));
+    border-top: 1px solid var(--panel-border);
+    box-shadow: 0 -25px 80px -50px color-mix(in srgb, var(--foreground) 0.45, transparent);
   }
 }
 
