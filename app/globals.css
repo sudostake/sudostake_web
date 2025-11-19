@@ -2,15 +2,15 @@
 
 :root {
   color-scheme: light dark;
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --surface: #ffffff;
-  --surface-muted: #f1f5f9;
+  --background: #071028;
+  --foreground: #f5fbff;
+  --surface: #0d1a2f;
+  --surface-muted: #111b2e;
   --surface-glass: color-mix(in oklab, var(--surface) 90%, transparent);
-  --primary: #1d4ed8;
-  --primary-text: #ffffff;
-  --secondary-text: #475569;
-  --border: color-mix(in oklab, var(--foreground) 10%, transparent);
+  --primary: #00d8c5;
+  --primary-text: #f7fbff;
+  --secondary-text: #9fc8e0;
+  --border: color-mix(in oklab, #0b1733 20%, transparent);
   --radius-sm: 0.5rem;
   --radius-md: 1rem;
   --radius-lg: 1.5rem;
@@ -18,12 +18,12 @@
   /* Legacy aliases to keep landing components aligned */
   --surface-primary: var(--surface);
   --border-soft: var(--border);
-  --border-strong: color-mix(in oklab, var(--foreground) 18%, transparent);
+  --border-strong: color-mix(in oklab, #0b1733 32%, transparent);
   --text-primary: var(--foreground);
   --text-secondary: var(--secondary-text);
   --text-tertiary: color-mix(in oklab, var(--secondary-text) 75%, transparent 25%);
   --text-muted: color-mix(in oklab, var(--secondary-text) 55%, transparent 45%);
-  --shadow-soft-color: rgba(15, 23, 42, 0.08);
+  --shadow-soft-color: rgba(6, 11, 22, 0.08);
   --accent-primary: var(--primary);
   --accent-primary-hover: color-mix(in oklab, var(--primary) 88%, black 12%);
   --accent-subtle: color-mix(in oklab, var(--primary) 12%, transparent);
@@ -50,23 +50,23 @@
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --background: #060b16;
-    --foreground: #e2e8f0;
-    --surface: #111827;
-    --surface-muted: #1e293b;
+    --background: #020616;
+    --foreground: #e0f2ff;
+    --surface: #071126;
+    --surface-muted: #090f1e;
     --surface-glass: color-mix(in oklab, var(--surface) 85%, transparent);
-    --primary: #2563eb;
+    --primary: #1c7dd7;
     --primary-text: #ffffff;
-    --secondary-text: #94a3b8;
-    --border: color-mix(in oklab, var(--foreground) 16%, transparent);
+    --secondary-text: #a1c8f1;
+    --border: color-mix(in oklab, #09132a 20%, transparent);
     --surface-primary: var(--surface);
     --border-soft: var(--border);
-    --border-strong: color-mix(in oklab, var(--foreground) 26%, transparent);
+    --border-strong: color-mix(in oklab, #09132a 26%, transparent);
     --text-primary: var(--foreground);
     --text-secondary: var(--secondary-text);
     --text-tertiary: color-mix(in oklab, var(--secondary-text) 78%, transparent 22%);
     --text-muted: color-mix(in oklab, var(--secondary-text) 60%, transparent 40%);
-    --shadow-soft-color: rgba(6, 11, 22, 0.25);
+    --shadow-soft-color: rgba(2, 6, 22, 0.25);
     --accent-primary: var(--primary);
     --accent-primary-hover: color-mix(in oklab, var(--primary) 82%, white 18%);
     --accent-subtle: color-mix(in oklab, var(--primary) 18%, transparent);
@@ -81,8 +81,8 @@
 
   body {
     background:
-      radial-gradient(circle at top left, rgba(37, 99, 235, 0.15), transparent 45%),
-      radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.12), transparent 55%),
+      radial-gradient(circle at top left, rgba(0, 216, 197, 0.25), transparent 45%),
+      radial-gradient(circle at bottom right, rgba(28, 125, 215, 0.35), transparent 55%),
       var(--background);
     color: var(--foreground);
     font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;

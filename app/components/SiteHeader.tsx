@@ -120,7 +120,7 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className="fixed left-0 right-0 top-0 border-b bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/50 transition"
+        className="fixed left-0 right-0 top-0 border-b border-white/10 bg-gradient-to-b from-[#0b1c2a]/90 via-[#071028]/80 to-[#020617]/95 backdrop-blur transition"
         style={{ zIndex: "var(--z-nav, 50)" }}
       >
         <div
@@ -130,7 +130,7 @@ export function SiteHeader() {
           <div className="flex flex-1 items-center gap-2 sm:gap-4">
             <a
               href="#top"
-              className="inline-flex items-center gap-3 whitespace-nowrap text-xl font-bold text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
+              className="inline-flex items-center gap-3 whitespace-nowrap text-xl font-bold text-white transition hover:text-[color:var(--accent-primary)]"
               aria-label="SudoStake home"
             >
               <LogoMark size={34} className="h-9 w-9 flex-none rounded-[12px]" />
@@ -148,18 +148,18 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
-              className="inline-flex h-9 items-center justify-center rounded-full border border-zinc-300/80 px-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-zinc-700 transition hover:border-zinc-400 hover:text-zinc-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-500 dark:border-zinc-700/70 dark:text-zinc-300 dark:hover:border-zinc-500 dark:hover:text-zinc-100 dark:focus-visible:outline-zinc-400 sm:hidden"
+              className="inline-flex h-9 items-center justify-center rounded-full border border-white/30 px-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-white/80 transition hover:border-white/50 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:hidden"
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
             >
               Menu
             </button>
-            <nav className="hidden items-center gap-3 text-sm font-medium text-secondary-text transition dark:text-zinc-300 sm:flex">
+            <nav className="hidden items-center gap-3 text-sm font-medium text-white/70 transition sm:flex">
               {navLinks.map(({ label, href, external, ariaLabel }) => (
                 <a
                   key={href}
                   href={href}
-                  className="transition hover:text-[color:var(--accent-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[color:var(--accent-primary)] dark:hover:text-[color:var(--accent-primary)]"
+                  className="transition hover:text-[color:var(--accent-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[color:var(--accent-primary)]"
                   target={external ? "_blank" : undefined}
                   rel={external ? "noopener noreferrer" : undefined}
                   aria-label={ariaLabel}
@@ -175,7 +175,7 @@ export function SiteHeader() {
       {renderMenu ? (
         <nav
           id="mobile-nav"
-          className="fixed inset-x-0 border-t border-zinc-200/70 bg-white/95 px-4 py-3 text-sm text-zinc-700 shadow-sm dark:border-zinc-800/70 dark:bg-zinc-950/95 dark:text-zinc-200 sm:hidden nav-entry"
+          className="fixed inset-x-0 border-t border-white/10 bg-gradient-to-b from-[#0b1c2a]/90 via-[#071028]/80 to-[#020617]/95 px-4 py-3 text-sm text-white/80 shadow-sm sm:hidden nav-entry"
           style={{
             top: "var(--nav-height, 56px)",
             zIndex: "calc(var(--z-nav, 50) + 1)",
@@ -190,7 +190,7 @@ export function SiteHeader() {
               <a
                 key={href}
                 href={href}
-                className="inline-flex items-center justify-between rounded-lg border border-transparent px-3 py-2 transition hover:border-zinc-200 hover:bg-zinc-100/70 hover:text-zinc-900 dark:hover:border-zinc-700 dark:hover:bg-zinc-900/80 dark:hover:text-zinc-100"
+                className="inline-flex items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-white/80 transition hover:border-white/30 hover:bg-white/10 hover:text-white"
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
                 aria-label={ariaLabel}
