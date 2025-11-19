@@ -2,22 +2,21 @@ const roles = [
   {
     title: "Vault Owners",
     accent: "#1d4ed8",
-    description: "Borrow USDC while your stake keeps earning.",
+    description: "Borrow USDC while your validator keeps earning.",
     bullets: [
-      "Connect your wallet in one tap and maintain validator bonding.",
-      "Split collateral across validators without losing rewards.",
-      "Check exact liquidation thresholds before signing each borrow.",
+      "Tap once to connect and keep validator bonds intact.",
+      "Distribute collateral across validators without pausing rewards.",
+      "Feel confident about every liquidation threshold before committing.",
     ],
   },
   {
     title: "Liquidity Providers",
     accent: "#059669",
-    description:
-      "Lend USDC to earn steady interest or exercise liquidation rights.",
+    description: "Supply USDC with steady interest and optional liquidation rights.",
     bullets: [
-      "Supply liquidity with clear pricing and slippage limits.",
-      "Review every loan state change before accepting.",
-      "Exit or trigger liquidations with predictable confirmations.",
+      "Add liquidity with transparent pricing and slippage bounds.",
+      "Inspect each loan state change before approving.",
+      "Exit or trigger liquidations with deliberate confirmations.",
     ],
   },
 ];
@@ -91,25 +90,24 @@ export function HeroSection() {
 
           <div className="relative flex flex-col gap-6 rounded-3xl border border-border-soft bg-white/85 px-6 py-6 shadow-card-subtle backdrop-blur dark:border-zinc-800/65 dark:bg-zinc-950/65">
             <span className="section-subtitle text-xs uppercase tracking-[0.35em] text-tertiary-soft dark:text-zinc-400">
-              Who it&apos;s for
+              Designed for
             </span>
             <div className="grid gap-4 sm:grid-cols-2">
               {roles.map((role) => (
                 <article
                   key={role.title}
-                className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-surface-glass px-5 py-5 transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:hover:bg-zinc-900/70 dark:border-zinc-800/60 dark:bg-surface-muted"
+                  className="flex flex-col gap-3 rounded-2xl border border-border-soft bg-surface-glass px-5 py-5 transition hover:border-[color:var(--accent-primary)] hover:bg-white/80 dark:hover:bg-zinc-900/70 dark:border-zinc-800/60 dark:bg-surface-muted"
                 >
-                  <div className="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.32em] text-tertiary-soft dark:text-zinc-400">
-                    <span>WHO WE PAIR WITH</span>
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-lg font-semibold text-primary-strong dark:text-zinc-50">
+                      {role.title}
+                    </h3>
                     <span
                       aria-hidden
-                      className="inline-flex h-2 w-2 rounded-full"
+                      className="inline-flex h-3 w-3 rounded-full border border-border-soft shadow-sm"
                       style={{ backgroundColor: role.accent }}
                     />
                   </div>
-                  <h3 className="text-lg font-semibold text-primary-strong dark:text-zinc-50">
-                    {role.title}
-                  </h3>
                   <p className="text-sm text-secondary-strong/90 dark:text-zinc-400">{role.description}</p>
                   <ul className="flex flex-col gap-2 text-xs text-secondary-strong/90 dark:text-zinc-400">
                     {role.bullets.map((bullet) => (
