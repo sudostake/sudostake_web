@@ -16,8 +16,7 @@ const resources: ResourceLink[] = [
   {
     name: "GitHub Repositories",
     href: "https://github.com/sudostake",
-    description:
-      "Code and tools that power SudoStake vaults.",
+    description: "Every repo and utility that keeps SudoStake vaults running.",
     label: "Code",
     accent: {
       base: "#3b4a73",
@@ -26,8 +25,7 @@ const resources: ResourceLink[] = [
   {
     name: "Telegram Support",
     href: "https://t.me/sudostake",
-    description:
-      "Chat with the SudoStake team and partners.",
+    description: "Tap into Telegram to talk directly with SudoStake builders and partners.",
     label: "Support",
     accent: {
       base: "#00b87b",
@@ -36,8 +34,7 @@ const resources: ResourceLink[] = [
   {
     name: "X (Twitter) Updates",
     href: "https://x.com/sudostake",
-    description:
-      "Updates on releases, community news, and credit.",
+    description: "Concise news on releases, community milestones, and protocol insight.",
     label: "Updates",
     accent: {
       base: "#1d9bf0",
@@ -50,10 +47,9 @@ function ResourcesSection() {
     <section id="resources" className="w-full py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-2 sm:max-w-xl">
-          <h2 className="section-heading text-primary-strong dark:text-zinc-100">Resources</h2>
+          <h2 className="section-heading text-primary-strong dark:text-zinc-100">Connections</h2>
           <p className="section-subtitle text-secondary-strong/90 dark:text-zinc-400">
-            Real-time support, code, and live updates—each link keeps the process transparent so you
-            always know what comes next.
+            Code, community, and live updates keep every step transparent so you know what happens next.
           </p>
         </div>
 
@@ -98,7 +94,7 @@ function ResourcesSection() {
                   </div>
                 </div>
                 <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)]">
-                  Explore resource
+                  Open resource
                   <span aria-hidden className="text-base">→</span>
                 </span>
               </a>

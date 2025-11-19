@@ -49,8 +49,7 @@ export function HeroSection() {
               Earn from staking, trade anytime.
             </h1>
             <p className="text-base text-secondary-strong/90 dark:text-zinc-300">
-              SudoStake keeps your staking rewards intact while letting you borrow, lend, and
-              swap with crystal-clear confirmations and no guesswork.
+              Keep validator rewards compounding while borrowing, lending, or swapping behind clear confirmations.
             </p>
 
             <div className="flex flex-col gap-3 pt-1 sm:flex-row sm:items-center sm:gap-4">

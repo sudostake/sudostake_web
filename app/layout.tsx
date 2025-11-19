@@ -13,19 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SudoStake | Stake-Backed Loans",
+  title: "SudoStake | Stake-Backed Liquidity",
   description:
-    "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
+    "Keep your validator bonded while borrowing USD liquidity through guided, transparent steps.",
   openGraph: {
-    title: "SudoStake | Stake-Backed Loans",
+    title: "SudoStake | Stake-Backed Liquidity",
     description:
-      "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
+      "Keep your validator bonded while borrowing USD liquidity through guided, transparent steps.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudoStake | Stake-Backed Loans",
+    title: "SudoStake | Stake-Backed Liquidity",
     description:
-      "Stake with your favorite validators, keep rewards growing, and borrow digital dollars through SudoStake vaults.",
+      "Keep your validator bonded while borrowing USD liquidity through guided, transparent steps.",
   },
 };
 

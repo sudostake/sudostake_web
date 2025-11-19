@@ -17,7 +17,7 @@ const networks: Network[] = [
     href: "https://cosmos.sudostake.com",
     status: "Mainnet",
     description:
-      "Borrow USDC against staked ARCH without interrupting validator rewards.",
+      "Borrow USDC against staked ARCH while validator rewards keep compounding.",
     accent: {
       base: "#ff4d00",
       gradient:
@@ -31,7 +31,7 @@ const networks: Network[] = [
     href: "https://near.sudostake.com",
     status: "Testnet",
     description:
-      "Simulate stake-backed NEAR loans and liquidation flows on testnet.",
+      "Pilot stake-backed NEAR loans and liquidation flows inside a testnet sandbox.",
     accent: {
       base: "#00ed96",
       gradient:
@@ -48,11 +48,11 @@ export function NetworkSection() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h2 className="section-heading text-primary-strong dark:text-zinc-100">
-            Explore Apps
+            Launch across networks
           </h2>
           <p className="section-subtitle text-secondary-strong/90 dark:text-zinc-400">
-            Choose the network that matches your validator set and the UI walks you step-by-step
-            through borrowing, lending, or liquidating with predictable confirmations.
+            Pick the network that mirrors your validator set; the interface guides you through borrowing,
+            lending, or liquidating with steady, predictable confirmations.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export function NetworkSection() {
                   </p>
                 </div>
                 <span className="text-sm font-semibold text-[color:var(--accent-primary)]">
-                  Launch {network.name} →
+                  Open {network.name} →
                 </span>
               </a>
             </li>
