@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { LogoMark } from "./LogoMark";
+
 type NavLink = {
   label: string;
   href: string;
@@ -128,10 +130,11 @@ export function SiteHeader() {
           <div className="flex flex-1 items-center gap-2 sm:gap-4">
             <a
               href="#top"
-              className="inline-flex items-center gap-2 whitespace-nowrap text-xl font-bold text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
+              className="inline-flex items-center gap-3 whitespace-nowrap text-xl font-bold text-zinc-900 transition hover:text-[color:var(--accent-primary)] dark:text-zinc-100 dark:hover:text-[color:var(--accent-primary)]"
               aria-label="SudoStake home"
             >
-              <span>SudoStake</span>
+              <LogoMark size={34} className="h-9 w-9 flex-none rounded-[12px]" />
+              <span>Sudostake</span>
               <span
                 aria-hidden
                 className="relative inline-flex h-2.5 w-2.5 flex-shrink-0 items-center justify-center"

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="280" height="280" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sudostakeLogoTitle">
+  <title id="sudostakeLogoTitle">Sudostake identity mark</title>
+  <defs>
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1c2a" />
+      <stop offset="100%" stop-color="#132d4a" />
+    </linearGradient>
+    <linearGradient id="markGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d8c5" />
+      <stop offset="100%" stop-color="#1c7dd7" />
+    </linearGradient>
+    <linearGradient id="haloGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f2f52" stop-opacity="0" />
+      <stop offset="100%" stop-color="#1c7dd7" stop-opacity="0.6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background globe -->
+  <rect width="280" height="280" rx="32" fill="url(#backgroundGradient)" />
+  <circle cx="140" cy="140" r="110" fill="none" stroke="url(#haloGradient)" stroke-width="6" />
+
+  <!-- Parallel wave equal mark -->
+  <path
+    d="M60 110C85 90 115 90 140 110S215 130 240 110"
+    fill="none"
+    stroke="url(#markGradient)"
+    stroke-width="20"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M60 150C85 130 115 130 140 150S215 170 240 150"
+    fill="none"
+    stroke="url(#markGradient)"
+    stroke-width="20"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

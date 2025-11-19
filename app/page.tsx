@@ -1,6 +1,7 @@
 import { HeroSection } from "./components/HeroSection";
 import { NetworkSection } from "./components/NetworkSection";
 import { SiteHeader } from "./components/SiteHeader";
+import { LogoMark } from "./components/LogoMark";
 
 type ResourceLink = {
   name: string;
@@ -119,9 +120,10 @@ export default function Home() {
 
       <footer className="border-t border-zinc-200/70 bg-white/85 py-10 text-center text-xs text-zinc-500 dark:border-zinc-800/70 dark:bg-zinc-950/85 dark:text-zinc-400">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
+          <LogoMark size={36} className="h-10 w-10" ariaLabel="SudoStake mark" />
           <span className="font-semibold uppercase tracking-[0.28em]">© 2025 SudoStake</span>
         </div>
       </footer>
-    </div>
-  );
-}
+      </div>
+    );
+  }
