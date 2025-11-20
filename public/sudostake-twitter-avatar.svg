@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sudostakeTwitterAvatarTitle">
+  <title id="sudostakeTwitterAvatarTitle">Sudostake social avatar for Twitter</title>
+  <defs>
+    <radialGradient id="backgroundGradient" cx="35%" cy="30%" r="85%">
+      <stop offset="0%" stop-color="#123a63" />
+      <stop offset="50%" stop-color="#0c243b" />
+      <stop offset="100%" stop-color="#091a2a" />
+    </radialGradient>
+    <linearGradient id="orbitGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0f3a64" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#1c7dd7" stop-opacity="0.65" />
+    </linearGradient>
+    <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d8c5" />
+      <stop offset="50%" stop-color="#12b2d8" />
+      <stop offset="100%" stop-color="#1c7dd7" />
+    </linearGradient>
+    <radialGradient id="glowGradient" cx="50%" cy="55%" r="65%">
+      <stop offset="0%" stop-color="#1c7dd7" stop-opacity="0.4" />
+      <stop offset="70%" stop-color="#00d8c5" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="132" fill="url(#backgroundGradient)" />
+  <circle cx="256" cy="256" r="212" fill="url(#glowGradient)" />
+  <circle cx="256" cy="256" r="190" fill="none" stroke="url(#orbitGradient)" stroke-width="12" />
+
+  <path
+    d="M110 201C155 165 210 165 256 201S393 237 439 201"
+    fill="none"
+    stroke="url(#waveGradient)"
+    stroke-width="38"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M110 274C155 237 210 237 256 274S393 311 439 274"
+    fill="none"
+    stroke="url(#waveGradient)"
+    stroke-width="38"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>
