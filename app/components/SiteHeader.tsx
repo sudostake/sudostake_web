@@ -185,8 +185,9 @@ export function SiteHeader() {
                 href={href}
                 className="inline-flex items-center justify-between rounded-lg border px-3 py-2 text-[color:var(--text-secondary)] transition hover:border-[color:var(--accent-primary)] hover:text-[color:var(--accent-primary)]"
                 style={{
-                  borderColor: "var(--border)",
-                  backgroundColor: "color-mix(in oklab, var(--surface), transparent 60%)",
+                  borderColor: "color-mix(in oklab, var(--panel-border), transparent 8%)",
+                  backgroundColor: "color-mix(in oklab, var(--surface), transparent 4%)",
+                  boxShadow: "0 10px 28px -20px color-mix(in srgb, var(--foreground) 0.45, transparent)",
                 }}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}

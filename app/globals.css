@@ -176,7 +176,7 @@
   }
 
   .nav-panel-mobile {
-    background: color-mix(in oklab, var(--surface), transparent 70%);
+    background: color-mix(in oklab, var(--surface), transparent 15%);
     border-top: 1px solid var(--panel-border);
     box-shadow: 0 16px 32px -12px color-mix(in srgb, var(--foreground) 0.3, transparent);
   }
