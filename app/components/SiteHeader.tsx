@@ -125,7 +125,7 @@ export function SiteHeader() {
       >
         <div
           ref={navRef}
-          className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-2 gap-y-1.5 px-4 py-1.5 sm:flex-nowrap sm:justify-between sm:px-6 sm:py-2.5 lg:px-8"
+          className="flex w-full flex-wrap items-center gap-x-2 gap-y-1.5 px-4 py-1.5 sm:flex-nowrap sm:justify-between sm:px-6 sm:py-2.5 lg:px-8"
         >
           <div className="flex flex-1 items-center gap-2 sm:gap-4">
             <a
@@ -178,7 +178,7 @@ export function SiteHeader() {
           data-state={navState}
           aria-hidden={!menuOpen}
         >
-          <div className="mx-auto flex w-full max-w-6xl flex-col gap-3">
+          <div className="flex w-full flex-col gap-3 px-1">
             {navLinks.map(({ label, href, external, ariaLabel }) => (
               <a
                 key={href}
