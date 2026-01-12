@@ -121,7 +121,7 @@ export default function Home() {
       <footer className="footer-panel py-10 text-center text-xs text-[color:var(--text-secondary)]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark size={36} className="h-10 w-10" ariaLabel="SudoStake mark" />
-          <span className="font-semibold uppercase tracking-[0.28em] text-[color:var(--text-secondary)]">© 2025 SudoStake</span>
+          <span className="font-semibold uppercase tracking-[0.28em] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
         </div>
       </footer>
     </div>
