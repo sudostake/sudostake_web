@@ -11,34 +11,17 @@ export function HeroSection() {
           Earn from staking, trade anytime.
         </h1>
         <p className="max-w-3xl text-base text-[color:var(--text-secondary)]">
-          SudoStake keeps validator rewards active while you use staked collateral
-          for USDC liquidity.
+          Unlock USDC without pausing your staking rewards.
         </p>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-          <a
-            href="https://cosmos.sudostake.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--accent-primary)] px-7 py-3 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-primary)] sm:w-auto"
-          >
-            Open Cosmos dApp
-          </a>
+        <div className="flex">
           <a
             href="#apps"
-            className="inline-flex w-full items-center justify-center rounded-full border px-7 py-3 text-sm font-semibold text-[color:var(--text-secondary)] transition hover:border-[color:var(--accent-primary)] hover:text-[color:var(--text-primary)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-primary)] sm:w-auto"
-            style={{
-              borderColor: "var(--border)",
-              backgroundColor: "color-mix(in oklab, var(--surface), transparent 40%)",
-            }}
+            className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--accent-primary)] px-7 py-3 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-primary)] sm:w-auto"
           >
-            Compare Networks
+            Choose network
           </a>
         </div>
-
-        <p className="text-sm text-[color:var(--text-tertiary)]">
-          Available now on Cosmos mainnet and NEAR testnet.
-        </p>
 
         <div className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] px-6 py-6">
           <h2 className="text-lg font-semibold text-[color:var(--text-primary)]">What you can do</h2>

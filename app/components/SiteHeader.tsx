@@ -16,8 +16,8 @@ const navLinks: NavLink[] = [
 
 export function SiteHeader() {
   return (
-    <header className="nav-panel">
-      <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center gap-3 px-5 py-3 sm:px-6 lg:px-8">
+    <header className="nav-panel sticky top-0 z-50">
+      <div className="flex w-full items-center gap-3 px-5 py-3 sm:px-6 lg:px-8">
         <a
           href="#top"
           className="mr-auto inline-flex items-center gap-3 text-xl font-bold text-[color:var(--foreground)] transition hover:text-[color:var(--accent-primary)]"
@@ -27,7 +27,7 @@ export function SiteHeader() {
           <span>SudoStake</span>
         </a>
 
-        <nav className="flex flex-wrap items-center gap-3 text-sm font-medium text-[color:var(--text-secondary)]">
+        <nav className="hidden items-center gap-3 text-sm font-medium text-[color:var(--text-secondary)] sm:flex">
           {navLinks.map(({ label, href, external, ariaLabel }) => (
             <a
               key={href}
@@ -41,14 +41,19 @@ export function SiteHeader() {
             </a>
           ))}
           <a
-            href="https://cosmos.sudostake.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#apps"
             className="inline-flex items-center rounded-full bg-[color:var(--accent-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)]"
           >
             Open app
           </a>
         </nav>
+
+        <a
+          href="#apps"
+          className="inline-flex items-center rounded-full bg-[color:var(--accent-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)] sm:hidden"
+        >
+          Open app
+        </a>
       </div>
     </header>
   );

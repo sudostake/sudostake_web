@@ -9,13 +9,13 @@ const networks: Network[] = [
   {
     name: "Cosmos dApp",
     href: "https://cosmos.sudostake.com",
-    description: "Borrow USDC against staked ARCH while validator rewards keep compounding.",
+    description: "Stake-backed borrowing and lending on Cosmos mainnet.",
     availability: "Mainnet",
   },
   {
     name: "NEAR dApp",
     href: "https://near.sudostake.com",
-    description: "Pilot stake-backed NEAR loans with peer-to-peer contract-enforced terms.",
+    description: "Stake-backed borrowing and lending flow on NEAR testnet.",
     availability: "Testnet",
   },
 ];
