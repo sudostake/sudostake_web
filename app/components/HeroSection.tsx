@@ -17,7 +17,7 @@ export function HeroSection() {
         <div className="flex">
           <a
             href="#apps"
-            className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--accent-primary)] px-7 py-3 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[color:var(--accent-primary)] sm:w-auto"
+            className="btn-primary inline-flex w-full items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition sm:w-auto"
           >
             Choose network
           </a>
