@@ -7,39 +7,23 @@ type ResourceLink = {
   name: string;
   href: string;
   description: string;
-  label: string;
-  accent: {
-    base: string;
-  };
 };
 
 const resources: ResourceLink[] = [
   {
-    name: "GitHub Repositories",
+    name: "GitHub",
     href: "https://github.com/sudostake",
-    description: "Every repo and utility that keeps SudoStake vaults running.",
-    label: "Code",
-    accent: {
-      base: "#3b4a73",
-    },
+    description: "Read contracts, frontend code, and open issues.",
   },
   {
-    name: "Telegram Support",
+    name: "Telegram",
     href: "https://t.me/sudostake",
-    description: "Tap into Telegram to talk directly with SudoStake builders and partners.",
-    label: "Support",
-    accent: {
-      base: "#00b87b",
-    },
+    description: "Get direct support from the SudoStake team and community.",
   },
   {
-    name: "X (Twitter) Updates",
+    name: "X (Twitter)",
     href: "https://x.com/sudostake",
-    description: "Concise news on releases, community milestones, and protocol insight.",
-    label: "Updates",
-    accent: {
-      base: "#1d9bf0",
-    },
+    description: "Follow product releases and protocol updates.",
   },
 ];
 
@@ -48,55 +32,26 @@ function ResourcesSection() {
     <section id="resources" className="w-full py-12">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-2 sm:max-w-xl">
-          <h2 className="section-heading text-[color:var(--text-primary)]">Connections</h2>
+          <h2 className="section-heading text-[color:var(--text-primary)]">Resources</h2>
           <p className="section-subtitle text-[color:var(--text-secondary)]">
-            Code, community, and live updates keep every step transparent so you know what happens next.
+            Everything you need to track the protocol and get help quickly.
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {resources.map(({ name, href, description, label, accent }) => (
+        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          {resources.map(({ name, href, description }) => (
             <li key={href} className="h-full">
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex h-full flex-col gap-4 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] hover:bg-[color:var(--surface-card-bg)] hover:shadow-[0_20px_45px_-30px_rgba(0,0,0,0.8)]"
+                className="flex h-full flex-col gap-3 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)]"
               >
-                <span
-                  className="text-[0.65rem] font-semibold uppercase tracking-[0.32em]"
-                  style={{ color: accent.base }}
-                >
-                  {label}
-                </span>
-                <div className="flex items-center gap-3">
-                  <span
-                    aria-hidden
-                    className="inline-flex h-10 w-10 flex-none items-center justify-center rounded-full"
-                    style={{
-                      border: `1px solid ${accent.base}33`,
-                      backgroundColor: `${accent.base}12`,
-                    }}
-                  >
-                    <span
-                      aria-hidden
-                      className="h-2.5 w-2.5 rounded-full"
-                      style={{ backgroundColor: accent.base }}
-                    />
-                  </span>
-                  <div className="flex flex-col gap-1">
-                    <span className="text-lg font-semibold text-[color:var(--text-primary)]">
-                      {name}
-                    </span>
-                    <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">
-                      {description}
-                    </p>
-                  </div>
-                </div>
+                <span className="text-lg font-semibold text-[color:var(--text-primary)]">{name}</span>
+                <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{description}</p>
                 <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)]">
-                  Open resource
-                  <span aria-hidden className="text-base">→</span>
+                  Visit
                 </span>
               </a>
             </li>
@@ -112,16 +67,16 @@ export default function Home() {
     <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
       <SiteHeader />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-5 pb-20 pt-12 sm:gap-14 sm:px-6 sm:pt-16 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-5 py-10 sm:gap-10 sm:px-6 sm:py-12 lg:px-8">
         <HeroSection />
         <NetworkSection />
         <ResourcesSection />
       </main>
 
-      <footer className="footer-panel py-10 text-center text-xs text-[color:var(--text-secondary)]">
+      <footer className="footer-panel py-8 text-center text-xs text-[color:var(--text-secondary)]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark size={36} className="h-10 w-10" ariaLabel="SudoStake mark" />
-          <span className="font-semibold uppercase tracking-[0.28em] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
+          <span className="font-medium text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
         </div>
       </footer>
     </div>
