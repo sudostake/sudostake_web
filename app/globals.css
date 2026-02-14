@@ -124,6 +124,22 @@
 }
 
 @layer components {
+  .btn-primary {
+    background: #0b5f59;
+    color: #ffffff;
+    border: 1px solid color-mix(in oklab, #0b5f59 85%, black 15%);
+  }
+
+  .btn-primary:hover {
+    background: #094a45;
+    color: #ffffff;
+  }
+
+  .btn-primary:focus-visible {
+    outline: 2px solid #0b5f59;
+    outline-offset: 4px;
+  }
+
   .focus-soft {
     transition:
       border-color 160ms ease,

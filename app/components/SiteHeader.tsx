@@ -42,7 +42,7 @@ export function SiteHeader() {
           ))}
           <a
             href="#apps"
-            className="inline-flex items-center rounded-full bg-[color:var(--accent-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)]"
+            className="btn-primary inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition"
           >
             Open app
           </a>
@@ -50,7 +50,7 @@ export function SiteHeader() {
 
         <a
           href="#apps"
-          className="inline-flex items-center rounded-full bg-[color:var(--accent-primary)] px-4 py-2 text-sm font-semibold text-[color:var(--primary-text)] transition hover:bg-[color:var(--accent-primary-hover)] sm:hidden"
+          className="btn-primary inline-flex items-center rounded-full px-4 py-2 text-sm font-semibold transition sm:hidden"
         >
           Open app
         </a>
