@@ -1,35 +1,34 @@
 const keyActions = [
-  "Borrow USDC against staked collateral without unbonding.",
-  "Lend USDC and earn from protocol borrowing activity.",
+  "Borrow USDC against your staked assets.",
+  "Lend USDC to vault owners for interest or liquidation rights.",
 ];
 
 export function HeroSection() {
   return (
-    <section id="how-it-works" className="w-full py-10 sm:py-12">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6">
-        <h1 className="text-pretty text-4xl font-semibold leading-[1.1] text-[color:var(--text-primary)] sm:text-5xl lg:text-[3.2rem]">
-          Earn from staking, trade anytime.
+    <section id="how-it-works" className="w-full py-12 sm:py-14 lg:py-16">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 sm:gap-9">
+        <h1 className="max-w-5xl text-pretty text-[2.75rem] font-bold leading-[1.02] tracking-[-0.02em] text-[color:var(--text-primary)] sm:text-[3.7rem] lg:text-[4.9rem]">
+          Earn from staking. Trade anytime.
         </h1>
-        <p className="max-w-3xl text-base text-[color:var(--text-secondary)]">
-          Unlock USDC without pausing your staking rewards.
-        </p>
 
-        <div className="flex">
-          <a
-            href="#apps"
-            className="btn-primary inline-flex w-full items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition sm:w-auto"
-          >
-            Choose network
-          </a>
-        </div>
-
-        <div className="rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface)] px-6 py-6">
-          <h2 className="text-lg font-semibold text-[color:var(--text-primary)]">What you can do</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-[color:var(--text-secondary)]">
+        <div className="hero-panel rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
+          <h2 className="text-xl font-semibold text-[color:var(--text-primary)] sm:text-2xl">
+            What you can do
+          </h2>
+          <ul className="mt-4 list-disc space-y-3 pl-5 text-base leading-relaxed text-[color:var(--text-secondary)] sm:text-lg">
             {keyActions.map((action) => (
               <li key={action}>{action}</li>
             ))}
           </ul>
+        </div>
+
+        <div className="flex">
+          <a
+            href="#apps"
+            className="btn-primary inline-flex w-full items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition sm:w-auto"
+          >
+            Start
+          </a>
         </div>
       </div>
     </section>
