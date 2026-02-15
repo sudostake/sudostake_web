@@ -202,17 +202,17 @@
   }
 
   .section-heading {
-    font-size: clamp(2rem, 3vw, 2.4rem);
+    font-size: clamp(2.1rem, 3.6vw, 2.9rem);
     font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1.2;
+    letter-spacing: -0.015em;
+    line-height: 1.12;
   }
 
   .section-subtitle {
-    font-size: 1rem;
-    line-height: 1.65;
+    font-size: 1.05rem;
+    line-height: 1.7;
     color: var(--text-secondary);
-    max-width: 44rem;
+    max-width: 46rem;
   }
 
   .bg-surface-primary {
