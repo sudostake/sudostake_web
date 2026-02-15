@@ -1,6 +1,6 @@
 const keyActions = [
   "Borrow USDC against your staked assets.",
-  "Lend USDC to vault owners for interest or liquidation rights.",
+  "Lend USDC to vault owners and earn interest or liquidation rights.",
 ];
 
 export function HeroSection() {
@@ -8,7 +8,8 @@ export function HeroSection() {
     <section id="how-it-works" className="w-full py-12 sm:py-14 lg:py-16">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 sm:gap-9">
         <h1 className="max-w-5xl text-pretty text-[2.75rem] font-bold leading-[1.02] tracking-[-0.02em] text-[color:var(--text-primary)] sm:text-[3.7rem] lg:text-[4.9rem]">
-          Earn from staking. Trade anytime.
+          Earn from staking.
+          <span className="block">Trade anytime.</span>
         </h1>
 
         <div className="hero-panel rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
@@ -27,7 +28,7 @@ export function HeroSection() {
             href="#apps"
             className="btn-primary inline-flex w-full items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition sm:w-auto"
           >
-            Start
+            Choose network
           </a>
         </div>
       </div>
