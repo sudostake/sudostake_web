@@ -23,7 +23,7 @@ export function SiteHeader() {
           className="mr-auto inline-flex items-center gap-3 text-xl font-bold text-[color:var(--foreground)] transition hover:text-[color:var(--accent-primary)]"
           aria-label="SudoStake home"
         >
-          <LogoMark size={34} className="h-9 w-9 flex-none" />
+          <LogoMark size={34} className="h-9 w-9 flex-none rounded-full" />
           <span>SudoStake</span>
         </a>
 
