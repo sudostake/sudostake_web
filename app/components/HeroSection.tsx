@@ -1,6 +1,7 @@
-const keyActions = [
-  "Borrow USDC against your staked assets.",
-  "Lend USDC to vault owners and earn interest or liquidation rights.",
+const quickStartSteps = [
+  "Choose your network below to open the right app.",
+  "Connect your wallet and select a staked asset as collateral.",
+  "Borrow or lend USDC, then track your position from the dashboard.",
 ];
 
 export function HeroSection() {
@@ -14,11 +15,11 @@ export function HeroSection() {
 
         <div className="hero-panel rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
           <h2 className="text-xl font-semibold text-[color:var(--text-primary)] sm:text-2xl">
-            What you can do
+            Start in 3 quick steps
           </h2>
-          <ul className="mt-4 list-disc space-y-3 pl-5 text-base leading-relaxed text-[color:var(--text-secondary)] sm:text-lg">
-            {keyActions.map((action) => (
-              <li key={action}>{action}</li>
+          <ul className="mt-4 list-decimal space-y-3 pl-5 text-base leading-relaxed text-[color:var(--text-secondary)] sm:text-lg">
+            {quickStartSteps.map((step) => (
+              <li key={step}>{step}</li>
             ))}
           </ul>
         </div>
@@ -28,7 +29,7 @@ export function HeroSection() {
             href="#apps"
             className="btn-primary inline-flex w-full items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold transition sm:w-auto"
           >
-            Choose network
+            Start now: choose network
           </a>
         </div>
       </div>
