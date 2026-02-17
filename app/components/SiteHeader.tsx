@@ -20,7 +20,7 @@ export function SiteHeader() {
       <div className="flex w-full items-center gap-3 px-5 py-3 sm:px-6 lg:px-8">
         <a
           href="#top"
-          className="mr-auto inline-flex items-center gap-3 text-xl font-bold text-[color:var(--foreground)] transition hover:text-[color:var(--accent-primary)]"
+          className="mr-auto inline-flex items-center gap-3 text-lg font-bold text-[color:var(--foreground)] transition hover:text-[color:var(--accent-primary)] sm:text-xl"
           aria-label="SudoStake home"
         >
           <LogoMark size={34} className="h-9 w-9 flex-none rounded-full" />
