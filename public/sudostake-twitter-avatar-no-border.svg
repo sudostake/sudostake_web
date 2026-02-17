@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sudostakeTwitterAvatarNoBorderTitle">
+  <title id="sudostakeTwitterAvatarNoBorderTitle">SudoStake social avatar no border</title>
+  <defs>
+    <linearGradient id="sudostakeAvatarNoBorderBgGradient" x1="10%" y1="6%" x2="92%" y2="94%">
+      <stop offset="0%" stop-color="#1f2836" />
+      <stop offset="55%" stop-color="#121a27" />
+      <stop offset="100%" stop-color="#0a1019" />
+    </linearGradient>
+    <radialGradient id="sudostakeAvatarNoBorderGlow" cx="50%" cy="24%" r="78%">
+      <stop offset="0%" stop-color="#c9d9ee" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#0b111b" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="sudostakeAvatarNoBorderMarkGradient" x1="8%" y1="12%" x2="92%" y2="88%">
+      <stop offset="0%" stop-color="#f6fbff" />
+      <stop offset="52%" stop-color="#d8e7f8" />
+      <stop offset="100%" stop-color="#9ab4d3" />
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="136" fill="url(#sudostakeAvatarNoBorderBgGradient)" />
+  <rect width="512" height="512" rx="136" fill="url(#sudostakeAvatarNoBorderGlow)" />
+
+  <path
+    d="M96 197C145 166 206 168 256 197C306 226 367 228 416 197"
+    fill="none"
+    stroke="url(#sudostakeAvatarNoBorderMarkGradient)"
+    stroke-width="50"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M96 296C145 265 206 267 256 296C306 325 367 327 416 296"
+    fill="none"
+    stroke="url(#sudostakeAvatarNoBorderMarkGradient)"
+    stroke-width="50"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M116 179C157 156 206 156 256 179C306 202 355 202 396 179"
+    fill="none"
+    stroke="#ffffff"
+    stroke-opacity="0.28"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+  <path
+    d="M116 278C157 255 206 255 256 278C306 301 355 301 396 278"
+    fill="none"
+    stroke="#ffffff"
+    stroke-opacity="0.2"
+    stroke-width="10"
+    stroke-linecap="round"
+  />
+</svg>
