@@ -9,7 +9,7 @@ type LogoMarkProps = {
 export function LogoMark({ size = 40, className, ariaLabel = "SudoStake logo mark" }: LogoMarkProps) {
   return (
     <Image
-      src="/sudostake-logo.svg"
+      src="/sudostake-logo-v2.svg"
       alt={ariaLabel}
       width={size}
       height={size}
