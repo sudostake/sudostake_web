@@ -1,22 +1,30 @@
+import Image from "next/image";
+
 type Network = {
   name: string;
   href: string;
   description: string;
   availability: string;
+  logoSrc: string;
+  logoAlt: string;
 };
 
 const networks: Network[] = [
   {
-    name: "Cosmos dApp",
+    name: "Cosmos",
     href: "https://cosmos.sudostake.com",
     description: "Stake-backed borrowing and lending on Cosmos mainnet.",
     availability: "Mainnet",
+    logoSrc: "https://raw.githubusercontent.com/cosmos/chain-registry/master/cosmoshub/images/atom.svg",
+    logoAlt: "Cosmos logo",
   },
   {
-    name: "NEAR dApp",
+    name: "NEAR",
     href: "https://near.sudostake.com",
-    description: "Stake-backed borrowing and lending flow on NEAR testnet.",
+    description: "Stake-backed borrowing and lending on NEAR testnet.",
     availability: "Testnet",
+    logoSrc: "https://pages.near.org/wp-content/uploads/2021/09/brand-icon-300x300.png",
+    logoAlt: "NEAR logo",
   },
 ];
 
@@ -31,7 +39,7 @@ export function NetworkSection() {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           {networks.map((network) => (
             <li key={network.name} className="h-full">
               <a
@@ -39,18 +47,23 @@ export function NetworkSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${network.name} (${network.availability})`}
-                className="flex h-full flex-col gap-5 rounded-3xl surface-card px-6 py-7 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] sm:px-7"
+                className="flex h-full flex-col gap-4 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] sm:px-6"
               >
-                <div className="flex flex-col gap-3">
-                  <h3 className="text-[1.75rem] font-semibold leading-tight text-[color:var(--text-primary)] sm:text-[1.95rem]">
-                    {network.name}
-                  </h3>
-                  <p className="text-base leading-relaxed text-[color:var(--text-secondary)]">
-                    {network.description}
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <span className="inline-flex rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-2">
+                      <Image src={network.logoSrc} alt={network.logoAlt} width={28} height={28} className="h-7 w-7" />
+                    </span>
+                    <h3 className="text-[1.25rem] font-semibold leading-tight text-[color:var(--text-primary)] sm:text-[1.35rem]">
+                      {network.name}
+                    </h3>
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[color:var(--text-tertiary)]">
+                    {network.availability}
                   </p>
-                  <p className="text-sm font-medium text-[color:var(--text-tertiary)]">{network.availability}</p>
                 </div>
-                <span className="mt-auto text-base font-semibold text-[color:var(--accent-primary)]">
+                <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{network.description}</p>
+                <span className="mt-auto text-sm font-semibold text-[color:var(--accent-primary)]">
                   Open app
                 </span>
               </a>

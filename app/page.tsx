@@ -46,11 +46,11 @@ function ResourcesSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex h-full flex-col gap-4 rounded-3xl surface-card px-6 py-7 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)]"
+                className="flex h-full flex-col gap-3 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)]"
               >
-                <span className="text-xl font-semibold text-[color:var(--text-primary)]">{name}</span>
-                <p className="text-base leading-relaxed text-[color:var(--text-secondary)]">{description}</p>
-                <span className="inline-flex items-center gap-2 text-base font-semibold text-[color:var(--accent-primary)]">
+                <span className="text-lg font-semibold text-[color:var(--text-primary)]">{name}</span>
+                <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{description}</p>
+                <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)]">
                   Visit
                 </span>
               </a>
