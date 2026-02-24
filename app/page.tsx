@@ -50,9 +50,6 @@ function ResourcesSection() {
               >
                 <span className="text-lg font-semibold text-[color:var(--text-primary)]">{name}</span>
                 <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{description}</p>
-                <span className="inline-flex items-center gap-2 text-sm font-semibold text-[color:var(--accent-primary)]">
-                  Visit
-                </span>
               </a>
             </li>
           ))}
