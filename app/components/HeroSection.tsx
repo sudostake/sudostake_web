@@ -24,14 +24,6 @@ export function HeroSection() {
           </ul>
         </div>
 
-        <div className="flex">
-          <a
-            href="#apps"
-            className="btn-primary inline-flex w-full items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition sm:w-auto"
-          >
-            Start now: choose network
-          </a>
-        </div>
       </div>
     </section>
   );
