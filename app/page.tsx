@@ -29,8 +29,8 @@ const resources: ResourceLink[] = [
 
 function ResourcesSection() {
   return (
-    <section id="resources" className="w-full py-12 sm:py-14 lg:py-16">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+    <section id="resources" className="w-full py-10 sm:py-12 lg:py-14">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-3 sm:max-w-2xl">
           <h2 className="section-heading text-[color:var(--text-primary)]">Resources</h2>
           <p className="section-subtitle text-[color:var(--text-secondary)]">
@@ -38,7 +38,7 @@ function ResourcesSection() {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           {resources.map(({ name, href, description }) => (
             <li key={href} className="h-full">
               <a
@@ -46,10 +46,11 @@ function ResourcesSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${name} in a new tab`}
-                className="flex h-full flex-col gap-3 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)]"
+                className="pixel-card surface-card flex h-full flex-col gap-3 px-4 py-5 text-left text-[color:var(--text-primary)]"
               >
-                <span className="text-lg font-semibold text-[color:var(--text-primary)]">{name}</span>
-                <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{description}</p>
+                <span className="pixel-heading text-[0.64rem] text-[color:var(--text-primary)]">{name}</span>
+                <p className="text-[1.12rem] leading-[1.18] text-[color:var(--text-secondary)]">{description}</p>
+                <span className="pixel-heading mt-auto text-[0.54rem] text-[color:var(--accent-primary)]">Visit -&gt;</span>
               </a>
             </li>
           ))}
@@ -61,19 +62,23 @@ function ResourcesSection() {
 
 export default function Home() {
   return (
-    <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)] antialiased">
+    <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)]">
       <SiteHeader />
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-10 px-5 py-10 sm:gap-12 sm:px-6 sm:py-12 lg:px-8">
+      <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-10 lg:px-8">
         <HeroSection />
         <NetworkSection />
         <ResourcesSection />
       </main>
 
-      <footer className="footer-panel py-8 text-center text-xs text-[color:var(--text-secondary)]">
+      <footer className="footer-panel py-7 text-center text-[0.56rem] text-[color:var(--text-secondary)]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
-          <LogoMark size={36} className="h-10 w-10 rounded-full" ariaLabel="SudoStake mark" />
-          <span className="font-medium text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
+          <LogoMark
+            size={36}
+            className="h-10 w-10 border-2 border-[color:var(--panel-border)] bg-[color:var(--surface)] p-1"
+            ariaLabel="SudoStake mark"
+          />
+          <span className="pixel-heading text-[0.5rem] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
         </div>
       </footer>
     </div>
