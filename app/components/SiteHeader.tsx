@@ -21,7 +21,7 @@ export function SiteHeader() {
         >
           <LogoMark
             size={34}
-            className="h-9 w-9 flex-none border-2 border-[color:var(--panel-border)] bg-[color:var(--surface-muted)] p-1"
+            className="h-9 w-9 flex-none"
           />
           <span>SudoStake</span>
         </a>

@@ -75,7 +75,7 @@ export default function Home() {
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark
             size={36}
-            className="h-10 w-10 border-2 border-[color:var(--panel-border)] bg-[color:var(--surface)] p-1"
+            className="h-10 w-10"
             ariaLabel="SudoStake mark"
           />
           <span className="pixel-heading text-[0.58rem] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>

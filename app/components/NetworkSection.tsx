@@ -51,9 +51,7 @@ export function NetworkSection() {
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex border-2 border-[color:var(--panel-border)] bg-[color:var(--surface-muted)] p-1.5">
-                      <Image src={network.logoSrc} alt={network.logoAlt} width={28} height={28} className="h-7 w-7" />
-                    </span>
+                    <Image src={network.logoSrc} alt={network.logoAlt} width={28} height={28} className="h-7 w-7 flex-none" />
                     <h3 className="pixel-heading text-[0.8rem] text-[color:var(--text-primary)] sm:text-[0.88rem]">
                       {network.name}
                     </h3>
