@@ -13,7 +13,7 @@ const navLinks: NavLink[] = [
 export function SiteHeader() {
   return (
     <header className="nav-panel sticky top-0 z-50">
-      <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
+      <div className="flex w-full items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <a
           href="#top"
           className="pixel-heading mr-auto inline-flex items-center gap-3 text-[0.7rem] text-[color:var(--foreground)] sm:text-[0.76rem]"
@@ -21,7 +21,7 @@ export function SiteHeader() {
         >
           <LogoMark
             size={34}
-            className="h-9 w-9 flex-none border-2 border-[color:var(--panel-border)] bg-[color:var(--surface-muted)] p-1"
+            className="h-9 w-9 flex-none"
           />
           <span>SudoStake</span>
         </a>

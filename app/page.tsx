@@ -6,24 +6,24 @@ import { LogoMark } from "./components/LogoMark";
 type ResourceLink = {
   name: string;
   href: string;
-  description: string;
+  tag: string;
 };
 
 const resources: ResourceLink[] = [
   {
     name: "GitHub",
     href: "https://github.com/sudostake",
-    description: "Read contracts, frontend code, and open issues.",
+    tag: "GH",
   },
   {
     name: "Telegram",
     href: "https://t.me/sudostake",
-    description: "Get direct support from the SudoStake team and community.",
+    tag: "TG",
   },
   {
     name: "X (Twitter)",
     href: "https://x.com/sudostake",
-    description: "Follow product releases and protocol updates.",
+    tag: "X",
   },
 ];
 
@@ -31,26 +31,29 @@ function ResourcesSection() {
   return (
     <section id="resources" className="w-full py-10 sm:py-12 lg:py-14">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <div className="flex flex-col gap-3 sm:max-w-2xl">
+        <div className="flex flex-col gap-3">
           <h2 className="section-heading text-[color:var(--text-primary)]">Resources</h2>
-          <p className="section-subtitle text-[color:var(--text-secondary)]">
-            Everything you need to track the protocol and get help quickly.
-          </p>
         </div>
 
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {resources.map(({ name, href, description }) => (
+          {resources.map(({ name, href, tag }) => (
             <li key={href} className="h-full">
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${name} in a new tab`}
-                className="pixel-card surface-card flex h-full flex-col gap-3 px-4 py-5 text-left text-[color:var(--text-primary)]"
+                aria-label={`Go to ${name} in a new tab`}
+                className="group pixel-card surface-card flex h-full items-center justify-between gap-4 px-4 py-5 text-left text-[color:var(--text-primary)]"
               >
-                <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
-                <p className="text-[1.12rem] leading-[1.24] text-[color:var(--text-secondary)]">{description}</p>
-                <span className="pixel-heading mt-auto text-[0.62rem] text-[color:var(--accent-primary)]">Visit -&gt;</span>
+                <span className="flex items-center gap-3">
+                  <span className="pixel-chip min-w-[2.1rem] justify-center text-[color:var(--text-secondary)]">
+                    {tag}
+                  </span>
+                  <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
+                </span>
+                <span className="pixel-heading text-[0.62rem] text-[color:var(--accent-primary)] transition-transform group-hover:translate-x-0.5">
+                  -&gt;
+                </span>
               </a>
             </li>
           ))}
@@ -75,10 +78,9 @@ export default function Home() {
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark
             size={36}
-            className="h-10 w-10 border-2 border-[color:var(--panel-border)] bg-[color:var(--surface)] p-1"
+            className="h-10 w-10"
             ariaLabel="SudoStake mark"
           />
-          <span className="pixel-heading text-[0.58rem] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
         </div>
       </footer>
     </div>
