@@ -30,8 +30,8 @@ const networks: Network[] = [
 
 export function NetworkSection() {
   return (
-    <section id="apps" className="w-full py-12 sm:py-14 lg:py-16">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-10">
+    <section id="apps" className="w-full py-10 sm:py-12 lg:py-14">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-3">
           <h2 className="section-heading text-[color:var(--text-primary)]">Choose a network</h2>
           <p className="section-subtitle text-[color:var(--text-secondary)]">
@@ -39,7 +39,7 @@ export function NetworkSection() {
           </p>
         </div>
 
-        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {networks.map((network) => (
             <li key={network.name} className="h-full">
               <a
@@ -47,24 +47,26 @@ export function NetworkSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Open ${network.name} (${network.availability})`}
-                className="flex h-full flex-col gap-4 rounded-2xl surface-card px-5 py-6 text-left text-[color:var(--text-primary)] transition hover:border-[color:var(--accent-primary)] sm:px-6"
+                className="pixel-card surface-card flex h-full flex-col gap-4 px-4 py-5 text-left text-[color:var(--text-primary)] sm:px-5"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <span className="inline-flex rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-muted)] p-2">
+                    <span className="inline-flex border-2 border-[color:var(--panel-border)] bg-[color:var(--surface-muted)] p-1.5">
                       <Image src={network.logoSrc} alt={network.logoAlt} width={28} height={28} className="h-7 w-7" />
                     </span>
-                    <h3 className="text-[1.25rem] font-semibold leading-tight text-[color:var(--text-primary)] sm:text-[1.35rem]">
+                    <h3 className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)] sm:text-[0.8rem]">
                       {network.name}
                     </h3>
                   </div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-[color:var(--text-tertiary)]">
+                  <p className="pixel-chip text-[color:var(--text-tertiary)]">
                     {network.availability}
                   </p>
                 </div>
-                <p className="text-sm leading-relaxed text-[color:var(--text-secondary)]">{network.description}</p>
-                <span className="mt-auto text-sm font-semibold text-[color:var(--accent-primary)]">
-                  Open app
+                <p className="text-[1.14rem] leading-[1.18] text-[color:var(--text-secondary)]">
+                  {network.description}
+                </p>
+                <span className="pixel-heading mt-auto text-[0.56rem] text-[color:var(--accent-primary)]">
+                  Open app -&gt;
                 </span>
               </a>
             </li>
