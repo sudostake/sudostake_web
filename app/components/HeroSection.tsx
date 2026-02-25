@@ -1,34 +1,37 @@
-const quickStartSteps = [
-  "Choose your network below to open the right app.",
-  "Connect your wallet and select a staked asset as collateral.",
-  "Borrow or lend USDC, then track your position from the dashboard.",
+type LaunchLink = {
+  label: string;
+  href: string;
+};
+
+const launchLinks: LaunchLink[] = [
+  { label: "Cosmos", href: "https://cosmos.sudostake.com" },
+  { label: "NEAR", href: "https://near.sudostake.com" },
+  { label: "GitHub", href: "https://github.com/sudostake" },
 ];
 
 export function HeroSection() {
   return (
     <section id="how-it-works" className="w-full py-10 sm:py-12 lg:py-14">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-7 sm:gap-8">
-        <p className="pixel-chip w-fit text-[color:var(--text-primary)]">Protocol Console v1.0</p>
         <h1 className="pixel-hero max-w-5xl text-[1rem] font-normal text-[color:var(--text-primary)] sm:text-[1.32rem] lg:text-[1.62rem]">
           Earn from staking.
           <span className="block">Trade anytime.</span>
         </h1>
-        <div className="pixel-rule max-w-4xl" aria-hidden />
 
-        <div className="hero-panel px-4 py-4 sm:px-6 sm:py-6">
-          <h2 className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)] sm:text-[0.78rem]">
-            Start in 3 quick steps
-          </h2>
-          <ol className="mt-3 space-y-2.5 text-[1.16rem] leading-[1.24] text-[color:var(--text-secondary)] sm:text-[1.26rem]">
-            {quickStartSteps.map((step, index) => (
-              <li key={step} className="flex items-start gap-3">
-                <span className="pixel-chip min-w-[2.1rem] justify-center text-[color:var(--text-primary)]">
-                  {index + 1}
-                </span>
-                <span className="pt-0.5">{step}</span>
-              </li>
-            ))}
-          </ol>
+        <div className="flex flex-wrap items-center gap-3">
+          {launchLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="pixel-card surface-card inline-flex items-center gap-2 px-3 py-2 text-[color:var(--text-primary)]"
+              aria-label={`Go to ${link.label}`}
+            >
+              <span className="pixel-heading text-[0.66rem]">{link.label}</span>
+              <span className="pixel-heading text-[0.58rem] text-[color:var(--accent-primary)]">-&gt;</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
