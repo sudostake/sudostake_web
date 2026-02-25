@@ -54,7 +54,7 @@ export function NetworkSection() {
                     <span className="inline-flex border-2 border-[color:var(--panel-border)] bg-[color:var(--surface-muted)] p-1.5">
                       <Image src={network.logoSrc} alt={network.logoAlt} width={28} height={28} className="h-7 w-7" />
                     </span>
-                    <h3 className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)] sm:text-[0.8rem]">
+                    <h3 className="pixel-heading text-[0.8rem] text-[color:var(--text-primary)] sm:text-[0.88rem]">
                       {network.name}
                     </h3>
                   </div>
@@ -62,10 +62,10 @@ export function NetworkSection() {
                     {network.availability}
                   </p>
                 </div>
-                <p className="text-[1.14rem] leading-[1.18] text-[color:var(--text-secondary)]">
+                <p className="text-[1.14rem] leading-[1.24] text-[color:var(--text-secondary)]">
                   {network.description}
                 </p>
-                <span className="pixel-heading mt-auto text-[0.56rem] text-[color:var(--accent-primary)]">
+                <span className="pixel-heading mt-auto text-[0.64rem] text-[color:var(--accent-primary)]">
                   Open app -&gt;
                 </span>
               </a>
