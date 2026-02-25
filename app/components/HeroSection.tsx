@@ -16,10 +16,10 @@ export function HeroSection() {
         <div className="pixel-rule max-w-4xl" aria-hidden />
 
         <div className="hero-panel px-4 py-4 sm:px-6 sm:py-6">
-          <h2 className="pixel-heading text-[0.64rem] text-[color:var(--text-primary)] sm:text-[0.7rem]">
+          <h2 className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)] sm:text-[0.78rem]">
             Start in 3 quick steps
           </h2>
-          <ol className="mt-3 space-y-2.5 text-[1.16rem] leading-[1.2] text-[color:var(--text-secondary)] sm:text-[1.26rem]">
+          <ol className="mt-3 space-y-2.5 text-[1.16rem] leading-[1.24] text-[color:var(--text-secondary)] sm:text-[1.26rem]">
             {quickStartSteps.map((step, index) => (
               <li key={step} className="flex items-start gap-3">
                 <span className="pixel-chip min-w-[2.1rem] justify-center text-[color:var(--text-primary)]">

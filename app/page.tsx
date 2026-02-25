@@ -48,9 +48,9 @@ function ResourcesSection() {
                 aria-label={`Open ${name} in a new tab`}
                 className="pixel-card surface-card flex h-full flex-col gap-3 px-4 py-5 text-left text-[color:var(--text-primary)]"
               >
-                <span className="pixel-heading text-[0.64rem] text-[color:var(--text-primary)]">{name}</span>
-                <p className="text-[1.12rem] leading-[1.18] text-[color:var(--text-secondary)]">{description}</p>
-                <span className="pixel-heading mt-auto text-[0.54rem] text-[color:var(--accent-primary)]">Visit -&gt;</span>
+                <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
+                <p className="text-[1.12rem] leading-[1.24] text-[color:var(--text-secondary)]">{description}</p>
+                <span className="pixel-heading mt-auto text-[0.62rem] text-[color:var(--accent-primary)]">Visit -&gt;</span>
               </a>
             </li>
           ))}
@@ -71,14 +71,14 @@ export default function Home() {
         <ResourcesSection />
       </main>
 
-      <footer className="footer-panel py-7 text-center text-[0.56rem] text-[color:var(--text-secondary)]">
+      <footer className="footer-panel py-7 text-center text-[0.64rem] text-[color:var(--text-secondary)]">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
           <LogoMark
             size={36}
             className="h-10 w-10 border-2 border-[color:var(--panel-border)] bg-[color:var(--surface)] p-1"
             ariaLabel="SudoStake mark"
           />
-          <span className="pixel-heading text-[0.5rem] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
+          <span className="pixel-heading text-[0.58rem] text-[color:var(--text-secondary)]">© 2026 SudoStake</span>
         </div>
       </footer>
     </div>

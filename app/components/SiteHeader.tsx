@@ -16,7 +16,7 @@ export function SiteHeader() {
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <a
           href="#top"
-          className="pixel-heading mr-auto inline-flex items-center gap-3 text-[0.62rem] text-[color:var(--foreground)] sm:text-[0.68rem]"
+          className="pixel-heading mr-auto inline-flex items-center gap-3 text-[0.7rem] text-[color:var(--foreground)] sm:text-[0.76rem]"
           aria-label="SudoStake home"
         >
           <LogoMark
@@ -26,7 +26,7 @@ export function SiteHeader() {
           <span>SudoStake</span>
         </a>
 
-        <nav className="flex items-center gap-1 text-[0.56rem] text-[color:var(--text-secondary)] sm:gap-2 sm:text-[0.62rem]">
+        <nav className="flex items-center gap-1 text-[0.64rem] text-[color:var(--text-secondary)] sm:gap-2 sm:text-[0.7rem]">
           {navLinks.map(({ label, href }) => (
             <a
               key={href}
