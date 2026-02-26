@@ -20,19 +20,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SudoStake | Stake-Backed Liquidity",
+  title: "SudoStake | Staked Assets as Collateral",
   description:
-    "Borrow or lend without unstaking. Unlock USDC liquidity while validator rewards keep compounding.",
+    "SudoStake vault smart contracts allow users or agents to use staked L1 assets as collateral so they can access USDC liquidity anytime while rewards keep compounding.",
   openGraph: {
-    title: "SudoStake | Stake-Backed Liquidity",
+    title: "SudoStake | Staked Assets as Collateral",
     description:
-      "Borrow or lend without unstaking. Unlock USDC liquidity while validator rewards keep compounding.",
+      "SudoStake vault smart contracts allow users or agents to use staked L1 assets as collateral so they can access USDC liquidity anytime while rewards keep compounding.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudoStake | Stake-Backed Liquidity",
+    title: "SudoStake | Staked Assets as Collateral",
     description:
-      "Borrow or lend without unstaking. Unlock USDC liquidity while validator rewards keep compounding.",
+      "SudoStake vault smart contracts allow users or agents to use staked L1 assets as collateral so they can access USDC liquidity anytime while rewards keep compounding.",
   },
 };
 

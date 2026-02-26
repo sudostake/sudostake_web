@@ -7,6 +7,7 @@ type ResourceLink = {
   name: string;
   href: string;
   tag: string;
+  description: string;
 };
 
 const resources: ResourceLink[] = [
@@ -14,16 +15,19 @@ const resources: ResourceLink[] = [
     name: "GitHub",
     href: "https://github.com/sudostake",
     tag: "GH",
+    description: "Open-source repos and release notes.",
   },
   {
     name: "Telegram",
     href: "https://t.me/sudostake",
     tag: "TG",
+    description: "Community chat and support updates.",
   },
   {
-    name: "X (Twitter)",
+    name: "X",
     href: "https://x.com/sudostake",
     tag: "X",
+    description: "Product updates and launch announcements.",
   },
 ];
 
@@ -33,25 +37,33 @@ function ResourcesSection() {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
         <div className="flex flex-col gap-3">
           <h2 className="section-heading text-[color:var(--text-primary)]">Resources</h2>
+          <p className="max-w-3xl text-[0.8rem] text-[color:var(--text-secondary)] sm:text-[0.88rem]">
+            Follow releases, ecosystem news, and community updates.
+          </p>
         </div>
 
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {resources.map(({ name, href, tag }) => (
+          {resources.map(({ name, href, tag, description }) => (
             <li key={href} className="h-full">
               <a
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Go to ${name} in a new tab`}
-                className="group pixel-card surface-card flex h-full items-center justify-between gap-4 px-4 py-5 text-left text-[color:var(--text-primary)]"
+                className="group pixel-card surface-card flex h-full min-w-0 flex-col gap-3 px-4 py-5 text-left text-[color:var(--text-primary)] sm:gap-4"
               >
-                <span className="flex items-center gap-3">
-                  <span className="pixel-chip min-w-[2.1rem] justify-center text-[color:var(--text-secondary)]">
+                <span className="flex min-w-0 items-start gap-3">
+                  <span className="resource-mark text-[color:var(--text-secondary)]">
                     {tag}
                   </span>
-                  <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
+                  <span className="flex min-w-0 flex-col gap-1">
+                    <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
+                    <span className="break-words text-[0.66rem] leading-[1.3] text-[color:var(--text-secondary)] sm:text-[0.72rem]">
+                      {description}
+                    </span>
+                  </span>
                 </span>
-                <span className="pixel-heading text-[0.62rem] text-[color:var(--accent-primary)] transition-transform group-hover:translate-x-0.5">
+                <span className="pixel-heading self-end text-[0.62rem] text-[color:var(--accent-primary)] transition-transform group-hover:translate-x-0.5">
                   -&gt;
                 </span>
               </a>
