@@ -106,6 +106,16 @@
 
   body {
     background:
+      radial-gradient(
+          circle at 10% 12%,
+          color-mix(in oklab, var(--accent-primary) 11%, transparent) 0,
+          transparent 34%
+        ),
+      radial-gradient(
+          circle at 90% 8%,
+          color-mix(in oklab, var(--accent-primary) 9%, transparent) 0,
+          transparent 30%
+        ),
       linear-gradient(
           90deg,
           color-mix(in oklab, var(--background-strong) 76%, transparent) 1px,
@@ -120,8 +130,8 @@
       linear-gradient(180deg, var(--background), var(--background-strong));
     color: var(--foreground);
     font-family: var(--font-pixel-body), "Courier New", Courier, monospace;
-    font-size: clamp(1.28rem, 1.95vw, 1.52rem);
-    line-height: 1.34;
+    font-size: clamp(1rem, 1.15vw, 1.16rem);
+    line-height: 1.4;
     letter-spacing: 0.02em;
     -webkit-font-smoothing: none;
     text-rendering: optimizeSpeed;
@@ -320,6 +330,100 @@
     background: var(--surface-card-bg);
     border: 2px solid var(--panel-border);
     box-shadow: var(--pixel-shadow);
+  }
+
+  .illustration-shell {
+    border: 2px solid var(--panel-border);
+    background:
+      linear-gradient(
+          135deg,
+          color-mix(in oklab, var(--surface) 88%, var(--accent-primary) 12%),
+          color-mix(in oklab, var(--surface-muted) 90%, transparent)
+        ),
+      repeating-linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--background-strong) 42%, transparent),
+          color-mix(in oklab, var(--background-strong) 42%, transparent) 1px,
+          transparent 1px,
+          transparent 10px
+        );
+    box-shadow: var(--pixel-shadow-lg);
+  }
+
+  .story-rail {
+    display: grid;
+    gap: 0.8rem;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  }
+
+  .story-step {
+    border: 2px solid var(--panel-border);
+    background: color-mix(in oklab, var(--surface) 86%, transparent);
+    padding: 0.6rem 0.7rem 0.72rem;
+    min-height: 0;
+  }
+
+  .story-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    border: 2px solid var(--panel-border);
+    background: color-mix(in oklab, var(--surface-muted) 86%, transparent);
+    padding: 0.08rem 0.4rem;
+    font-family: var(--font-pixel-display), "Courier New", Courier, monospace;
+    font-size: 0.52rem;
+    line-height: 1.3;
+    color: var(--text-secondary);
+  }
+
+  .story-title {
+    margin-top: 0.46rem;
+    font-family: var(--font-pixel-display), "Courier New", Courier, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .story-copy {
+    margin-top: 0.34rem;
+    font-size: 0.64rem;
+    line-height: 1.3;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .network-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 2px solid var(--panel-border);
+    background: color-mix(in oklab, var(--surface-muted) 88%, transparent);
+    box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--surface) 58%, transparent);
+    flex: none;
+  }
+
+  .resource-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.25rem;
+    border: 2px solid var(--panel-border);
+    background: color-mix(in oklab, var(--surface-muted) 90%, transparent);
+    padding: 0.13rem 0.5rem;
+    font-family: var(--font-pixel-display), "Courier New", Courier, monospace;
+    font-size: 0.58rem;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .nav-panel {
