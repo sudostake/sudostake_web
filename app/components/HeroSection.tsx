@@ -27,7 +27,7 @@ export function HeroSection() {
     <section id="how-it-works" className="w-full py-10 sm:py-12 lg:py-14">
       <div className="mx-auto grid w-full max-w-6xl gap-8 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:items-center">
         <div className="flex flex-col gap-5">
-          <h1 className="pixel-hero max-w-5xl text-[1rem] font-normal text-[color:var(--text-primary)] sm:text-[1.32rem] lg:text-[1.62rem]">
+          <h1 className="hero-title-mobile pixel-hero max-w-5xl text-[1rem] font-normal text-[color:var(--text-primary)] sm:text-[1.32rem] lg:text-[1.62rem]">
             Use staked L1 tokens
             <span className="block">as collateral for USDC.</span>
           </h1>

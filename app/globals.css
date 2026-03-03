@@ -480,6 +480,40 @@
     text-wrap: balance;
   }
 
+  @media (max-width: 639px) {
+    .hero-title-mobile {
+      font-size: clamp(1.14rem, 5.9vw, 1.28rem);
+      line-height: 1.46;
+      letter-spacing: 0.066em;
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    .illustration-shell {
+      background: var(--surface);
+      box-shadow: var(--pixel-shadow);
+    }
+
+    .story-rail {
+      grid-template-columns: 1fr;
+      gap: 0.56rem;
+    }
+
+    .story-step {
+      padding: 0.54rem 0.6rem 0.62rem;
+    }
+
+    .story-title {
+      margin-top: 0.38rem;
+    }
+
+    .story-copy {
+      margin-top: 0.28rem;
+    }
+  }
+
   .pixel-rule {
     height: 8px;
     width: 100%;
