@@ -76,6 +76,14 @@ function ResourcesSection() {
 }
 
 export default function Home() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentDate = new Intl.DateTimeFormat("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(now);
+
   return (
     <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)]">
       <SiteHeader />
@@ -93,6 +101,12 @@ export default function Home() {
             className="h-10 w-10"
             ariaLabel="SudoStake mark"
           />
+          <p className="pixel-heading text-[0.58rem] text-[color:var(--text-primary)]">
+            Copyright (c) {currentYear} SudoStake
+          </p>
+          <p className="text-[0.62rem] text-[color:var(--text-secondary)]">
+            {currentDate}
+          </p>
         </div>
       </footer>
     </div>
