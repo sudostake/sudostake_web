@@ -1,112 +1,171 @@
-import { HeroSection } from "./components/HeroSection";
-import { NetworkSection } from "./components/NetworkSection";
-import { SiteHeader } from "./components/SiteHeader";
+import Image from "next/image";
 import { LogoMark } from "./components/LogoMark";
 
-type ResourceLink = {
-  name: string;
-  href: string;
-  tag: string;
+type Step = {
+  title: string;
   description: string;
 };
 
-const resources: ResourceLink[] = [
+type Network = {
+  name: string;
+  href: string;
+  description: string;
+  logoSrc: string;
+  logoAlt: string;
+};
+
+type SocialLink = {
+  name: string;
+  href: string;
+};
+
+const steps: Step[] = [
+  {
+    title: "Create a vault",
+    description: "Choose a supported network and open a vault for the asset you want to use.",
+  },
+  {
+    title: "Deposit and stake",
+    description: "Deposit tokens into the vault and keep them staked while rewards continue accruing.",
+  },
+  {
+    title: "Borrow USDC",
+    description: "Use the staked position as collateral when you need liquidity.",
+  },
+];
+
+const networks: Network[] = [
+  {
+    name: "NEAR",
+    href: "https://near.sudostake.com",
+    description: "Borrow against staked NEAR.",
+    logoSrc: "/near-logo.png",
+    logoAlt: "NEAR logo",
+  },
+  {
+    name: "Archway",
+    href: "https://cosmos.sudostake.com",
+    description: "Borrow against staked ARCH.",
+    logoSrc: "/archway-logo.svg",
+    logoAlt: "Archway logo",
+  },
+  {
+    name: "Chihuahua",
+    href: "https://cosmos.sudostake.com",
+    description: "Borrow against staked HUAHUA.",
+    logoSrc: "/chihuahua-logo.svg",
+    logoAlt: "Chihuahua logo",
+  },
+];
+
+const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
     href: "https://github.com/sudostake",
-    tag: "GH",
-    description: "Open-source repos and release notes.",
   },
   {
     name: "Telegram",
     href: "https://t.me/sudostake",
-    tag: "TG",
-    description: "Community chat and support updates.",
   },
   {
     name: "X",
     href: "https://x.com/sudostake",
-    tag: "X",
-    description: "Product updates and launch announcements.",
   },
 ];
 
-function ResourcesSection() {
-  return (
-    <section id="resources" className="w-full py-10 sm:py-12 lg:py-14">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8">
-        <div className="flex flex-col gap-3">
-          <h2 className="section-heading text-[color:var(--text-primary)]">Resources</h2>
-          <p className="max-w-3xl text-[0.8rem] text-[color:var(--text-secondary)] sm:text-[0.88rem]">
-            Follow releases, ecosystem news, and community updates.
-          </p>
-        </div>
+export default function Home() {
+  const currentYear = new Date().getFullYear();
 
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          {resources.map(({ name, href, tag, description }) => (
-            <li key={href} className="h-full">
+  return (
+    <div id="top" className="app-shell">
+      <header className="app-bar">
+        <div className="frame app-bar__row">
+          <a href="#top" aria-label="SudoStake home" className="brand-link">
+            <LogoMark size={32} className="brand-link__mark" />
+            <span>SudoStake</span>
+          </a>
+
+          <nav className="toolbar-links" aria-label="External links">
+            {socialLinks.map((link) => (
               <a
-                href={href}
+                key={link.name}
+                href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Go to ${name} in a new tab`}
-                className="group pixel-card surface-card flex h-full min-w-0 flex-col gap-3 px-4 py-5 text-left text-[color:var(--text-primary)] sm:gap-4"
               >
-                <span className="flex min-w-0 items-start gap-3">
-                  <span className="resource-mark text-[color:var(--text-secondary)]">
-                    {tag}
-                  </span>
-                  <span className="flex min-w-0 flex-col gap-1">
-                    <span className="pixel-heading text-[0.72rem] text-[color:var(--text-primary)]">{name}</span>
-                    <span className="break-words text-[0.66rem] leading-[1.3] text-[color:var(--text-secondary)] sm:text-[0.72rem]">
-                      {description}
-                    </span>
-                  </span>
-                </span>
-                <span className="pixel-heading self-end text-[0.62rem] text-[color:var(--accent-primary)] transition-transform group-hover:translate-x-0.5">
-                  -&gt;
-                </span>
+                {link.name}
               </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
+            ))}
+          </nav>
+        </div>
+      </header>
 
-export default function Home() {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  const currentDate = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(now);
+      <main className="frame page-layout">
+        <fieldset className="panel panel--hero">
+          <legend>Overview</legend>
+          <div className="hero-copy">
+            <h1>Borrow USDC with staked assets.</h1>
+            <p>
+              Open a vault on a supported network, deposit your tokens, keep them
+              staked, and borrow against that position when you need liquidity.
+            </p>
+          </div>
+        </fieldset>
 
-  return (
-    <div id="top" className="min-h-dvh bg-[var(--background)] text-[color:var(--text-primary)]">
-      <SiteHeader />
+        <div className="panel-grid">
+          <fieldset className="panel">
+            <legend>How it works</legend>
+            <ol className="panel-list">
+              {steps.map((step, index) => (
+                <li key={step.title} className="panel-item">
+                  <p className="item-index">{index + 1}.</p>
+                  <h3>{step.title}</h3>
+                  <p className="muted-text">{step.description}</p>
+                </li>
+              ))}
+            </ol>
+          </fieldset>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8 sm:gap-10 sm:px-6 sm:py-10 lg:px-8">
-        <HeroSection />
-        <NetworkSection />
-        <ResourcesSection />
+          <fieldset className="panel">
+            <legend>Networks</legend>
+            <ul className="panel-list">
+              {networks.map((network) => (
+                <li key={network.name} className="panel-item panel-item--network">
+                  <div className="network-summary-item">
+                    <span className="network-logo">
+                      <Image
+                        src={network.logoSrc}
+                        alt={network.logoAlt}
+                        width={32}
+                        height={32}
+                        className="network-logo__image"
+                      />
+                    </span>
+                    <div>
+                      <h3>{network.name}</h3>
+                      <p className="muted-text">{network.description}</p>
+                    </div>
+                  </div>
+                  <p>
+                    <a href={network.href} target="_blank" rel="noopener noreferrer">
+                      Open {network.name} app
+                    </a>
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </fieldset>
+        </div>
       </main>
 
-      <footer className="footer-panel py-7 text-center text-[0.64rem] text-[color:var(--text-secondary)]">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-2 px-5 sm:px-6 lg:px-8">
-          <LogoMark
-            size={36}
-            className="h-10 w-10"
-            ariaLabel="SudoStake mark"
-          />
-          <p className="pixel-heading text-[0.58rem] text-[color:var(--text-primary)]">
-            Copyright (c) {currentYear} SudoStake
-          </p>
-          <p className="text-[0.62rem] text-[color:var(--text-secondary)]">
-            {currentDate}
-          </p>
+      <footer className="app-footer">
+        <div className="frame app-footer__row">
+          <div className="brand-link">
+            <LogoMark size={28} className="brand-link__mark brand-link__mark--small" ariaLabel="SudoStake mark" />
+            <span>SudoStake</span>
+          </div>
+
+          <p>Copyright {currentYear} SudoStake.</p>
         </div>
       </footer>
     </div>
