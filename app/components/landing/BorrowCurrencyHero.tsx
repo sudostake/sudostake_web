@@ -11,7 +11,7 @@ import {
 
 type BorrowCurrencyHeroProps = {
   currencies: string[];
-  tickIntervalMs?: number;
+  tickIntervalMs?: number | readonly number[];
   tickDurationMs?: number;
   resetDurationMs?: number;
 };
@@ -25,6 +25,7 @@ type AnimatedCurrencyProps = {
 };
 
 const defaultCurrencies = ["a supported stablecoin"];
+const defaultTickIntervalsMs = [2400, 3100, 2700, 3400] as const;
 
 type CurrencyTransition = {
   id: number;
@@ -88,9 +89,9 @@ function AnimatedCurrency({
 
 export function BorrowCurrencyHero({
   currencies,
-  tickIntervalMs = 1500,
-  tickDurationMs = 280,
-  resetDurationMs = 220,
+  tickIntervalMs = defaultTickIntervalsMs,
+  tickDurationMs = 340,
+  resetDurationMs = 420,
 }: BorrowCurrencyHeroProps) {
   const configuredCurrencies = currencies.filter(
     (currency) => currency.trim().length > 0,
@@ -103,6 +104,9 @@ export function BorrowCurrencyHero({
   const currentIndex = activeIndex % availableCurrencies.length;
   const activeCurrency =
     availableCurrencies[currentIndex];
+  const currentTickIntervalMs = Array.isArray(tickIntervalMs)
+    ? tickIntervalMs[currentIndex % tickIntervalMs.length]
+    : tickIntervalMs;
 
   const queueNextTransition = useEffectEvent(() => {
     if (availableCurrencies.length < 2 || transition) {
@@ -154,12 +158,12 @@ export function BorrowCurrencyHero({
 
     const timeoutId = window.setTimeout(() => {
       queueNextTransition();
-    }, tickIntervalMs);
+    }, currentTickIntervalMs);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [availableCurrencies.length, tickIntervalMs, transition]);
+  }, [availableCurrencies.length, currentTickIntervalMs, transition]);
 
   useEffect(() => {
     if (!transition) {
