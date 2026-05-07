@@ -2,18 +2,18 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 const description =
-  "Use supported staked assets as collateral to borrow USDC through SudoStake vaults.";
+  "Keep supported assets staked and borrow stablecoins through SudoStake vaults.";
 
 export const metadata: Metadata = {
-  title: "SudoStake | Borrow USDC Against Staked Assets",
+  title: "SudoStake | Borrow Stablecoins Without Unstaking",
   description,
   openGraph: {
-    title: "SudoStake | Borrow USDC Against Staked Assets",
+    title: "SudoStake | Borrow Stablecoins Without Unstaking",
     description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "SudoStake | Borrow USDC Against Staked Assets",
+    title: "SudoStake | Borrow Stablecoins Without Unstaking",
     description,
   },
 };
