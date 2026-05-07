@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BorrowCurrencyHero } from "./components/landing/BorrowCurrencyHero";
 import { LogoMark } from "./components/LogoMark";
 
 type Step = {
@@ -19,18 +20,23 @@ type SocialLink = {
   href: string;
 };
 
+const borrowCurrencies = ["USDC", "EURC", "USDT", "cNGN"];
+
 const steps: Step[] = [
   {
     title: "Create a vault",
-    description: "Choose a supported network and open a vault for the asset you want to use.",
+    description:
+      "Choose a supported network and open the vault for the asset you want to use.",
   },
   {
     title: "Deposit and stake",
-    description: "Deposit tokens into the vault and keep them staked while rewards continue accruing.",
+    description:
+      "Deposit your tokens and keep the collateral staked while rewards continue accruing.",
   },
   {
-    title: "Borrow USDC",
-    description: "Use the staked position as collateral when you need liquidity.",
+    title: "Borrow stablecoins",
+    description:
+      "Draw against the position when you need liquidity without exiting your stake.",
   },
 ];
 
@@ -38,21 +44,21 @@ const networks: Network[] = [
   {
     name: "NEAR",
     href: "https://near.sudostake.com",
-    description: "Borrow against staked NEAR.",
+    description: "Use staked NEAR as collateral.",
     logoSrc: "/near-logo.png",
     logoAlt: "NEAR logo",
   },
   {
     name: "Archway",
     href: "https://cosmos.sudostake.com",
-    description: "Borrow against staked ARCH.",
+    description: "Use staked ARCH as collateral.",
     logoSrc: "/archway-logo.svg",
     logoAlt: "Archway logo",
   },
   {
     name: "Chihuahua",
     href: "https://cosmos.sudostake.com",
-    description: "Borrow against staked HUAHUA.",
+    description: "Use staked HUAHUA as collateral.",
     logoSrc: "/chihuahua-logo.svg",
     logoAlt: "Chihuahua logo",
   },
@@ -103,13 +109,7 @@ export default function Home() {
       <main className="frame page-layout">
         <fieldset className="panel panel--hero">
           <legend>Overview</legend>
-          <div className="hero-copy">
-            <h1>Borrow USDC with staked assets.</h1>
-            <p>
-              Open a vault on a supported network, deposit your tokens, keep them
-              staked, and borrow against that position when you need liquidity.
-            </p>
-          </div>
+          <BorrowCurrencyHero currencies={borrowCurrencies} />
         </fieldset>
 
         <div className="panel-grid">
@@ -127,8 +127,8 @@ export default function Home() {
           </fieldset>
 
           <fieldset className="panel">
-            <legend>Networks</legend>
-            <ul className="panel-list">
+            <legend>Supported networks</legend>
+            <ul className="panel-list panel-list--networks">
               {networks.map((network) => (
                 <li key={network.name} className="panel-item panel-item--network">
                   <div className="network-summary-item">
@@ -141,14 +141,19 @@ export default function Home() {
                         className="network-logo__image"
                       />
                     </span>
-                    <div>
+                    <div className="network-copy">
                       <h3>{network.name}</h3>
                       <p className="muted-text">{network.description}</p>
                     </div>
                   </div>
                   <p>
-                    <a href={network.href} target="_blank" rel="noopener noreferrer">
-                      Open {network.name} app
+                    <a
+                      className="network-action"
+                      href={network.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Launch {network.name}
                     </a>
                   </p>
                 </li>
