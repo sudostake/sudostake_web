@@ -20,23 +20,23 @@ type SocialLink = {
   href: string;
 };
 
-const borrowCurrencies = ["USDC", "EURC", "USDT", "cNGN"];
+const borrowCurrencies = ["L1 tokens", "USDC", "EURC", "cNGN"];
 
 const steps: Step[] = [
   {
-    title: "Create a vault",
+    title: "Vault",
     description:
-      "Choose a supported network and open the vault for the asset you want to use.",
+      "Open a USYC vault on Arc or a staked crypto vault on a supported L1.",
   },
   {
-    title: "Deposit and stake",
+    title: "Fund",
     description:
-      "Deposit your tokens and keep the collateral staked while rewards continue accruing.",
+      "Move collateral in through x402, bridging, or teleportation.",
   },
   {
-    title: "Borrow stablecoins",
+    title: "Borrow",
     description:
-      "Draw against the position when you need liquidity without exiting your stake.",
+      "Access crypto liquidity, USDC, EURC, or cNGN against that vault.",
   },
 ];
 
@@ -44,21 +44,21 @@ const networks: Network[] = [
   {
     name: "NEAR",
     href: "https://near.sudostake.com",
-    description: "Use staked NEAR as collateral.",
+    description: "Use staked NEAR as collateral for stablecoin liquidity.",
     logoSrc: "/near-logo.png",
     logoAlt: "NEAR logo",
   },
   {
     name: "Archway",
     href: "https://cosmos.sudostake.com",
-    description: "Use staked ARCH as collateral.",
+    description: "Use staked ARCH as collateral for stablecoin liquidity.",
     logoSrc: "/archway-logo.svg",
     logoAlt: "Archway logo",
   },
   {
     name: "Chihuahua",
     href: "https://cosmos.sudostake.com",
-    description: "Use staked HUAHUA as collateral.",
+    description: "Use staked HUAHUA as collateral for stablecoin liquidity.",
     logoSrc: "/chihuahua-logo.svg",
     logoAlt: "Chihuahua logo",
   },
@@ -107,30 +107,29 @@ export default function Home() {
       </header>
 
       <main className="frame page-layout">
-        <fieldset className="panel panel--hero">
-          <legend>Overview</legend>
+        <section className="hero-section">
           <BorrowCurrencyHero currencies={borrowCurrencies} />
-        </fieldset>
+        </section>
 
-        <div className="panel-grid">
-          <fieldset className="panel">
-            <legend>How it works</legend>
-            <ol className="panel-list">
+        <div className="content-grid">
+          <section className="content-section" aria-labelledby="flow-title">
+            <h2 id="flow-title">Flow</h2>
+            <ol className="content-list">
               {steps.map((step, index) => (
-                <li key={step.title} className="panel-item">
+                <li key={step.title} className="content-item">
                   <p className="item-index">{index + 1}.</p>
                   <h3>{step.title}</h3>
                   <p className="muted-text">{step.description}</p>
                 </li>
               ))}
             </ol>
-          </fieldset>
+          </section>
 
-          <fieldset className="panel">
-            <legend>Supported networks</legend>
-            <ul className="panel-list panel-list--networks">
+          <section className="content-section" aria-labelledby="networks-title">
+            <h2 id="networks-title">Networks</h2>
+            <ul className="content-list network-list">
               {networks.map((network) => (
-                <li key={network.name} className="panel-item panel-item--network">
+                <li key={network.name} className="content-item network-item">
                   <div className="network-summary-item">
                     <span className="network-logo">
                       <Image
@@ -159,7 +158,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-          </fieldset>
+          </section>
         </div>
       </main>
 
