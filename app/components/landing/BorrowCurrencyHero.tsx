@@ -184,7 +184,9 @@ export function BorrowCurrencyHero({
 
   return (
     <div className="hero-copy">
-      <p className="hero-kicker">Stake, borrow, stay exposed.</p>
+      <p className="hero-kicker">
+        Use USYC or staked crypto vaults to borrow across Arc and L1 chains.
+      </p>
       <h1>
         Borrow{" "}
         <AnimatedCurrency
@@ -194,25 +196,12 @@ export function BorrowCurrencyHero({
           resetDurationMs={resetDurationMs}
           transition={transition}
         />{" "}
-        Without Unstaking
+        against vault collateral
       </h1>
       <p className="hero-lede">
-        Open a vault on a supported network, deposit your tokens, keep them
-        staked, and unlock liquidity from that collateral while rewards
-        continue to accrue.
+        Deposit USYC or staked crypto, keep exposure to the underlying asset,
+        and draw liquidity through x402, bridging, or teleportation rails.
       </p>
-      <div className="hero-support" aria-label="Supported borrow currencies">
-        <div className="support-group">
-          <span className="support-label">Borrow</span>
-          <div className="support-pills">
-            {availableCurrencies.map((currency) => (
-              <span key={currency} className="support-pill">
-                {currency}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
