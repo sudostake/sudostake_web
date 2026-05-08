@@ -38,10 +38,6 @@ const networks: Network[] = [
     name: "Archway",
     href: "https://cosmos.sudostake.com",
   },
-  {
-    name: "Chihuahua",
-    href: "https://cosmos.sudostake.com",
-  },
 ];
 
 export default function Home() {
